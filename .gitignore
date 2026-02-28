@@ -1,0 +1,6 @@
+# Игнорируем бэкапы и временные файлы
+.backups/
+*.log
+.file_hashes
+.DS_Store
+*.tar.gz

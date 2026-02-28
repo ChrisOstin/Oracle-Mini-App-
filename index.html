@@ -1,0 +1,184 @@
+// ========================================
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Оракул Mini App</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23FFD700'>🍑</text></svg>">
+    <link rel="stylesheet" href="css/style.css?v=1772311394">
+    <script src="https://telegram.org/js/telegram-web-app.js?v=1772311394"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js?v=1772311394"></script>
+</head>
+<body class="theme-classic">
+    <div class="app-container">
+        <!-- ШАПКА -->
+        <div class="header">
+            <div class="title">
+                <span class="oracle">ОРАКУЛ</span>
+                <span class="version">v20.0</span>
+            </div>
+            <div class="header-actions">
+                <span class="mori-price-bar" id="mori-price-bar">
+                    <span class="price-skeleton skeleton" id="price-skeleton">$0.006887</span>
+                    <span class="change-skeleton skeleton" id="change-skeleton">-6.34%</span>
+                </span>
+                <button class="theme-btn" onclick="toggleThemeMenu()" id="theme-btn">🎨</button>
+            </div>
+        </div>
+
+        <!-- ЭКРАН ЗАГРУЗКИ -->
+        <div id="loading-screen" class="screen active">
+            <div class="loader">
+                <div class="spinner"></div>
+                <p>Загрузка Оракула...</p>
+            </div>
+        </div>
+
+        <!-- ЭКРАН АВТОРИЗАЦИИ -->
+        <div id="auth-screen" class="screen">
+            <div class="auth-container">
+                <div class="auth-logo">🔮</div>
+                <h1>ОРАКУЛ</h1>
+                <p>v20.0</p>
+                
+                <div id="login-form">
+                    <input type="password" id="master-password" placeholder="Мастер-пароль">
+                    <button onclick="checkMasterPassword()">🔑 Войти</button>
+                    <p id="login-error" class="error hidden"></p>
+                </div>
+                
+                <div id="register-form" class="hidden">
+                    <input type="text" id="reg-username" placeholder="Твоё имя">
+                    <div class="avatar-selector">
+                        <div class="avatar-option" onclick="selectAvatar('👤')">👤</div>
+                        <div class="avatar-option" onclick="selectAvatar('🦉')">🦉</div>
+                        <div class="avatar-option" onclick="selectAvatar('🐉')">🐉</div>
+                        <div class="avatar-option" onclick="selectAvatar('👑')">👑</div>
+                        <div class="avatar-option" onclick="selectAvatar('🧙')">🧙</div>
+                        <div class="avatar-option" onclick="selectAvatar('🦊')">🦊</div>
+                        <div class="avatar-option" onclick="selectAvatar('🐺')">🐺</div>
+                        <div class="avatar-option" onclick="selectAvatar('🦅')">🦅</div>
+                    </div>
+                    <button onclick="registerUser()">📝 Зарегистрироваться</button>
+                    <p id="register-error" class="error hidden"></p>
+                    <p class="back-link" onclick="backToLogin()">← Назад</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ОСНОВНОЙ ЭКРАН ПРИЛОЖЕНИЯ -->
+        <div id="app-screen" class="screen hidden">
+            <!-- НИЖНЯЯ НАВИГАЦИЯ -->
+            <div class="bottom-nav" id="bottom-nav">
+                <button class="nav-btn active" data-module="mori">
+                    <span class="icon">🏆</span>
+                    <span class="label">MORI</span>
+                </button>
+                <button class="nav-btn" data-module="music">
+                    <span class="icon">🎵</span>
+                    <span class="label">Музыка</span>
+                </button>
+                <button class="nav-btn" data-module="crypto">
+                    <span class="icon">💰</span>
+                    <span class="label">Крипта</span>
+                </button>
+                <button class="nav-btn" data-module="ai">
+                    <span class="icon">🧠</span>
+                    <span class="label">AI</span>
+                </button>
+                <button class="nav-btn" data-module="profile">
+                    <span class="icon">👤</span>
+                    <span class="label">Профиль</span>
+                </button>
+            </div>
+
+            <!-- КОНТЕЙНЕРЫ ДЛЯ МОДУЛЕЙ -->
+            <div id="mori-container" class="module-container"></div>
+            <div id="music-container" class="module-container hidden"></div>
+            <div id="crypto-container" class="module-container hidden"></div>
+            <div id="ai-container" class="module-container hidden"></div>
+            <div id="profile-container" class="module-container hidden"></div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНЫЕ ОКНА -->
+    <div id="modals-container"></div>
+    <div id="toast-container"></div>
+
+    <!-- ЯДРО -->
+    <script src="js/core.js?v=1772311394"></script>
+    <script src="js/auth.js?v=1772311394"></script>
+    <script src="js/themes.js?v=1772311394"></script>
+    
+    <!-- ЗАГРУЗЧИК МОДУЛЕЙ -->
+    <script>
+            const moduleCache = {};
+        
+            function showSkeleton(moduleName) {
+                    const container = document.getElementById(`${moduleName}-container`);
+                    if (container) {
+                        container.innerHTML = `
+                            <div class="skeleton-screen">
+                                <div class="skeleton-header"></div>
+                                <div class="skeleton-stats">
+                                    <div class="skeleton-stat"></div>
+                                    <div class="skeleton-stat"></div>
+                                    <div class="skeleton-stat"></div>
+                                    <div class="skeleton-stat"></div>
+                                </div>
+                                <div class="skeleton-chart"></div>
+                                <div class="skeleton-actions"></div>
+                            </div>
+                        `;
+                    }
+            }
+        
+            function hideSkeleton(moduleName) {
+                    const container = document.getElementById(`${moduleName}-container`);
+                if (container) container.innerHTML = '';
+            }
+        
+            async function loadModule(moduleName) {
+                if (moduleCache[moduleName]) return moduleCache[moduleName];
+                
+                showSkeleton(moduleName);
+                
+                    try {
+                            const module = await import(`./js/${moduleName}.js`);
+                        moduleCache[moduleName] = module;
+                        hideSkeleton(moduleName);
+                            if (module.render) module.render(document.getElementById(`${moduleName}-container`));
+                        return module;
+                        } catch (error) {
+                        hideSkeleton(moduleName);
+                        console.error('Error loading module:', error);
+                        return null;
+                    }
+            }
+        
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const moduleName = e.currentTarget.dataset.module;
+                        
+                        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                        e.currentTarget.classList.add('active');
+                        
+                        document.querySelectorAll('.module-container').forEach(c => c.classList.add('hidden'));
+                            const container = document.getElementById(`${moduleName}-container`);
+                        container.classList.remove('hidden');
+                        
+                            if (!container.hasChildNodes()) {
+                                await loadModule(moduleName);
+                            }
+                    });
+            });
+        
+        // Загружаем MORI по умолчанию
+            document.addEventListener('DOMContentLoaded', () => {
+                loadModule('mori');
+            });
+    </script>
+</body>
+</html>
+// ========================================
