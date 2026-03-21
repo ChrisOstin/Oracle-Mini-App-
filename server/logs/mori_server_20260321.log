@@ -190,3 +190,6 @@ ModuleNotFoundError: No module named 'flask_sqlalchemy'
 2026-03-21 14:20:58,076 - mori_server - INFO - 📥 [c60704aa1e00df99] GET /health | IP: 127.0.0.1
 2026-03-21 14:20:58,076 - mori_server - INFO - 📤 [c60704aa1e00df99] 200 | 0.72ms
 2026-03-21 14:20:58,077 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:20:58] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:21:28,348 - mori_server - INFO - 📥 [a7f7a63703341a87] GET /health | IP: 127.0.0.1
+2026-03-21 14:21:28,349 - mori_server - INFO - 📤 [a7f7a63703341a87] 200 | 0.88ms
+2026-03-21 14:21:28,349 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:21:28] "GET /health HTTP/1.1" 200 -
