@@ -457,7 +457,7 @@ initModules: async function() {
         if (this.moduleCache.has(moduleName)) return;
         
         try {
-            const module = await import(`/js/modules/${moduleName}/index.js`);
+            const module = await import(`js/modules/${moduleName}/index.js`);
             this.moduleCache.set(moduleName, module);
             console.log(`📦 Модуль ${moduleName} предзагружен`);
         } catch (error) {
