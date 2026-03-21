@@ -1,0 +1,90 @@
+/* ===== FONTS.CSS ===== */
+
+/* Inter (основной шрифт) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Roboto Mono (моноширинный) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
+
+/* Open Sans (запасной) */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+/* Локальные шрифты (на случай отсутствия интернета) */
+@font-face {
+    font-family: 'Inter Fallback';
+    src: local('Arial');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter Fallback';
+    src: local('Arial Bold');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Основные семейства */
+:root {
+    --font-sans: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, 
+                 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'Roboto Mono', 'Courier New', monospace;
+    --font-serif: Georgia, 'Times New Roman', serif;
+}
+
+/* Базовые стили для текста */
+body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Заголовки */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+/* Моноширинный текст */
+code, pre, .mono {
+    font-family: var(--font-mono);
+}
+
+/* Утилиты для текста */
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+/* Поддержка разных языков */
+[lang="ru"] {
+    letter-spacing: 0.01em;
+}
+
+[lang="en"] {
+    letter-spacing: normal;
+}
+
+/* Для людей с дислексией (будет включаться позже) */
+body[data-dyslexia="true"] {
+    font-family: 'OpenDyslexic', var(--font-sans);
+    line-height: 1.8;
+    word-spacing: 0.2em;
+}

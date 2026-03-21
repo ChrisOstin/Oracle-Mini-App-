@@ -1,0 +1,573 @@
+/* ===== PROFILE MODULE ===== */
+
+.profile-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Шапка профиля */
+.profile-header {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-bottom: var(--spacing-md);
+}
+
+.profile-avatar {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+}
+
+.avatar-image {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--radius-circle);
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    border: 3px solid var(--accent-primary);
+    overflow: hidden;
+}
+
+.avatar-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-circle);
+    background: var(--accent-primary);
+    border: 2px solid var(--bg-primary);
+    color: var(--mori-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+}
+
+.avatar-edit:active {
+    transform: scale(0.9);
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.profile-username {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.profile-badge {
+    background: var(--accent-primary);
+    color: var(--mori-black);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+/* Уровень и прогресс */
+.level-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.level-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.level-title {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.level-number {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+.level-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.level-progress {
+    height: 8px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: var(--spacing-xs);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: var(--radius-sm);
+    transition: width var(--transition-normal);
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Статистика */
+.stats-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.stats-section h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.stat-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Достижения */
+.achievements-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.achievements-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.achievements-header h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-primary);
+}
+
+.achievements-count {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    background: var(--bg-primary);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-xl);
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.achievement-item {
+    text-align: center;
+    cursor: pointer;
+}
+
+.achievement-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-circle);
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto var(--spacing-xs);
+    border: 2px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.achievement-item.locked .achievement-icon {
+    opacity: 0.5;
+    filter: grayscale(0.5);
+}
+
+.achievement-item.unlocked .achievement-icon {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-gold);
+}
+
+.achievement-name {
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.achievement-progress {
+    font-size: 0.625rem;
+    color: var(--text-secondary);
+}
+
+.achievements-more {
+    text-align: center;
+    color: var(--accent-primary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+}
+
+/* Настройки */
+.settings-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.settings-section h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.settings-item:last-child {
+    border-bottom: none;
+}
+
+.settings-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.settings-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-circle);
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.settings-info h4 {
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.settings-info p {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+}
+
+.settings-value {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.settings-arrow {
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+}
+
+/* Переключатели */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-primary);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--text-secondary);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+    background-color: var(--mori-black);
+}
+
+/* Редактирование профиля */
+.edit-profile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-primary);
+    z-index: var(--z-modal);
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease;
+}
+
+.edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.edit-header h3 {
+    color: var(--text-primary);
+}
+
+.edit-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.edit-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+}
+
+.edit-field {
+    margin-bottom: var(--spacing-lg);
+}
+
+.edit-label {
+    display: block;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.875rem;
+}
+
+.edit-input {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+}
+
+.edit-input:focus {
+    border-color: var(--accent-primary);
+    outline: none;
+}
+
+.edit-input.error {
+    border-color: var(--accent-danger);
+}
+
+.edit-save {
+    width: 100%;
+    padding: var(--spacing-lg);
+    background: var(--accent-primary);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: var(--mori-black);
+    font-weight: 700;
+    font-size: 1.125rem;
+    cursor: pointer;
+    margin-top: var(--spacing-lg);
+}
+
+.edit-save:active {
+    transform: scale(0.98);
+}
+
+/* Выбор аватара */
+.avatar-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+}
+
+.avatar-option {
+    aspect-ratio: 1;
+    border-radius: var(--radius-circle);
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.avatar-option.selected {
+    border-color: var(--accent-primary);
+    transform: scale(1.05);
+}
+
+.avatar-option:active {
+    transform: scale(0.95);
+}
+
+/* Состояния загрузки */
+.profile-skeleton {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.skeleton-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(
+        90deg,
+        var(--bg-card) 25%,
+        var(--bg-secondary) 50%,
+        var(--bg-card) 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    margin: 0 auto var(--spacing-md);
+}
+
+.skeleton-line {
+    height: 20px;
+    background: linear-gradient(
+        90deg,
+        var(--bg-card) 25%,
+        var(--bg-secondary) 50%,
+        var(--bg-card) 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: var(--radius-sm);
+    margin: var(--spacing-xs) 0;
+}
+
+.skeleton-line.title {
+    width: 60%;
+    height: 28px;
+}
+
+/* Адаптивность */
+@media (max-width: 360px) {
+    .achievements-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .avatar-selector {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .profile-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .achievements-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

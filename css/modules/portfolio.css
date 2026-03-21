@@ -1,0 +1,318 @@
+/* ===== PORTFOLIO MODULE ===== */
+
+.portfolio-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Шапка портфеля */
+.portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.portfolio-price {
+    text-align: left;
+}
+
+.price-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.price-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    line-height: 1.2;
+}
+
+.price-change {
+    font-size: 0.875rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    display: inline-block;
+    margin-top: var(--spacing-xs);
+}
+
+.price-change.positive {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--accent-success);
+}
+
+.price-change.negative {
+    background: rgba(255, 68, 68, 0.1);
+    color: var(--accent-danger);
+}
+
+/* Статистика (сетка 2x2) */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.stat-card {
+    background: var(--bg-card);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-fast);
+}
+
+.stat-card:active {
+    transform: scale(0.98);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-change {
+    font-size: 0.75rem;
+}
+
+/* График */
+.chart-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+#mori-chart {
+    width: 100%;
+    height: 100%;
+}
+
+/* Таймфреймы */
+.timeframe-selector {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.timeframe-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-card);
+    border: 1px solid var(--text-muted);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex: 1;
+    min-width: 60px;
+}
+
+.timeframe-btn.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--mori-black);
+    font-weight: 600;
+}
+
+.timeframe-btn:active {
+    transform: scale(0.95);
+}
+
+/* Раздел "О MORI" */
+.about-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.about-section h3 {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+}
+
+.about-item {
+    background: var(--bg-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+}
+
+.about-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.about-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+/* Киты */
+.whales-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.whales-section h3 {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.whale-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.whale-item:last-child {
+    border-bottom: none;
+}
+
+.whale-address {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.whale-amount {
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+.whale-percentage {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+}
+
+/* Состояния загрузки */
+.skeleton-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.skeleton-line {
+    height: 16px;
+    background: linear-gradient(
+        90deg,
+        var(--bg-card) 25%,
+        var(--bg-secondary) 50%,
+        var(--bg-card) 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: var(--radius-sm);
+    margin: var(--spacing-xs) 0;
+}
+
+.skeleton-line.title {
+    width: 60%;
+    height: 24px;
+}
+
+.skeleton-line.price {
+    width: 40%;
+    height: 32px;
+}
+
+/* Обновление данных */
+.refresh-indicator {
+    position: fixed;
+    top: calc(var(--header-height) + 10px);
+    right: var(--spacing-md);
+    background: var(--accent-primary);
+    color: var(--mori-black);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+    font-weight: 600;
+    z-index: var(--z-toast);
+    box-shadow: var(--shadow-gold);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 360px) {
+    .timeframe-btn {
+        font-size: 0.75rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .stat-value {
+        font-size: 1rem;
+    }
+    
+    .price-value {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .about-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Тёмная тема (специфичные правки) */
+body[data-theme="dark"] .stat-card,
+body[data-theme="dark"] .whale-item {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Светлая тема */
+body[data-theme="light"] .whale-item {
+    border-color: rgba(0, 0, 0, 0.05);
+}

@@ -1,0 +1,344 @@
+/* ===== THEME: FAMILY SKULLS ===== */
+/* Черепа: красная, мрачная, рок */
+/* Объект слева: 💀 череп */
+
+.theme-family-skulls {
+    --bg-primary: #1a0a0a;
+    --bg-secondary: #2a0f0f;
+    --bg-card: #3a1515;
+    --bg-modal: #3a1515;
+    --text-primary: #ffcccc;
+    --text-secondary: #ff8888;
+    --text-muted: #cc4444;
+    --text-inverse: #1a0a0a;
+    --accent-primary: #ff4444;
+    --accent-secondary: #dd3c3c;
+    --accent-tertiary: #bb2e2e;
+    --accent-danger: #ff4444;
+    --accent-success: #88ff88;
+    --accent-warning: #ffaa44;
+    --accent-info: #4444ff;
+    --border-color: rgba(255, 68, 68, 0.3);
+    --shadow-color: rgba(255, 68, 68, 0.2);
+    --gradient-start: #ff4444;
+    --gradient-end: #dd3c3c;
+    --header-bg: rgba(26, 10, 10, 0.95);
+    --footer-bg: rgba(26, 10, 10, 0.98);
+    --input-bg: #2a0f0f;
+    --input-border: #3a1515;
+    --input-focus: #ff4444;
+    --button-hover: #dd3c3c;
+    --link-color: #ff4444;
+    --link-hover: #dd3c3c;
+    --icon-color: #ff4444;
+    --icon-hover: #dd3c3c;
+    --badge-bg: #ff4444;
+    --badge-text: #1a0a0a;
+    --tooltip-bg: #3a1515;
+    --tooltip-text: #ffcccc;
+    --scrollbar-thumb: #ff4444;
+    --scrollbar-track: #2a0f0f;
+    --selection-bg: #ff4444;
+    --selection-text: #1a0a0a;
+    --loader-color: #ff4444;
+    --skeleton-start: #2a0f0f;
+    --skeleton-end: #3a1515;
+}
+
+/* Объект слева вверху */
+.theme-family-skulls .theme-icon::before {
+    content: '💀';
+    font-size: 2rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(255, 68, 68, 0.6));
+    pointer-events: auto;
+}
+
+.theme-family-skulls .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 20px rgba(255, 68, 68, 0.9));
+}
+
+/* Анимация для объекта */
+@keyframes skullGlow {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 68, 68, 0.5)); }
+    50% { filter: drop-shadow(0 0 20px rgba(255, 68, 68, 0.8)); }
+}
+
+.theme-family-skulls .theme-icon::before {
+    animation: skullGlow 2s infinite ease-in-out;
+}
+
+/* Стили для кнопок */
+.theme-family-skulls .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: 2px solid var(--accent-tertiary);
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.theme-family-skulls .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.5);
+}
+
+/* Стили для карточек */
+.theme-family-skulls .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.theme-family-skulls .card::before {
+    content: '💀';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1rem;
+    opacity: 0.2;
+}
+
+.theme-family-skulls .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(255, 68, 68, 0.3);
+}
+
+/* Стили для ссылок */
+.theme-family-skulls a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    border-bottom: 1px solid transparent;
+}
+
+.theme-family-skulls a:hover {
+    color: var(--accent-secondary);
+    border-bottom-color: var(--accent-secondary);
+}
+
+/* Стили для заголовков */
+.theme-family-skulls h1, 
+.theme-family-skulls h2, 
+.theme-family-skulls h3 {
+    color: var(--text-primary);
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.theme-family-skulls h1::after,
+.theme-family-skulls h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-family-skulls input,
+.theme-family-skulls textarea,
+.theme-family-skulls select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-skulls input:focus,
+.theme-family-skulls textarea:focus,
+.theme-family-skulls select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-family-skulls ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-family-skulls ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-family-skulls ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+
+.theme-family-skulls ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-family-skulls ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-family-skulls .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+}
+
+/* Градиенты для особых элементов */
+.theme-family-skulls .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-family-skulls .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-skulls .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+}
+
+/* Стили для бейджей */
+.theme-family-skulls .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 4px 12px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid var(--accent-tertiary);
+}
+
+/* Стили для тултипов */
+.theme-family-skulls .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+}
+
+/* Стили для модальных окон */
+.theme-family-skulls .modal {
+    background: var(--bg-modal);
+    border: 2px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+/* Стили для таблиц */
+.theme-family-skulls table {
+    border-collapse: collapse;
+}
+
+.theme-family-skulls th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.theme-family-skulls td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-family-skulls tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-family-skulls ul li::before {
+    content: '💀';
+    color: var(--accent-primary);
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+/* Стили для прогресс-баров */
+.theme-family-skulls .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Стили для переключателей */
+.theme-family-skulls .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-family-skulls input:checked + .switch-slider {
+    background: var(--accent-primary);
+}
+
+/* Стили для радио-кнопок */
+.theme-family-skulls .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-skulls input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+}
+
+/* Стили для чекбоксов */
+.theme-family-skulls .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-skulls input:checked + .checkbox-custom {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Стили для дашборда */
+.theme-family-skulls .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.theme-family-skulls .stat-value {
+    color: var(--accent-primary);
+}
+
+/* Стили для графика */
+.theme-family-skulls .chart-line {
+    stroke: var(--accent-primary);
+}
+
+.theme-family-skulls .chart-bar {
+    fill: var(--accent-primary);
+}
+
+/* Стили для чата */
+.theme-family-skulls .message-own {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    border: 1px solid var(--accent-tertiary);
+}
+
+.theme-family-skulls .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-family-skulls .notification {
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-card);
+}
+
+/* Стили для календаря */
+.theme-family-skulls .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-skulls .calendar-day.has-event {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}

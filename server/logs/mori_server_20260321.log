@@ -1,0 +1,171 @@
+2026-03-21 14:02:38,687 - mori_server - INFO - 
+╔══════════════════════════════════════════════════════════╗
+║                                                          ║
+║   ███╗   ███╗ ██████╗ ██████╗ ██╗                       ║
+║   ████╗ ████║██╔═══██╗██╔══██╗██║                       ║
+║   ██╔████╔██║██║   ██║██████╔╝██║                       ║
+║   ██║╚██╔╝██║██║   ██║██╔══██╗██║                       ║
+║   ██║ ╚═╝ ██║╚██████╔╝██║  ██║██║                       ║
+║   ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                       ║
+║                                                          ║
+║   🔥 MORI ORACLE SERVER v2.0.0                          ║
+║   💪 РАЗРЫВНОЙ РЕЖИМ АКТИВИРОВАН                        ║
+║   🚀 Поддержка 10+ приложений                            ║
+╚══════════════════════════════════════════════════════════╝
+        
+2026-03-21 14:02:38,696 - mori_server - ERROR - ❌ Ошибка инициализации БД: No module named 'flask_sqlalchemy'
+2026-03-21 14:02:38,696 - mori_server - ERROR - 💥 Критическая ошибка: No module named 'flask_sqlalchemy'
+Traceback (most recent call last):
+  File "/data/data/com.termux/files/home/Oracle-Mini-App-/server/app.py", line 410, in <module>
+    init_database()
+    ~~~~~~~~~~~~~^^
+  File "/data/data/com.termux/files/home/Oracle-Mini-App-/server/app.py", line 326, in init_database
+    from models import db
+  File "/data/data/com.termux/files/home/Oracle-Mini-App-/server/models.py", line 10, in <module>
+    from flask_sqlalchemy import SQLAlchemy
+ModuleNotFoundError: No module named 'flask_sqlalchemy'
+2026-03-21 14:02:38,699 - mori_server - INFO - 🏁 Сервер завершил работу
+2026-03-21 14:03:40,163 - mori_server - INFO - 
+╔══════════════════════════════════════════════════════════╗
+║                                                          ║
+║   ███╗   ███╗ ██████╗ ██████╗ ██╗                       ║
+║   ████╗ ████║██╔═══██╗██╔══██╗██║                       ║
+║   ██╔████╔██║██║   ██║██████╔╝██║                       ║
+║   ██║╚██╔╝██║██║   ██║██╔══██╗██║                       ║
+║   ██║ ╚═╝ ██║╚██████╔╝██║  ██║██║                       ║
+║   ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                       ║
+║                                                          ║
+║   🔥 MORI ORACLE SERVER v2.0.0                          ║
+║   💪 РАЗРЫВНОЙ РЕЖИМ АКТИВИРОВАН                        ║
+║   🚀 Поддержка 10+ приложений                            ║
+╚══════════════════════════════════════════════════════════╝
+        
+2026-03-21 14:03:40,801 - mori_server - INFO - ✅ База данных инициализирована
+2026-03-21 14:03:40,964 - mori_routes - INFO - ✅ Зарегистрировано 35 эндпоинтов для 4 origins
+2026-03-21 14:03:40,965 - mori_server - INFO - 📋 Зарегистрировано эндпоинтов: 45
+2026-03-21 14:03:40,965 - mori_server - INFO - 🌐 Сервер запущен на 0.0.0.0:5000
+2026-03-21 14:03:40,965 - mori_server - INFO - 🐍 Debug mode: True
+2026-03-21 14:03:40,965 - mori_server - INFO - ⚡ Ожидание подключений...
+2026-03-21 14:03:41,024 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://26.26.26.1:5000
+2026-03-21 14:03:41,025 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-21 14:03:41,027 - werkzeug - INFO -  * Restarting with stat
+2026-03-21 14:03:41,510 - mori_server - INFO - 
+╔══════════════════════════════════════════════════════════╗
+║                                                          ║
+║   ███╗   ███╗ ██████╗ ██████╗ ██╗                       ║
+║   ████╗ ████║██╔═══██╗██╔══██╗██║                       ║
+║   ██╔████╔██║██║   ██║██████╔╝██║                       ║
+║   ██║╚██╔╝██║██║   ██║██╔══██╗██║                       ║
+║   ██║ ╚═╝ ██║╚██████╔╝██║  ██║██║                       ║
+║   ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                       ║
+║                                                          ║
+║   🔥 MORI ORACLE SERVER v2.0.0                          ║
+║   💪 РАЗРЫВНОЙ РЕЖИМ АКТИВИРОВАН                        ║
+║   🚀 Поддержка 10+ приложений                            ║
+╚══════════════════════════════════════════════════════════╝
+        
+2026-03-21 14:03:42,129 - mori_server - INFO - ✅ База данных инициализирована
+2026-03-21 14:03:42,248 - mori_routes - INFO - ✅ Зарегистрировано 35 эндпоинтов для 4 origins
+2026-03-21 14:03:42,248 - mori_server - INFO - 📋 Зарегистрировано эндпоинтов: 45
+2026-03-21 14:03:42,248 - mori_server - INFO - 🌐 Сервер запущен на 0.0.0.0:5000
+2026-03-21 14:03:42,248 - mori_server - INFO - 🐍 Debug mode: True
+2026-03-21 14:03:42,249 - mori_server - INFO - ⚡ Ожидание подключений...
+2026-03-21 14:03:42,280 - werkzeug - WARNING -  * Debugger is active!
+2026-03-21 14:03:42,318 - werkzeug - INFO -  * Debugger PIN: 269-651-015
+2026-03-21 14:04:32,849 - mori_server - INFO - 🏁 Сервер завершил работу
+2026-03-21 14:04:33,101 - mori_server - INFO - 🏁 Сервер завершил работу
+2026-03-21 14:11:01,707 - mori_server - INFO - 
+╔══════════════════════════════════════════════════════════╗
+║                                                          ║
+║   ███╗   ███╗ ██████╗ ██████╗ ██╗                       ║
+║   ████╗ ████║██╔═══██╗██╔══██╗██║                       ║
+║   ██╔████╔██║██║   ██║██████╔╝██║                       ║
+║   ██║╚██╔╝██║██║   ██║██╔══██╗██║                       ║
+║   ██║ ╚═╝ ██║╚██████╔╝██║  ██║██║                       ║
+║   ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                       ║
+║                                                          ║
+║   🔥 MORI ORACLE SERVER v2.0.0                          ║
+║   💪 РАЗРЫВНОЙ РЕЖИМ АКТИВИРОВАН                        ║
+║   🚀 Поддержка 10+ приложений                            ║
+╚══════════════════════════════════════════════════════════╝
+        
+2026-03-21 14:11:02,700 - mori_server - INFO - ✅ База данных инициализирована
+2026-03-21 14:11:02,860 - mori_routes - INFO - ✅ Зарегистрировано 35 эндпоинтов для 4 origins
+2026-03-21 14:11:02,861 - mori_server - INFO - 📋 Зарегистрировано эндпоинтов: 45
+2026-03-21 14:11:02,861 - mori_server - INFO - 🌐 Сервер запущен на 0.0.0.0:5000
+2026-03-21 14:11:02,861 - mori_server - INFO - 🐍 Debug mode: True
+2026-03-21 14:11:02,861 - mori_server - INFO - ⚡ Ожидание подключений...
+2026-03-21 14:11:02,943 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://26.26.26.1:5000
+2026-03-21 14:11:02,944 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-03-21 14:11:02,946 - werkzeug - INFO -  * Restarting with stat
+2026-03-21 14:11:03,607 - mori_server - INFO - 
+╔══════════════════════════════════════════════════════════╗
+║                                                          ║
+║   ███╗   ███╗ ██████╗ ██████╗ ██╗                       ║
+║   ████╗ ████║██╔═══██╗██╔══██╗██║                       ║
+║   ██╔████╔██║██║   ██║██████╔╝██║                       ║
+║   ██║╚██╔╝██║██║   ██║██╔══██╗██║                       ║
+║   ██║ ╚═╝ ██║╚██████╔╝██║  ██║██║                       ║
+║   ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                       ║
+║                                                          ║
+║   🔥 MORI ORACLE SERVER v2.0.0                          ║
+║   💪 РАЗРЫВНОЙ РЕЖИМ АКТИВИРОВАН                        ║
+║   🚀 Поддержка 10+ приложений                            ║
+╚══════════════════════════════════════════════════════════╝
+        
+2026-03-21 14:11:04,432 - mori_server - INFO - ✅ База данных инициализирована
+2026-03-21 14:11:04,584 - mori_routes - INFO - ✅ Зарегистрировано 35 эндпоинтов для 4 origins
+2026-03-21 14:11:04,585 - mori_server - INFO - 📋 Зарегистрировано эндпоинтов: 45
+2026-03-21 14:11:04,585 - mori_server - INFO - 🌐 Сервер запущен на 0.0.0.0:5000
+2026-03-21 14:11:04,586 - mori_server - INFO - 🐍 Debug mode: True
+2026-03-21 14:11:04,586 - mori_server - INFO - ⚡ Ожидание подключений...
+2026-03-21 14:11:04,627 - werkzeug - WARNING -  * Debugger is active!
+2026-03-21 14:11:04,690 - werkzeug - INFO -  * Debugger PIN: 100-867-575
+2026-03-21 14:11:04,718 - mori_server - INFO - 📥 [18a0e43881b1a2c1] GET /health | IP: 127.0.0.1
+2026-03-21 14:11:04,723 - mori_server - INFO - 📤 [18a0e43881b1a2c1] 200 | 5.42ms
+2026-03-21 14:11:04,728 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:11:04] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:11:21,749 - mori_server - INFO - 📥 [d0cdc59b3d858f34] GET /health | IP: 127.0.0.1
+2026-03-21 14:11:21,751 - mori_server - INFO - 📤 [d0cdc59b3d858f34] 200 | 2.11ms
+2026-03-21 14:11:21,753 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:11:21] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:11:52,227 - mori_server - INFO - 📥 [09c9e6af9a78724d] GET /health | IP: 127.0.0.1
+2026-03-21 14:11:52,230 - mori_server - INFO - 📤 [09c9e6af9a78724d] 200 | 2.45ms
+2026-03-21 14:11:52,231 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:11:52] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:12:22,556 - mori_server - INFO - 📥 [ed4990c262c668cb] GET /health | IP: 127.0.0.1
+2026-03-21 14:12:22,559 - mori_server - INFO - 📤 [ed4990c262c668cb] 200 | 3.3ms
+2026-03-21 14:12:22,563 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:12:22] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:12:52,930 - mori_server - INFO - 📥 [bf5e86d6d9d4987a] GET /health | IP: 127.0.0.1
+2026-03-21 14:12:52,933 - mori_server - INFO - 📤 [bf5e86d6d9d4987a] 200 | 3.18ms
+2026-03-21 14:12:52,936 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:12:52] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:13:23,291 - mori_server - INFO - 📥 [a4a93f0a3c2b27b3] GET /health | IP: 127.0.0.1
+2026-03-21 14:13:23,295 - mori_server - INFO - 📤 [a4a93f0a3c2b27b3] 200 | 3.68ms
+2026-03-21 14:13:23,296 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:13:23] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:13:53,504 - mori_server - INFO - 📥 [f73ddaf3c15a2e2b] GET /health | IP: 127.0.0.1
+2026-03-21 14:13:53,506 - mori_server - INFO - 📤 [f73ddaf3c15a2e2b] 200 | 1.89ms
+2026-03-21 14:13:53,508 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:13:53] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:14:23,727 - mori_server - INFO - 📥 [c0eae6a10afd87e8] GET /health | IP: 127.0.0.1
+2026-03-21 14:14:23,727 - mori_server - INFO - 📤 [c0eae6a10afd87e8] 200 | 0.69ms
+2026-03-21 14:14:23,728 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:14:23] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:14:53,968 - mori_server - INFO - 📥 [ae6a8197f04aba46] GET /health | IP: 127.0.0.1
+2026-03-21 14:14:53,970 - mori_server - INFO - 📤 [ae6a8197f04aba46] 200 | 1.62ms
+2026-03-21 14:14:53,972 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:14:53] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:15:24,212 - mori_server - INFO - 📥 [7903ecb38ec6b825] GET /health | IP: 127.0.0.1
+2026-03-21 14:15:24,213 - mori_server - INFO - 📤 [7903ecb38ec6b825] 200 | 1.52ms
+2026-03-21 14:15:24,214 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:15:24] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:15:54,487 - mori_server - INFO - 📥 [69717a2fd9fab6df] GET /health | IP: 127.0.0.1
+2026-03-21 14:15:54,488 - mori_server - INFO - 📤 [69717a2fd9fab6df] 200 | 0.75ms
+2026-03-21 14:15:54,488 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:15:54] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:16:24,814 - mori_server - INFO - 📥 [83267ab8c6fcb610] GET /health | IP: 127.0.0.1
+2026-03-21 14:16:24,815 - mori_server - INFO - 📤 [83267ab8c6fcb610] 200 | 0.92ms
+2026-03-21 14:16:24,815 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:16:24] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:16:55,123 - mori_server - INFO - 📥 [aa1420a88b1a1d7a] GET /health | IP: 127.0.0.1
+2026-03-21 14:16:55,124 - mori_server - INFO - 📤 [aa1420a88b1a1d7a] 200 | 1.6ms
+2026-03-21 14:16:55,127 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:16:55] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:17:25,410 - mori_server - INFO - 📥 [1448512d289ac164] GET /health | IP: 127.0.0.1
+2026-03-21 14:17:25,413 - mori_server - INFO - 📤 [1448512d289ac164] 200 | 3.37ms
+2026-03-21 14:17:25,414 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:17:25] "GET /health HTTP/1.1" 200 -

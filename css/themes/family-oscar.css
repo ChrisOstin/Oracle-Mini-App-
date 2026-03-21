@@ -1,0 +1,419 @@
+/* ===== THEME: FAMILY OSCAR ===== */
+/* Оскар: Голливуд, звёзды, красная дорожка */
+/* С надписями STAR везде */
+/* Объект слева: 🏆 статуэтка */
+
+.theme-family-oscar {
+    --bg-primary: #0a0a1a;
+    --bg-secondary: #1a1a2a;
+    --bg-card: #2a2a3a;
+    --bg-modal: #2a2a3a;
+    --text-primary: #ffffff;
+    --text-secondary: #ffd700;
+    --text-muted: #aa8800;
+    --text-inverse: #0a0a1a;
+    --accent-primary: #ffd700;
+    --accent-secondary: #ffaa00;
+    --accent-tertiary: #cc8800;
+    --accent-danger: #ff6666;
+    --accent-success: #88ff88;
+    --accent-warning: #ffaa66;
+    --accent-info: #66aaff;
+    --border-color: rgba(255, 215, 0, 0.3);
+    --shadow-color: rgba(255, 215, 0, 0.2);
+    --gradient-start: #ffd700;
+    --gradient-end: #ffaa00;
+    --header-bg: rgba(10, 10, 26, 0.9);
+    --footer-bg: rgba(10, 10, 26, 0.95);
+    --input-bg: #1a1a2a;
+    --input-border: #2a2a3a;
+    --input-focus: #ffd700;
+    --button-hover: #ffaa00;
+    --link-color: #ffd700;
+    --link-hover: #ffaa00;
+    --icon-color: #ffd700;
+    --icon-hover: #ffaa00;
+    --badge-bg: linear-gradient(135deg, #ffd700, #ffaa00);
+    --badge-text: #0a0a1a;
+    --tooltip-bg: #2a2a3a;
+    --tooltip-text: #ffffff;
+    --scrollbar-thumb: #ffd700;
+    --scrollbar-track: #1a1a2a;
+    --selection-bg: #ffd700;
+    --selection-text: #0a0a1a;
+    --loader-color: #ffd700;
+    --skeleton-start: #1a1a2a;
+    --skeleton-end: #2a2a3a;
+}
+
+/* Объект слева вверху */
+.theme-family-oscar .theme-icon::before {
+    content: '🏆';
+    font-size: 2rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+    pointer-events: auto;
+}
+
+.theme-family-oscar .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9));
+}
+
+/* Анимация для объекта */
+@keyframes oscarGlow {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
+    50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
+}
+
+.theme-family-oscar .theme-icon::before {
+    animation: oscarGlow 2s infinite ease-in-out;
+}
+
+/* НАДПИСИ STAR ВЕЗДЕ */
+.theme-family-oscar h1::after,
+.theme-family-oscar h2::after,
+.theme-family-oscar .card-header::after {
+    content: ' ★ STAR ★';
+    color: var(--accent-primary);
+    font-size: 0.6em;
+    margin-left: var(--spacing-xs);
+    letter-spacing: 2px;
+}
+
+.theme-family-oscar h3::before {
+    content: '★ ';
+    color: var(--accent-primary);
+}
+
+.theme-family-oscar .card {
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-oscar .card::before {
+    content: '★★★★★';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: var(--accent-primary);
+    opacity: 0.2;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+.theme-family-oscar .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), var(--accent-primary), transparent);
+    animation: starScan 3s linear infinite;
+}
+
+@keyframes starScan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.theme-family-oscar .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+
+/* Стили для кнопок */
+.theme-family-oscar .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-oscar .btn-primary::after {
+    content: '★';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    opacity: 0.3;
+    transition: all var(--transition-fast);
+}
+
+.theme-family-oscar .btn-primary:hover::after {
+    right: 10px;
+    opacity: 1;
+}
+
+.theme-family-oscar .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+}
+
+/* Стили для ссылок */
+.theme-family-oscar a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.theme-family-oscar a::after {
+    content: '★';
+    position: absolute;
+    left: -20px;
+    opacity: 0;
+    transition: all var(--transition-fast);
+    font-size: 0.8rem;
+}
+
+.theme-family-oscar a:hover {
+    color: var(--accent-secondary);
+    padding-left: 20px;
+}
+
+.theme-family-oscar a:hover::after {
+    opacity: 1;
+    left: 0;
+}
+
+/* Стили для заголовков */
+.theme-family-oscar h1, 
+.theme-family-oscar h2, 
+.theme-family-oscar h3 {
+    color: var(--text-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.theme-family-oscar h1::after,
+.theme-family-oscar h2::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-family-oscar input,
+.theme-family-oscar textarea,
+.theme-family-oscar select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-oscar input:focus,
+.theme-family-oscar textarea:focus,
+.theme-family-oscar select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-family-oscar ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-family-oscar ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-family-oscar ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+
+.theme-family-oscar ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-family-oscar ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-family-oscar .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+    border-right-color: var(--accent-secondary);
+}
+
+/* Градиенты для особых элементов */
+.theme-family-oscar .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-family-oscar .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-oscar .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+}
+
+/* Стили для бейджей */
+.theme-family-oscar .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Стили для тултипов */
+.theme-family-oscar .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+    border-radius: 10px;
+}
+
+/* Стили для модальных окон */
+.theme-family-oscar .modal {
+    background: var(--bg-modal);
+    border: 2px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    border-radius: 15px;
+}
+
+/* Стили для таблиц */
+.theme-family-oscar table {
+    border-collapse: collapse;
+}
+
+.theme-family-oscar th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+    text-transform: uppercase;
+}
+
+.theme-family-oscar td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-family-oscar tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-family-oscar ul li::before {
+    content: '★';
+    color: var(--accent-primary);
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+/* Стили для прогресс-баров */
+.theme-family-oscar .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Стили для переключателей */
+.theme-family-oscar .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-family-oscar input:checked + .switch-slider {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Стили для радио-кнопок */
+.theme-family-oscar .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-oscar input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+}
+
+/* Стили для чекбоксов */
+.theme-family-oscar .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-oscar input:checked + .checkbox-custom {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-color: var(--accent-secondary);
+}
+
+/* Стили для дашборда */
+.theme-family-oscar .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.theme-family-oscar .stat-value {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+/* Стили для графика */
+.theme-family-oscar .chart-line {
+    stroke: url(#oscarGradient);
+}
+
+.theme-family-oscar .chart-bar {
+    fill: url(#oscarGradient);
+}
+
+/* Стили для чата */
+.theme-family-oscar .message-own {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+}
+
+.theme-family-oscar .message-own::after {
+    content: ' ★';
+    font-size: 0.8rem;
+}
+
+.theme-family-oscar .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-family-oscar .notification {
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-card);
+}
+
+/* Стили для календаря */
+.theme-family-oscar .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-oscar .calendar-day.has-event {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+}

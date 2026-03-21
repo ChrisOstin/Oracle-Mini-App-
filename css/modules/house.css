@@ -1,0 +1,926 @@
+/* ===== HOUSE MODULE ===== */
+
+.house-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-primary);
+}
+
+/* Шапка дома */
+.house-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.house-header h2 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-primary);
+}
+
+.house-weather {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--bg-primary);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+}
+
+/* Переключение комнат */
+.room-tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.room-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.room-tab {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--bg-primary);
+    border: none;
+    border-radius: var(--radius-xl);
+    color: var(--text-secondary);
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.room-tab.active {
+    background: var(--accent-primary);
+    color: var(--mori-black);
+}
+
+.room-tab:active {
+    transform: scale(0.95);
+}
+
+/* Комната */
+.room-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.5s ease;
+}
+
+/* Гостиная */
+.room-living {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+}
+
+/* Кухня */
+.room-kitchen {
+    background: linear-gradient(135deg, #2a1f0a 0%, #3d2e12 100%);
+}
+
+/* Спальня */
+.room-bedroom {
+    background: linear-gradient(135deg, #1a1a2a 0%, #2a2a3a 100%);
+}
+
+/* Кабинет */
+.room-office {
+    background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+}
+
+/* Предметы в комнате */
+.room-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+}
+
+.house-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-lg);
+}
+
+.house-item:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.house-item.locked {
+    opacity: 0.5;
+    filter: grayscale(0.7);
+}
+
+.item-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.item-name {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.item-status {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Картина над камином */
+.painting-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: var(--spacing-lg) auto;
+    cursor: pointer;
+}
+
+.painting-frame {
+    background: #8b7355;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.painting-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+}
+
+.painting-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.painting-caption {
+    text-align: center;
+    margin-top: var(--spacing-xs);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    font-family: var(--font-serif);
+}
+
+/* Камин */
+.fireplace {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: var(--spacing-lg) auto;
+    text-align: center;
+}
+
+.fireplace-image {
+    width: 100%;
+    background: #4a3a2a;
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
+    padding: var(--spacing-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.firewood {
+    height: 40px;
+    background: #5d4a33;
+    border-radius: var(--radius-sm);
+    margin: var(--spacing-xs) 0;
+    position: relative;
+}
+
+.fire-flames {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    pointer-events: none;
+}
+
+.flame {
+    width: 15px;
+    background: linear-gradient(to top, #ffaa00, #ff4400);
+    border-radius: 50% 50% 0 0;
+    animation: flicker 1s infinite alternate;
+}
+
+.flame:nth-child(1) { height: 40px; animation-delay: 0s; }
+.flame:nth-child(2) { height: 60px; animation-delay: 0.3s; }
+.flame:nth-child(3) { height: 50px; animation-delay: 0.1s; }
+.flame:nth-child(4) { height: 45px; animation-delay: 0.4s; }
+.flame:nth-child(5) { height: 35px; animation-delay: 0.2s; }
+
+@keyframes flicker {
+    0% { height: 30px; opacity: 0.8; }
+    100% { height: 60px; opacity: 1; }
+}
+
+.fireplace-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+.fireplace-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-circle);
+    background: var(--bg-card);
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.fireplace-btn.active {
+    background: var(--accent-primary);
+    color: var(--mori-black);
+}
+
+/* Диван */
+.sofa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: var(--spacing-lg) 0;
+}
+
+.sofa-image {
+    width: 200px;
+    height: 80px;
+    background: #5a4a3a;
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
+    position: relative;
+    box-shadow: var(--shadow-md);
+}
+
+.sofa-image::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    right: 20px;
+    height: 30px;
+    background: #7a6a5a;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.sofa-occupants {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xs);
+    min-height: 40px;
+}
+
+.sofa-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-circle);
+    background: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    border: 2px solid var(--accent-primary);
+    animation: sitDown 0.3s ease;
+}
+
+@keyframes sitDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Книжный шкаф */
+.bookshelf {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: #4a3a2a;
+    border-radius: var(--radius-lg);
+    margin: var(--spacing-md) 0;
+}
+
+.bookshelf-book {
+    aspect-ratio: 3/4;
+    background: #7a6a5a;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.bookshelf-book:active {
+    transform: translateY(-5px);
+}
+
+/* Телевизор */
+.tv-container {
+    width: 100%;
+    max-width: 400px;
+    margin: var(--spacing-lg) auto;
+    cursor: pointer;
+}
+
+.tv-frame {
+    background: #2a2a2a;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.tv-screen {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #1a1a1a;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+.tv-screen.playing {
+    background: #000;
+}
+
+.tv-screen.playing::after {
+    content: '▶️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.3;
+}
+
+.tv-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+.tv-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-circle);
+    background: var(--bg-card);
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.tv-btn.active {
+    background: var(--accent-primary);
+    color: var(--mori-black);
+}
+
+/* Радио */
+.radio-container {
+    width: 200px;
+    margin: var(--spacing-md) auto;
+    text-align: center;
+}
+
+.radio-image {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    background: #4a3a2a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
+}
+
+.radio-image:active {
+    transform: scale(0.95);
+}
+
+.radio-image.playing {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.radio-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+/* Чай */
+.tea-set {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.teapot {
+    width: 80px;
+    height: 80px;
+    background: #a58e6d;
+    border-radius: 50% 50% 40% 40%;
+    position: relative;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.teapot::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 25px;
+    width: 15px;
+    height: 20px;
+    background: #a58e6d;
+    border-radius: 40% 40% 0 0;
+}
+
+.teapot.boiling {
+    animation: boil 0.5s infinite alternate;
+}
+
+@keyframes boil {
+    from { transform: translateY(0); }
+    to { transform: translateY(-3px); }
+}
+
+.teapot.boiling::after {
+    content: '💨';
+    position: absolute;
+    top: -25px;
+    left: 30px;
+    font-size: 1.5rem;
+    animation: steam 1s infinite;
+}
+
+@keyframes steam {
+    0% { opacity: 0; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-5px); }
+    100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.tea-cups {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+}
+
+.tea-cup {
+    width: 40px;
+    height: 40px;
+    background: #d4b48c;
+    border-radius: 0 0 30% 30%;
+    position: relative;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tea-cup::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -8px;
+    width: 12px;
+    height: 15px;
+    background: #d4b48c;
+    border-radius: 40% 0 0 40%;
+}
+
+.tea-cup.filled {
+    background: #8b6b4a;
+}
+
+.tea-cup.filled::after {
+    content: '🫖';
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    font-size: 0.875rem;
+}
+
+/* Цветы */
+.flower-pot {
+    display: inline-block;
+    margin: var(--spacing-sm);
+    text-align: center;
+}
+
+.flower {
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.flower.watered {
+    animation: grow 0.5s ease;
+}
+
+@keyframes grow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.flower-progress {
+    width: 50px;
+    height: 4px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+    margin-top: var(--spacing-xs);
+}
+
+.flower-fill {
+    height: 100%;
+    background: var(--accent-success);
+    border-radius: var(--radius-sm);
+    transition: width 0.3s ease;
+}
+
+/* Рыбки */
+.aquarium {
+    width: 200px;
+    height: 150px;
+    background: #1a4d6e;
+    border-radius: 0 0 50% 50%;
+    position: relative;
+    overflow: hidden;
+    margin: var(--spacing-md) auto;
+}
+
+.fish {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: swim 5s infinite linear;
+}
+
+.fish:nth-child(1) { top: 30px; left: 20px; animation-delay: 0s; }
+.fish:nth-child(2) { top: 70px; left: 50px; animation-delay: 2s; }
+.fish:nth-child(3) { top: 100px; left: 80px; animation-delay: 4s; }
+
+@keyframes swim {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(50px); }
+    50% { transform: translateX(100px) scaleX(-1); }
+    75% { transform: translateX(50px) scaleX(-1); }
+    100% { transform: translateX(0); }
+}
+
+.feed-btn {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background: var(--accent-primary);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: var(--mori-black);
+    margin-top: var(--spacing-sm);
+    cursor: pointer;
+}
+
+/* Кот */
+.cat {
+    position: relative;
+    width: 100px;
+    height: 80px;
+    margin: var(--spacing-md) auto;
+    cursor: pointer;
+}
+
+.cat-body {
+    width: 60px;
+    height: 40px;
+    background: #ffa500;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+}
+
+.cat-head {
+    width: 40px;
+    height: 40px;
+    background: #ffa500;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 40px;
+}
+
+.cat-ears {
+    position: absolute;
+    top: -5px;
+    left: 45px;
+}
+
+.cat-ear {
+    width: 15px;
+    height: 20px;
+    background: #ffa500;
+    border-radius: 50% 50% 0 0;
+    position: absolute;
+}
+
+.cat-ear.left {
+    left: -10px;
+    transform: rotate(-15deg);
+}
+
+.cat-ear.right {
+    left: 15px;
+    transform: rotate(15deg);
+}
+
+.cat-eyes {
+    position: absolute;
+    top: 10px;
+    left: 48px;
+}
+
+.cat-eye {
+    width: 6px;
+    height: 6px;
+    background: #000;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.cat-eye.left {
+    left: -2px;
+}
+
+.cat-eye.right {
+    left: 12px;
+}
+
+.cat-nose {
+    width: 4px;
+    height: 4px;
+    background: #ff69b4;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+    left: 55px;
+}
+
+.cat-whiskers {
+    position: absolute;
+    top: 18px;
+    left: 48px;
+}
+
+.whisker {
+    width: 15px;
+    height: 1px;
+    background: #000;
+    position: absolute;
+}
+
+.whisker.left {
+    left: -15px;
+    transform: rotate(-10deg);
+}
+
+.whisker.right {
+    left: 15px;
+    transform: rotate(10deg);
+}
+
+.cat-tail {
+    width: 20px;
+    height: 30px;
+    background: #ffa500;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    left: 5px;
+    transform: rotate(20deg);
+    animation: tailWag 2s infinite alternate;
+}
+
+@keyframes tailWag {
+    0% { transform: rotate(20deg); }
+    100% { transform: rotate(40deg); }
+}
+
+.cat-paw {
+    width: 8px;
+    height: 8px;
+    background: #ffa500;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+}
+
+.cat-paw.left {
+    left: 25px;
+}
+
+.cat-paw.right {
+    left: 45px;
+}
+
+/* Анимации кота */
+.cat.sleeping .cat-eyes {
+    display: none;
+}
+
+.cat.sleeping::after {
+    content: '😴';
+    position: absolute;
+    top: -10px;
+    left: 45px;
+    font-size: 1.2rem;
+}
+
+.cat.walking {
+    animation: walk 5s infinite;
+}
+
+@keyframes walk {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(20px); }
+    50% { transform: translateX(40px) scaleX(-1); }
+    75% { transform: translateX(20px) scaleX(-1); }
+    100% { transform: translateX(0); }
+}
+
+.cat.eating {
+    animation: eat 0.5s infinite alternate;
+}
+
+@keyframes eat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-5px); }
+}
+
+.cat-bowl {
+    width: 40px;
+    height: 20px;
+    background: #d4b48c;
+    border-radius: 0 0 50% 50%;
+    position: absolute;
+    bottom: -10px;
+    left: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cat-bowl.visible {
+    opacity: 1;
+}
+
+/* Кровать */
+.bed {
+    width: 200px;
+    margin: var(--spacing-xl) auto;
+    text-align: center;
+}
+
+.bed-frame {
+    background: #5a4a3a;
+    height: 60px;
+    border-radius: var(--radius-lg);
+    position: relative;
+}
+
+.bed-mattress {
+    background: #7a6a5a;
+    height: 30px;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: var(--radius-md);
+    transform: translateY(-15px);
+}
+
+.bed-pillow {
+    width: 40px;
+    height: 20px;
+    background: #9a8a7a;
+    border-radius: var(--radius-md);
+    position: absolute;
+    top: -25px;
+    left: 30px;
+}
+
+.bed-blanket {
+    width: 80%;
+    height: 30px;
+    background: #b59e8a;
+    margin: var(--spacing-xs) auto 0;
+    border-radius: var(--radius-sm);
+}
+
+.sleep-btn {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--accent-primary);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: var(--mori-black);
+    margin-top: var(--spacing-md);
+    cursor: pointer;
+}
+
+/* Звёздное небо */
+.starry-sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.starry-sky.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.star {
+    position: absolute;
+    color: #fff;
+    font-size: 1rem;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Адаптивность */
+@media (max-width: 360px) {
+    .room-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .painting-container {
+        max-width: 280px;
+    }
+    
+    .tv-container {
+        max-width: 280px;
+    }
+}

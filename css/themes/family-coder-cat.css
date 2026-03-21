@@ -1,0 +1,447 @@
+/* ===== THEME: FAMILY CODER CAT ===== */
+/* Девочка в худи с ушками кошки, программист */
+/* Пурпурная + чёрные лилии ⚜️ */
+/* Объект слева: 👩‍💻⚜️ девушка-программист */
+
+.theme-family-coder-cat {
+    --bg-primary: #1a0f1f;
+    --bg-secondary: #2a1a2f;
+    --bg-card: #3a253f;
+    --bg-modal: #3a253f;
+    --text-primary: #f0e0ff;
+    --text-secondary: #d0a0f0;
+    --text-muted: #a060c0;
+    --text-inverse: #1a0f1f;
+    --accent-primary: #c060ff;
+    --accent-secondary: #a040dd;
+    --accent-tertiary: #8020bb;
+    --accent-danger: #ff88aa;
+    --accent-success: #88ffaa;
+    --accent-warning: #ffaa88;
+    --accent-info: #88aaff;
+    --accent-black: #000000;
+    --accent-black-soft: #1a1a1a;
+    --border-color: rgba(192, 96, 255, 0.3);
+    --shadow-color: rgba(192, 96, 255, 0.2);
+    --gradient-start: #c060ff;
+    --gradient-end: #a040dd;
+    --header-bg: rgba(26, 15, 31, 0.9);
+    --footer-bg: rgba(26, 15, 31, 0.95);
+    --input-bg: #2a1a2f;
+    --input-border: #3a253f;
+    --input-focus: #c060ff;
+    --button-hover: #a040dd;
+    --link-color: #c060ff;
+    --link-hover: #a040dd;
+    --icon-color: #c060ff;
+    --icon-hover: #a040dd;
+    --badge-bg: #c060ff;
+    --badge-text: #1a0f1f;
+    --tooltip-bg: #3a253f;
+    --tooltip-text: #f0e0ff;
+    --scrollbar-thumb: #c060ff;
+    --scrollbar-track: #2a1a2f;
+    --selection-bg: #c060ff;
+    --selection-text: #1a0f1f;
+    --loader-color: #c060ff;
+    --skeleton-start: #2a1a2f;
+    --skeleton-end: #3a253f;
+}
+
+/* Объект слева вверху */
+.theme-family-coder-cat .theme-icon::before {
+    content: '👩‍💻⚜️';
+    font-size: 2rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(192, 96, 255, 0.6));
+    pointer-events: auto;
+}
+
+.theme-family-coder-cat .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 20px rgba(192, 96, 255, 0.9));
+}
+
+/* Анимация для объекта */
+@keyframes catEars {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+.theme-family-coder-cat .theme-icon::before {
+    animation: catEars 2s infinite ease-in-out;
+}
+
+/* Чёрные лилии по всему интерфейсу */
+.theme-family-coder-cat h1::before,
+.theme-family-coder-cat .card-header::before {
+    content: '⚜️';
+    color: var(--accent-black);
+    margin-right: 8px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.theme-family-coder-cat h2::after,
+.theme-family-coder-cat .section-title::after {
+    content: ' ⚜️';
+    color: var(--accent-black);
+    font-size: 0.8em;
+    margin-left: 8px;
+    opacity: 0.6;
+}
+
+/* Стили для кнопок */
+.theme-family-coder-cat .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(192, 96, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-coder-cat .btn-primary::after {
+    content: '⚜️⚜️⚜️';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    font-size: 3rem;
+    opacity: 0.1;
+    transform: rotate(-15deg);
+    transition: all var(--transition-fast);
+    color: #000000;
+}
+
+.theme-family-coder-cat .btn-primary:hover::after {
+    bottom: -10px;
+    right: -10px;
+    opacity: 0.2;
+}
+
+.theme-family-coder-cat .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192, 96, 255, 0.5);
+}
+
+/* Стили для карточек */
+.theme-family-coder-cat .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-coder-cat .card::before {
+    content: '⚜️';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 1.2rem;
+    opacity: 0.2;
+    color: #000000;
+}
+
+.theme-family-coder-cat .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #000000, transparent);
+}
+
+.theme-family-coder-cat .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(192, 96, 255, 0.3);
+}
+
+/* Стили для ссылок */
+.theme-family-coder-cat a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.theme-family-coder-cat a::after {
+    content: '⚜️';
+    position: absolute;
+    left: -20px;
+    opacity: 0;
+    transition: all var(--transition-fast);
+    color: #000000;
+    font-size: 0.8rem;
+}
+
+.theme-family-coder-cat a:hover {
+    color: var(--accent-secondary);
+    padding-left: 20px;
+    text-shadow: 0 0 8px rgba(192, 96, 255, 0.5);
+}
+
+.theme-family-coder-cat a:hover::after {
+    opacity: 0.7;
+    left: 0;
+}
+
+/* Стили для заголовков */
+.theme-family-coder-cat h1, 
+.theme-family-coder-cat h2, 
+.theme-family-coder-cat h3 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.theme-family-coder-cat h1::after,
+.theme-family-coder-cat h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), #000000, transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-family-coder-cat input,
+.theme-family-coder-cat textarea,
+.theme-family-coder-cat select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.theme-family-coder-cat input:focus,
+.theme-family-coder-cat textarea:focus,
+.theme-family-coder-cat select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 20px rgba(192, 96, 255, 0.4);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-family-coder-cat ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-family-coder-cat ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-family-coder-cat ::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--accent-primary);
+}
+
+.theme-family-coder-cat ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-family-coder-cat ::selection {
+    background: var(--selection-bg);
+    color: #000000;
+}
+
+/* Анимации для загрузки */
+.theme-family-coder-cat .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+    border-right-color: #000000;
+}
+
+/* Градиенты для особых элементов */
+.theme-family-coder-cat .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), #000000, var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-family-coder-cat .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+    filter: drop-shadow(0 0 5px #000000);
+}
+
+.theme-family-coder-cat .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+}
+
+/* Стили для бейджей */
+.theme-family-coder-cat .badge {
+    background: linear-gradient(135deg, var(--badge-bg), #000000);
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--accent-tertiary);
+}
+
+/* Стили для тултипов */
+.theme-family-coder-cat .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid #000000;
+}
+
+/* Стили для модальных окон */
+.theme-family-coder-cat .modal {
+    background: var(--bg-modal);
+    border: 1px solid #000000;
+    box-shadow: 0 10px 30px rgba(192, 96, 255, 0.2);
+}
+
+/* Стили для таблиц */
+.theme-family-coder-cat table {
+    border-collapse: collapse;
+}
+
+.theme-family-coder-cat th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid #000000;
+}
+
+.theme-family-coder-cat td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-family-coder-cat tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-family-coder-cat ul li::before {
+    content: '⚜️';
+    color: #000000;
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+/* Подсветка синтаксиса как в IDE */
+.theme-family-coder-cat .keyword {
+    color: #ff88aa;
+    font-weight: 600;
+}
+
+.theme-family-coder-cat .string {
+    color: #88ffaa;
+}
+
+.theme-family-coder-cat .function {
+    color: #ffaa88;
+}
+
+.theme-family-coder-cat .comment {
+    color: #888888;
+    font-style: italic;
+}
+
+.theme-family-coder-cat .number {
+    color: #88aaff;
+}
+
+/* Стили для прогресс-баров */
+.theme-family-coder-cat .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), #000000);
+}
+
+/* Стили для переключателей */
+.theme-family-coder-cat .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-family-coder-cat input:checked + .switch-slider {
+    background: linear-gradient(90deg, var(--accent-primary), #000000);
+}
+
+/* Стили для радио-кнопок */
+.theme-family-coder-cat .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-coder-cat input:checked + .radio-custom::after {
+    background: #000000;
+}
+
+/* Стили для чекбоксов */
+.theme-family-coder-cat .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-coder-cat input:checked + .checkbox-custom {
+    background: #000000;
+    border-color: var(--accent-primary);
+}
+
+/* Стили для дашборда */
+.theme-family-coder-cat .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.theme-family-coder-cat .stat-card::before {
+    content: '⚜️';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #000000;
+    opacity: 0.2;
+}
+
+.theme-family-coder-cat .stat-value {
+    color: var(--accent-primary);
+}
+
+/* Стили для графика */
+.theme-family-coder-cat .chart-line {
+    stroke: var(--accent-primary);
+}
+
+.theme-family-coder-cat .chart-bar {
+    fill: url(#purpleBlackGradient);
+}
+
+/* Стили для чата */
+.theme-family-coder-cat .message-own {
+    background: linear-gradient(135deg, var(--accent-primary), #000000);
+    color: #ffffff;
+}
+
+.theme-family-coder-cat .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-family-coder-cat .notification {
+    border-left: 4px solid #000000;
+    background: var(--bg-card);
+}
+
+/* Стили для календаря */
+.theme-family-coder-cat .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-coder-cat .calendar-day.has-event {
+    background: #000000;
+    color: var(--text-inverse);
+}

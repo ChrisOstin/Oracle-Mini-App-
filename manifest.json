@@ -1,0 +1,106 @@
+{
+  "name": "MORI Oracle",
+  "short_name": "MORI",
+  "description": "Крипто-приложение для MORI Family с играми, чатами и домом",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ffd700",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshots/home.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Главный экран"
+    },
+    {
+      "src": "assets/screenshots/chat.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Чат"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Портфель",
+      "short_name": "Портфель",
+      "description": "Графики и цена MORI",
+      "url": "/#portfolio",
+      "icons": [{ "src": "assets/icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Чат",
+      "short_name": "Чат",
+      "description": "Общий чат",
+      "url": "/#chat",
+      "icons": [{ "src": "assets/icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Дом",
+      "short_name": "Дом",
+      "description": "Интерактивный дом",
+      "url": "/#house",
+      "icons": [{ "src": "assets/icons/icon-96.png", "sizes": "96x96" }]
+    }
+  ],
+  "categories": ["finance", "social", "games"],
+  "lang": "ru",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "scope": "/",
+  "display_override": ["standalone", "fullscreen"]
+}
