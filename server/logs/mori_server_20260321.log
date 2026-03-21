@@ -169,3 +169,24 @@ ModuleNotFoundError: No module named 'flask_sqlalchemy'
 2026-03-21 14:17:25,410 - mori_server - INFO - 📥 [1448512d289ac164] GET /health | IP: 127.0.0.1
 2026-03-21 14:17:25,413 - mori_server - INFO - 📤 [1448512d289ac164] 200 | 3.37ms
 2026-03-21 14:17:25,414 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:17:25] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:17:55,644 - mori_server - INFO - 📥 [83bc7246bd7a4e10] GET /health | IP: 127.0.0.1
+2026-03-21 14:17:55,644 - mori_server - INFO - 📤 [83bc7246bd7a4e10] 200 | 0.76ms
+2026-03-21 14:17:55,645 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:17:55] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:18:25,964 - mori_server - INFO - 📥 [0f2b302c12bec783] GET /health | IP: 127.0.0.1
+2026-03-21 14:18:25,967 - mori_server - INFO - 📤 [0f2b302c12bec783] 200 | 3.53ms
+2026-03-21 14:18:25,970 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:18:25] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:18:56,253 - mori_server - INFO - 📥 [a44f8c7402d0861f] GET /health | IP: 127.0.0.1
+2026-03-21 14:18:56,254 - mori_server - INFO - 📤 [a44f8c7402d0861f] 200 | 0.62ms
+2026-03-21 14:18:56,254 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:18:56] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:19:27,002 - mori_server - INFO - 📥 [d8f68966ae75ece0] GET /health | IP: 127.0.0.1
+2026-03-21 14:19:27,007 - mori_server - INFO - 📤 [d8f68966ae75ece0] 200 | 5.31ms
+2026-03-21 14:19:27,009 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:19:27] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:19:57,501 - mori_server - INFO - 📥 [037e0aae9a9661fd] GET /health | IP: 127.0.0.1
+2026-03-21 14:19:57,501 - mori_server - INFO - 📤 [037e0aae9a9661fd] 200 | 0.99ms
+2026-03-21 14:19:57,502 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:19:57] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:20:27,810 - mori_server - INFO - 📥 [8759e563080d0022] GET /health | IP: 127.0.0.1
+2026-03-21 14:20:27,811 - mori_server - INFO - 📤 [8759e563080d0022] 200 | 1.91ms
+2026-03-21 14:20:27,812 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:20:27] "GET /health HTTP/1.1" 200 -
+2026-03-21 14:20:58,076 - mori_server - INFO - 📥 [c60704aa1e00df99] GET /health | IP: 127.0.0.1
+2026-03-21 14:20:58,076 - mori_server - INFO - 📤 [c60704aa1e00df99] 200 | 0.72ms
+2026-03-21 14:20:58,077 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 14:20:58] "GET /health HTTP/1.1" 200 -
