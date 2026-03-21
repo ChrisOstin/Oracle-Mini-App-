@@ -3682,3 +3682,432 @@ ModuleNotFoundError: No module named 'flask_sqlalchemy'
 2026-03-21 18:18:16,568 - mori_server - INFO - 📥 [a6248fd2828d1d41] GET /health | IP: 127.0.0.1
 2026-03-21 18:18:16,569 - mori_server - INFO - 📤 [a6248fd2828d1d41] 200 | 0.9ms
 2026-03-21 18:18:16,570 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:18:16] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:18:29,283 - mori_server - INFO - 📥 [517cf5b00844b7e8] GET /health | IP: 127.0.0.1
+2026-03-21 18:18:29,285 - mori_server - INFO - 📤 [517cf5b00844b7e8] 200 | 2.57ms
+2026-03-21 18:18:29,288 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:18:29] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:18:29,694 - mori_server - INFO - 📥 [ca546192484ca410] GET /health | IP: 127.0.0.1
+2026-03-21 18:18:29,695 - mori_server - INFO - 📤 [ca546192484ca410] 200 | 0.78ms
+2026-03-21 18:18:29,696 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:18:29] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:18:46,748 - mori_server - INFO - 📥 [dd854ce244a4acf8] GET /health | IP: 127.0.0.1
+2026-03-21 18:18:46,749 - mori_server - INFO - 📤 [dd854ce244a4acf8] 200 | 0.5ms
+2026-03-21 18:18:46,749 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:18:46] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:18:59,589 - mori_server - INFO - 📥 [87276543fa314a21] GET /health | IP: 127.0.0.1
+2026-03-21 18:18:59,591 - mori_server - INFO - 📤 [87276543fa314a21] 200 | 1.61ms
+2026-03-21 18:18:59,592 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:18:59] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:18:59,956 - mori_server - INFO - 📥 [cbe02a54b37ee154] GET /health | IP: 127.0.0.1
+2026-03-21 18:18:59,957 - mori_server - INFO - 📤 [cbe02a54b37ee154] 200 | 1.42ms
+2026-03-21 18:18:59,959 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:18:59] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:19:16,972 - mori_server - INFO - 📥 [65f706073e012576] GET /health | IP: 127.0.0.1
+2026-03-21 18:19:16,972 - mori_server - INFO - 📤 [65f706073e012576] 200 | 0.56ms
+2026-03-21 18:19:16,973 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:19:16] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:19:29,886 - mori_server - INFO - 📥 [29e9a2a829492709] GET /health | IP: 127.0.0.1
+2026-03-21 18:19:29,888 - mori_server - INFO - 📤 [29e9a2a829492709] 200 | 2.65ms
+2026-03-21 18:19:29,891 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:19:29] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:19:30,295 - mori_server - INFO - 📥 [105eda194f23dc20] GET /health | IP: 127.0.0.1
+2026-03-21 18:19:30,296 - mori_server - INFO - 📤 [105eda194f23dc20] 200 | 1.01ms
+2026-03-21 18:19:30,297 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:19:30] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:19:47,192 - mori_server - INFO - 📥 [d8633fa7dda78d0c] GET /health | IP: 127.0.0.1
+2026-03-21 18:19:47,194 - mori_server - INFO - 📤 [d8633fa7dda78d0c] 200 | 1.75ms
+2026-03-21 18:19:47,196 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:19:47] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:20:00,191 - mori_server - INFO - 📥 [c4aa04e3f7344a15] GET /health | IP: 127.0.0.1
+2026-03-21 18:20:00,192 - mori_server - INFO - 📤 [c4aa04e3f7344a15] 200 | 1.37ms
+2026-03-21 18:20:00,194 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:20:00] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:20:00,580 - mori_server - INFO - 📥 [e1af0f888e12a311] GET /health | IP: 127.0.0.1
+2026-03-21 18:20:00,581 - mori_server - INFO - 📤 [e1af0f888e12a311] 200 | 1.62ms
+2026-03-21 18:20:00,583 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:20:00] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:20:17,492 - mori_server - INFO - 📥 [d3786eaf3413cd11] GET /health | IP: 127.0.0.1
+2026-03-21 18:20:17,494 - mori_server - INFO - 📤 [d3786eaf3413cd11] 200 | 1.49ms
+2026-03-21 18:20:17,496 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:20:17] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:20:30,490 - mori_server - INFO - 📥 [f452ea1d48f4b2df] GET /health | IP: 127.0.0.1
+2026-03-21 18:20:30,490 - mori_server - INFO - 📤 [f452ea1d48f4b2df] 200 | 0.49ms
+2026-03-21 18:20:30,491 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:20:30] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:20:30,896 - mori_server - INFO - 📥 [721696eb6d2b8d9c] GET /health | IP: 127.0.0.1
+2026-03-21 18:20:30,897 - mori_server - INFO - 📤 [721696eb6d2b8d9c] 200 | 1.34ms
+2026-03-21 18:20:30,898 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:20:30] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:20:47,817 - mori_server - INFO - 📥 [3b40ba598f853684] GET /health | IP: 127.0.0.1
+2026-03-21 18:20:47,819 - mori_server - INFO - 📤 [3b40ba598f853684] 200 | 1.47ms
+2026-03-21 18:20:47,820 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:20:47] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:21:00,734 - mori_server - INFO - 📥 [81fe334dcde0b2f1] GET /health | IP: 127.0.0.1
+2026-03-21 18:21:00,736 - mori_server - INFO - 📤 [81fe334dcde0b2f1] 200 | 1.62ms
+2026-03-21 18:21:00,738 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:21:00] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:21:01,183 - mori_server - INFO - 📥 [37c2adc32e740a2d] GET /health | IP: 127.0.0.1
+2026-03-21 18:21:01,184 - mori_server - INFO - 📤 [37c2adc32e740a2d] 200 | 0.76ms
+2026-03-21 18:21:01,185 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:21:01] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:21:18,130 - mori_server - INFO - 📥 [fa34b163c8eed585] GET /health | IP: 127.0.0.1
+2026-03-21 18:21:18,131 - mori_server - INFO - 📤 [fa34b163c8eed585] 200 | 0.94ms
+2026-03-21 18:21:18,132 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:21:18] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:21:30,988 - mori_server - INFO - 📥 [abe92eb323893776] GET /health | IP: 127.0.0.1
+2026-03-21 18:21:30,989 - mori_server - INFO - 📤 [abe92eb323893776] 200 | 1.76ms
+2026-03-21 18:21:30,991 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:21:30] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:21:31,435 - mori_server - INFO - 📥 [468b22847ee57000] GET /health | IP: 127.0.0.1
+2026-03-21 18:21:31,435 - mori_server - INFO - 📤 [468b22847ee57000] 200 | 0.77ms
+2026-03-21 18:21:31,436 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:21:31] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:21:48,405 - mori_server - INFO - 📥 [14fc558598322454] GET /health | IP: 127.0.0.1
+2026-03-21 18:21:48,406 - mori_server - INFO - 📤 [14fc558598322454] 200 | 0.75ms
+2026-03-21 18:21:48,407 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:21:48] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:22:01,254 - mori_server - INFO - 📥 [9aea934157a44ccf] GET /health | IP: 127.0.0.1
+2026-03-21 18:22:01,256 - mori_server - INFO - 📤 [9aea934157a44ccf] 200 | 1.49ms
+2026-03-21 18:22:01,258 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:22:01] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:22:01,710 - mori_server - INFO - 📥 [1b8652eaf10c7ec4] GET /health | IP: 127.0.0.1
+2026-03-21 18:22:01,711 - mori_server - INFO - 📤 [1b8652eaf10c7ec4] 200 | 0.79ms
+2026-03-21 18:22:01,712 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:22:01] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:22:18,671 - mori_server - INFO - 📥 [b996963ab62d126e] GET /health | IP: 127.0.0.1
+2026-03-21 18:22:18,673 - mori_server - INFO - 📤 [b996963ab62d126e] 200 | 1.46ms
+2026-03-21 18:22:18,675 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:22:18] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:22:31,497 - mori_server - INFO - 📥 [dcd0036afbaa84fb] GET /health | IP: 127.0.0.1
+2026-03-21 18:22:31,498 - mori_server - INFO - 📤 [dcd0036afbaa84fb] 200 | 0.73ms
+2026-03-21 18:22:31,498 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:22:31] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:22:31,980 - mori_server - INFO - 📥 [e458689edbe8dea2] GET /health | IP: 127.0.0.1
+2026-03-21 18:22:31,980 - mori_server - INFO - 📤 [e458689edbe8dea2] 200 | 0.67ms
+2026-03-21 18:22:31,982 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:22:31] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:22:48,993 - mori_server - INFO - 📥 [bdef4a305fb34636] GET /health | IP: 127.0.0.1
+2026-03-21 18:22:48,994 - mori_server - INFO - 📤 [bdef4a305fb34636] 200 | 0.83ms
+2026-03-21 18:22:48,995 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:22:48] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:23:01,791 - mori_server - INFO - 📥 [b0ce4a81c70e1596] GET /health | IP: 127.0.0.1
+2026-03-21 18:23:01,792 - mori_server - INFO - 📤 [b0ce4a81c70e1596] 200 | 1.56ms
+2026-03-21 18:23:01,794 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:23:01] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:23:02,235 - mori_server - INFO - 📥 [90a891fa56bd538a] GET /health | IP: 127.0.0.1
+2026-03-21 18:23:02,237 - mori_server - INFO - 📤 [90a891fa56bd538a] 200 | 1.86ms
+2026-03-21 18:23:02,239 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:23:02] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:23:19,290 - mori_server - INFO - 📥 [6df3ad2021f3c504] GET /health | IP: 127.0.0.1
+2026-03-21 18:23:19,292 - mori_server - INFO - 📤 [6df3ad2021f3c504] 200 | 1.82ms
+2026-03-21 18:23:19,294 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:23:19] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:23:32,079 - mori_server - INFO - 📥 [c70cec52d86ccfd0] GET /health | IP: 127.0.0.1
+2026-03-21 18:23:32,080 - mori_server - INFO - 📤 [c70cec52d86ccfd0] 200 | 1.39ms
+2026-03-21 18:23:32,082 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:23:32] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:23:32,556 - mori_server - INFO - 📥 [e0fc0b11bdb24146] GET /health | IP: 127.0.0.1
+2026-03-21 18:23:32,557 - mori_server - INFO - 📤 [e0fc0b11bdb24146] 200 | 1.02ms
+2026-03-21 18:23:32,558 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:23:32] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:23:49,548 - mori_server - INFO - 📥 [74cee3c2397f6947] GET /health | IP: 127.0.0.1
+2026-03-21 18:23:49,549 - mori_server - INFO - 📤 [74cee3c2397f6947] 200 | 0.93ms
+2026-03-21 18:23:49,550 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:23:49] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:24:02,330 - mori_server - INFO - 📥 [8a9fe8c93911cb8d] GET /health | IP: 127.0.0.1
+2026-03-21 18:24:02,331 - mori_server - INFO - 📤 [8a9fe8c93911cb8d] 200 | 1.51ms
+2026-03-21 18:24:02,333 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:24:02] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:24:02,838 - mori_server - INFO - 📥 [8999fcfec9b7a661] GET /health | IP: 127.0.0.1
+2026-03-21 18:24:02,839 - mori_server - INFO - 📤 [8999fcfec9b7a661] 200 | 0.78ms
+2026-03-21 18:24:02,840 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:24:02] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:24:19,834 - mori_server - INFO - 📥 [e779d648f8e49343] GET /health | IP: 127.0.0.1
+2026-03-21 18:24:19,835 - mori_server - INFO - 📤 [e779d648f8e49343] 200 | 1.69ms
+2026-03-21 18:24:19,838 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:24:19] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:24:32,582 - mori_server - INFO - 📥 [f682eb39cdbb3c23] GET /health | IP: 127.0.0.1
+2026-03-21 18:24:32,583 - mori_server - INFO - 📤 [f682eb39cdbb3c23] 200 | 1.6ms
+2026-03-21 18:24:32,586 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:24:32] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:24:33,119 - mori_server - INFO - 📥 [63a85d1490ac8c24] GET /health | IP: 127.0.0.1
+2026-03-21 18:24:33,120 - mori_server - INFO - 📤 [63a85d1490ac8c24] 200 | 0.85ms
+2026-03-21 18:24:33,121 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:24:33] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:24:50,067 - mori_server - INFO - 📥 [e5119c705cf68589] GET /health | IP: 127.0.0.1
+2026-03-21 18:24:50,068 - mori_server - INFO - 📤 [e5119c705cf68589] 200 | 1.53ms
+2026-03-21 18:24:50,070 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:24:50] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:25:02,818 - mori_server - INFO - 📥 [fe6dffcce4d5fe1b] GET /health | IP: 127.0.0.1
+2026-03-21 18:25:02,819 - mori_server - INFO - 📤 [fe6dffcce4d5fe1b] 200 | 0.66ms
+2026-03-21 18:25:02,820 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:25:02] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:25:03,395 - mori_server - INFO - 📥 [383f7af9c3116c4f] GET /health | IP: 127.0.0.1
+2026-03-21 18:25:03,396 - mori_server - INFO - 📤 [383f7af9c3116c4f] 200 | 0.99ms
+2026-03-21 18:25:03,397 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:25:03] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:25:20,375 - mori_server - INFO - 📥 [386a4549b4f428ac] GET /health | IP: 127.0.0.1
+2026-03-21 18:25:20,376 - mori_server - INFO - 📤 [386a4549b4f428ac] 200 | 1.24ms
+2026-03-21 18:25:20,378 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:25:20] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:25:33,049 - mori_server - INFO - 📥 [fe35a6d01e970d7d] GET /health | IP: 127.0.0.1
+2026-03-21 18:25:33,050 - mori_server - INFO - 📤 [fe35a6d01e970d7d] 200 | 0.83ms
+2026-03-21 18:25:33,051 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:25:33] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:25:33,641 - mori_server - INFO - 📥 [676e5896b0431330] GET /health | IP: 127.0.0.1
+2026-03-21 18:25:33,641 - mori_server - INFO - 📤 [676e5896b0431330] 200 | 0.8ms
+2026-03-21 18:25:33,642 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:25:33] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:25:50,629 - mori_server - INFO - 📥 [007271706ecfdddd] GET /health | IP: 127.0.0.1
+2026-03-21 18:25:50,630 - mori_server - INFO - 📤 [007271706ecfdddd] 200 | 0.78ms
+2026-03-21 18:25:50,631 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:25:50] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:26:03,283 - mori_server - INFO - 📥 [468159cf10d6ecd5] GET /health | IP: 127.0.0.1
+2026-03-21 18:26:03,284 - mori_server - INFO - 📤 [468159cf10d6ecd5] 200 | 1.76ms
+2026-03-21 18:26:03,286 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:26:03] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:26:03,921 - mori_server - INFO - 📥 [4916541a5a767f30] GET /health | IP: 127.0.0.1
+2026-03-21 18:26:03,922 - mori_server - INFO - 📤 [4916541a5a767f30] 200 | 0.81ms
+2026-03-21 18:26:03,923 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:26:03] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:26:20,905 - mori_server - INFO - 📥 [883caee6d62c67ff] GET /health | IP: 127.0.0.1
+2026-03-21 18:26:20,906 - mori_server - INFO - 📤 [883caee6d62c67ff] 200 | 0.73ms
+2026-03-21 18:26:20,907 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:26:20] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:26:33,573 - mori_server - INFO - 📥 [a286dbd34e1ffc92] GET /health | IP: 127.0.0.1
+2026-03-21 18:26:33,574 - mori_server - INFO - 📤 [a286dbd34e1ffc92] 200 | 0.66ms
+2026-03-21 18:26:33,574 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:26:33] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:26:34,206 - mori_server - INFO - 📥 [eb360cabef2f8a5a] GET /health | IP: 127.0.0.1
+2026-03-21 18:26:34,208 - mori_server - INFO - 📤 [eb360cabef2f8a5a] 200 | 1.35ms
+2026-03-21 18:26:34,209 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:26:34] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:26:51,181 - mori_server - INFO - 📥 [ebba19c4fb10b6bf] GET /health | IP: 127.0.0.1
+2026-03-21 18:26:51,182 - mori_server - INFO - 📤 [ebba19c4fb10b6bf] 200 | 1.07ms
+2026-03-21 18:26:51,183 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:26:51] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:27:03,880 - mori_server - INFO - 📥 [e6a1bdbbeeb2b289] GET /health | IP: 127.0.0.1
+2026-03-21 18:27:03,881 - mori_server - INFO - 📤 [e6a1bdbbeeb2b289] 200 | 1.32ms
+2026-03-21 18:27:03,882 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:27:03] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:27:04,456 - mori_server - INFO - 📥 [288948f23fe63025] GET /health | IP: 127.0.0.1
+2026-03-21 18:27:04,456 - mori_server - INFO - 📤 [288948f23fe63025] 200 | 0.62ms
+2026-03-21 18:27:04,457 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:27:04] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:27:21,421 - mori_server - INFO - 📥 [f6e79afd8d9bcc1c] GET /health | IP: 127.0.0.1
+2026-03-21 18:27:21,423 - mori_server - INFO - 📤 [f6e79afd8d9bcc1c] 200 | 1.98ms
+2026-03-21 18:27:21,424 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:27:21] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:27:34,146 - mori_server - INFO - 📥 [e692b0a7c369ef09] GET /health | IP: 127.0.0.1
+2026-03-21 18:27:34,146 - mori_server - INFO - 📤 [e692b0a7c369ef09] 200 | 0.89ms
+2026-03-21 18:27:34,147 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:27:34] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:27:34,648 - mori_server - INFO - 📥 [fa1a05be403c4b03] GET /health | IP: 127.0.0.1
+2026-03-21 18:27:34,650 - mori_server - INFO - 📤 [fa1a05be403c4b03] 200 | 2.01ms
+2026-03-21 18:27:34,652 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:27:34] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:27:51,654 - mori_server - INFO - 📥 [d64e0a7a05bcd3b4] GET /health | IP: 127.0.0.1
+2026-03-21 18:27:51,656 - mori_server - INFO - 📤 [d64e0a7a05bcd3b4] 200 | 1.57ms
+2026-03-21 18:27:51,657 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:27:51] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:28:04,358 - mori_server - INFO - 📥 [22188d851dbad765] GET /health | IP: 127.0.0.1
+2026-03-21 18:28:04,360 - mori_server - INFO - 📤 [22188d851dbad765] 200 | 1.68ms
+2026-03-21 18:28:04,362 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:28:04] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:28:04,907 - mori_server - INFO - 📥 [c917227fd7af352f] GET /health | IP: 127.0.0.1
+2026-03-21 18:28:04,908 - mori_server - INFO - 📤 [c917227fd7af352f] 200 | 0.8ms
+2026-03-21 18:28:04,909 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:28:04] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:28:21,924 - mori_server - INFO - 📥 [a15c85b9e2da6ce4] GET /health | IP: 127.0.0.1
+2026-03-21 18:28:21,926 - mori_server - INFO - 📤 [a15c85b9e2da6ce4] 200 | 1.95ms
+2026-03-21 18:28:21,928 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:28:21] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:28:34,651 - mori_server - INFO - 📥 [be3f2332f20e1c9c] GET /health | IP: 127.0.0.1
+2026-03-21 18:28:34,652 - mori_server - INFO - 📤 [be3f2332f20e1c9c] 200 | 1.47ms
+2026-03-21 18:28:34,654 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:28:34] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:28:35,139 - mori_server - INFO - 📥 [6631d98d3d2da2bc] GET /health | IP: 127.0.0.1
+2026-03-21 18:28:35,140 - mori_server - INFO - 📤 [6631d98d3d2da2bc] 200 | 1.5ms
+2026-03-21 18:28:35,142 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:28:35] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:28:52,234 - mori_server - INFO - 📥 [a7e425915b8c67e1] GET /health | IP: 127.0.0.1
+2026-03-21 18:28:52,235 - mori_server - INFO - 📤 [a7e425915b8c67e1] 200 | 0.77ms
+2026-03-21 18:28:52,236 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:28:52] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:29:04,899 - mori_server - INFO - 📥 [f10c16c71847cd58] GET /health | IP: 127.0.0.1
+2026-03-21 18:29:04,899 - mori_server - INFO - 📤 [f10c16c71847cd58] 200 | 0.67ms
+2026-03-21 18:29:04,900 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:29:04] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:29:05,398 - mori_server - INFO - 📥 [b484a575f2725b7e] GET /health | IP: 127.0.0.1
+2026-03-21 18:29:05,399 - mori_server - INFO - 📤 [b484a575f2725b7e] 200 | 0.8ms
+2026-03-21 18:29:05,400 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:29:05] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:29:22,537 - mori_server - INFO - 📥 [d3edbbc918ef5f23] GET /health | IP: 127.0.0.1
+2026-03-21 18:29:22,539 - mori_server - INFO - 📤 [d3edbbc918ef5f23] 200 | 2.13ms
+2026-03-21 18:29:22,540 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:29:22] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:29:35,129 - mori_server - INFO - 📥 [a8f08a89cd8e1121] GET /health | IP: 127.0.0.1
+2026-03-21 18:29:35,130 - mori_server - INFO - 📤 [a8f08a89cd8e1121] 200 | 0.86ms
+2026-03-21 18:29:35,131 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:29:35] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:29:35,745 - mori_server - INFO - 📥 [6c5ada7e87513940] GET /health | IP: 127.0.0.1
+2026-03-21 18:29:35,746 - mori_server - INFO - 📤 [6c5ada7e87513940] 200 | 0.73ms
+2026-03-21 18:29:35,746 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:29:35] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:29:52,843 - mori_server - INFO - 📥 [711b4b89c56bf7b8] GET /health | IP: 127.0.0.1
+2026-03-21 18:29:52,845 - mori_server - INFO - 📤 [711b4b89c56bf7b8] 200 | 1.92ms
+2026-03-21 18:29:52,846 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:29:52] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:30:05,428 - mori_server - INFO - 📥 [161c137e9522c958] GET /health | IP: 127.0.0.1
+2026-03-21 18:30:05,429 - mori_server - INFO - 📤 [161c137e9522c958] 200 | 1.18ms
+2026-03-21 18:30:05,430 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:30:05] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:30:05,988 - mori_server - INFO - 📥 [d5e08b4b4ea0cc83] GET /health | IP: 127.0.0.1
+2026-03-21 18:30:05,989 - mori_server - INFO - 📤 [d5e08b4b4ea0cc83] 200 | 0.73ms
+2026-03-21 18:30:05,990 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:30:05] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:30:23,166 - mori_server - INFO - 📥 [7bd86c9b6a02f6fb] GET /health | IP: 127.0.0.1
+2026-03-21 18:30:23,172 - mori_server - INFO - 📤 [7bd86c9b6a02f6fb] 200 | 6.97ms
+2026-03-21 18:30:23,174 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:30:23] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:30:35,711 - mori_server - INFO - 📥 [5bbbd5471ac0ff77] GET /health | IP: 127.0.0.1
+2026-03-21 18:30:35,712 - mori_server - INFO - 📤 [5bbbd5471ac0ff77] 200 | 0.92ms
+2026-03-21 18:30:35,713 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:30:35] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:30:36,414 - mori_server - INFO - 📥 [488e207f8c1cca4b] GET /health | IP: 127.0.0.1
+2026-03-21 18:30:36,415 - mori_server - INFO - 📤 [488e207f8c1cca4b] 200 | 1.78ms
+2026-03-21 18:30:36,419 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:30:36] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:30:53,418 - mori_server - INFO - 📥 [0af4829d67ff52c9] GET /health | IP: 127.0.0.1
+2026-03-21 18:30:53,418 - mori_server - INFO - 📤 [0af4829d67ff52c9] 200 | 0.65ms
+2026-03-21 18:30:53,419 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:30:53] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:31:05,943 - mori_server - INFO - 📥 [57fcf37369ed8e83] GET /health | IP: 127.0.0.1
+2026-03-21 18:31:05,945 - mori_server - INFO - 📤 [57fcf37369ed8e83] 200 | 1.97ms
+2026-03-21 18:31:05,947 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:31:05] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:31:06,726 - mori_server - INFO - 📥 [a187f9687b03af14] GET /health | IP: 127.0.0.1
+2026-03-21 18:31:06,728 - mori_server - INFO - 📤 [a187f9687b03af14] 200 | 1.91ms
+2026-03-21 18:31:06,730 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:31:06] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:31:23,645 - mori_server - INFO - 📥 [8f8274fb68aa813c] GET /health | IP: 127.0.0.1
+2026-03-21 18:31:23,646 - mori_server - INFO - 📤 [8f8274fb68aa813c] 200 | 1.03ms
+2026-03-21 18:31:23,648 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:31:23] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:31:36,280 - mori_server - INFO - 📥 [bac2df06d9c5fe97] GET /health | IP: 127.0.0.1
+2026-03-21 18:31:36,283 - mori_server - INFO - 📤 [bac2df06d9c5fe97] 200 | 3.57ms
+2026-03-21 18:31:36,285 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:31:36] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:31:37,021 - mori_server - INFO - 📥 [dcf66a1848be9c6b] GET /health | IP: 127.0.0.1
+2026-03-21 18:31:37,021 - mori_server - INFO - 📤 [dcf66a1848be9c6b] 200 | 0.53ms
+2026-03-21 18:31:37,022 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:31:37] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:31:53,952 - mori_server - INFO - 📥 [5b0beb63fdc07dfa] GET /health | IP: 127.0.0.1
+2026-03-21 18:31:53,952 - mori_server - INFO - 📤 [5b0beb63fdc07dfa] 200 | 0.57ms
+2026-03-21 18:31:53,955 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:31:53] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:32:06,791 - mori_server - INFO - 📥 [cd688153e153bab6] GET /health | IP: 127.0.0.1
+2026-03-21 18:32:06,792 - mori_server - INFO - 📤 [cd688153e153bab6] 200 | 1.79ms
+2026-03-21 18:32:06,795 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:32:06] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:32:07,318 - mori_server - INFO - 📥 [f744a536c78689ad] GET /health | IP: 127.0.0.1
+2026-03-21 18:32:07,318 - mori_server - INFO - 📤 [f744a536c78689ad] 200 | 0.68ms
+2026-03-21 18:32:07,319 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:32:07] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:32:24,187 - mori_server - INFO - 📥 [f0ef1c107eb9bfc0] GET /health | IP: 127.0.0.1
+2026-03-21 18:32:24,189 - mori_server - INFO - 📤 [f0ef1c107eb9bfc0] 200 | 2.13ms
+2026-03-21 18:32:24,192 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:32:24] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:32:37,102 - mori_server - INFO - 📥 [42dfd57ab29f4b23] GET /health | IP: 127.0.0.1
+2026-03-21 18:32:37,104 - mori_server - INFO - 📤 [42dfd57ab29f4b23] 200 | 2.16ms
+2026-03-21 18:32:37,106 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:32:37] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:32:37,571 - mori_server - INFO - 📥 [67289d44c616c6e8] GET /health | IP: 127.0.0.1
+2026-03-21 18:32:37,573 - mori_server - INFO - 📤 [67289d44c616c6e8] 200 | 1.41ms
+2026-03-21 18:32:37,574 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:32:37] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:32:54,466 - mori_server - INFO - 📥 [900ed7798ba8d17d] GET /health | IP: 127.0.0.1
+2026-03-21 18:32:54,466 - mori_server - INFO - 📤 [900ed7798ba8d17d] 200 | 0.61ms
+2026-03-21 18:32:54,468 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:32:54] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:33:07,396 - mori_server - INFO - 📥 [99c059b73af47512] GET /health | IP: 127.0.0.1
+2026-03-21 18:33:07,398 - mori_server - INFO - 📤 [99c059b73af47512] 200 | 1.72ms
+2026-03-21 18:33:07,399 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:33:07] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:33:07,867 - mori_server - INFO - 📥 [8b1811efaae7d3c0] GET /health | IP: 127.0.0.1
+2026-03-21 18:33:07,869 - mori_server - INFO - 📤 [8b1811efaae7d3c0] 200 | 1.37ms
+2026-03-21 18:33:07,870 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:33:07] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:33:24,669 - mori_server - INFO - 📥 [a37b05587d9fd5e4] GET /health | IP: 127.0.0.1
+2026-03-21 18:33:24,670 - mori_server - INFO - 📤 [a37b05587d9fd5e4] 200 | 0.75ms
+2026-03-21 18:33:24,671 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:33:24] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:33:37,713 - mori_server - INFO - 📥 [8e996e1fb027ff72] GET /health | IP: 127.0.0.1
+2026-03-21 18:33:37,714 - mori_server - INFO - 📤 [8e996e1fb027ff72] 200 | 1.32ms
+2026-03-21 18:33:37,715 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:33:37] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:33:38,124 - mori_server - INFO - 📥 [cbd4680e754eca34] GET /health | IP: 127.0.0.1
+2026-03-21 18:33:38,126 - mori_server - INFO - 📤 [cbd4680e754eca34] 200 | 1.7ms
+2026-03-21 18:33:38,128 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:33:38] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:33:54,913 - mori_server - INFO - 📥 [4ec59e4f4d3f6326] GET /health | IP: 127.0.0.1
+2026-03-21 18:33:54,914 - mori_server - INFO - 📤 [4ec59e4f4d3f6326] 200 | 1.29ms
+2026-03-21 18:33:54,916 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:33:54] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:34:07,915 - mori_server - INFO - 📥 [c191729d3e944379] GET /health | IP: 127.0.0.1
+2026-03-21 18:34:07,917 - mori_server - INFO - 📤 [c191729d3e944379] 200 | 1.83ms
+2026-03-21 18:34:07,919 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:34:07] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:34:08,382 - mori_server - INFO - 📥 [9e1c6ada1919e4c0] GET /health | IP: 127.0.0.1
+2026-03-21 18:34:08,384 - mori_server - INFO - 📤 [9e1c6ada1919e4c0] 200 | 1.6ms
+2026-03-21 18:34:08,386 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:34:08] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:34:25,181 - mori_server - INFO - 📥 [c6edb4687e019a93] GET /health | IP: 127.0.0.1
+2026-03-21 18:34:25,183 - mori_server - INFO - 📤 [c6edb4687e019a93] 200 | 1.64ms
+2026-03-21 18:34:25,185 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:34:25] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:34:38,150 - mori_server - INFO - 📥 [cc3cae16023362b5] GET /health | IP: 127.0.0.1
+2026-03-21 18:34:38,151 - mori_server - INFO - 📤 [cc3cae16023362b5] 200 | 0.85ms
+2026-03-21 18:34:38,152 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:34:38] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:34:38,655 - mori_server - INFO - 📥 [617d233966d0151b] GET /health | IP: 127.0.0.1
+2026-03-21 18:34:38,657 - mori_server - INFO - 📤 [617d233966d0151b] 200 | 1.81ms
+2026-03-21 18:34:38,659 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:34:38] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:34:55,475 - mori_server - INFO - 📥 [5cba10630ecde4f8] GET /health | IP: 127.0.0.1
+2026-03-21 18:34:55,475 - mori_server - INFO - 📤 [5cba10630ecde4f8] 200 | 0.85ms
+2026-03-21 18:34:55,476 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:34:55] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:35:08,405 - mori_server - INFO - 📥 [f0f65a0846bbe16c] GET /health | IP: 127.0.0.1
+2026-03-21 18:35:08,406 - mori_server - INFO - 📤 [f0f65a0846bbe16c] 200 | 1.06ms
+2026-03-21 18:35:08,408 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:35:08] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:35:08,933 - mori_server - INFO - 📥 [55876ea03aff80e7] GET /health | IP: 127.0.0.1
+2026-03-21 18:35:08,934 - mori_server - INFO - 📤 [55876ea03aff80e7] 200 | 1.63ms
+2026-03-21 18:35:08,935 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:35:08] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:35:25,809 - mori_server - INFO - 📥 [66d25258fdb6b36f] GET /health | IP: 127.0.0.1
+2026-03-21 18:35:25,810 - mori_server - INFO - 📤 [66d25258fdb6b36f] 200 | 1.61ms
+2026-03-21 18:35:25,812 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:35:25] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:35:38,625 - mori_server - INFO - 📥 [baf3a21d3b730751] GET /health | IP: 127.0.0.1
+2026-03-21 18:35:38,626 - mori_server - INFO - 📤 [baf3a21d3b730751] 200 | 1.52ms
+2026-03-21 18:35:38,628 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:35:38] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:35:39,142 - mori_server - INFO - 📥 [29ca2883f090da8c] GET /health | IP: 127.0.0.1
+2026-03-21 18:35:39,143 - mori_server - INFO - 📤 [29ca2883f090da8c] 200 | 1.34ms
+2026-03-21 18:35:39,145 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:35:39] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:35:56,051 - mori_server - INFO - 📥 [8363ed5112784165] GET /health | IP: 127.0.0.1
+2026-03-21 18:35:56,051 - mori_server - INFO - 📤 [8363ed5112784165] 200 | 0.53ms
+2026-03-21 18:35:56,052 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:35:56] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:36:08,858 - mori_server - INFO - 📥 [f652f664e06790ca] GET /health | IP: 127.0.0.1
+2026-03-21 18:36:08,863 - mori_server - INFO - 📤 [f652f664e06790ca] 200 | 5.77ms
+2026-03-21 18:36:08,865 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:36:08] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:36:09,398 - mori_server - INFO - 📥 [d7f3c2f60216065e] GET /health | IP: 127.0.0.1
+2026-03-21 18:36:09,399 - mori_server - INFO - 📤 [d7f3c2f60216065e] 200 | 1.46ms
+2026-03-21 18:36:09,401 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:36:09] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:36:26,317 - mori_server - INFO - 📥 [8a8966e276738e32] GET /health | IP: 127.0.0.1
+2026-03-21 18:36:26,319 - mori_server - INFO - 📤 [8a8966e276738e32] 200 | 1.99ms
+2026-03-21 18:36:26,321 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:36:26] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:36:39,117 - mori_server - INFO - 📥 [caa2a8c5b64609e2] GET /health | IP: 127.0.0.1
+2026-03-21 18:36:39,118 - mori_server - INFO - 📤 [caa2a8c5b64609e2] 200 | 0.98ms
+2026-03-21 18:36:39,119 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:36:39] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:36:39,668 - mori_server - INFO - 📥 [39a2825307466f0e] GET /health | IP: 127.0.0.1
+2026-03-21 18:36:39,669 - mori_server - INFO - 📤 [39a2825307466f0e] 200 | 0.93ms
+2026-03-21 18:36:39,670 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:36:39] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:36:56,592 - mori_server - INFO - 📥 [a5938ec0a97eddd6] GET /health | IP: 127.0.0.1
+2026-03-21 18:36:56,594 - mori_server - INFO - 📤 [a5938ec0a97eddd6] 200 | 1.65ms
+2026-03-21 18:36:56,596 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:36:56] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:37:09,335 - mori_server - INFO - 📥 [913a2ab6e0571f03] GET /health | IP: 127.0.0.1
+2026-03-21 18:37:09,336 - mori_server - INFO - 📤 [913a2ab6e0571f03] 200 | 0.79ms
+2026-03-21 18:37:09,337 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:37:09] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:37:09,919 - mori_server - INFO - 📥 [5e36dbd73f9a986a] GET /health | IP: 127.0.0.1
+2026-03-21 18:37:09,921 - mori_server - INFO - 📤 [5e36dbd73f9a986a] 200 | 1.21ms
+2026-03-21 18:37:09,923 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:37:09] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:37:26,852 - mori_server - INFO - 📥 [b2d7af4fd08f30ff] GET /health | IP: 127.0.0.1
+2026-03-21 18:37:26,854 - mori_server - INFO - 📤 [b2d7af4fd08f30ff] 200 | 1.25ms
+2026-03-21 18:37:26,855 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:37:26] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:37:39,579 - mori_server - INFO - 📥 [9f998a6ea0f3d6da] GET /health | IP: 127.0.0.1
+2026-03-21 18:37:39,580 - mori_server - INFO - 📤 [9f998a6ea0f3d6da] 200 | 1.46ms
+2026-03-21 18:37:39,582 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:37:39] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:37:40,139 - mori_server - INFO - 📥 [226732c9b2800465] GET /health | IP: 127.0.0.1
+2026-03-21 18:37:40,140 - mori_server - INFO - 📤 [226732c9b2800465] 200 | 1.02ms
+2026-03-21 18:37:40,140 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:37:40] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:37:57,131 - mori_server - INFO - 📥 [ad15fff8a00d27e2] GET /health | IP: 127.0.0.1
+2026-03-21 18:37:57,132 - mori_server - INFO - 📤 [ad15fff8a00d27e2] 200 | 1.34ms
+2026-03-21 18:37:57,134 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:37:57] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:38:09,807 - mori_server - INFO - 📥 [d6eb1aa2e5a398aa] GET /health | IP: 127.0.0.1
+2026-03-21 18:38:09,807 - mori_server - INFO - 📤 [d6eb1aa2e5a398aa] 200 | 0.73ms
+2026-03-21 18:38:09,808 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:38:09] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:38:10,378 - mori_server - INFO - 📥 [07053bd531c59ab4] GET /health | IP: 127.0.0.1
+2026-03-21 18:38:10,380 - mori_server - INFO - 📤 [07053bd531c59ab4] 200 | 1.43ms
+2026-03-21 18:38:10,380 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:38:10] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:38:27,326 - mori_server - INFO - 📥 [1254d2f95b303c14] GET /health | IP: 127.0.0.1
+2026-03-21 18:38:27,326 - mori_server - INFO - 📤 [1254d2f95b303c14] 200 | 0.52ms
+2026-03-21 18:38:27,327 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:38:27] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:38:40,023 - mori_server - INFO - 📥 [1a097001e452e4c9] GET /health | IP: 127.0.0.1
+2026-03-21 18:38:40,026 - mori_server - INFO - 📤 [1a097001e452e4c9] 200 | 2.31ms
+2026-03-21 18:38:40,028 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:38:40] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:38:40,634 - mori_server - INFO - 📥 [59044df38e2cbf32] GET /health | IP: 127.0.0.1
+2026-03-21 18:38:40,636 - mori_server - INFO - 📤 [59044df38e2cbf32] 200 | 1.69ms
+2026-03-21 18:38:40,637 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:38:40] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:38:57,496 - mori_server - INFO - 📥 [89d7a15e6280c1ec] GET /health | IP: 127.0.0.1
+2026-03-21 18:38:57,498 - mori_server - INFO - 📤 [89d7a15e6280c1ec] 200 | 1.53ms
+2026-03-21 18:38:57,499 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:38:57] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:39:10,351 - mori_server - INFO - 📥 [b2c9e039deb3e558] GET /health | IP: 127.0.0.1
+2026-03-21 18:39:10,353 - mori_server - INFO - 📤 [b2c9e039deb3e558] 200 | 1.84ms
+2026-03-21 18:39:10,355 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:39:10] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:39:10,935 - mori_server - INFO - 📥 [7b51a8b63290a66f] GET /health | IP: 127.0.0.1
+2026-03-21 18:39:10,936 - mori_server - INFO - 📤 [7b51a8b63290a66f] 200 | 1.98ms
+2026-03-21 18:39:10,939 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:39:10] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:39:27,789 - mori_server - INFO - 📥 [805bbc2a46c24977] GET /health | IP: 127.0.0.1
+2026-03-21 18:39:27,790 - mori_server - INFO - 📤 [805bbc2a46c24977] 200 | 1.01ms
+2026-03-21 18:39:27,791 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:39:27] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:39:40,632 - mori_server - INFO - 📥 [4db1aae620fbad2b] GET /health | IP: 127.0.0.1
+2026-03-21 18:39:40,633 - mori_server - INFO - 📤 [4db1aae620fbad2b] 200 | 1.4ms
+2026-03-21 18:39:40,635 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:39:40] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:39:41,218 - mori_server - INFO - 📥 [c6d6144d67b8d716] GET /health | IP: 127.0.0.1
+2026-03-21 18:39:41,219 - mori_server - INFO - 📤 [c6d6144d67b8d716] 200 | 1.04ms
+2026-03-21 18:39:41,220 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:39:41] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:39:58,088 - mori_server - INFO - 📥 [a6fef274f8e31d34] GET /health | IP: 127.0.0.1
+2026-03-21 18:39:58,089 - mori_server - INFO - 📤 [a6fef274f8e31d34] 200 | 0.76ms
+2026-03-21 18:39:58,090 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:39:58] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:40:10,949 - mori_server - INFO - 📥 [038a9473f27bfdda] GET /health | IP: 127.0.0.1
+2026-03-21 18:40:10,951 - mori_server - INFO - 📤 [038a9473f27bfdda] 200 | 1.63ms
+2026-03-21 18:40:10,951 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:40:10] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:40:11,465 - mori_server - INFO - 📥 [d87d13584b85885c] GET /health | IP: 127.0.0.1
+2026-03-21 18:40:11,466 - mori_server - INFO - 📤 [d87d13584b85885c] 200 | 0.59ms
+2026-03-21 18:40:11,467 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:40:11] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:40:28,386 - mori_server - INFO - 📥 [8363f7665664e003] GET /health | IP: 127.0.0.1
+2026-03-21 18:40:28,387 - mori_server - INFO - 📤 [8363f7665664e003] 200 | 0.88ms
+2026-03-21 18:40:28,387 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:40:28] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:40:41,331 - mori_server - INFO - 📥 [7af9a5ae1eae43b4] GET /health | IP: 127.0.0.1
+2026-03-21 18:40:41,332 - mori_server - INFO - 📤 [7af9a5ae1eae43b4] 200 | 1.08ms
+2026-03-21 18:40:41,333 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:40:41] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:40:41,746 - mori_server - INFO - 📥 [1091b323f3871bee] GET /health | IP: 127.0.0.1
+2026-03-21 18:40:41,748 - mori_server - INFO - 📤 [1091b323f3871bee] 200 | 1.79ms
+2026-03-21 18:40:41,750 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:40:41] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:40:58,665 - mori_server - INFO - 📥 [1dbbbba66d5e45f1] GET /health | IP: 127.0.0.1
+2026-03-21 18:40:58,666 - mori_server - INFO - 📤 [1dbbbba66d5e45f1] 200 | 0.87ms
+2026-03-21 18:40:58,667 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:40:58] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:41:11,589 - mori_server - INFO - 📥 [9a3ad972f53746b0] GET /health | IP: 127.0.0.1
+2026-03-21 18:41:11,590 - mori_server - INFO - 📤 [9a3ad972f53746b0] 200 | 0.72ms
+2026-03-21 18:41:11,591 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:41:11] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:41:12,113 - mori_server - INFO - 📥 [9800a5ee0d417183] GET /health | IP: 127.0.0.1
+2026-03-21 18:41:12,113 - mori_server - INFO - 📤 [9800a5ee0d417183] 200 | 0.62ms
+2026-03-21 18:41:12,114 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:41:12] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:41:28,967 - mori_server - INFO - 📥 [f08f3b7311f761da] GET /health | IP: 127.0.0.1
+2026-03-21 18:41:28,967 - mori_server - INFO - 📤 [f08f3b7311f761da] 200 | 0.64ms
+2026-03-21 18:41:28,968 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:41:28] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:41:41,861 - mori_server - INFO - 📥 [8ee88b105c96a7bb] GET /health | IP: 127.0.0.1
+2026-03-21 18:41:41,862 - mori_server - INFO - 📤 [8ee88b105c96a7bb] 200 | 0.67ms
+2026-03-21 18:41:41,862 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:41:41] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:41:42,393 - mori_server - INFO - 📥 [b16632e2c53ffeac] GET /health | IP: 127.0.0.1
+2026-03-21 18:41:42,393 - mori_server - INFO - 📤 [b16632e2c53ffeac] 200 | 0.88ms
+2026-03-21 18:41:42,394 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:41:42] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:41:59,263 - mori_server - INFO - 📥 [aed7ea9722268241] GET /health | IP: 127.0.0.1
+2026-03-21 18:41:59,265 - mori_server - INFO - 📤 [aed7ea9722268241] 200 | 1.91ms
+2026-03-21 18:41:59,266 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:41:59] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:42:12,083 - mori_server - INFO - 📥 [c4652a9a19848c24] GET /health | IP: 127.0.0.1
+2026-03-21 18:42:12,083 - mori_server - INFO - 📤 [c4652a9a19848c24] 200 | 0.69ms
+2026-03-21 18:42:12,084 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:42:12] "GET /health HTTP/1.1" 200 -
+2026-03-21 18:42:12,649 - mori_server - INFO - 📥 [fc5bcb7a5d88d5d3] GET /health | IP: 127.0.0.1
+2026-03-21 18:42:12,651 - mori_server - INFO - 📤 [fc5bcb7a5d88d5d3] 200 | 2.0ms
+2026-03-21 18:42:12,653 - werkzeug - INFO - 127.0.0.1 - - [21/Mar/2026 18:42:12] "GET /health HTTP/1.1" 200 -
