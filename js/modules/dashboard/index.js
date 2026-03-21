@@ -1,6 +1,6 @@
 const MORI_DASHBOARD = {
     init: function() {
-        console.log('Dashboard loaded');
+        console.log('Dashboard init called');
         const content = document.getElementById('main-content');
         if (content) {
             content.innerHTML = `
@@ -9,8 +9,18 @@ const MORI_DASHBOARD = {
                     <p>Вы успешно вошли в систему!</p>
                 </div>
             `;
+            console.log('Dashboard rendered');
+        } else {
+            console.log('main-content not found');
         }
     }
 };
 
 window.MORI_DASHBOARD = MORI_DASHBOARD;
+
+// Автоинициализация после загрузки модуля
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => MORI_DASHBOARD.init());
+} else {
+    MORI_DASHBOARD.init();
+}
