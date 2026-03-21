@@ -294,7 +294,7 @@ const MORI_APP = {
 
     initModules: async function() {
         console.log('🚀 Параллельная загрузка модулей...');
-        const modules = ['portfolio', 'calculator', 'library', 'ai-chat', 'profile', 'tasks', 'chat', 'house', 'family', 'demigurge', 'music', 'voice', 'all-apps'];
+        const modules = ['portfolio', 'calculator', 'library', 'ai-chat', 'profile', 'tasks', 'chat', 'house', 'family', 'demigurge', 'music', 'voice', 'all-apps', 'dashboard'];
         
         const results = await Promise.all(modules.map(m => this.loadModule(m)));
         const loaded = results.filter(Boolean);
