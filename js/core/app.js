@@ -439,15 +439,15 @@ const MORI_APP = {
             if (window.MORI_ROUTER) MORI_ROUTER.navigate(lastScreen);
         }
 
-        // Инициализация дашборда после перехода
-        if (lastScreen === 'dashboard') {
-            setTimeout(() => {
-                if (window.MORI_DASHBOARD && typeof window.MORI_DASHBOARD.init === 'function') {
-                    window.MORI_DASHBOARD.init();
-                }
-            }, 100);
-        }
-        
+            // Инициализация дашборда после перехода
+            if (lastScreen === 'dashboard') {
+                setTimeout(() => {
+                    if (window.MORI_DASHBOARD && typeof window.MORI_DASHBOARD.init === 'function') {
+                        window.MORI_DASHBOARD.init();
+                    }
+                }, 100);
+            }
+        } 
         this.runHooks('afterStart');
         this.trackEvent('app_start', { level: this.accessLevel });
 
