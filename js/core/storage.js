@@ -875,24 +875,26 @@ logError: function(source, message) {
     async queryDB(storeName, indexName, value) {
     return this.measurePerformance(async () => {
         await this.initDB();
-        
+
         return new Promise((resolve, reject) => {
             try {
                 const transaction = this.db.transaction(storeName, 'readonly');
                 const store = transaction.objectStore(storeName);
                 const index = store.index(indexName);
-                
-                // Проверяем, что value - допустимый ключ
-                // Если value === false, используем IDBKeyRange.only(false)
+
+                // Проверка на валидный ключ
                 let request;
-                if (value === false) {
+                if (value === undefined || value === null) {
+                    // Если ключ не задан, возвращаем все записи
+                    request = index.getAll();
+                } else if (value === false) {
                     request = index.getAll(IDBKeyRange.only(false));
                 } else if (value === true) {
                     request = index.getAll(IDBKeyRange.only(true));
                 } else {
                     request = index.getAll(value);
                 }
-                
+
                 request.onsuccess = () => resolve(request.result || []);
                 request.onerror = () => {
                     console.warn(`Ошибка запроса к индексу ${indexName}, возвращаем пустой массив`);
