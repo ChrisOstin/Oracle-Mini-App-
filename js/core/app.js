@@ -380,76 +380,30 @@ const MORI_APP = {
     },
 
     // ========== ИНИЦИАЛИЗАЦИЯ МОДУЛЕЙ ==========
-initModules: async function() {
-    console.log('📦 Инициализация модулей...');
-    this.updateProgress(85, 'Поиск модулей...');
-    
-    // Собираем все модули из window
-    const moduleNames = [];
-    
-    for (let key in window) {
-        // Ищем всё что начинается с MORI_, но не core-файлы
-        if (key.startsWith('MORI_') && 
-            key !== 'MORI_APP' && 
-            key !== 'MORI_API' && 
-            key !== 'MORI_AUTH' && 
-            key !== 'MORI_USER' && 
-            key !== 'MORI_UTILS' && 
-            key !== 'MORI_STORAGE' && 
-            key !== 'MORI_ROUTER' && 
-            key !== 'MORI_NOTIFICATIONS') {
-            
-            moduleNames.push(key);
-        }
-    }
-    
-    console.log(`📦 Найдено модулей: ${moduleNames.length}`);
-    this.updateProgress(90, `Найдено ${moduleNames.length} модулей`);
-    
-    let loaded = 0;
-    const total = moduleNames.length;
-    
-    // Инициализируем все модули
-    for (const moduleName of moduleNames) {
+    initModules: async function() {
+    console.log('Инициализация модулей...');
+    const modules = ['portfolio', 'calculator', 'library', 'ai-chat', 'profile', 'tasks', 'chat', 'house', 'family', 'demigurge', 'music', 'voice', 'all-apps'];
+    const loaded = [];
+
+    for (const moduleName of modules) {
         try {
-            this.runHooks('beforeModuleLoad', moduleName);
-            
-            const module = window[moduleName];
-            
-            if (!module) {
-                console.warn(`⚠️ Модуль ${moduleName} не найден`);
-                continue;
-            }
-            
-            // Вызываем init если есть
-            if (module.init) {
-                await module.init();
-                console.log(`✅ ${moduleName} инициализирован`);
-            }
-            
-            loaded++;
-            const percent = 90 + Math.floor((loaded / total) * 10);
-            this.updateProgress(percent, `Загрузка...`, `Загружен ${moduleName}`);
-            
-            this.runHooks('afterModuleLoad', moduleName);
-            
+            await new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = `js/modules/${moduleName}/index.js`;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+            loaded.push(moduleName);
+            console.log(`✅ Модуль ${moduleName} загружен`);
         } catch (error) {
-            console.error(`❌ Ошибка ${moduleName}:`, error);
+            console.error(`❌ Ошибка загрузки модуля ${moduleName}:`, error);
         }
     }
-    
-    this.updateProgress(100, 'Готово!', `Загружено ${loaded} модулей`);
-    
-    if (loaded === 0) {
-        this.showToast('⚠️ Модули не загружены', 'warning', 5000);
-    } else {
-        this.showToast(`✅ Загружено ${loaded} модулей`, 'success', 3000);
-    }
-    
-    // Показываем список в консоли
-    console.group('📊 Загруженные модули:');
-    moduleNames.forEach(name => console.log(`✅ ${name}`));
-    console.groupEnd();
+
+    console.log(`Загружено модулей: ${loaded.length}`);
+    window.MORI_APP.modules = loaded;
+    return loaded;
 },
 
     // ========== ПРЕДЗАГРУЗКА МОДУЛЯ ==========
