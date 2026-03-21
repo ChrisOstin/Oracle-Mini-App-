@@ -6,7 +6,7 @@
 
 const MORI_API = {
     // ========== БАЗОВЫЕ НАСТРОЙКИ ==========
-    baseUrl: ':5000',
+    baseUrl: 'http://localhost:5000',
     
     timeouts: {
         default: 10000,
