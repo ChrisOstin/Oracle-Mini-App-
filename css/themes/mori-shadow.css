@@ -1,0 +1,323 @@
+/* ===== THEME: MORI SHADOW ===== */
+/* Тема теней: графит + золото */
+/* Объект слева: 👤 силуэт */
+
+.theme-mori-shadow {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --bg-card: #333333;
+    --bg-modal: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #888888;
+    --text-inverse: #1a1a1a;
+    --accent-primary: #bfa35c;
+    --accent-secondary: #a68a44;
+    --accent-tertiary: #8c7238;
+    --accent-danger: #ff4444;
+    --accent-success: #00ff88;
+    --accent-warning: #ffbb33;
+    --accent-info: #33b5e5;
+    --border-color: rgba(191, 163, 92, 0.2);
+    --shadow-color: rgba(191, 163, 92, 0.15);
+    --gradient-start: #bfa35c;
+    --gradient-end: #a68a44;
+    --header-bg: rgba(26, 26, 26, 0.9);
+    --footer-bg: rgba(26, 26, 26, 0.95);
+    --input-bg: #2a2a2a;
+    --input-border: #333333;
+    --input-focus: #bfa35c;
+    --button-hover: #a68a44;
+    --link-color: #bfa35c;
+    --link-hover: #a68a44;
+    --icon-color: #bfa35c;
+    --icon-hover: #a68a44;
+    --badge-bg: #bfa35c;
+    --badge-text: #1a1a1a;
+    --tooltip-bg: #333333;
+    --tooltip-text: #ffffff;
+    --scrollbar-thumb: #bfa35c;
+    --scrollbar-track: #2a2a2a;
+    --selection-bg: #bfa35c;
+    --selection-text: #1a1a1a;
+    --loader-color: #bfa35c;
+    --skeleton-start: #2a2a2a;
+    --skeleton-end: #333333;
+}
+
+/* Объект слева вверху */
+.theme-mori-shadow .theme-icon::before {
+    content: '👤';
+    font-size: 1.8rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(191, 163, 92, 0.3));
+    pointer-events: auto;
+}
+
+.theme-mori-shadow .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(191, 163, 92, 0.6));
+}
+
+/* Анимация для объекта */
+@keyframes shadowPulse {
+    0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 5px rgba(191, 163, 92, 0.3)); }
+    50% { opacity: 1; filter: drop-shadow(0 0 15px rgba(191, 163, 92, 0.6)); }
+}
+
+.theme-mori-shadow .theme-icon::before {
+    animation: shadowPulse 3s infinite ease-in-out;
+}
+
+/* Стили для кнопок */
+.theme-mori-shadow .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.theme-mori-shadow .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(191, 163, 92, 0.4);
+}
+
+/* Стили для карточек */
+.theme-mori-shadow .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.theme-mori-shadow .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+/* Стили для ссылок */
+.theme-mori-shadow a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.theme-mori-shadow a:hover {
+    color: var(--accent-secondary);
+    text-shadow: 0 0 8px var(--accent-primary);
+}
+
+/* Стили для заголовков */
+.theme-mori-shadow h1, 
+.theme-mori-shadow h2, 
+.theme-mori-shadow h3 {
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+}
+
+.theme-mori-shadow h1::after,
+.theme-mori-shadow h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-mori-shadow input,
+.theme-mori-shadow textarea,
+.theme-mori-shadow select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.theme-mori-shadow input:focus,
+.theme-mori-shadow textarea:focus,
+.theme-mori-shadow select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 10px rgba(191, 163, 92, 0.3);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-mori-shadow ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-mori-shadow ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-mori-shadow ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+
+.theme-mori-shadow ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-mori-shadow ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-mori-shadow .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+}
+
+/* Градиенты для особых элементов */
+.theme-mori-shadow .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-mori-shadow .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-mori-shadow .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+}
+
+/* Стили для бейджей */
+.theme-mori-shadow .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Стили для тултипов */
+.theme-mori-shadow .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+}
+
+/* Стили для модальных окон */
+.theme-mori-shadow .modal {
+    background: var(--bg-modal);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Стили для таблиц */
+.theme-mori-shadow table {
+    border-collapse: collapse;
+}
+
+.theme-mori-shadow th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.theme-mori-shadow td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-mori-shadow tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-mori-shadow ul li::before {
+    color: var(--accent-primary);
+}
+
+/* Стили для прогресс-баров */
+.theme-mori-shadow .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Стили для переключателей */
+.theme-mori-shadow .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-mori-shadow input:checked + .switch-slider {
+    background: var(--accent-primary);
+}
+
+/* Стили для радио-кнопок */
+.theme-mori-shadow .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-mori-shadow input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+}
+
+/* Стили для чекбоксов */
+.theme-mori-shadow .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-mori-shadow input:checked + .checkbox-custom {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Стили для дашборда */
+.theme-mori-shadow .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.theme-mori-shadow .stat-value {
+    color: var(--accent-primary);
+}
+
+/* Стили для графика */
+.theme-mori-shadow .chart-line {
+    stroke: var(--accent-primary);
+}
+
+.theme-mori-shadow .chart-bar {
+    fill: var(--accent-primary);
+}
+
+/* Стили для чата */
+.theme-mori-shadow .message-own {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}
+
+.theme-mori-shadow .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-mori-shadow .notification {
+    border-left: 4px solid var(--accent-primary);
+}
+
+/* Стили для календаря */
+.theme-mori-shadow .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-mori-shadow .calendar-day.has-event {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}

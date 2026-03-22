@@ -1,0 +1,107 @@
+/* ===== VARIABLES.CSS ===== */
+:root {
+    /* Цветовая схема MORI (чёрно-золотая) */
+    --mori-black: #0a0a0a;
+    --mori-black-soft: #1a1a1a;
+    --mori-black-light: #2a2a2a;
+    --mori-gold: #ffd700;
+    --mori-gold-soft: #e5c100;
+    --mori-gold-light: #ffea8a;
+    
+    /* Системные цвета */
+    --bg-primary: var(--mori-black);
+    --bg-secondary: var(--mori-black-soft);
+    --bg-card: var(--mori-black-light);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-muted: #707070;
+    --accent-primary: var(--mori-gold);
+    --accent-secondary: var(--mori-gold-soft);
+    --accent-danger: #ff4444;
+    --accent-success: #00c851;
+    --accent-warning: #ffbb33;
+    --accent-info: #33b5e5;
+    
+    /* Размеры */
+    --header-height: 70px;
+    --nav-height: 70px;
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    
+    /* Скругления */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-circle: 50%;
+    
+    /* Тени */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.4);
+    --shadow-gold: 0 4px 12px rgba(255, 215, 0, 0.2);
+    
+    /* Анимации */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Z-index */
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-modal: 300;
+    --z-popover: 400;
+    --z-toast: 500;
+    --z-tooltip: 600;
+    
+    /* Шрифты */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+}
+
+/* Светлая тема (если включена в Telegram) */
+body[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --bg-card: #e5e5e5;
+    --text-primary: #0a0a0a;
+    --text-secondary: #505050;
+    --text-muted: #909090;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* MORI темы (будут добавляться по мере разблокировки) */
+body[data-theme="mori-night"] {
+    --bg-primary: #000000;
+    --accent-primary: #e5e4e2;
+    --mori-gold: #e5e4e2;
+}
+
+body[data-theme="mori-gold"] {
+    --bg-primary: #1a0f00;
+    --accent-primary: #ffb347;
+    --mori-gold: #ffb347;
+}
+
+/* Базовые переменные для доступности */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #ffffff;
+        --text-secondary: #ffffff;
+        --bg-primary: #000000;
+        --bg-secondary: #000000;
+    }
+}
+
+@media (prefers-contrast: low) {
+    :root {
+        --text-secondary: #a0a0a0;
+        --text-muted: #808080;
+    }
+}

@@ -1,0 +1,366 @@
+/* ===== THEME: FAMILY RABBIT ===== */
+/* Кролик с чайником: жёлтый + чайные листья */
+/* Объект слева: 🐰☕ кролик с чаем */
+
+.theme-family-rabbit {
+    --bg-primary: #1a1a0a;
+    --bg-secondary: #2a2a0f;
+    --bg-card: #3a3a15;
+    --bg-modal: #3a3a15;
+    --text-primary: #ffffe6;
+    --text-secondary: #dddd88;
+    --text-muted: #aaaa44;
+    --text-inverse: #1a1a0a;
+    --accent-primary: #ffdd44;
+    --accent-secondary: #ddbb33;
+    --accent-tertiary: #bb9922;
+    --accent-danger: #ff8888;
+    --accent-success: #88ff88;
+    --accent-warning: #ffaa44;
+    --accent-info: #44aaff;
+    --border-color: rgba(255, 221, 68, 0.3);
+    --shadow-color: rgba(255, 221, 68, 0.2);
+    --gradient-start: #ffdd44;
+    --gradient-end: #ddbb33;
+    --header-bg: rgba(26, 26, 10, 0.9);
+    --footer-bg: rgba(26, 26, 10, 0.95);
+    --input-bg: #2a2a0f;
+    --input-border: #3a3a15;
+    --input-focus: #ffdd44;
+    --button-hover: #ddbb33;
+    --link-color: #ffdd44;
+    --link-hover: #ddbb33;
+    --icon-color: #ffdd44;
+    --icon-hover: #ddbb33;
+    --badge-bg: #ffdd44;
+    --badge-text: #1a1a0a;
+    --tooltip-bg: #3a3a15;
+    --tooltip-text: #ffffe6;
+    --scrollbar-thumb: #ffdd44;
+    --scrollbar-track: #2a2a0f;
+    --selection-bg: #ffdd44;
+    --selection-text: #1a1a0a;
+    --loader-color: #ffdd44;
+    --skeleton-start: #2a2a0f;
+    --skeleton-end: #3a3a15;
+}
+
+/* Объект слева вверху */
+.theme-family-rabbit .theme-icon::before {
+    content: '🐰☕';
+    font-size: 2rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(255, 221, 68, 0.5));
+    pointer-events: auto;
+}
+
+.theme-family-rabbit .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1) rotate(-5deg);
+    filter: drop-shadow(0 0 20px rgba(255, 221, 68, 0.8));
+}
+
+/* Анимация для объекта */
+@keyframes rabbitHop {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.theme-family-rabbit .theme-icon::before {
+    animation: rabbitHop 2s infinite ease-in-out;
+}
+
+/* Стили для кнопок */
+.theme-family-rabbit .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 221, 68, 0.3);
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-rabbit .btn-primary::after {
+    content: '🐰';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.3;
+    transition: all var(--transition-fast);
+}
+
+.theme-family-rabbit .btn-primary:hover::after {
+    right: 10px;
+    opacity: 1;
+}
+
+.theme-family-rabbit .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 221, 68, 0.5);
+}
+
+/* Стили для карточек */
+.theme-family-rabbit .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-rabbit .card::before {
+    content: '☕';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 2rem;
+    opacity: 0.1;
+}
+
+.theme-family-rabbit .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(255, 221, 68, 0.2);
+}
+
+/* Стили для ссылок */
+.theme-family-rabbit a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    border-bottom: 1px solid transparent;
+}
+
+.theme-family-rabbit a:hover {
+    color: var(--accent-secondary);
+    border-bottom-color: var(--accent-secondary);
+}
+
+/* Стили для заголовков */
+.theme-family-rabbit h1, 
+.theme-family-rabbit h2, 
+.theme-family-rabbit h3 {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.theme-family-rabbit h1::after,
+.theme-family-rabbit h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-family-rabbit input,
+.theme-family-rabbit textarea,
+.theme-family-rabbit select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    border-radius: 15px;
+}
+
+.theme-family-rabbit input:focus,
+.theme-family-rabbit textarea:focus,
+.theme-family-rabbit select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 20px rgba(255, 221, 68, 0.3);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-family-rabbit ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-family-rabbit ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-family-rabbit ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+
+.theme-family-rabbit ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-family-rabbit ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-family-rabbit .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+}
+
+/* Градиенты для особых элементов */
+.theme-family-rabbit .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-family-rabbit .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-rabbit .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+}
+
+/* Стили для бейджей */
+.theme-family-rabbit .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Стили для тултипов */
+.theme-family-rabbit .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+    border-radius: 15px;
+}
+
+/* Стили для модальных окон */
+.theme-family-rabbit .modal {
+    background: var(--bg-modal);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(255, 221, 68, 0.2);
+    border-radius: 25px;
+}
+
+/* Стили для таблиц */
+.theme-family-rabbit table {
+    border-collapse: collapse;
+}
+
+.theme-family-rabbit th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.theme-family-rabbit td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-family-rabbit tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-family-rabbit ul li::before {
+    content: '🐰';
+    color: var(--accent-primary);
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+/* Стили для прогресс-баров */
+.theme-family-rabbit .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 10px;
+}
+
+/* Стили для переключателей */
+.theme-family-rabbit .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-family-rabbit input:checked + .switch-slider {
+    background: var(--accent-primary);
+}
+
+/* Стили для радио-кнопок */
+.theme-family-rabbit .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-rabbit input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+}
+
+/* Стили для чекбоксов */
+.theme-family-rabbit .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-rabbit input:checked + .checkbox-custom {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Стили для дашборда */
+.theme-family-rabbit .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+}
+
+.theme-family-rabbit .stat-value {
+    color: var(--accent-primary);
+}
+
+/* Стили для графика */
+.theme-family-rabbit .chart-line {
+    stroke: var(--accent-primary);
+}
+
+.theme-family-rabbit .chart-bar {
+    fill: var(--accent-primary);
+}
+
+/* Стили для чата */
+.theme-family-rabbit .message-own {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border-radius: 20px 20px 5px 20px;
+}
+
+.theme-family-rabbit .message-other {
+    background: var(--bg-card);
+    border-radius: 20px 20px 20px 5px;
+}
+
+/* Стили для уведомлений */
+.theme-family-rabbit .notification {
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-card);
+    border-radius: 10px;
+}
+
+/* Стили для календаря */
+.theme-family-rabbit .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-rabbit .calendar-day.has-event {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}

@@ -1,0 +1,375 @@
+/* ===== THEME: MORI NEON ===== */
+/* Неоновая тема: чёрный + неоново-золотой */
+/* Объект слева: 💎 кристалл */
+
+.theme-mori-neon {
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-card: #111111;
+    --bg-modal: #111111;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #666666;
+    --text-inverse: #000000;
+    --accent-primary: #00ffaa;
+    --accent-secondary: #00cc88;
+    --accent-tertiary: #009966;
+    --accent-danger: #ff4444;
+    --accent-success: #00ff88;
+    --accent-warning: #ffbb33;
+    --accent-info: #33b5e5;
+    --border-color: rgba(0, 255, 170, 0.3);
+    --shadow-color: rgba(0, 255, 170, 0.3);
+    --gradient-start: #00ffaa;
+    --gradient-end: #00cc88;
+    --header-bg: rgba(0, 0, 0, 0.9);
+    --footer-bg: rgba(0, 0, 0, 0.95);
+    --input-bg: #0a0a0a;
+    --input-border: #111111;
+    --input-focus: #00ffaa;
+    --button-hover: #00cc88;
+    --link-color: #00ffaa;
+    --link-hover: #00cc88;
+    --icon-color: #00ffaa;
+    --icon-hover: #00cc88;
+    --badge-bg: #00ffaa;
+    --badge-text: #000000;
+    --tooltip-bg: #111111;
+    --tooltip-text: #ffffff;
+    --scrollbar-thumb: #00ffaa;
+    --scrollbar-track: #0a0a0a;
+    --selection-bg: #00ffaa;
+    --selection-text: #000000;
+    --loader-color: #00ffaa;
+    --skeleton-start: #0a0a0a;
+    --skeleton-end: #111111;
+}
+
+/* Объект слева вверху */
+.theme-mori-neon .theme-icon::before {
+    content: '💎';
+    font-size: 1.8rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(0, 255, 170, 0.8));
+    pointer-events: auto;
+}
+
+.theme-mori-neon .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(0, 255, 170, 1));
+}
+
+/* Анимация для объекта */
+@keyframes neonPulse {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(0, 255, 170, 0.5)); }
+    50% { filter: drop-shadow(0 0 20px rgba(0, 255, 170, 1)); }
+}
+
+.theme-mori-neon .theme-icon::before {
+    animation: neonPulse 2s infinite ease-in-out;
+}
+
+/* Стили для кнопок */
+.theme-mori-neon .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 255, 170, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-mori-neon .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 170, 0.6);
+}
+
+/* Стили для карточек */
+.theme-mori-neon .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-mori-neon .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(0, 255, 170, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: neonShine 3s infinite;
+}
+
+@keyframes neonShine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.theme-mori-neon .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+/* Стили для ссылок */
+.theme-mori-neon a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.theme-mori-neon a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--accent-primary);
+    transform: scaleX(0);
+    transition: transform var(--transition-fast);
+}
+
+.theme-mori-neon a:hover {
+    color: var(--accent-secondary);
+}
+
+.theme-mori-neon a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Стили для заголовков */
+.theme-mori-neon h1, 
+.theme-mori-neon h2, 
+.theme-mori-neon h3 {
+    color: var(--text-primary);
+    letter-spacing: 1px;
+}
+
+.theme-mori-neon h1::after,
+.theme-mori-neon h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-mori-neon input,
+.theme-mori-neon textarea,
+.theme-mori-neon select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.theme-mori-neon input:focus,
+.theme-mori-neon textarea:focus,
+.theme-mori-neon select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-mori-neon ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-mori-neon ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-mori-neon ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+.theme-mori-neon ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-mori-neon ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-mori-neon .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.5);
+}
+
+/* Градиенты для особых элементов */
+.theme-mori-neon .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-mori-neon .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-mori-neon .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(0, 255, 170, 0.8));
+}
+
+/* Стили для бейджей */
+.theme-mori-neon .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+/* Стили для тултипов */
+.theme-mori-neon .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+}
+
+/* Стили для модальных окон */
+.theme-mori-neon .modal {
+    background: var(--bg-modal);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(0, 255, 170, 0.2);
+}
+
+/* Стили для таблиц */
+.theme-mori-neon table {
+    border-collapse: collapse;
+}
+
+.theme-mori-neon th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.theme-mori-neon td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-mori-neon tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-mori-neon ul li::before {
+    color: var(--accent-primary);
+}
+
+/* Стили для прогресс-баров */
+.theme-mori-neon .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+/* Стили для переключателей */
+.theme-mori-neon .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-mori-neon input:checked + .switch-slider {
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+/* Стили для радио-кнопок */
+.theme-mori-neon .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-mori-neon input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+/* Стили для чекбоксов */
+.theme-mori-neon .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-mori-neon input:checked + .checkbox-custom {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+/* Стили для дашборда */
+.theme-mori-neon .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.theme-mori-neon .stat-value {
+    color: var(--accent-primary);
+    text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+/* Стили для графика */
+.theme-mori-neon .chart-line {
+    stroke: var(--accent-primary);
+    filter: drop-shadow(0 0 5px rgba(0, 255, 170, 0.5));
+}
+
+.theme-mori-neon .chart-bar {
+    fill: var(--accent-primary);
+    filter: drop-shadow(0 0 5px rgba(0, 255, 170, 0.5));
+}
+
+/* Стили для чата */
+.theme-mori-neon .message-own {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+}
+
+.theme-mori-neon .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-mori-neon .notification {
+    border-left: 4px solid var(--accent-primary);
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+}
+
+/* Стили для календаря */
+.theme-mori-neon .calendar-day.today {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+.theme-mori-neon .calendar-day.has-event {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}

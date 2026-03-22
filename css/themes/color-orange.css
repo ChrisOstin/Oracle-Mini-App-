@@ -1,0 +1,325 @@
+/* ===== THEME: COLOR ORANGE ===== */
+/* Оранжевая тема */
+/* Объект слева: 🟠 оранжевый круг */
+
+.theme-color-orange {
+    --bg-primary: #1a0f0a;
+    --bg-secondary: #2a1a0f;
+    --bg-card: #3a2515;
+    --bg-modal: #3a2515;
+    --text-primary: #ffffff;
+    --text-secondary: #ffd0b0;
+    --text-muted: #b09060;
+    --text-inverse: #1a0f0a;
+    --accent-primary: #ff8844;
+    --accent-secondary: #d46c3c;
+    --accent-tertiary: #b2582e;
+    --accent-danger: #ff4444;
+    --accent-success: #00ff88;
+    --accent-warning: #ffbb33;
+    --accent-info: #33b5e5;
+    --border-color: rgba(255, 136, 68, 0.3);
+    --shadow-color: rgba(255, 136, 68, 0.2);
+    --gradient-start: #ff8844;
+    --gradient-end: #d46c3c;
+    --header-bg: rgba(26, 15, 10, 0.9);
+    --footer-bg: rgba(26, 15, 10, 0.95);
+    --input-bg: #2a1a0f;
+    --input-border: #3a2515;
+    --input-focus: #ff8844;
+    --button-hover: #d46c3c;
+    --link-color: #ff8844;
+    --link-hover: #d46c3c;
+    --icon-color: #ff8844;
+    --icon-hover: #d46c3c;
+    --badge-bg: #ff8844;
+    --badge-text: #1a0f0a;
+    --tooltip-bg: #3a2515;
+    --tooltip-text: #ffffff;
+    --scrollbar-thumb: #ff8844;
+    --scrollbar-track: #2a1a0f;
+    --selection-bg: #ff8844;
+    --selection-text: #1a0f0a;
+    --loader-color: #ff8844;
+    --skeleton-start: #2a1a0f;
+    --skeleton-end: #3a2515;
+}
+
+/* Объект слева вверху */
+.theme-color-orange .theme-icon::before {
+    content: '🟠';
+    font-size: 1.8rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(255, 136, 68, 0.6));
+    pointer-events: auto;
+}
+
+.theme-color-orange .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1) rotate(10deg);
+    filter: drop-shadow(0 0 20px rgba(255, 136, 68, 0.9));
+}
+
+/* Анимация для объекта */
+@keyframes orangePulse {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 136, 68, 0.5)); }
+    50% { filter: drop-shadow(0 0 20px rgba(255, 136, 68, 0.8)); }
+}
+
+.theme-color-orange .theme-icon::before {
+    animation: orangePulse 2s infinite ease-in-out;
+}
+
+/* Стили для кнопок */
+.theme-color-orange .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 136, 68, 0.3);
+}
+
+.theme-color-orange .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 136, 68, 0.5);
+}
+
+/* Стили для карточек */
+.theme-color-orange .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.theme-color-orange .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(255, 136, 68, 0.3);
+}
+
+/* Стили для ссылок */
+.theme-color-orange a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.theme-color-orange a:hover {
+    color: var(--accent-secondary);
+    text-shadow: 0 0 8px rgba(255, 136, 68, 0.5);
+}
+
+/* Стили для заголовков */
+.theme-color-orange h1, 
+.theme-color-orange h2, 
+.theme-color-orange h3 {
+    color: var(--text-primary);
+}
+
+.theme-color-orange h1::after,
+.theme-color-orange h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-color-orange input,
+.theme-color-orange textarea,
+.theme-color-orange select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.theme-color-orange input:focus,
+.theme-color-orange textarea:focus,
+.theme-color-orange select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 15px rgba(255, 136, 68, 0.4);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-color-orange ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-color-orange ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-color-orange ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+
+.theme-color-orange ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-color-orange ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-color-orange .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+}
+
+/* Градиенты для особых элементов */
+.theme-color-orange .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-color-orange .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-color-orange .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+}
+
+/* Стили для бейджей */
+.theme-color-orange .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Стили для тултипов */
+.theme-color-orange .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+}
+
+/* Стили для модальных окон */
+.theme-color-orange .modal {
+    background: var(--bg-modal);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(255, 136, 68, 0.2);
+}
+
+/* Стили для таблиц */
+.theme-color-orange table {
+    border-collapse: collapse;
+}
+
+.theme-color-orange th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.theme-color-orange td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-color-orange tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-color-orange ul li::before {
+    content: '•';
+    color: var(--accent-primary);
+    margin-right: 8px;
+}
+
+/* Стили для прогресс-баров */
+.theme-color-orange .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Стили для переключателей */
+.theme-color-orange .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-color-orange input:checked + .switch-slider {
+    background: var(--accent-primary);
+}
+
+/* Стили для радио-кнопок */
+.theme-color-orange .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-color-orange input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+}
+
+/* Стили для чекбоксов */
+.theme-color-orange .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-color-orange input:checked + .checkbox-custom {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Стили для дашборда */
+.theme-color-orange .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.theme-color-orange .stat-value {
+    color: var(--accent-primary);
+}
+
+/* Стили для графика */
+.theme-color-orange .chart-line {
+    stroke: var(--accent-primary);
+}
+
+.theme-color-orange .chart-bar {
+    fill: var(--accent-primary);
+}
+
+/* Стили для чата */
+.theme-color-orange .message-own {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}
+
+.theme-color-orange .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-color-orange .notification {
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-card);
+}
+
+/* Стили для календаря */
+.theme-color-orange .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-color-orange .calendar-day.has-event {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}

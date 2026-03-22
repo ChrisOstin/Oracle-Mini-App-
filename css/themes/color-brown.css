@@ -1,0 +1,328 @@
+/* ===== THEME: COLOR BROWN ===== */
+/* Коричневая тема */
+/* Объект слева: 🪵 дерево */
+
+.theme-color-brown {
+    --bg-primary: #1a1208;
+    --bg-secondary: #2a1d0f;
+    --bg-card: #3a2817;
+    --bg-modal: #3a2817;
+    --text-primary: #f0e0c0;
+    --text-secondary: #d0b080;
+    --text-muted: #a08050;
+    --text-inverse: #1a1208;
+    --accent-primary: #c0a060;
+    --accent-secondary: #a08040;
+    --accent-tertiary: #806030;
+    --accent-danger: #ff6666;
+    --accent-success: #88cc88;
+    --accent-warning: #ddbb66;
+    --accent-info: #6699dd;
+    --border-color: rgba(192, 160, 96, 0.3);
+    --shadow-color: rgba(192, 160, 96, 0.2);
+    --gradient-start: #c0a060;
+    --gradient-end: #a08040;
+    --header-bg: rgba(26, 18, 8, 0.9);
+    --footer-bg: rgba(26, 18, 8, 0.95);
+    --input-bg: #2a1d0f;
+    --input-border: #3a2817;
+    --input-focus: #c0a060;
+    --button-hover: #a08040;
+    --link-color: #c0a060;
+    --link-hover: #a08040;
+    --icon-color: #c0a060;
+    --icon-hover: #a08040;
+    --badge-bg: #c0a060;
+    --badge-text: #1a1208;
+    --tooltip-bg: #3a2817;
+    --tooltip-text: #f0e0c0;
+    --scrollbar-thumb: #c0a060;
+    --scrollbar-track: #2a1d0f;
+    --selection-bg: #c0a060;
+    --selection-text: #1a1208;
+    --loader-color: #c0a060;
+    --skeleton-start: #2a1d0f;
+    --skeleton-end: #3a2817;
+}
+
+/* Объект слева вверху */
+.theme-color-brown .theme-icon::before {
+    content: '🪵';
+    font-size: 1.8rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 5px rgba(192, 160, 96, 0.3));
+    pointer-events: auto;
+}
+
+.theme-color-brown .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 10px rgba(192, 160, 96, 0.5));
+}
+
+/* Анимация для объекта */
+@keyframes woodGrain {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.02) rotate(1deg); }
+    75% { transform: scale(0.98) rotate(-1deg); }
+}
+
+.theme-color-brown .theme-icon::before {
+    animation: woodGrain 5s infinite ease-in-out;
+}
+
+/* Стили для кнопок */
+.theme-color-brown .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--accent-tertiary);
+}
+
+.theme-color-brown .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192, 160, 96, 0.3);
+}
+
+/* Стили для карточек */
+.theme-color-brown .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.theme-color-brown .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(192, 160, 96, 0.2);
+}
+
+/* Стили для ссылок */
+.theme-color-brown a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.theme-color-brown a:hover {
+    color: var(--accent-secondary);
+}
+
+/* Стили для заголовков */
+.theme-color-brown h1, 
+.theme-color-brown h2, 
+.theme-color-brown h3 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.theme-color-brown h1::after,
+.theme-color-brown h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-color-brown input,
+.theme-color-brown textarea,
+.theme-color-brown select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.theme-color-brown input:focus,
+.theme-color-brown textarea:focus,
+.theme-color-brown select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 15px rgba(192, 160, 96, 0.3);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-color-brown ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-color-brown ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-color-brown ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+
+.theme-color-brown ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-color-brown ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-color-brown .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+}
+
+/* Градиенты для особых элементов */
+.theme-color-brown .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-color-brown .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-color-brown .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+}
+
+/* Стили для бейджей */
+.theme-color-brown .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Стили для тултипов */
+.theme-color-brown .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+}
+
+/* Стили для модальных окон */
+.theme-color-brown .modal {
+    background: var(--bg-modal);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Стили для таблиц */
+.theme-color-brown table {
+    border-collapse: collapse;
+}
+
+.theme-color-brown th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.theme-color-brown td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-color-brown tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-color-brown ul li::before {
+    content: '🌲';
+    color: var(--accent-primary);
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+/* Стили для прогресс-баров */
+.theme-color-brown .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Стили для переключателей */
+.theme-color-brown .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-color-brown input:checked + .switch-slider {
+    background: var(--accent-primary);
+}
+
+/* Стили для радио-кнопок */
+.theme-color-brown .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-color-brown input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+}
+
+/* Стили для чекбоксов */
+.theme-color-brown .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-color-brown input:checked + .checkbox-custom {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Стили для дашборда */
+.theme-color-brown .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.theme-color-brown .stat-value {
+    color: var(--accent-primary);
+}
+
+/* Стили для графика */
+.theme-color-brown .chart-line {
+    stroke: var(--accent-primary);
+}
+
+.theme-color-brown .chart-bar {
+    fill: var(--accent-primary);
+}
+
+/* Стили для чата */
+.theme-color-brown .message-own {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}
+
+.theme-color-brown .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-color-brown .notification {
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-card);
+}
+
+/* Стили для календаря */
+.theme-color-brown .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-color-brown .calendar-day.has-event {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}

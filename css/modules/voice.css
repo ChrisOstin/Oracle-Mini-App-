@@ -1,0 +1,410 @@
+/* ===== VOICE MODULE ===== */
+
+.voice-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+/* Шапка */
+.voice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.voice-header h2 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-primary);
+}
+
+.voice-status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--bg-primary);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #888;
+}
+
+.status-dot.recording {
+    background: #ff4444;
+    animation: pulse 1s infinite;
+}
+
+.status-dot.playing {
+    background: #00ff88;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Основной контейнер */
+.voice-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Визуализатор */
+.visualizer-container {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: var(--spacing-xl);
+}
+
+.visualizer-canvas {
+    width: 100%;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Кнопка записи */
+.record-button {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 4px solid var(--accent-primary);
+    color: var(--text-primary);
+    font-size: 3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+    transition: all var(--transition-fast);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+.record-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+}
+
+.record-button:active {
+    transform: scale(0.95);
+}
+
+.record-button.recording {
+    background: #ff4444;
+    border-color: #ff4444;
+    animation: recordingPulse 1.5s infinite;
+}
+
+@keyframes recordingPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(255, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
+    }
+}
+
+.record-button.playing {
+    background: #00ff88;
+    border-color: #00ff88;
+}
+
+.record-button.processing {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Таймер */
+.voice-timer {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: var(--spacing-lg);
+    font-family: var(--font-mono);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Уровень громкости */
+.volume-level {
+    width: 200px;
+    height: 20px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+}
+
+.volume-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff88, var(--accent-primary));
+    border-radius: var(--radius-xl);
+    transition: width 0.1s ease;
+}
+
+/* Список записей */
+.recordings-list {
+    width: 100%;
+    max-width: 400px;
+    margin-top: var(--spacing-xl);
+}
+
+.recordings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.recordings-header h3 {
+    color: var(--text-primary);
+}
+
+.recordings-clear {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid #ff4444;
+    border-radius: var(--radius-xl);
+    color: #ff4444;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.recordings-clear:hover {
+    background: #ff4444;
+    color: white;
+}
+
+.recording-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xs);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.recording-item:hover {
+    transform: translateX(4px);
+    background: var(--bg-secondary);
+}
+
+.recording-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-circle);
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--accent-primary);
+}
+
+.recording-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.recording-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recording-meta {
+    display: flex;
+    gap: var(--spacing-md);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+}
+
+.recording-duration {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.recording-size {
+    color: var(--accent-primary);
+}
+
+.recording-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.recording-item:hover .recording-actions {
+    opacity: 1;
+}
+
+.recording-action {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-circle);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.recording-action:hover {
+    background: var(--accent-primary);
+    color: var(--mori-black);
+}
+
+.recording-action.delete:hover {
+    background: #ff4444;
+    color: white;
+}
+
+/* Пустое состояние */
+.empty-recordings {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+/* Микрофон */
+.mic-permission {
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.mic-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--accent-primary);
+}
+
+.mic-text {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.mic-button {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: var(--accent-primary);
+    border: none;
+    border-radius: var(--radius-xl);
+    color: var(--mori-black);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.mic-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Волны (анимация) */
+.wave-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 60px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.wave-bar {
+    width: 8px;
+    background: var(--accent-primary);
+    border-radius: 4px;
+    animation: wave 0.5s infinite alternate;
+}
+
+.wave-bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+.wave-bar:nth-child(2) { height: 35px; animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { height: 50px; animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { height: 45px; animation-delay: 0.3s; }
+.wave-bar:nth-child(5) { height: 30px; animation-delay: 0.4s; }
+.wave-bar:nth-child(6) { height: 55px; animation-delay: 0.5s; }
+.wave-bar:nth-child(7) { height: 40px; animation-delay: 0.6s; }
+.wave-bar:nth-child(8) { height: 25px; animation-delay: 0.7s; }
+
+@keyframes wave {
+    from { transform: scaleY(0.5); }
+    to { transform: scaleY(1.5); }
+}
+
+/* Прогресс воспроизведения */
+.playback-progress {
+    width: 100%;
+    height: 4px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin: var(--spacing-sm) 0;
+}
+
+.playback-fill {
+    height: 100%;
+    background: var(--accent-primary);
+    border-radius: var(--radius-sm);
+    transition: width 0.1s linear;
+}
+
+/* Адаптивность */
+@media (max-width: 360px) {
+    .record-button {
+        width: 100px;
+        height: 100px;
+        font-size: 2.5rem;
+    }
+    
+    .voice-timer {
+        font-size: 2.5rem;
+    }
+    
+    .recordings-list {
+        max-width: 100%;
+    }
+}

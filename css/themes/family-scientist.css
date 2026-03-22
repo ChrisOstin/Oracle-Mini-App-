@@ -1,0 +1,378 @@
+/* ===== THEME: FAMILY SCIENTIST ===== */
+/* Учёный: человек в очках и с бородой */
+/* Голубая палитра */
+/* Объект слева: 👓 очки */
+
+.theme-family-scientist {
+    --bg-primary: #0a1a1f;
+    --bg-secondary: #0f2a2f;
+    --bg-card: #153a3f;
+    --bg-modal: #153a3f;
+    --text-primary: #e0f0ff;
+    --text-secondary: #a0d0ff;
+    --text-muted: #6090c0;
+    --text-inverse: #0a1a1f;
+    --accent-primary: #44aaff;
+    --accent-secondary: #3388dd;
+    --accent-tertiary: #2266bb;
+    --accent-danger: #ff6688;
+    --accent-success: #88ffaa;
+    --accent-warning: #ffaa88;
+    --accent-info: #88aaff;
+    --border-color: rgba(68, 170, 255, 0.3);
+    --shadow-color: rgba(68, 170, 255, 0.2);
+    --gradient-start: #44aaff;
+    --gradient-end: #3388dd;
+    --header-bg: rgba(10, 26, 31, 0.9);
+    --footer-bg: rgba(10, 26, 31, 0.95);
+    --input-bg: #0f2a2f;
+    --input-border: #153a3f;
+    --input-focus: #44aaff;
+    --button-hover: #3388dd;
+    --link-color: #44aaff;
+    --link-hover: #3388dd;
+    --icon-color: #44aaff;
+    --icon-hover: #3388dd;
+    --badge-bg: #44aaff;
+    --badge-text: #0a1a1f;
+    --tooltip-bg: #153a3f;
+    --tooltip-text: #e0f0ff;
+    --scrollbar-thumb: #44aaff;
+    --scrollbar-track: #0f2a2f;
+    --selection-bg: #44aaff;
+    --selection-text: #0a1a1f;
+    --loader-color: #44aaff;
+    --skeleton-start: #0f2a2f;
+    --skeleton-end: #153a3f;
+}
+
+/* Объект слева вверху */
+.theme-family-scientist .theme-icon::before {
+    content: '👓';
+    font-size: 2rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(68, 170, 255, 0.5));
+    pointer-events: auto;
+}
+
+.theme-family-scientist .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1) rotate(-5deg);
+    filter: drop-shadow(0 0 20px rgba(68, 170, 255, 0.8));
+}
+
+/* Анимация для объекта */
+@keyframes scientistThink {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+.theme-family-scientist .theme-icon::before {
+    animation: scientistThink 4s infinite ease-in-out;
+}
+
+/* Стили для кнопок */
+.theme-family-scientist .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(68, 170, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-scientist .btn-primary::after {
+    content: '🔬';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 2rem;
+    opacity: 0.2;
+    transform: rotate(15deg);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-scientist .btn-primary:hover::after {
+    top: 5px;
+    right: 5px;
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.theme-family-scientist .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(68, 170, 255, 0.5);
+}
+
+/* Стили для карточек */
+.theme-family-scientist .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    border-radius: 8px;
+}
+
+.theme-family-scientist .card::before {
+    content: '📐';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 1.2rem;
+    opacity: 0.2;
+}
+
+.theme-family-scientist .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(68, 170, 255, 0.3);
+}
+
+/* Стили для ссылок */
+.theme-family-scientist a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    border-bottom: 1px dashed var(--accent-primary);
+}
+
+.theme-family-scientist a:hover {
+    color: var(--accent-secondary);
+    border-bottom-style: solid;
+}
+
+/* Стили для заголовков */
+.theme-family-scientist h1, 
+.theme-family-scientist h2, 
+.theme-family-scientist h3 {
+    color: var(--text-primary);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.theme-family-scientist h1::after,
+.theme-family-scientist h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-family-scientist input,
+.theme-family-scientist textarea,
+.theme-family-scientist select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    border-radius: 4px;
+}
+
+.theme-family-scientist input:focus,
+.theme-family-scientist textarea:focus,
+.theme-family-scientist select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 20px rgba(68, 170, 255, 0.3);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-family-scientist ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-family-scientist ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-family-scientist ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+
+.theme-family-scientist ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-family-scientist ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-family-scientist .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+}
+
+/* Градиенты для особых элементов */
+.theme-family-scientist .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-family-scientist .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-scientist .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+}
+
+/* Стили для бейджей */
+.theme-family-scientist .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Стили для тултипов */
+.theme-family-scientist .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+    border-radius: 4px;
+}
+
+/* Стили для модальных окон */
+.theme-family-scientist .modal {
+    background: var(--bg-modal);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(68, 170, 255, 0.2);
+    border-radius: 8px;
+}
+
+/* Стили для таблиц */
+.theme-family-scientist table {
+    border-collapse: collapse;
+}
+
+.theme-family-scientist th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.theme-family-scientist td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-family-scientist tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-family-scientist ul li::before {
+    content: '📊';
+    color: var(--accent-primary);
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+/* Научные формулы */
+.theme-family-scientist .formula {
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-primary);
+}
+
+/* Стили для прогресс-баров */
+.theme-family-scientist .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 2px;
+}
+
+/* Стили для переключателей */
+.theme-family-scientist .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-family-scientist input:checked + .switch-slider {
+    background: var(--accent-primary);
+}
+
+/* Стили для радио-кнопок */
+.theme-family-scientist .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-scientist input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+}
+
+/* Стили для чекбоксов */
+.theme-family-scientist .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-scientist input:checked + .checkbox-custom {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Стили для дашборда */
+.theme-family-scientist .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.theme-family-scientist .stat-value {
+    color: var(--accent-primary);
+    font-family: 'Courier New', monospace;
+}
+
+/* Стили для графика */
+.theme-family-scientist .chart-line {
+    stroke: var(--accent-primary);
+}
+
+.theme-family-scientist .chart-bar {
+    fill: var(--accent-primary);
+}
+
+/* Стили для чата */
+.theme-family-scientist .message-own {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+}
+
+.theme-family-scientist .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-family-scientist .notification {
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-card);
+}
+
+/* Стили для календаря */
+.theme-family-scientist .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-scientist .calendar-day.has-event {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}

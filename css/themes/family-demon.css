@@ -1,0 +1,392 @@
+/* ===== THEME: FAMILY DEMON ===== */
+/* Демон: лицо в капюшоне, видны только глаза */
+/* Фиолетовая палитра */
+/* Объект слева: 👁️ глаз */
+
+.theme-family-demon {
+    --bg-primary: #0a050f;
+    --bg-secondary: #1a0f1f;
+    --bg-card: #2a1a2f;
+    --bg-modal: #2a1a2f;
+    --text-primary: #e0c0ff;
+    --text-secondary: #c080ff;
+    --text-muted: #8040c0;
+    --text-inverse: #0a050f;
+    --accent-primary: #aa44ff;
+    --accent-secondary: #8833dd;
+    --accent-tertiary: #6622bb;
+    --accent-danger: #ff66aa;
+    --accent-success: #66ffaa;
+    --accent-warning: #ffaa66;
+    --accent-info: #66aaff;
+    --border-color: rgba(170, 68, 255, 0.25);
+    --shadow-color: rgba(170, 68, 255, 0.2);
+    --gradient-start: #aa44ff;
+    --gradient-end: #8833dd;
+    --header-bg: rgba(10, 5, 15, 0.95);
+    --footer-bg: rgba(10, 5, 15, 0.98);
+    --input-bg: #1a0f1f;
+    --input-border: #2a1a2f;
+    --input-focus: #aa44ff;
+    --button-hover: #8833dd;
+    --link-color: #aa44ff;
+    --link-hover: #8833dd;
+    --icon-color: #aa44ff;
+    --icon-hover: #8833dd;
+    --badge-bg: #aa44ff;
+    --badge-text: #0a050f;
+    --tooltip-bg: #2a1a2f;
+    --tooltip-text: #e0c0ff;
+    --scrollbar-thumb: #aa44ff;
+    --scrollbar-track: #1a0f1f;
+    --selection-bg: #aa44ff;
+    --selection-text: #0a050f;
+    --loader-color: #aa44ff;
+    --skeleton-start: #1a0f1f;
+    --skeleton-end: #2a1a2f;
+}
+
+/* Объект слева вверху */
+.theme-family-demon .theme-icon::before {
+    content: '👁️';
+    font-size: 2rem;
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 9999;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all var(--transition-normal);
+    filter: drop-shadow(0 0 10px rgba(170, 68, 255, 0.8));
+    pointer-events: auto;
+}
+
+.theme-family-demon .theme-icon:hover::before {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(170, 68, 255, 1));
+}
+
+/* Анимация для объекта */
+@keyframes demonEye {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(170, 68, 255, 0.5)); }
+    50% { transform: scale(1.2); filter: drop-shadow(0 0 20px rgba(170, 68, 255, 1)); }
+}
+
+.theme-family-demon .theme-icon::before {
+    animation: demonEye 3s infinite ease-in-out;
+}
+
+/* Стили для кнопок */
+.theme-family-demon .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+    border: none;
+    box-shadow: 0 4px 15px rgba(170, 68, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-demon .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent 70%);
+    animation: demonGlow 2s infinite;
+}
+
+@keyframes demonGlow {
+    0% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.6; }
+    100% { transform: scale(1); opacity: 0.3; }
+}
+
+.theme-family-demon .btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(170, 68, 255, 0.5);
+}
+
+/* Стили для карточек */
+.theme-family-demon .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-family-demon .card::before {
+    content: '👁️';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    opacity: 0.1;
+}
+
+.theme-family-demon .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(170, 68, 255, 0.05) 100%);
+    pointer-events: none;
+}
+
+.theme-family-demon .card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 25px rgba(170, 68, 255, 0.3);
+}
+
+/* Стили для ссылок */
+.theme-family-demon a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.theme-family-demon a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    transform: scaleX(0);
+    transition: transform var(--transition-fast);
+}
+
+.theme-family-demon a:hover {
+    color: var(--accent-secondary);
+    text-shadow: 0 0 8px rgba(170, 68, 255, 0.5);
+}
+
+.theme-family-demon a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Стили для заголовков */
+.theme-family-demon h1, 
+.theme-family-demon h2, 
+.theme-family-demon h3 {
+    color: var(--text-primary);
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(170, 68, 255, 0.3);
+}
+
+.theme-family-demon h1::after,
+.theme-family-demon h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+    margin-top: var(--spacing-xs);
+}
+
+/* Стили для полей ввода */
+.theme-family-demon input,
+.theme-family-demon textarea,
+.theme-family-demon select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-demon input:focus,
+.theme-family-demon textarea:focus,
+.theme-family-demon select:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 20px rgba(170, 68, 255, 0.4);
+    outline: none;
+}
+
+/* Стили для скроллбара */
+.theme-family-demon ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.theme-family-demon ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+.theme-family-demon ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-sm);
+}
+
+.theme-family-demon ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* Стили для выделения текста */
+.theme-family-demon ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-text);
+}
+
+/* Анимации для загрузки */
+.theme-family-demon .loader {
+    border-color: var(--skeleton-start);
+    border-top-color: var(--loader-color);
+}
+
+/* Градиенты для особых элементов */
+.theme-family-demon .gradient-bg {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+}
+
+/* Стили для иконок */
+.theme-family-demon .icon {
+    color: var(--icon-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-family-demon .icon:hover {
+    color: var(--icon-hover);
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgba(170, 68, 255, 0.5));
+}
+
+/* Стили для бейджей */
+.theme-family-demon .badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 4px 12px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px rgba(170, 68, 255, 0.3);
+}
+
+/* Стили для тултипов */
+.theme-family-demon .tooltip {
+    background: var(--tooltip-bg);
+    color: var(--tooltip-text);
+    border: 1px solid var(--accent-primary);
+}
+
+/* Стили для модальных окон */
+.theme-family-demon .modal {
+    background: var(--bg-modal);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 10px 30px rgba(170, 68, 255, 0.2);
+}
+
+/* Стили для таблиц */
+.theme-family-demon table {
+    border-collapse: collapse;
+}
+
+.theme-family-demon th {
+    background: var(--bg-secondary);
+    color: var(--accent-primary);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.theme-family-demon td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-family-demon tr:hover {
+    background: var(--bg-secondary);
+}
+
+/* Стили для списков */
+.theme-family-demon ul li::before {
+    content: '👁️';
+    color: var(--accent-primary);
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+/* Стили для прогресс-баров */
+.theme-family-demon .progress-bar {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+}
+
+/* Стили для переключателей */
+.theme-family-demon .switch-slider {
+    background: var(--bg-secondary);
+}
+
+.theme-family-demon input:checked + .switch-slider {
+    background: var(--accent-primary);
+}
+
+/* Стили для радио-кнопок */
+.theme-family-demon .radio-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-demon input:checked + .radio-custom::after {
+    background: var(--accent-primary);
+}
+
+/* Стили для чекбоксов */
+.theme-family-demon .checkbox-custom {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-demon input:checked + .checkbox-custom {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Стили для дашборда */
+.theme-family-demon .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.theme-family-demon .stat-value {
+    color: var(--accent-primary);
+    text-shadow: 0 0 10px rgba(170, 68, 255, 0.3);
+}
+
+/* Стили для графика */
+.theme-family-demon .chart-line {
+    stroke: var(--accent-primary);
+}
+
+.theme-family-demon .chart-bar {
+    fill: var(--accent-primary);
+}
+
+/* Стили для чата */
+.theme-family-demon .message-own {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--text-inverse);
+}
+
+.theme-family-demon .message-other {
+    background: var(--bg-card);
+}
+
+/* Стили для уведомлений */
+.theme-family-demon .notification {
+    border-left: 4px solid var(--accent-primary);
+    background: var(--bg-card);
+}
+
+/* Стили для календаря */
+.theme-family-demon .calendar-day.today {
+    border-color: var(--accent-primary);
+}
+
+.theme-family-demon .calendar-day.has-event {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+}
