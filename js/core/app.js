@@ -489,7 +489,7 @@ pulse: function(element, duration = 1000) {
         if (this.accessLevel === 'guest') {
             if (window.MORI_ROUTER) MORI_ROUTER.navigate('auth');
         } else {
-            const lastScreen = localStorage.getItem('last_screen') || 'dashboard';
+            const lastScreen = localStorage.getItem('last_screen') || 'portfolio';
             if (window.MORI_ROUTER) MORI_ROUTER.navigate(lastScreen);
         }
 
