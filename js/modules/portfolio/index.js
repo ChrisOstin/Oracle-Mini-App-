@@ -93,20 +93,27 @@ const MORI_PORTFOLIO = {
             </div>
 
             <div class="timeframe-selector">
-                <button class="timeframe-btn ${this.state.timeframe === '15m' ? 'active' : ''}" data-timeframe="15m">15м</button>
-                <button class="timeframe-btn ${this.state.timeframe === '30m' ? 'active' : ''}" data-timeframe="30m">30м</button>
-                <button class="timeframe-btn ${this.state.timeframe === '1h' ? 'active' : ''}" data-timeframe="1h">1ч</button>
-                <button class="timeframe-btn ${this.state.timeframe === '4h' ? 'active' : ''}" data-timeframe="4h">4ч</button>
                 <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
                 <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
-                <button class="timeframe-btn ${this.state.timeframe === '1w' ? 'active' : ''}" data-timeframe="1w">1н</button>
+                <button class="timeframe-btn ${this.state.timeframe === '3d' ? 'active' : ''}" data-timeframe="3d">3д</button>
                 <button class="timeframe-btn ${this.state.timeframe === '1m' ? 'active' : ''}" data-timeframe="1m">1м</button>
                 <button class="timeframe-btn ${this.state.timeframe === '3m' ? 'active' : ''}" data-timeframe="3m">3м</button>
                 <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
+                <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
             </div>
 
             <div class="chart-container">
                 <canvas id="mori-chart"></canvas>
+            </div>
+
+            <div class="timeframe-selector">
+                <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
+                <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
+                <button class="timeframe-btn ${this.state.timeframe === '3d' ? 'active' : ''}" data-timeframe="3d">3д</button>
+                <button class="timeframe-btn ${this.state.timeframe === '1m' ? 'active' : ''}" data-timeframe="1m">1м</button>
+                <button class="timeframe-btn ${this.state.timeframe === '3m' ? 'active' : ''}" data-timeframe="3m">3м</button>
+                <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
+                <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
             </div>
 
             <div class="about-section">
@@ -337,9 +344,17 @@ const MORI_PORTFOLIO = {
     },
 
     getTimeUnit: function(timeframe) {
-        const units = { '15m': 'minute', '30m': 'minute', '1h': 'hour', '4h': 'hour', '12h': 'hour', '1d': 'day', '1w': 'day', '1m': 'month', '3m': 'month', '6m': 'month' };
-        return units[timeframe] || 'hour';
-    },
+    const units = {
+        '12h': 'hour',
+        '1d': 'day',
+        '3d': 'day',
+        '1m': 'month',
+        '3m': 'month',
+        '6m': 'month',
+        '12m': 'year'
+    };
+    return units[timeframe] || 'day';
+},
 
     generateMockData: function() {
         const data = [];
@@ -356,14 +371,30 @@ const MORI_PORTFOLIO = {
     },
 
     getPointsForTimeframe: function(timeframe) {
-        const points = { '15m': 15, '30m': 30, '1h': 60, '4h': 48, '12h': 72, '1d': 24, '1w': 168, '1m': 30, '3m': 90, '6m': 180 };
-        return points[timeframe] || 60;
-    },
+    const points = {
+        '12h': 12,
+        '1d': 24,
+        '3d': 72,
+        '1m': 30,
+        '3m': 90,
+        '6m': 180,
+        '12m': 365
+    };
+    return points[timeframe] || 24;
+},
 
     getIntervalForTimeframe: function(timeframe) {
-        const intervals = { '15m': 900000, '30m': 1800000, '1h': 3600000, '4h': 14400000, '12h': 43200000, '1d': 86400000, '1w': 604800000, '1m': 2592000000, '3m': 7776000000, '6m': 15552000000 };
-        return intervals[timeframe] || 3600000;
-    },
+    const intervals = {
+        '12h': 3600000,   // 1 час
+        '1d': 3600000,    // 1 час
+        '3d': 86400000,   // 1 день
+        '1m': 86400000,   // 1 день
+        '3m': 86400000,   // 1 день
+        '6m': 86400000,   // 1 день
+        '12m': 86400000    // 1 день
+    };
+    return intervals[timeframe] || 3600000;
+},
 
     setState: function(newState) {
         this.state = { ...this.state, ...newState };

@@ -427,7 +427,19 @@ pulse: function(element, duration = 1000) {
             this.stopTimers();
             this.saveMetrics();
         });
-    },
+   
+        // Обработчик иконки темы
+        setTimeout(() => {
+            const themeIcon = document.querySelector('.theme-icon');
+            if (themeIcon) {
+                themeIcon.addEventListener('click', () => {
+                    // Показываем меню выбора тем (временно консоль)
+                    console.log('🎨 Меню тем');
+                    this.showToast('🎨 Меню выбора тем будет доступно в профиле', 'info', 3000);
+                });
+            }
+        }, 1000);
+
 
     startBackgroundTasks: function() {
         this.addBackgroundTask('sync', () => this.syncOfflineData(), 60000);
