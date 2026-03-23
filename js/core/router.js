@@ -27,7 +27,7 @@ const MORI_ROUTER = {
             title: 'Портфель',
             module: 'MORI_PORTFOLIO',
             guard: 'user',
-            icon: '📊'
+            icon: '📊',
             id: 'portfolio'
         },
 
