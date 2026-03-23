@@ -274,6 +274,25 @@ const MORI_PORTFOLIO = {
                 }
             });
         });
+   
+        // Обработчик клика на график (для телефона)
+        const chartCanvas = document.getElementById('mori-chart');
+        if (chartCanvas) {
+            chartCanvas.addEventListener('click', (e) => {
+                if (!this.chart) return;
+                const activePoints = this.chart.getElementsAtEvent(e);
+                if (activePoints && activePoints.length) {
+                    const point = activePoints[0];
+                    const dataPoint = this.chartData[point.index];
+                    if (dataPoint) {
+                        const price = dataPoint.y;
+                        const time = MORI_UTILS.formatDate(dataPoint.x, 'full');
+                        MORI_APP.showToast(`💰 Цена: $${price.toFixed(6)}\n📅 ${time}`, 'info', 4000);
+                    }
+                }
+            });
+        }
+
     },
 
     loadData: async function() {
