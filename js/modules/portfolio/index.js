@@ -45,7 +45,11 @@ const MORI_PORTFOLIO = {
 
     render: function() {
         const content = document.getElementById('portfolio-content');
-        if (!content) return;
+        if (!content) {
+            console.warn('portfolio-content not found, retrying...');
+            setTimeout(() => this.render(), 100);
+            return;
+        }
         content.innerHTML = this.getHTML();
         this.attachEvents();
         this.renderChart();
