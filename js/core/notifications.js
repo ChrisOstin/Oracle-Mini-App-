@@ -359,9 +359,7 @@ const MORI_NOTIFICATIONS = {
 
 // ========== CSS ==========
 const notificationStyle = document.createElement('style');
-notificationStyle.textContent = `...`;
-document.head.appendChild(notificationStyle);
-style.textContent = `
+notificationStyle.textContent = `
     .notification-container {
         position: fixed;
         z-index: 9999;
@@ -477,8 +475,6 @@ style.textContent = `
         box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 `;
-
-document.head.appendChild(style);
 
 // ========== ЗАПУСК ==========
 window.MORI_NOTIFICATIONS = MORI_NOTIFICATIONS;
