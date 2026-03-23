@@ -28,6 +28,7 @@ const MORI_ROUTER = {
             module: 'MORI_PORTFOLIO',
             guard: 'user',
             icon: '📊'
+            id: 'portfolio'
         },
 
         // MORI AI
@@ -454,7 +455,7 @@ const MORI_ROUTER = {
                         ${this.renderHeaderButtons()}
                     </div>
                 </header>
-                <div class="screen-content" id="${screen.title.toLowerCase()}-content">
+                <div class="screen-content" id="${screen.id}-content">
                     <div class="loading">Загрузка ${screen.title}...</div>
                 </div>
             </div>
