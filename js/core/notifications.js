@@ -1,6 +1,6 @@
 /**
  * CORE NOTIFICATIONS — УВЕДОМЛЕНИЯ
- * Версия: 5.0.0 (С ПОЛЕМ ВВОДА, САМОЛЁТИКОМ, СВАЙПОМ)
+ * Версия: 6.0.0 (С ТЕМОЙ, АНИМАЦИЯМИ, СВЕЧЕНИЕМ)
  */
 
 const MORI_NOTIFICATIONS = {
@@ -17,7 +17,7 @@ const MORI_NOTIFICATIONS = {
     },
 
     defaults: {
-        duration: 5000,
+        duration: 10000,
         position: 'top-center',
         animation: 'slide',
         sound: null,
@@ -27,14 +27,14 @@ const MORI_NOTIFICATIONS = {
     },
 
     types: {
-        success: { icon: '✅', color: '#10b981', sound: '/assets/sounds/success.mp3' },
-        error: { icon: '❌', color: '#ef4444', sound: '/assets/sounds/error.mp3' },
-        warning: { icon: '⚠️', color: '#f59e0b', sound: '/assets/sounds/warning.mp3' },
-        info: { icon: 'ℹ️', color: '#3b82f6', sound: '/assets/sounds/info.mp3' },
-        message: { icon: '💬', color: '#8b5cf6', sound: '/assets/sounds/message.mp3' },
-        reply: { icon: '💬', color: '#8b5cf6', sound: '/assets/sounds/message.mp3', duration: 10000 },
-        achievement: { icon: '🏆', color: '#fbbf24', sound: '/assets/sounds/achievement.mp3', duration: 7000 },
-        level: { icon: '📈', color: '#6366f1', sound: '/assets/sounds/levelup.mp3', duration: 6000 }
+        success: { icon: '✅', color: '#10b981', sound: '/assets/sounds/success.mp3', animation: 'bounceIn' },
+        error: { icon: '❌', color: '#ef4444', sound: '/assets/sounds/error.mp3', animation: 'shake' },
+        warning: { icon: '⚠️', color: '#f59e0b', sound: '/assets/sounds/warning.mp3', animation: 'pulse' },
+        info: { icon: 'ℹ️', color: '#3b82f6', sound: '/assets/sounds/info.mp3', animation: 'fadeIn' },
+        message: { icon: '💬', color: '#8b5cf6', sound: '/assets/sounds/message.mp3', animation: 'slideIn' },
+        reply: { icon: '💬', color: '#8b5cf6', sound: '/assets/sounds/message.mp3', duration: 10000, animation: 'slideIn' },
+        achievement: { icon: '🏆', color: '#fbbf24', sound: '/assets/sounds/achievement.mp3', duration: 10000, animation: 'bounceIn' },
+        level: { icon: '📈', color: '#6366f1', sound: '/assets/sounds/levelup.mp3', duration: 10000, animation: 'pulse' }
     },
 
     init: function() {
@@ -93,6 +93,7 @@ const MORI_NOTIFICATIONS = {
         const action = options.action || null;
         const replyable = options.replyable || false;
         const onReply = options.onReply || null;
+        const animation = config.animation || this.defaults.animation;
 
         const notification = {
             id, message, type,
@@ -104,6 +105,7 @@ const MORI_NOTIFICATIONS = {
             action,
             replyable,
             onReply,
+            animation,
             ...options
         };
 
@@ -179,6 +181,8 @@ const MORI_NOTIFICATIONS = {
         element.id = `notification-${notification.id}`;
         element.className = `notification notification-${notification.type}`;
         element.style.borderLeft = `4px solid ${notification.color}`;
+        element.style.backgroundColor = 'var(--bg-card, rgba(0,0,0,0.9))';
+        element.style.backdropFilter = 'blur(10px)';
 
         element.innerHTML = `
             <div class="notification-icon">${notification.icon}</div>
@@ -208,6 +212,17 @@ const MORI_NOTIFICATIONS = {
             input.style.color = '#fff';
             input.style.fontSize = '14px';
             input.style.outline = 'none';
+            input.style.transition = 'all 0.2s';
+            
+            input.addEventListener('focus', () => {
+                input.style.boxShadow = '0 0 8px var(--accent-primary, #ffd700)';
+                input.style.borderColor = 'var(--accent-primary, #ffd700)';
+            });
+            
+            input.addEventListener('blur', () => {
+                input.style.boxShadow = 'none';
+                input.style.borderColor = 'rgba(255,215,0,0.3)';
+            });
             
             const sendBtn = document.createElement('button');
             sendBtn.textContent = '📤';
@@ -254,7 +269,7 @@ const MORI_NOTIFICATIONS = {
         element.addEventListener('click', (e) => {
             if (e.target.classList.contains('notification-close')) return;
             if (e.target.classList.contains('notification-input')) return;
-            if (e.target === sendBtn) return;
+            if (e.target.tagName === 'BUTTON') return;
             if (notification.action && window.MORI_ROUTER) {
                 this.hide(notification.id);
                 MORI_ROUTER.navigate(notification.action);
@@ -281,7 +296,20 @@ const MORI_NOTIFICATIONS = {
         };
 
         container.appendChild(element);
-        setTimeout(() => element.classList.add('notification-show'), 10);
+
+        // Применяем анимацию
+        if (notification.animation === 'bounceIn' && window.MORI_APP && MORI_APP.animations.bounceIn) {
+            MORI_APP.animations.bounceIn(element);
+        } else if (notification.animation === 'shake' && window.MORI_APP && MORI_APP.animations.shake) {
+            MORI_APP.animations.shake(element);
+        } else if (notification.animation === 'pulse' && window.MORI_APP && MORI_APP.animations.pulse) {
+            MORI_APP.animations.pulse(element);
+        } else if (notification.animation === 'fadeIn' && window.MORI_APP && MORI_APP.animations.fadeIn) {
+            MORI_APP.animations.fadeIn(element);
+        } else {
+            // Стандартная анимация slide
+            setTimeout(() => element.classList.add('notification-show'), 10);
+        }
     },
 
     getContainer: function(position) {
@@ -367,7 +395,6 @@ notificationStyle.textContent = `
         padding: 16px;
         padding-right: 40px;
         border-radius: 20px;
-        background: rgba(0, 0, 0, 0.9);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 215, 0, 0.3);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -375,9 +402,6 @@ notificationStyle.textContent = `
         align-items: flex-start;
         gap: 12px;
         pointer-events: auto;
-        transform: translateY(-100%);
-        opacity: 0;
-        transition: transform 0.3s ease, opacity 0.3s ease;
         cursor: pointer;
     }
 
@@ -389,6 +413,7 @@ notificationStyle.textContent = `
     .notification-hide {
         transform: translateY(-100%);
         opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .notification-icon {
@@ -423,10 +448,12 @@ notificationStyle.textContent = `
         color: #ffffff;
         font-size: 14px;
         outline: none;
+        transition: all 0.2s;
     }
 
     .notification-input:focus {
-        border-color: #ffd700;
+        border-color: var(--accent-primary, #ffd700);
+        box-shadow: 0 0 8px var(--accent-primary, #ffd700);
     }
 
     .notification-close {
