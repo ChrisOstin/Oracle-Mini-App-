@@ -6,7 +6,7 @@
 
 const MORI_API = {
     // ========== БАЗОВЫЕ НАСТРОЙКИ ==========
-    baseUrl: 'https://mori-server.onrender.com',
+    baseUrl: 'https://mori-server.onrender.com/api',
     
     timeouts: {
         default: 10000,
