@@ -335,12 +335,18 @@ const MORI_PORTFOLIO = {
                 hover: { mode: 'index', intersect: false }
             }
         });
+   
+    setTimeout(() => this.drawPriceLevels(), 100);
+
     },
 
     updateChart: function() {
         if (!this.chart) return;
         this.chart.data.datasets[0].data = this.chartData;
         this.chart.update();
+
+    setTimeout(() => this.drawPriceLevels(), 50);
+
     },
 
     getTimeUnit: function(timeframe) {
@@ -354,6 +360,36 @@ const MORI_PORTFOLIO = {
         '12m': 'year'
     };
     return units[timeframe] || 'day';
+},
+
+    drawPriceLevels: function() {
+    const ctx = document.getElementById('mori-chart')?.getContext('2d');
+    if (!ctx || !this.chart) return;
+    
+    const canvas = ctx.canvas;
+    const yAxis = this.chart.scales.y;
+    const ticks = yAxis.ticks;
+    
+    ctx.save();
+    ctx.font = '10px Inter, monospace';
+    ctx.fillStyle = '#888';
+    ctx.textAlign = 'right';
+    ctx.shadowBlur = 0;
+    
+    ticks.forEach(tick => {
+        const y = yAxis.getPixelForValue(tick.value);
+        if (y > 10 && y < canvas.height - 10) {
+            ctx.fillText('$' + tick.value.toFixed(6), canvas.width - 10, y - 2);
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(40, y);
+            ctx.lineTo(canvas.width - 10, y);
+            ctx.stroke();
+        }
+    });
+    
+    ctx.restore();
 },
 
     generateMockData: function() {
