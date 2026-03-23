@@ -670,15 +670,15 @@ const MORI_ROUTER = {
 
     // ========== ТЕМЫ ДЛЯ ЭКРАНОВ ==========
     screenThemes: {
-        portfolio: 'dark',
-        library: 'light',
-        chat: 'cyber',
-        family: 'warm',
-        admin: 'royal'
+        portfolio: 'mori-classic',
+        library: 'mori-classic',
+        chat: 'mori-classic',
+        family: 'mori-classic',
+        admin: 'mori-classic'
     },
     
     applyScreenTheme: function(screenId) {
-        const theme = this.screenThemes[screenId] || 'default';
+        const theme = this.screenThemes[screenId] || 'mori-classic';
         document.body.className = `theme-${theme}`;
     },
 
