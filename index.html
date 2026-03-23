@@ -13,16 +13,6 @@
 
     <!-- Тема по умолчанию (mori-classic) -->
     <link rel="stylesheet" href="css/themes/mori-classic.css" id="theme-style">
-    <style>
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
-    </style>    
 
     <!-- Стили модулей -->
     <link rel="stylesheet" href="css/modules/portfolio.css">
@@ -45,8 +35,20 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+    <style>
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+    </style>
 </head>
 <body>
+    <div class="theme-icon"></div>
     <div id="app"></div>
 
     <script src="js/core/utils.js"></script>
