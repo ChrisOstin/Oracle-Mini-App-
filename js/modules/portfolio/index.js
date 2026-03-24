@@ -290,10 +290,11 @@ vibrate: function(pattern = 20) {
                 }
             });
         });
-   
-       // Обработчик клика на график (для телефона)
+ 
+        // Обработчик клика на график и двойной тап
 const chartCanvas = document.getElementById('mori-chart');
 if (chartCanvas) {
+    // Клик — уведомление с ценой
     chartCanvas.addEventListener('click', (e) => {
         if (!this.chart || !this.chart.getElementsAtEvent) return;
         const activePoints = this.chart.getElementsAtEvent(e);
@@ -307,8 +308,20 @@ if (chartCanvas) {
             }
         }
     });
+
+    // Двойной тап — сброс к текущей цене
+    let lastTap = 0;
+    chartCanvas.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - lastTap < 300) {
+            this.loadData(true);
+            this.loadChartData(this.state.timeframe);
+            MORI_APP.showToast('📊 График сброшен к текущей цене', 'info', 2000);
+        }
+        lastTap = now;
+    });
 }
- 
+
         // Кнопка показа/скрытия информации о MORI
         const toggleBtn = document.getElementById('toggle-mori-info');
         if (toggleBtn) {
@@ -336,21 +349,6 @@ if (themeIcon) {
         setTimeout(() => {
             themeIcon.style.transform = '';
         }, 200);
-    });
-}
-
-// 2. Двойной тап по графику — сброс к текущей цене
-const chartCanvas = document.getElementById('mori-chart');
-if (chartCanvas) {
-    let lastTap = 0;
-    chartCanvas.addEventListener('touchend', (e) => {
-        const now = Date.now();
-        if (now - lastTap < 300) {
-            this.loadData(true);
-            this.loadChartData(this.state.timeframe);
-            MORI_APP.showToast('📊 График сброшен к текущей цене', 'info', 2000);
-        }
-        lastTap = now;
     });
 }
 
