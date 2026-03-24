@@ -71,6 +71,11 @@
     transform: scale(0.98);
 }
 
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .stat-label {
     font-size: 0.75rem;
     color: var(--text-secondary);
@@ -109,33 +114,34 @@
 /* Таймфреймы */
 .timeframe-selector {
     display: flex;
-    gap: var(--spacing-xs);
-    margin-bottom: var(--spacing-md);
+    justify-content: center;
+    gap: 4px;
+    margin: 12px 0;
     flex-wrap: wrap;
 }
 
 .timeframe-btn {
-    padding: var(--spacing-xs) var(--spacing-md);
-    background: var(--bg-card);
-    border: 1px solid var(--text-muted);
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    font-size: 0.875rem;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #ffd700;
+    padding: 4px 8px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all var(--transition-fast);
-    flex: 1;
-    min-width: 60px;
+    transition: all 0.2s;
 }
 
 .timeframe-btn.active {
-    background: var(--accent-primary);
-    border-color: var(--accent-primary);
-    color: var(--mori-black);
-    font-weight: 600;
+    background: rgba(255, 215, 0, 0.3);
+    border-color: #ffd700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    transform: scale(1.02);
 }
 
-.timeframe-btn:active {
-    transform: scale(0.95);
+.timeframe-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-1px);
 }
 
 /* Раздел "О MORI" */
@@ -221,6 +227,30 @@
     border-radius: var(--radius-md);
 }
 
+.whales-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 80px; /* чтобы не перекрывалось панелью навигации */
+}
+
+/* Стили для скролла в разделе китов */
+.whales-section::-webkit-scrollbar {
+    width: 4px;
+}
+
+.whales-section::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+    border-radius: 4px;
+}
+
+.whales-section::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 4px;
+}
 /* Состояния загрузки */
 .skeleton-card {
     background: var(--bg-card);
@@ -376,6 +406,27 @@ body[data-theme="light"] .whale-item {
 }
 
 /* Кнопка О MORI */
+.info-section {
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .info-btn {
     background: rgba(255, 215, 0, 0.1);
     border: 1px solid rgba(255, 215, 0, 0.3);
@@ -395,11 +446,218 @@ body[data-theme="light"] .whale-item {
     transform: translateY(-2px);
 }
 
-.info-section {
-    margin-top: 16px;
-    padding: 16px;
+.info-btn:active {
+    transform: scale(0.98);
+}
+/* Панель навигации */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
     background: var(--bg-card);
-    border-radius: 16px;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s;
+    border-top: 1px solid var(--border-color);
+    padding: 8px 0;
+    z-index: 100;
+}
+
+.nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.nav-btn.active {
+    color: var(--accent-primary);
+}
+
+.nav-btn.locked {
+    opacity: 0.6;
+}
+
+.nav-icon {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.lock-icon {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    font-size: 10px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 10px;
+    padding: 0 2px;
+}
+
+.floating-buttons {
+    position: fixed;
+    bottom: 80px;
+    z-index: 101;
+}
+
+.floating-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background: var(--accent-primary);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-btn:hover {
+    transform: scale(1.05);
+}
+
+.floating-btn:active {
+    transform: scale(0.95);
+}
+
+.apps-btn {
+    position: fixed;
+    right: 16px;
+    bottom: 90px;
+}
+
+.house-btn {
+    position: fixed;
+    left: 16px;
+    bottom: 90px;
+    background: var(--accent-secondary);
+}
+
+/* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ===== */
+
+/* 1. Активная кнопка в панели навигации */
+.nav-btn.active {
+    color: var(--accent-primary);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.nav-btn.active .nav-icon {
+    transform: scale(1.05);
+}
+
+/* 2. Анимация появления панели навигации */
+.bottom-nav {
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* 3. Пустое состояние */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+}
+
+.empty-state .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+/* 4. Skeleton анимация (улучшенная) */
+.skeleton-line {
+    background: linear-gradient(
+        90deg,
+        var(--bg-card) 25%,
+        var(--bg-secondary) 50%,
+        var(--bg-card) 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* 5. Модальное окно выбора тем */
+.theme-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent-primary);
+    max-width: 90%;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.theme-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 999;
+}
+
+/* 6. Стили для уведомлений (общие) */
+.notification {
+    background: var(--bg-card);
+    border-left: 4px solid var(--accent-primary);
+    backdrop-filter: blur(10px);
+}
+
+/* 7. Эффект нажатия для плавающей кнопки "Все приложения" */
+.apps-btn:active {
+    transform: scale(0.95);
+    background: var(--accent-secondary);
+}
+
+/* 8. Кастомный скролл всей страницы */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
 }

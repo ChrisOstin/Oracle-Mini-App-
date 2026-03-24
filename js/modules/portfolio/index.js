@@ -18,6 +18,14 @@ const MORI_PORTFOLIO = {
         lastUpdate: null
     },
 
+// Звук
+playSound: function(soundName) {
+    if (!window.MORI_NOTIFICATIONS || !MORI_NOTIFICATIONS.state.soundEnabled) return;
+    const audio = new Audio(`/assets/sounds/${soundName}.mp3`);
+    audio.volume = 0.3;
+    audio.play().catch(() => {});
+},
+
     chart: null,
     chartData: [],
     updateTimer: null,
@@ -225,6 +233,7 @@ const MORI_PORTFOLIO = {
         document.querySelectorAll('.timeframe-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const timeframe = e.target.dataset.timeframe;
+                this.playSound('click');
                 this.setState({ timeframe });
                 this.loadChartData(timeframe);
             });
@@ -238,6 +247,7 @@ const MORI_PORTFOLIO = {
                 const unlockTask = btn.dataset.unlockTask ? JSON.parse(btn.dataset.unlockTask) : null;
                 
                 if (isLocked && unlockTask) {
+                    this.playSound('error');
                     MORI_APP.showToast(
                         `🔒 Функция "${btn.querySelector('.nav-label')?.textContent}" заблокирована.\n✅ Выполните задание №${unlockTask.id}: "${unlockTask.title}" (${unlockTask.desc}) для разблокировки.`,
                         'warning',
@@ -249,6 +259,7 @@ const MORI_PORTFOLIO = {
                 if (module === 'portfolio') {
                     this.loadData();
                 } else if (window.MORI_ROUTER) {
+                    this.playSound('click');
                     MORI_ROUTER.navigate(module);
                 }
             });
@@ -259,33 +270,35 @@ const MORI_PORTFOLIO = {
             btn.addEventListener('click', () => {
                 const module = btn.dataset.module;
                 if (window.MORI_ROUTER) {
+                    this.playSound('click');
                     MORI_ROUTER.navigate(module);
                 }
             });
         });
    
-        // Обработчик клика на график (для телефона)
-        const chartCanvas = document.getElementById('mori-chart');
-        if (chartCanvas) {
-            chartCanvas.addEventListener('click', (e) => {
-                if (!this.chart) return;
-                const activePoints = this.chart.getElementsAtEvent(e);
-                if (activePoints && activePoints.length) {
-                    const point = activePoints[0];
-                    const dataPoint = this.chartData[point.index];
-                    if (dataPoint) {
-                        const price = dataPoint.y;
-                        const time = MORI_UTILS.formatDate(dataPoint.x, 'full');
-                        MORI_APP.showToast(`💰 Цена: $${price.toFixed(6)}\n📅 ${time}`, 'info', 4000);
-                    }
-                }
-            });
+       // Обработчик клика на график (для телефона)
+const chartCanvas = document.getElementById('mori-chart');
+if (chartCanvas) {
+    chartCanvas.addEventListener('click', (e) => {
+        if (!this.chart || !this.chart.getElementsAtEvent) return;
+        const activePoints = this.chart.getElementsAtEvent(e);
+        if (activePoints && activePoints.length) {
+            const point = activePoints[0];
+            const dataPoint = this.chartData[point.index];
+            if (dataPoint) {
+                const price = dataPoint.y;
+                const time = MORI_UTILS.formatDate(dataPoint.x, 'full');
+                MORI_APP.showToast(`💰 Цена: $${price.toFixed(6)}\n📅 ${time}`, 'info', 4000);
+            }
         }
-        
+    });
+}
+ 
         // Кнопка показа/скрытия информации о MORI
         const toggleBtn = document.getElementById('toggle-mori-info');
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
+                this.playSound('click');
                 const section = document.getElementById('mori-info-section');
                 if (section) {
                     if (section.style.display === 'none') {
