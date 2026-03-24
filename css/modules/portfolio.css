@@ -661,3 +661,102 @@ body[data-theme="light"] .whale-item {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--accent-secondary);
 }
+
+/* ===== ПАНЕЛЬ НАВИГАЦИИ — ПРИНУДИТЕЛЬНО ===== */
+.bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #1a1a1a !important;
+    border-top: 2px solid #ffd700 !important;
+    padding: 10px 0 !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3) !important;
+}
+
+.nav-btn {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: none !important;
+    color: #aaa !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    padding: 4px 8px !important;
+    border-radius: 8px !important;
+    transition: all 0.2s !important;
+}
+
+.nav-btn.active {
+    color: #ffd700 !important;
+}
+
+.nav-icon {
+    font-size: 22px !important;
+    margin-bottom: 2px !important;
+}
+
+.floating-buttons {
+    position: fixed !important;
+    bottom: 90px !important;
+    z-index: 10000 !important;
+}
+
+.apps-btn {
+    position: fixed !important;
+    right: 16px !important;
+    bottom: 100px !important;
+    background: #ffd700 !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+/* Таймфреймы внутри графика */
+.chart-container {
+    position: relative;
+}
+
+.timeframe-selector {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 8px 12px;
+    border-radius: 30px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.timeframe-btn {
+    background: rgba(255, 215, 0, 0.2);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: #ffd700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.timeframe-btn.active {
+    background: rgba(255, 215, 0, 0.5);
+    border-color: #ffd700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}

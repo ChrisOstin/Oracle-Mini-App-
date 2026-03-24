@@ -279,10 +279,14 @@ const MORI_NOTIFICATIONS = {
         // Свайп вверх для закрытия
         let touchStartY = 0;
         element.addEventListener('touchstart', (e) => {
+            e.stopPropagation();  // <-- добавить
+            e.preventDefault();
             touchStartY = e.touches[0].clientY;
         });
-        
+
         element.addEventListener('touchend', (e) => {
+            e.stopPropagation();  // <-- добавить
+            e.preventDefault();
             const touchEndY = e.changedTouches[0].clientY;
             if (touchStartY - touchEndY > 50) {
                 this.hide(notification.id);

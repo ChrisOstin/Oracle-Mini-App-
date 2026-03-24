@@ -26,6 +26,11 @@ playSound: function(soundName) {
     audio.play().catch(() => {});
 },
 
+vibrate: function(pattern = 20) {
+    if (!window.MORI_NOTIFICATIONS || !MORI_NOTIFICATIONS.state.vibrationEnabled) return;
+    if (navigator.vibrate) navigator.vibrate(pattern);
+},
+
     chart: null,
     chartData: [],
     updateTimer: null,
@@ -71,16 +76,7 @@ playSound: function(soundName) {
           
             <div class="chart-container">
                 <canvas id="mori-chart"></canvas>
-            </div>
-
-            <div class="current-price-large">
-                <span class="price-big">$${this.state.price.toFixed(6)}</span>
-                <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
-                    ${this.state.change24h >= 0 ? '+' : ''}${this.state.change24h.toFixed(2)}%
-                </span>
-            </div>
-
-            <div class="timeframe-selector">
+                 <div class="timeframe-selector">
                 <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
                 <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
                 <button class="timeframe-btn ${this.state.timeframe === '3d' ? 'active' : ''}" data-timeframe="3d">3д</button>
@@ -88,6 +84,15 @@ playSound: function(soundName) {
                 <button class="timeframe-btn ${this.state.timeframe === '3m' ? 'active' : ''}" data-timeframe="3m">3м</button>
                 <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
                 <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
+            </div>
+ 
+           </div>
+
+            <div class="current-price-large">
+                <span class="price-big">$${this.state.price.toFixed(6)}</span>
+                <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
+                    ${this.state.change24h >= 0 ? '+' : ''}${this.state.change24h.toFixed(2)}%
+                </span>
             </div>
 
             <button class="info-btn" id="toggle-mori-info">🪙 О MORI</button>
@@ -234,6 +239,7 @@ playSound: function(soundName) {
             btn.addEventListener('click', (e) => {
                 const timeframe = e.target.dataset.timeframe;
                 this.playSound('click');
+                this.vibrate(20);
                 this.setState({ timeframe });
                 this.loadChartData(timeframe);
             });
@@ -248,6 +254,7 @@ playSound: function(soundName) {
                 
                 if (isLocked && unlockTask) {
                     this.playSound('error');
+                    this.vibrate([100, 50, 100]);
                     MORI_APP.showToast(
                         `🔒 Функция "${btn.querySelector('.nav-label')?.textContent}" заблокирована.\n✅ Выполните задание №${unlockTask.id}: "${unlockTask.title}" (${unlockTask.desc}) для разблокировки.`,
                         'warning',
@@ -260,6 +267,7 @@ playSound: function(soundName) {
                     this.loadData();
                 } else if (window.MORI_ROUTER) {
                     this.playSound('click');
+                    this.vibrate(20);
                     MORI_ROUTER.navigate(module);
                 }
             });
@@ -271,6 +279,7 @@ playSound: function(soundName) {
                 const module = btn.dataset.module;
                 if (window.MORI_ROUTER) {
                     this.playSound('click');
+                    this.vibrate(20);
                     MORI_ROUTER.navigate(module);
                 }
             });
@@ -299,6 +308,7 @@ if (chartCanvas) {
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
                 this.playSound('click');
+                this.vibrate(20);
                 const section = document.getElementById('mori-info-section');
                 if (section) {
                     if (section.style.display === 'none') {
@@ -314,29 +324,48 @@ if (chartCanvas) {
 
     },
 
-    loadData: async function() {
-        this.setState({ isLoading: true });
-        try {
-            const priceData = await MORI_API.getMoriPrice();
-            if (priceData) {
-                this.setState({
-                    price: priceData.price,
-                    change24h: priceData.change24h,
-                    volume24h: priceData.volume24h,
-                    liquidity: priceData.liquidity,
-                    fdv: priceData.fdv,
-                    marketCap: priceData.marketCap,
-                    circulatingSupply: priceData.circulatingSupply,
-                    lastUpdate: Date.now()
-                });
-            }
-            await this.loadChartData(this.state.timeframe);
-        } catch (error) {
-            console.error('Error loading portfolio data:', error);
-            MORI_APP.showToast('Ошибка загрузки данных', 'error');
-        }
+    loadData: async function(force = false) {
+    this.setState({ isLoading: true });
+    
+    const cacheKey = `portfolio_data_${this.state.timeframe}`;
+    const cached = MORI_STORAGE?.get(cacheKey);
+    const cacheAge = cached?.timestamp ? Date.now() - cached.timestamp : Infinity;
+    
+    if (!force && cached && cacheAge < 30000) {
+        this.setState(cached.data);
         this.setState({ isLoading: false });
-    },
+        return;
+    }
+    
+    try {
+        const priceData = await MORI_API.getMoriPrice();
+        if (priceData) {
+            const newData = {
+                price: priceData.price,
+                change24h: priceData.change24h,
+                volume24h: priceData.volume24h,
+                liquidity: priceData.liquidity,
+                fdv: priceData.fdv,
+                marketCap: priceData.marketCap,
+                circulatingSupply: priceData.circulatingSupply,
+                lastUpdate: Date.now()
+            };
+            this.setState(newData);
+            
+            MORI_STORAGE?.set(cacheKey, {
+                data: newData,
+                timestamp: Date.now()
+            });
+        }
+        await this.loadChartData(this.state.timeframe);
+    } catch (error) {
+        console.error('Error loading portfolio data:', error);
+        MORI_APP.showToast('Ошибка загрузки данных', 'error');
+        this.playSound('error');
+        this.vibrate([100, 50, 100]);
+    }
+    this.setState({ isLoading: false });
+},
 
     loadChartData: async function(timeframe) {
         try {
