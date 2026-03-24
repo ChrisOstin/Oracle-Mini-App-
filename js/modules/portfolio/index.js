@@ -60,18 +60,31 @@ const MORI_PORTFOLIO = {
         const changeSign = this.state.change24h >= 0 ? '+' : '';
 
         return `
-            <div class="portfolio-header">
-                <div class="portfolio-price">
-                    <div class="price-label">MORI / USD</div>
-                    <div class="price-value">${MORI_UTILS.formatMoriPrice(this.state.price)}</div>
-                    <div class="price-change ${changeClass}">
-                        ${changeSign}${this.state.change24h.toFixed(2)}%
-                    </div>
-                </div>
-                <div class="last-update">
-                    ${this.state.lastUpdate ? MORI_UTILS.timeAgo(this.state.lastUpdate) : ''}
-                </div>
+          
+            <div class="chart-container">
+                <canvas id="mori-chart"></canvas>
             </div>
+
+            <div class="current-price-large">
+                <span class="price-big">$${this.state.price.toFixed(6)}</span>
+                <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
+                    ${this.state.change24h >= 0 ? '+' : ''}${this.state.change24h.toFixed(2)}%
+                </span>
+            </div>
+
+            <div class="timeframe-selector">
+                <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
+                <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
+                <button class="timeframe-btn ${this.state.timeframe === '3d' ? 'active' : ''}" data-timeframe="3d">3д</button>
+                <button class="timeframe-btn ${this.state.timeframe === '1m' ? 'active' : ''}" data-timeframe="1m">1м</button>
+                <button class="timeframe-btn ${this.state.timeframe === '3m' ? 'active' : ''}" data-timeframe="3m">3м</button>
+                <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
+                <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
+            </div>
+
+            <button class="info-btn" id="toggle-mori-info">🪙 О MORI</button>
+
+            <div id="mori-info-section" class="info-section" style="display: none;">
 
             <div class="stats-grid">
                 <div class="stat-card">
@@ -92,37 +105,13 @@ const MORI_PORTFOLIO = {
                 </div>
             </div>
 
-            <div class="timeframe-selector">
-                <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
-                <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
-                <button class="timeframe-btn ${this.state.timeframe === '3d' ? 'active' : ''}" data-timeframe="3d">3д</button>
-                <button class="timeframe-btn ${this.state.timeframe === '1m' ? 'active' : ''}" data-timeframe="1m">1м</button>
-                <button class="timeframe-btn ${this.state.timeframe === '3m' ? 'active' : ''}" data-timeframe="3m">3м</button>
-                <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
-                <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
-            </div>
-
-            <div class="chart-container">
-                <canvas id="mori-chart"></canvas>
-            </div>
-
-            <div class="timeframe-selector">
-                <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
-                <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
-                <button class="timeframe-btn ${this.state.timeframe === '3d' ? 'active' : ''}" data-timeframe="3d">3д</button>
-                <button class="timeframe-btn ${this.state.timeframe === '1m' ? 'active' : ''}" data-timeframe="1m">1м</button>
-                <button class="timeframe-btn ${this.state.timeframe === '3m' ? 'active' : ''}" data-timeframe="3m">3м</button>
-                <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
-                <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
-            </div>
-
-            <div class="about-section">
+           <div class="about-section">
                 <h3>О MORI</h3>
                 <div class="about-grid">
                     <div class="about-item">
                         <div class="about-label">Токен</div>
                         <div class="about-value">MORI</div>
-                    </div>
+                   </div>
                     <div class="about-item">
                         <div class="about-label">Сеть</div>
                         <div class="about-value">Solana</div>
@@ -133,7 +122,7 @@ const MORI_PORTFOLIO = {
                     </div>
                     <div class="about-item">
                         <div class="about-label">Макс. предложение</div>
-                        <div class="about-value">1B</div>
+                       <div class="about-value">1B</div>
                     </div>
                 </div>
             </div>
@@ -182,7 +171,7 @@ const MORI_PORTFOLIO = {
         const showChat = (level === 'user' && !allTasksCompleted);
         
         let buttons = [];
-        buttons.push({ id: 'portfolio', icon: '📊', label: 'Портфель', locked: false });
+        buttons.push({ id: 'portfolio', icon: '💼', label: 'Портфель', locked: false });
         
         const calculatorUnlocked = this.isModuleUnlocked('calculator');
         buttons.push({ id: 'calculator', icon: '🧮', label: 'Калькулятор', locked: !calculatorUnlocked, unlockTask: { id: 5, title: 'Исследователь', desc: 'Написать 10 сообщений' } });
@@ -195,7 +184,7 @@ const MORI_PORTFOLIO = {
         }
         
         const aiUnlocked = this.isModuleUnlocked('ai-chat');
-        buttons.push({ id: 'ai-chat', icon: '🤖', label: 'AI-чат', locked: !aiUnlocked, unlockTask: { id: 18, title: 'Любознательный', desc: 'Написать 30 сообщений' } });
+        buttons.push({ id: 'ai-chat', icon: '🧠', label: 'AI', locked: !aiUnlocked, unlockTask: { id: 18, title: 'Любознательный', desc: 'Написать 30 сообщений' } });
         
         buttons.push({ id: 'profile', icon: '👤', label: 'Профиль', locked: false });
         
@@ -288,6 +277,22 @@ const MORI_PORTFOLIO = {
                         const price = dataPoint.y;
                         const time = MORI_UTILS.formatDate(dataPoint.x, 'full');
                         MORI_APP.showToast(`💰 Цена: $${price.toFixed(6)}\n📅 ${time}`, 'info', 4000);
+                    }
+                }
+            });
+   
+        // Кнопка показа/скрытия информации о MORI
+        const toggleBtn = document.getElementById('toggle-mori-info');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const section = document.getElementById('mori-info-section');
+                if (section) {
+                    if (section.style.display === 'none') {
+                        section.style.display = 'block';
+                        toggleBtn.textContent = '🪙 Скрыть MORI';
+                    } else {
+                        section.style.display = 'none';
+                        toggleBtn.textContent = '🪙 О MORI';
                     }
                 }
             });

@@ -316,3 +316,61 @@ body[data-theme="dark"] .whale-item {
 body[data-theme="light"] .whale-item {
     border-color: rgba(0, 0, 0, 0.05);
 }
+
+
+/* Таймфреймы под графиком */
+.timeframe-selector {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+}
+
+.timeframe-btn {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #ffd700;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.timeframe-btn.active {
+    background: rgba(255, 215, 0, 0.3);
+    border-color: #ffd700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.timeframe-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Крупная цена под графиком */
+.current-price-large {
+    text-align: center;
+    margin: 16px 0;
+}
+
+.price-big {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.price-change {
+    font-size: 16px;
+    margin-left: 8px;
+    font-weight: 500;
+}
+
+.price-change.positive {
+    color: #00ff88;
+}
+
+.price-change.negative {
+    color: #ff4444;
+}
