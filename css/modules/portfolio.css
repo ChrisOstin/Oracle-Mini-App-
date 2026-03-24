@@ -182,6 +182,7 @@
     color: var(--accent-primary);
 }
 
+/* Киты */
 .whales-section h3 {
     font-size: 1.125rem;
     margin-bottom: var(--spacing-md);
@@ -279,6 +280,7 @@
 .refresh-indicator {
     position: fixed;
     top: calc(var(--header-height) + 10px);
+header-height) + 10px);
     right: var(--spacing-md);
     background: var(--accent-primary);
     color: var(--mori-black);
@@ -321,11 +323,10 @@
 @media (min-width: 768px) {
     .stats-grid {
         grid-template-columns: repeat(4, 1fr);
-    }
+}
     
-    .about-grid {
+.about-grid {
         grid-template-columns: repeat(4, 1fr);
-    }
 }
 
 /* Тёмная тема (специфичные правки) */
