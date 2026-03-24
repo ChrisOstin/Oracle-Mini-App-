@@ -95,12 +95,6 @@ vibrate: function(pattern = 20) {
                 </span>
             </div>
 
-            <!-- Сравнение с Solana -->
-            <div class="solana-compare">
-                <div class="solana-label">Сравнение с Solana</div>
-                <div class="solana-value">+2.34% за 24ч</div>
-            </div>
-
             <button class="info-btn" id="toggle-mori-info">🪙 О MORI</button>
 
             <div id="mori-info-section" class="info-section" style="display: none;">
@@ -325,65 +319,6 @@ if (chartCanvas) {
                 }
             });
         }
-
-    // ===== НОВЫЕ ФУНКЦИИ =====
-
-// 1. Пульсация иконки темы при клике
-const themeIcon = document.querySelector('.theme-icon');
-if (themeIcon) {
-    themeIcon.addEventListener('click', () => {
-        themeIcon.style.transform = 'scale(1.1)';
-        setTimeout(() => {
-            themeIcon.style.transform = '';
-        }, 200);
-    });
-}
-
-// 2. Двойной тап по графику — сброс к текущей цене
-const chartCanvas = document.getElementById('mori-chart');
-if (chartCanvas) {
-    let lastTap = 0;
-    chartCanvas.addEventListener('touchend', (e) => {
-        const now = Date.now();
-        if (now - lastTap < 300) {
-            this.loadData(true);
-            this.loadChartData(this.state.timeframe);
-            MORI_APP.showToast('📊 График сброшен к текущей цене', 'info', 2000);
-        }
-        lastTap = now;
-    });
-}
-
-// 3. Долгий тап по киту — копирование адреса
-document.querySelectorAll('.whale-item').forEach(item => {
-    let pressTimer;
-    item.addEventListener('touchstart', (e) => {
-        pressTimer = setTimeout(() => {
-            const address = item.querySelector('.whale-address')?.textContent;
-            if (address) {
-                navigator.clipboard.writeText(address);
-                MORI_APP.showToast(`📋 Адрес скопирован: ${address}`, 'success', 2000);
-            }
-        }, 500);
-    });
-    item.addEventListener('touchend', () => {
-        clearTimeout(pressTimer);
-    });
-    item.addEventListener('touchmove', () => {
-        clearTimeout(pressTimer);
-    });
-});
-
-// 4. Клик по киту — уведомление с транзакциями
-document.querySelectorAll('.whale-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-        const address = item.querySelector('.whale-address')?.textContent;
-        const amount = item.querySelector('.whale-amount')?.textContent;
-        if (address) {
-            MORI_APP.showToast(`🐋 Кит ${address}\n💰 Баланс: ${amount}\n📊 Транзакции: временно недоступны`, 'info', 4000);
-        }
-    });
-});
 
     },
 

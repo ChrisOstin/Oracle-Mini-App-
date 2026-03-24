@@ -1,107 +1,12 @@
 /* ===== PORTFOLIO MODULE ===== */
 
-.portfolio-screen {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Шапка портфеля */
-.portfolio-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-md);
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--spacing-md);
-}
-
-.portfolio-price {
-    text-align: left;
-}
-
-.price-label {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-xs);
-}
-
-.price-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent-primary);
-    line-height: 1.2;
-}
-
-.price-change {
-    font-size: 0.875rem;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-md);
-    display: inline-block;
-    margin-top: var(--spacing-xs);
-}
-
-.price-change.positive {
-    background: rgba(0, 255, 136, 0.1);
-    color: var(--accent-success);
-}
-
-.price-change.negative {
-    background: rgba(255, 68, 68, 0.1);
-    color: var(--accent-danger);
-}
-
-/* Статистика (сетка 2x2) */
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-}
-
-.stat-card {
-    background: var(--bg-card);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-lg);
-    transition: transform var(--transition-fast);
-}
-
-.stat-card:active {
-    transform: scale(0.98);
-}
-
-.stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.stat-label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: var(--spacing-xs);
-}
-
-.stat-value {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: var(--spacing-xs);
-}
-
-.stat-change {
-    font-size: 0.75rem;
-}
-
 /* График */
 .chart-container {
     background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    height: 300px;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    height: 320px;
     position: relative;
     overflow: hidden;
 }
@@ -109,267 +14,6 @@
 #mori-chart {
     width: 100%;
     height: 100%;
-}
-
-/* Таймфреймы */
-.timeframe-selector {
-    display: flex;
-    justify-content: center;
-    gap: 4px;
-    margin: 12px 0;
-    flex-wrap: wrap;
-}
-
-.timeframe-btn {
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: #ffd700;
-    padding: 4px 8px;
-    border-radius: 14px;
-    font-size: 11px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.timeframe-btn.active {
-    background: rgba(255, 215, 0, 0.3);
-    border-color: #ffd700;
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-    transform: scale(1.02);
-}
-
-.timeframe-btn:hover {
-    background: rgba(255, 215, 0, 0.2);
-    transform: translateY(-1px);
-}
-
-/* Раздел "О MORI" */
-.about-section {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-}
-
-.about-section h3 {
-    font-size: 1.125rem;
-    margin-bottom: var(--spacing-md);
-    color: var(--text-primary);
-}
-
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-sm);
-}
-
-.about-item {
-    background: var(--bg-primary);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-md);
-}
-
-.about-label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-xs);
-}
-
-.about-value {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--accent-primary);
-}
-
-/* Киты */
-.whales-section h3 {
-    font-size: 1.125rem;
-    margin-bottom: var(--spacing-md);
-    color: var(--text-primary);
-}
-
-.whale-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-md) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.whale-item:last-child {
-    border-bottom: none;
-}
-
-.whale-address {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-}
-
-.whale-amount {
-    font-weight: 600;
-    color: var(--accent-primary);
-}
-
-.whale-percentage {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    background: var(--bg-primary);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-md);
-}
-
-.whales-section {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    max-height: 400px;
-    overflow-y: auto;
-    margin-bottom: 80px; /* чтобы не перекрывалось панелью навигации */
-}
-
-/* Стили для скролла в разделе китов */
-.whales-section::-webkit-scrollbar {
-    width: 4px;
-}
-
-.whales-section::-webkit-scrollbar-track {
-    background: var(--bg-primary);
-    border-radius: 4px;
-}
-
-.whales-section::-webkit-scrollbar-thumb {
-    background: var(--accent-primary);
-    border-radius: 4px;
-}
-/* Состояния загрузки */
-.skeleton-card {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-}
-
-.skeleton-line {
-    height: 16px;
-    background: linear-gradient(
-        90deg,
-        var(--bg-card) 25%,
-        var(--bg-secondary) 50%,
-        var(--bg-card) 75%
-    );
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
-    border-radius: var(--radius-sm);
-    margin: var(--spacing-xs) 0;
-}
-
-.skeleton-line.title {
-    width: 60%;
-    height: 24px;
-}
-
-.skeleton-line.price {
-    width: 40%;
-    height: 32px;
-}
-
-/* Обновление данных */
-.refresh-indicator {
-    position: fixed;
-    top: calc(var(--header-height) + 10px);
-header-height) + 10px);
-    right: var(--spacing-md);
-    background: var(--accent-primary);
-    color: var(--mori-black);
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: var(--radius-xl);
-    font-size: 0.875rem;
-    font-weight: 600;
-    z-index: var(--z-toast);
-    box-shadow: var(--shadow-gold);
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* Адаптивность */
-@media (max-width: 360px) {
-    .timeframe-btn {
-        font-size: 0.75rem;
-        padding: var(--spacing-xs) var(--spacing-sm);
-    }
-    
-    .stat-value {
-        font-size: 1rem;
-    }
-    
-    .price-value {
-        font-size: 1.5rem;
-    }
-}
-
-@media (min-width: 768px) {
-    .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
-}
-    
-.about-grid {
-        grid-template-columns: repeat(4, 1fr);
-}
-
-/* Тёмная тема (специфичные правки) */
-body[data-theme="dark"] .stat-card,
-body[data-theme="dark"] .whale-item {
-    border-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Светлая тема */
-body[data-theme="light"] .whale-item {
-    border-color: rgba(0, 0, 0, 0.05);
-}
-
-
-/* Таймфреймы под графиком */
-.timeframe-selector {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 16px 0;
-    flex-wrap: wrap;
-}
-
-.timeframe-btn {
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: #ffd700;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.timeframe-btn.active {
-    background: rgba(255, 215, 0, 0.3);
-    border-color: #ffd700;
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-}
-
-.timeframe-btn:hover {
-    background: rgba(255, 215, 0, 0.2);
-    transform: translateY(-2px);
 }
 
 /* Крупная цена под графиком */
@@ -381,7 +25,8 @@ body[data-theme="light"] .whale-item {
 .price-big {
     font-size: 28px;
     font-weight: bold;
-    color: var(--text-primary);
+    color: #ffffff;
+    transition: all 0.2s;
 }
 
 .price-change {
@@ -399,6 +44,26 @@ body[data-theme="light"] .whale-item {
 }
 
 /* Кнопка О MORI */
+.info-btn {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #ffd700;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 16px auto;
+    display: block;
+    width: fit-content;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.info-btn:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-2px);
+}
+
 .info-section {
     margin-top: 16px;
     padding: 16px;
@@ -420,50 +85,193 @@ body[data-theme="light"] .whale-item {
     }
 }
 
-.info-btn {
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: #ffd700;
-    padding: 8px 20px;
-    border-radius: 30px;
-    font-size: 14px;
-    cursor: pointer;
+/* Статистика */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    padding: 12px;
+    border-radius: 12px;
     transition: all 0.2s;
-    margin: 16px auto;
-    display: block;
-    width: fit-content;
 }
 
-.info-btn:hover {
-    background: rgba(255, 215, 0, 0.2);
-    transform: translateY(-2px);
-}
-
-.info-btn:active {
+.stat-card:active {
     transform: scale(0.98);
 }
-/* Панель навигации */
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Раздел "О MORI" */
+.about-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.about-section h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #ffd700;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.about-item {
+    background: var(--bg-primary);
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.about-label {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.about-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffd700;
+}
+
+/* Сравнение с Solana */
+.solana-compare {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 16px;
+    text-align: center;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.solana-label {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.solana-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffd700;
+}
+
+/* Киты */
+.whales-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 80px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.whales-section h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #ffd700;
+}
+
+.whale-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.whale-item:active {
+    transform: scale(0.99);
+}
+
+.whale-item:last-child {
+    border-bottom: none;
+}
+
+.whale-address {
+    font-family: monospace;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.whale-amount {
+    font-weight: 600;
+    color: #ffd700;
+}
+
+.whale-percentage {
+    font-size: 12px;
+    color: #aaa;
+    background: var(--bg-primary);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+/* Стили для скролла китов */
+.whales-section::-webkit-scrollbar {
+    width: 4px;
+}
+
+.whales-section::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+    border-radius: 4px;
+}
+
+.whales-section::-webkit-scrollbar-thumb {
+    background: #ffd700;
+    border-radius: 4px;
+}
+
+/* ПАНЕЛЬ НАВИГАЦИИ */
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    background: #1a1a1a;
+    border-top: 2px solid rgba(255, 215, 0, 0.5);
+    padding: 8px 0;
+    z-index: 9999;
     display: flex;
     justify-content: space-around;
-    background: var(--bg-card);
-    border-top: 1px solid var(--border-color);
-    padding: 8px 0;
-    z-index: 100;
 }
 
 .nav-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: none;
+    background: transparent;
     border: none;
-    color: var(--text-secondary);
-    font-size: 12px;
+    color: #888;
+    font-size: 11px;
     cursor: pointer;
     padding: 4px 8px;
     border-radius: 8px;
@@ -472,16 +280,16 @@ body[data-theme="light"] .whale-item {
 }
 
 .nav-btn.active {
-    color: var(--accent-primary);
-}
-
-.nav-btn.locked {
-    opacity: 0.6;
+    color: #ffd700;
 }
 
 .nav-icon {
     font-size: 20px;
     margin-bottom: 2px;
+}
+
+.nav-btn.locked {
+    opacity: 0.5;
 }
 
 .lock-icon {
@@ -494,17 +302,18 @@ body[data-theme="light"] .whale-item {
     padding: 0 2px;
 }
 
+/* ПЛАВАЮЩИЕ КНОПКИ */
 .floating-buttons {
     position: fixed;
     bottom: 80px;
-    z-index: 101;
+    z-index: 10000;
 }
 
 .floating-btn {
     width: 48px;
     height: 48px;
-    border-radius: 24px;
-    background: var(--accent-primary);
+    border-radius: 50%;
+    background: #ffd700;
     border: none;
     font-size: 24px;
     cursor: pointer;
@@ -533,210 +342,47 @@ body[data-theme="light"] .whale-item {
     position: fixed;
     left: 16px;
     bottom: 90px;
-    background: var(--accent-secondary);
+    background: #ffaa33;
 }
 
-/* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ===== */
-
-/* 1. Активная кнопка в панели навигации */
-.nav-btn.active {
-    color: var(--accent-primary);
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-}
-
-.nav-btn.active .nav-icon {
-    transform: scale(1.05);
-}
-
-/* 2. Анимация появления панели навигации */
-.bottom-nav {
-    animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(100%);
-    }
-    to {
-        transform: translateY(0);
-    }
-}
-
-/* 3. Пустое состояние */
-.empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-secondary);
-}
-
-.empty-state .empty-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-    opacity: 0.5;
-}
-
-/* 4. Skeleton анимация (улучшенная) */
-.skeleton-line {
-    background: linear-gradient(
-        90deg,
-        var(--bg-card) 25%,
-        var(--bg-secondary) 50%,
-        var(--bg-card) 75%
-    );
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
-    }
-}
-
-/* 5. Модальное окно выбора тем */
-.theme-modal {
+/* ИКОНКА ТЕМЫ */
+.theme-icon {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--bg-card);
-    border-radius: 24px;
-    padding: 20px;
-    z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--accent-primary);
-    max-width: 90%;
-    max-height: 80%;
-    overflow-y: auto;
+    top: 16px;
+    left: 16px;
+    z-index: 10000;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1.5px solid #ffd700;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
 }
 
-.theme-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 999;
+.theme-icon:hover {
+    transform: scale(1.02);
+    background: rgba(0, 0, 0, 0.7);
 }
 
-/* 6. Стили для уведомлений (общие) */
-.notification {
-    background: var(--bg-card);
-    border-left: 4px solid var(--accent-primary);
-    backdrop-filter: blur(10px);
-}
-
-/* 7. Эффект нажатия для плавающей кнопки "Все приложения" */
-.apps-btn:active {
-    transform: scale(0.95);
-    background: var(--accent-secondary);
-}
-
-/* 8. Кастомный скролл всей страницы */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--accent-primary);
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-secondary);
-}
-
-/* ===== ПАНЕЛЬ НАВИГАЦИИ — ПРИНУДИТЕЛЬНО ===== */
-.bottom-nav {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    background: #1a1a1a !important;
-    border-top: 2px solid #ffd700 !important;
-    padding: 10px 0 !important;
-    z-index: 9999 !important;
-    display: flex !important;
-    justify-content: space-around !important;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.3) !important;
-}
-
-.nav-btn {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    background: transparent !important;
-    border: none !important;
-    color: #aaa !important;
-    font-size: 12px !important;
-    cursor: pointer !important;
-    padding: 4px 8px !important;
-    border-radius: 8px !important;
-    transition: all 0.2s !important;
-}
-
-.nav-btn.active {
-    color: #ffd700 !important;
-}
-
-.nav-icon {
-    font-size: 22px !important;
-    margin-bottom: 2px !important;
-}
-
-.floating-buttons {
-    position: fixed !important;
-    bottom: 90px !important;
-    z-index: 10000 !important;
-}
-
-.apps-btn {
-    position: fixed !important;
-    right: 16px !important;
-    bottom: 100px !important;
-    background: #ffd700 !important;
-    width: 48px !important;
-    height: 48px !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 24px !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
-}
-
-/* Убедимся, что контент не перекрывает панель */
-.whales-section {
-    margin-bottom: 80px !important;
-    padding-bottom: 20px !important;
-}
-/* Таймфреймы внутри графика */
-.chart-container {
-    position: relative;
-}
-
+/* ТАЙМФРЕЙМЫ ВНУТРИ ГРАФИКА */
 .timeframe-selector {
     position: absolute;
-    bottom: 16px;
+    bottom: 40px;
     left: 0;
     right: 0;
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     z-index: 10;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
-    padding: 8px 12px;
+    padding: 6px 12px;
     border-radius: 30px;
     width: fit-content;
     margin: 0 auto;
@@ -759,82 +405,91 @@ body[data-theme="light"] .whale-item {
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
 }
 
+/* Отступ для контента, чтобы панель не перекрывала */
+#portfolio-content {
+    padding-bottom: 80px;
+}
 
-/* ===== ИКОНКА ТЕМЫ (золотая обводка) ===== */
-.theme-icon {
+/* ===== ОКНО ВЫБОРА ТЕМ ===== */
+.theme-modal {
     position: fixed;
-    top: 16px;
-    left: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 20px;
     z-index: 10000;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1.5px solid #ffd700;
-    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent-primary);
+    max-width: 90%;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.theme-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+}
+
+.theme-modal h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: #ffd700;
+    text-align: center;
+}
+
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.theme-option {
+    background: var(--bg-primary);
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.theme-option:hover {
+    border-color: #ffd700;
+    transform: scale(1.02);
+}
+
+.theme-option.active {
+    border-color: #ffd700;
+    background: rgba(255,215,0,0.1);
+}
+
+.theme-icon-preview {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.theme-name {
+    font-size: 12px;
+    color: #fff;
+}
+
+.theme-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: #888;
     font-size: 24px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(4px);
-    box-shadow: none;
 }
 
-.theme-icon:hover {
-    transform: scale(1.02);
-    background: rgba(0, 0, 0, 0.7);
-    border-color: #ffd700;
-}
 
-/* ===== ПАНЕЛЬ НАВИГАЦИИ (тёмные иконки, активная золотая) ===== */
-.bottom-nav {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    background: #1a1a1a !important;
-    border-top: 2px solid rgba(255, 215, 0, 0.3) !important;
-    padding: 8px 0 !important;
-    z-index: 9999 !important;
-    display: flex !important;
-    justify-content: space-around !important;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.3) !important;
-}
-
-.nav-btn {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    background: transparent !important;
-    border: none !important;
-    color: #666 !important;  /* тёмные иконки */
-    font-size: 12px !important;
-    cursor: pointer !important;
-    padding: 4px 8px !important;
-    border-radius: 8px !important;
-    transition: all 0.2s !important;
-}
-
-.nav-btn.active {
-    color: #ffd700 !important;  /* золотая активная */
-}
-
-.nav-icon {
-    font-size: 22px !important;
-    margin-bottom: 2px !important;
-}
-
-.nav-btn.locked {
-    opacity: 0.5 !important;
-}
-
-.lock-icon {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    font-size: 10px;
-    background: rgba(0,0,0,0.7);
-    border-radius: 10px;
-    padding: 0 2px;
-}
