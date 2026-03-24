@@ -307,8 +307,6 @@ if (chartCanvas) {
         const toggleBtn = document.getElementById('toggle-mori-info');
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
-                this.playSound('click');
-                this.vibrate(20);
                 const section = document.getElementById('mori-info-section');
                 if (section) {
                     if (section.style.display === 'none') {

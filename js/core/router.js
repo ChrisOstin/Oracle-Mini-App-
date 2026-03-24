@@ -481,25 +481,7 @@ const MORI_ROUTER = {
 
     // ========== КНОПКИ В ШАПКЕ ==========
     renderHeaderButtons: function() {
-        const level = MORI_APP.accessLevel || 'guest';
-        let buttons = '';
-        
-        if (level !== 'guest') {
-            buttons += `<button class="header-btn" onclick="MORI_ROUTER.toggleBookmark()" title="Закладка">🔖</button>`;
-            buttons += `<button class="header-btn" onclick="MORI_ROUTER.toggleFavorite()" title="Избранное">⭐</button>`;
-        }
-        
-        buttons += `<button class="header-btn" onclick="MORI_ROUTER.goBack()" title="Назад">◀</button>`;
-        
-        if (level === 'admin') {
-            buttons += `<button class="header-btn" onclick="MORI_ROUTER.navigate('admin')" title="Админка">👑</button>`;
-        }
-        
-        if (level !== 'guest') {
-            buttons += `<button class="header-btn" onclick="MORI_AUTH.logout()" title="Выход">🚪</button>`;
-        }
-        
-        return buttons;
+        return '';
     },
 
     // ========== ЛЕНИВАЯ ЗАГРУЗКА МОДУЛЯ ==========

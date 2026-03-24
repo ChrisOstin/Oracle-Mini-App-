@@ -182,14 +182,6 @@
     color: var(--accent-primary);
 }
 
-/* Киты */
-.whales-section {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-}
-
 .whales-section h3 {
     font-size: 1.125rem;
     margin-bottom: var(--spacing-md);
@@ -722,6 +714,11 @@ body[data-theme="light"] .whale-item {
     box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
 }
 
+/* Убедимся, что контент не перекрывает панель */
+.whales-section {
+    margin-bottom: 80px !important;
+    padding-bottom: 20px !important;
+}
 /* Таймфреймы внутри графика */
 .chart-container {
     position: relative;
@@ -759,4 +756,84 @@ body[data-theme="light"] .whale-item {
     background: rgba(255, 215, 0, 0.5);
     border-color: #ffd700;
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+
+/* ===== ИКОНКА ТЕМЫ (золотая обводка) ===== */
+.theme-icon {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 10000;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1.5px solid #ffd700;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    box-shadow: none;
+}
+
+.theme-icon:hover {
+    transform: scale(1.02);
+    background: rgba(0, 0, 0, 0.7);
+    border-color: #ffd700;
+}
+
+/* ===== ПАНЕЛЬ НАВИГАЦИИ (тёмные иконки, активная золотая) ===== */
+.bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #1a1a1a !important;
+    border-top: 2px solid rgba(255, 215, 0, 0.3) !important;
+    padding: 8px 0 !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3) !important;
+}
+
+.nav-btn {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: none !important;
+    color: #666 !important;  /* тёмные иконки */
+    font-size: 12px !important;
+    cursor: pointer !important;
+    padding: 4px 8px !important;
+    border-radius: 8px !important;
+    transition: all 0.2s !important;
+}
+
+.nav-btn.active {
+    color: #ffd700 !important;  /* золотая активная */
+}
+
+.nav-icon {
+    font-size: 22px !important;
+    margin-bottom: 2px !important;
+}
+
+.nav-btn.locked {
+    opacity: 0.5 !important;
+}
+
+.lock-icon {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    font-size: 10px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 10px;
+    padding: 0 2px;
 }
