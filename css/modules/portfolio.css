@@ -252,16 +252,16 @@
 
 /* ПАНЕЛЬ НАВИГАЦИИ */
 .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #1a1a1a;
-    border-top: 2px solid rgba(255, 215, 0, 0.5);
-    padding: 8px 0;
-    z-index: 9999;
-    display: flex;
-    justify-content: space-around;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #1a1a1a !important;
+    border-top: 2px solid #ffd700 !important;
+    padding: 10px 0 !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    justify-content: space-around !important;
 }
 
 .nav-btn {
