@@ -280,7 +280,8 @@ const MORI_PORTFOLIO = {
                     }
                 }
             });
-   
+        }
+        
         // Кнопка показа/скрытия информации о MORI
         const toggleBtn = document.getElementById('toggle-mori-info');
         if (toggleBtn) {
