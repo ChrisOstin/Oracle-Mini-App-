@@ -319,25 +319,15 @@ const MORI_PORTFOLIO = {
             });
         }
 
-        // Кнопка разворачивания графика
+        // Кнопка разворачивания/сворачивания графика
 const expandBtn = document.getElementById('expand-chart-btn');
 if (expandBtn) {
     expandBtn.addEventListener('click', () => {
         const container = document.querySelector('.chart-container');
         if (container) {
-            container.classList.toggle('expanded');
             if (container.classList.contains('expanded')) {
-                container.style.position = 'fixed';
-                container.style.top = '0';
-                container.style.left = '0';
-                container.style.right = '0';
-                container.style.bottom = '0';
-                container.style.width = '100%';
-                container.style.height = '100%';
-                container.style.zIndex = '10000';
-                container.style.background = 'var(--bg-primary)';
-                expandBtn.textContent = '✕';
-            } else {
+                // Сворачиваем
+                container.classList.remove('expanded');
                 container.style.position = '';
                 container.style.top = '';
                 container.style.left = '';
@@ -348,6 +338,19 @@ if (expandBtn) {
                 container.style.zIndex = '';
                 container.style.background = '';
                 expandBtn.textContent = '⛶';
+            } else {
+                // Разворачиваем
+                container.classList.add('expanded');
+                container.style.position = 'fixed';
+                container.style.top = '0';
+                container.style.left = '0';
+                container.style.right = '0';
+                container.style.bottom = '0';
+                container.style.width = '100%';
+                container.style.height = '100%';
+                container.style.zIndex = '10000';
+                container.style.background = 'var(--bg-primary)';
+                expandBtn.textContent = '✕';
             }
             setTimeout(() => this.renderChart(), 100);
         }
