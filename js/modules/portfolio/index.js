@@ -14,7 +14,7 @@ const MORI_PORTFOLIO = {
         circulatingSupply: 0,
         timeframe: '12h',
         isLoading: false,
-        lastUpdate: null,y
+        lastUpdate: null,
         isExpanded: false
     },
 
