@@ -671,6 +671,6 @@ if (expandBtn) {
             changeEl.className = `price-change ${changeClass}`;
         }
     }
-},
+}
 
 window.MORI_PORTFOLIO = MORI_PORTFOLIO;
