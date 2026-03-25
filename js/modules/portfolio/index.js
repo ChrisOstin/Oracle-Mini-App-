@@ -326,9 +326,8 @@ if (expandBtn) {
     expandBtn.addEventListener('click', () => {
         const container = document.querySelector('.chart-container');
         if (container) {
-            if (this.state.isExpanded) {
+            if (container.classList.contains('expanded')) {
                 // Сворачиваем
-                this.state.isExpanded = false;
                 container.classList.remove('expanded');
                 container.style.position = '';
                 container.style.top = '';
@@ -340,9 +339,9 @@ if (expandBtn) {
                 container.style.zIndex = '';
                 container.style.background = '';
                 expandBtn.textContent = '⛶';
+                this.state.isExpanded = false;
             } else {
                 // Разворачиваем
-                this.state.isExpanded = true;
                 container.classList.add('expanded');
                 container.style.position = 'fixed';
                 container.style.top = '0';
@@ -354,8 +353,9 @@ if (expandBtn) {
                 container.style.zIndex = '10000';
                 container.style.background = 'var(--bg-primary)';
                 expandBtn.textContent = '✕';
+                this.state.isExpanded = true;
             }
-            // НЕ вызываем renderChart(), чтобы не сбрасывать состояние
+            // НЕ вызываем renderChart()
         }
     });
 }
@@ -567,37 +567,13 @@ if (expandBtn) {
     },
 
     setState: function(newState) {
-    const wasExpanded = this.state.isExpanded;
     this.state = { ...this.state, ...newState };
-    
     if (newState.timeframe || newState.price) {
         const content = document.getElementById('portfolio-content');
         if (content) {
             content.innerHTML = this.getHTML();
             this.attachEvents();
             this.renderChart();
-            
-            // Восстанавливаем развёрнутость после рендера
-            if (wasExpanded) {
-                setTimeout(() => {
-                    const container = document.querySelector('.chart-container');
-                    const expandBtn = document.getElementById('expand-chart-btn');
-                    if (container && expandBtn) {
-                        this.state.isExpanded = true;
-                        container.classList.add('expanded');
-                        container.style.position = 'fixed';
-                        container.style.top = '0';
-                        container.style.left = '0';
-                        container.style.right = '0';
-                        container.style.bottom = '0';
-                        container.style.width = '100%';
-                        container.style.height = '100%';
-                        container.style.zIndex = '10000';
-                        container.style.background = 'var(--bg-primary)';
-                        expandBtn.textContent = '✕';
-                    }
-                }, 50);
-            }
         }
     }
 },
