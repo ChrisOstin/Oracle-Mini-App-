@@ -101,7 +101,7 @@ vibrate: function(pattern = 20) {
                 <div class="solana-value">+2.34% за 24ч</div>
             </div>
 
-            <button class="info-btn" id="toggle-mori-info">🪙 О MORI</button>
+          //  <button class="info-btn" id="toggle-mori-info">🪙 О MORI</button>
 
             <div id="mori-info-section" class="info-section" style="display: none;">
 
