@@ -101,6 +101,8 @@ vibrate: function(pattern = 20) {
                 <div class="solana-value">+2.34% за 24ч</div>
             </div>
 
+            <button class="info-btn" id="toggle-mori-info">🪙 О MORI</button>
+
             <div id="mori-info-section" class="info-section" style="display: none;">
 
             <div class="stats-grid">
@@ -320,7 +322,24 @@ if (chartCanvas) {
     });
 }
 
-   // ===== НОВЫЕ ФУНКЦИИ =====
+        // Кнопка показа/скрытия информации о MORI
+        const toggleBtn = document.getElementById('toggle-mori-info');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const section = document.getElementById('mori-info-section');
+                if (section) {
+                    if (section.style.display === 'none') {
+                        section.style.display = 'block';
+                        toggleBtn.textContent = '🪙 Скрыть MORI';
+                    } else {
+                        section.style.display = 'none';
+                        toggleBtn.textContent = '🪙 О MORI';
+                    }
+                }
+            });
+        }
+
+    // ===== НОВЫЕ ФУНКЦИИ =====
 
 // 1. Пульсация иконки темы при клике
 const themeIcon = document.querySelector('.theme-icon');
