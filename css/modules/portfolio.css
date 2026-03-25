@@ -372,27 +372,10 @@
 }
 
 /* ТАЙМФРЕЙМЫ ВНУТРИ ГРАФИКА */
-.timeframe-selector {
-    position: absolute;
-    bottom: 40px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    z-index: 10;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    padding: 6px 12px;
-    border-radius: 30px;
-    width: fit-content;
-    margin: 0 auto;
-}
-
 .timeframe-btn {
-    background: rgba(255, 215, 0, 0.2);
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    color: #ffd700;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #aaa;
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 11px;
@@ -401,11 +384,16 @@
 }
 
 .timeframe-btn.active {
-    background: rgba(255, 215, 0, 0.5);
+    background: rgba(255, 215, 0, 0.2);
     border-color: #ffd700;
+    color: #ffd700;
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
 }
 
+.timeframe-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
 /* Отступ для контента, чтобы панель не перекрывала */
 #portfolio-content {
     padding-bottom: 80px;
