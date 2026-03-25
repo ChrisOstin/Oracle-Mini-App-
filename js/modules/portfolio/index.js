@@ -323,7 +323,8 @@ const MORI_PORTFOLIO = {
         // Кнопка разворачивания/сворачивания графика
 const expandBtn = document.getElementById('expand-chart-btn');
 if (expandBtn) {
-    expandBtn.addEventListener('click', () => {
+    expandBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const container = document.querySelector('.chart-container');
         if (container) {
             if (container.classList.contains('expanded')) {
@@ -338,8 +339,8 @@ if (expandBtn) {
                 container.style.height = '';
                 container.style.zIndex = '';
                 container.style.background = '';
+                container.style.padding = '';
                 expandBtn.textContent = '⛶';
-                this.state.isExpanded = false;
             } else {
                 // Разворачиваем
                 container.classList.add('expanded');
@@ -352,10 +353,11 @@ if (expandBtn) {
                 container.style.height = '100%';
                 container.style.zIndex = '10000';
                 container.style.background = 'var(--bg-primary)';
+                container.style.padding = '20px';
                 expandBtn.textContent = '✕';
-                this.state.isExpanded = true;
             }
-            // НЕ вызываем renderChart()
+            // Перерисовываем график, чтобы он подстроился под новый размер
+            setTimeout(() => this.renderChart(), 50);
         }
     });
 }
