@@ -70,6 +70,12 @@ const MORI_PORTFOLIO = {
         const changeSign = this.state.change24h >= 0 ? '+' : '';
 
         return `
+           
+            <div class="chart-header">
+                <span class="chart-title">График MORI</span>
+                <button id="expand-chart-btn" class="chart-expand-btn">⛶</button>
+                </div>
+      
             <div class="chart-container">
                 <canvas id="mori-chart"></canvas>
                 <div class="timeframe-selector">
@@ -312,6 +318,41 @@ const MORI_PORTFOLIO = {
                 lastTap = now;
             });
         }
+
+        // Кнопка разворачивания графика
+const expandBtn = document.getElementById('expand-chart-btn');
+if (expandBtn) {
+    expandBtn.addEventListener('click', () => {
+        const container = document.querySelector('.chart-container');
+        if (container) {
+            container.classList.toggle('expanded');
+            if (container.classList.contains('expanded')) {
+                container.style.position = 'fixed';
+                container.style.top = '0';
+                container.style.left = '0';
+                container.style.right = '0';
+                container.style.bottom = '0';
+                container.style.width = '100%';
+                container.style.height = '100%';
+                container.style.zIndex = '10000';
+                container.style.background = 'var(--bg-primary)';
+                expandBtn.textContent = '✕';
+            } else {
+                container.style.position = '';
+                container.style.top = '';
+                container.style.left = '';
+                container.style.right = '';
+                container.style.bottom = '';
+                container.style.width = '';
+                container.style.height = '';
+                container.style.zIndex = '';
+                container.style.background = '';
+                expandBtn.textContent = '⛶';
+            }
+            setTimeout(() => this.renderChart(), 100);
+        }
+    });
+}
 
         // Кнопка "О MORI"
         const toggleBtn = document.getElementById('toggle-mori-info');
