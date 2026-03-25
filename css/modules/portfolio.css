@@ -517,3 +517,18 @@
 .whales-section {
     margin-bottom: 100px !important;
 }
+
+/* ФИКС: контент не перекрывает панель */
+#portfolio-content {
+    padding-bottom: 120px !important;
+    min-height: calc(100vh - 120px) !important;
+}
+
+.whales-section {
+    margin-bottom: 120px !important;
+}
+
+.bottom-nav {
+    top: auto !important;
+    bottom: 0 !important;
+}
