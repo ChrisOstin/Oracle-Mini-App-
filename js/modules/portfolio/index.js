@@ -341,6 +341,9 @@ if (expandBtn) {
                 container.style.background = '';
                 container.style.padding = '';
                 expandBtn.textContent = '⛶';
+                // Удаляем внутреннюю кнопку, если есть
+                const innerBtn = document.getElementById('expand-chart-btn-inner');
+                if (innerBtn) innerBtn.remove();
             } else {
                 // Разворачиваем
                 container.classList.add('expanded');
@@ -354,9 +357,34 @@ if (expandBtn) {
                 container.style.zIndex = '10000';
                 container.style.background = 'var(--bg-primary)';
                 container.style.padding = '20px';
+                
+                // Добавляем кнопку свернуть внутри развёрнутого графика
+                if (!document.getElementById('expand-chart-btn-inner')) {
+                    const innerBtn = document.createElement('button');
+                    innerBtn.id = 'expand-chart-btn-inner';
+                    innerBtn.textContent = '✕';
+                    innerBtn.style.cssText = 'position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); border: 1px solid #ffd700; color: #ffd700; border-radius: 30px; padding: 8px 16px; font-size: 16px; cursor: pointer; z-index: 10001;';
+                    innerBtn.onclick = () => {
+                        // Сворачиваем по клику на внутреннюю кнопку
+                        container.classList.remove('expanded');
+                        container.style.position = '';
+                        container.style.top = '';
+                        container.style.left = '';
+                        container.style.right = '';
+                        container.style.bottom = '';
+                        container.style.width = '';
+                        container.style.height = '';
+                        container.style.zIndex = '';
+                        container.style.background = '';
+                        container.style.padding = '';
+                        expandBtn.textContent = '⛶';
+                        innerBtn.remove();
+                        setTimeout(() => this.renderChart(), 50);
+                    };
+                    container.appendChild(innerBtn);
+                }
                 expandBtn.textContent = '✕';
             }
-            // Перерисовываем график, чтобы он подстроился под новый размер
             setTimeout(() => this.renderChart(), 50);
         }
     });
