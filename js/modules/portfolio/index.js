@@ -418,31 +418,42 @@ const MORI_PORTFOLIO = {
     },
 
     renderChart: function() {
-        const ctx = document.getElementById('mori-chart')?.getContext('2d');
-        if (!ctx) return;
-        if (this.chart) this.chart.destroy();
+    const ctx = document.getElementById('mori-chart')?.getContext('2d');
+    if (!ctx) return;
+    if (this.chart) this.chart.destroy();
 
-        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-        gradient.addColorStop(0, 'rgba(255, 215, 0, 0.4)');
-        gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(255, 215, 0, 0.4)');
+    gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
 
-        const data = this.chartData.length ? this.chartData : this.generateMockData();
+    const data = this.chartData.length ? this.chartData : this.generateMockData();
 
-        this.chart = new Chart(ctx, {
-            type: 'line',
-            data: { datasets: [{ label: 'MORI Price', data: data, borderColor: '#ffd700', backgroundColor: gradient, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, pointHoverBackgroundColor: '#ffd700', pointHoverBorderColor: '#ffffff', tension: 0.2, fill: true }] },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1a1a1a', titleColor: '#ffffff', bodyColor: '#ffd700', borderColor: '#ffd700', borderWidth: 1, callbacks: { label: (context) => `$${context.parsed.y.toFixed(6)}` } } },
-                scales: { x: { type: 'time', time: { unit: this.getTimeUnit(this.state.timeframe), displayFormats: { minute: 'HH:mm', hour: 'HH:mm', day: 'dd MMM', week: 'dd MMM', month: 'MMM yyyy' } }, grid: { display: false }, ticks: { color: '#888', maxRotation: 0, autoSkip: true, maxTicksLimit: 6 } }, y: { grid: { color: 'rgba(255,255,255,0.1)', drawBorder: false }, ticks: { color: '#888', callback: (value) => '$' + value.toFixed(6) } } },
-                animation: { duration: 1000, easing: 'easeOutQuart' },
-                hover: { mode: 'index', intersect: false }
-            }
-        });
+    this.chart = new Chart(ctx, {
+        type: 'line',
+        data: { datasets: [{ label: 'MORI Price', data: data, borderColor: '#ffd700', backgroundColor: gradient, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, pointHoverBackgroundColor: '#ffd700', pointHoverBorderColor: '#ffffff', tension: 0.2, fill: true }] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1a1a1a', titleColor: '#ffffff', bodyColor: '#ffd700', borderColor: '#ffd700', borderWidth: 1, callbacks: { label: (context) => `$${context.parsed.y.toFixed(6)}` } } },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: { unit: this.getTimeUnit(this.state.timeframe), displayFormats: { minute: 'HH:mm', hour: 'HH:mm', day: 'dd MMM', week: 'dd MMM', month: 'MMM yyyy' } },
+                    grid: { display: false },
+                    ticks: { display: false }  // <--- убираем метки времени
+                },
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.1)', drawBorder: false },
+                    ticks: { color: '#888', callback: (value) => '$' + value.toFixed(6) }
+                }
+            },
+            animation: { duration: 1000, easing: 'easeOutQuart' },
+            hover: { mode: 'index', intersect: false }
+        }
+    });
 
-        setTimeout(() => this.drawPriceLevels(), 100);
-    },
+    setTimeout(() => this.drawPriceLevels(), 100);
+},
 
     updateChart: function() {
         if (!this.chart) return;
