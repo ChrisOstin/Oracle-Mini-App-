@@ -597,29 +597,79 @@ if (expandBtn) {
     },
 
     setState: function(newState) {
+    const wasExpanded = this.state.isExpanded;
     this.state = { ...this.state, ...newState };
-    if (newState.timeframe || newState.price) {
+    
+    // Перерисовываем только при смене таймфрейма
+    if (newState.timeframe) {
         const content = document.getElementById('portfolio-content');
         if (content) {
             content.innerHTML = this.getHTML();
             this.attachEvents();
             this.renderChart();
+            
+            // Восстанавливаем развёрнутость после перерисовки
+            if (wasExpanded) {
+                setTimeout(() => {
+                    const container = document.querySelector('.chart-container');
+                    const expandBtn = document.getElementById('expand-chart-btn');
+                    if (container && expandBtn) {
+                        container.classList.add('expanded');
+                        container.style.position = 'fixed';
+                        container.style.top = '0';
+                        container.style.left = '0';
+                        container.style.right = '0';
+                        container.style.bottom = '0';
+                        container.style.width = '100%';
+                        container.style.height = '100%';
+                        container.style.zIndex = '10000';
+                        container.style.background = 'var(--bg-primary)';
+                        expandBtn.textContent = '✕';
+                        this.state.isExpanded = true;
+                        
+                        // Добавляем внутреннюю кнопку, если её нет
+                        if (!document.getElementById('expand-chart-btn-inner')) {
+                            const innerBtn = document.createElement('button');
+                            innerBtn.id = 'expand-chart-btn-inner';
+                            innerBtn.textContent = '✕';
+                            innerBtn.style.cssText = 'position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); border: 1px solid #ffd700; color: #ffd700; border-radius: 30px; padding: 8px 16px; font-size: 16px; cursor: pointer; z-index: 10001;';
+                            innerBtn.onclick = () => {
+                                const container = document.querySelector('.chart-container');
+                                const expandBtn = document.getElementById('expand-chart-btn');
+                                if (container && expandBtn) {
+                                    container.classList.remove('expanded');
+                                    container.style.position = '';
+                                    container.style.top = '';
+                                    container.style.left = '';
+                                    container.style.right = '';
+                                    container.style.bottom = '';
+                                    container.style.width = '';
+                                    container.style.height = '';
+                                    container.style.zIndex = '';
+                                    container.style.background = '';
+                                    expandBtn.textContent = '⛶';
+                                    this.state.isExpanded = false;
+                                    innerBtn.remove();
+                                    setTimeout(() => this.renderChart(), 50);
+                                }
+                            };
+                            container.appendChild(innerBtn);
+                        }
+                    }
+                }, 100);
+            }
         }
-    }
-},
-
-    startAutoUpdate: function() {
-        if (this.updateTimer) clearInterval(this.updateTimer);
-        this.updateTimer = setInterval(() => this.loadData(), 5000);
-    },
-
-    stopAutoUpdate: function() {
-        if (this.updateTimer) { clearInterval(this.updateTimer); this.updateTimer = null; }
-    },
-
-    destroy: function() {
-        this.stopAutoUpdate();
-        if (this.chart) { this.chart.destroy(); this.chart = null; }
+    } else if (newState.price) {
+        // При обновлении цены не перерисовываем весь портфель, только цену
+        const priceEl = document.querySelector('.price-big');
+        const changeEl = document.querySelector('.price-change');
+        if (priceEl) priceEl.textContent = `$${this.state.price.toFixed(6)}`;
+        if (changeEl) {
+            const changeClass = this.state.change24h >= 0 ? 'positive' : 'negative';
+            const changeSign = this.state.change24h >= 0 ? '+' : '';
+            changeEl.textContent = `${changeSign}${this.state.change24h.toFixed(2)}%`;
+            changeEl.className = `price-change ${changeClass}`;
+        }
     }
 };
 
