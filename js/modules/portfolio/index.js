@@ -209,7 +209,7 @@ vibrate: function(pattern = 20) {
         buttons.push({ id: 'profile', icon: '👤', label: 'Профиль', locked: false });
         
         return buttons.map(btn => `
-            <button class="nav-btn ${btn.locked ? 'locked' : ''}" 
+            <button class="nav-btn ${btn.locked ? 'locked' : ''}"
                     data-module="${btn.id}"
                     ${btn.locked ? `data-unlock-task='${JSON.stringify(btn.unlockTask)}'` : ''}>
                 <span class="nav-icon">${btn.icon}</span>
