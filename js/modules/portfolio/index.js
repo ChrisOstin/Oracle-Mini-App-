@@ -599,16 +599,14 @@ if (expandBtn) {
     setState: function(newState) {
     const wasExpanded = this.state.isExpanded;
     this.state = { ...this.state, ...newState };
-    
-    // Перерисовываем только при смене таймфрейма
+
     if (newState.timeframe) {
         const content = document.getElementById('portfolio-content');
         if (content) {
             content.innerHTML = this.getHTML();
             this.attachEvents();
             this.renderChart();
-            
-            // Восстанавливаем развёрнутость после перерисовки
+
             if (wasExpanded) {
                 setTimeout(() => {
                     const container = document.querySelector('.chart-container');
@@ -626,16 +624,13 @@ if (expandBtn) {
                         container.style.background = 'var(--bg-primary)';
                         expandBtn.textContent = '✕';
                         this.state.isExpanded = true;
-                        
-                        // Добавляем внутреннюю кнопку, если её нет
+
                         if (!document.getElementById('expand-chart-btn-inner')) {
                             const innerBtn = document.createElement('button');
                             innerBtn.id = 'expand-chart-btn-inner';
                             innerBtn.textContent = '✕';
                             innerBtn.style.cssText = 'position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); border: 1px solid #ffd700; color: #ffd700; border-radius: 30px; padding: 8px 16px; font-size: 16px; cursor: pointer; z-index: 10001;';
                             innerBtn.onclick = () => {
-                                const container = document.querySelector('.chart-container');
-                                const expandBtn = document.getElementById('expand-chart-btn');
                                 if (container && expandBtn) {
                                     container.classList.remove('expanded');
                                     container.style.position = '';
@@ -660,7 +655,6 @@ if (expandBtn) {
             }
         }
     } else if (newState.price) {
-        // При обновлении цены не перерисовываем весь портфель, только цену
         const priceEl = document.querySelector('.price-big');
         const changeEl = document.querySelector('.price-change');
         if (priceEl) priceEl.textContent = `$${this.state.price.toFixed(6)}`;
@@ -672,5 +666,6 @@ if (expandBtn) {
         }
     }
 }
+};
 
 window.MORI_PORTFOLIO = MORI_PORTFOLIO;
