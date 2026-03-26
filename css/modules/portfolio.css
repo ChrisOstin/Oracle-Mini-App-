@@ -396,15 +396,13 @@
     background: rgba(0, 0, 0, 0.7);
 }
 
-.timeframe-btn {
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #aaa;
-    padding: 2px 6px;
-    border-radius: 14px;
-    font-size: 9px;
-    cursor: pointer;
-    transition: all 0.2s;
+.timeframe-selector {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+    margin-top: 10px;
+    margin-bottom: 16px;
+    padding-left: 16px;
 }
 
 .timeframe-btn.active {
