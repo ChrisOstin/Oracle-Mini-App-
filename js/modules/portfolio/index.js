@@ -34,6 +34,14 @@ const MORI_PORTFOLIO = {
         if (navigator.vibrate) navigator.vibrate(pattern);
     },
 
+    startAutoUpdate: function() {
+    if (this.updateTimer) clearInterval(this.updateTimer);
+    this.updateTimer = setInterval(() => {
+        this.loadData(true);
+        this.loadChartData(this.state.timeframe);
+    }, 5000);
+},
+
     init: function() {
         console.log('MORI_PORTFOLIO инициализация...');
         this.loadData();
@@ -595,6 +603,18 @@ if (expandBtn) {
         const intervals = { '12h': 3600000, '1d': 3600000, '3d': 86400000, '1m': 86400000, '3m': 86400000, '6m': 86400000, '12m': 86400000 };
         return intervals[timeframe] || 3600000;
     },
+
+    destroy: function() {
+    if (this.updateTimer) {
+        clearInterval(this.updateTimer);
+        this.updateTimer = null;
+    }
+    if (this.chart) {
+        this.chart.destroy();
+        this.chart = null;
+    }
+    this.chartData = [];
+},
 
     setState: function(newState) {
     const wasExpanded = this.state.isExpanded;
