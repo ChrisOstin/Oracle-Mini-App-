@@ -427,8 +427,8 @@
     display: flex;
     gap: 6px;
     justify-content: flex-end;
-    margin-top: 0px;
+    margin-top: -2px;
     margin-bottom: 16px;
-    margin-left: -6px;
+    margin-left: -10px;
     padding-right: 16px;
 }
