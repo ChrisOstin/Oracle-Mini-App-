@@ -426,8 +426,8 @@
 .timeframe-selector {
     display: flex;
     gap: 6px;
-    justify-content: flex-start;
-    margin-top: 4px;
-    margin-bottom: 12px;
-    padding-left: 8px;
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-bottom: 16px;
+    padding-right: 16px;
 }
