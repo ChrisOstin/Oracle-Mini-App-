@@ -4,13 +4,12 @@
 .chart-container {
     background: var(--bg-card);
     border-radius: 28px;
-    padding: 16px;
+    padding: 12px;
     margin-bottom: 16px;
-    height: 320px;
+    height: 280px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .chart-header {
@@ -397,18 +396,15 @@
     background: rgba(0, 0, 0, 0.7);
 }
 
-/* ТАЙМФРЕЙМЫ ВНУТРИ ГРАФИКА */
 .timeframe-btn {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: #ccc;
-    padding: 6px 14px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #aaa;
+    padding: 4px 10px;
     border-radius: 30px;
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 11px;
     cursor: pointer;
     transition: all 0.2s;
-    backdrop-filter: blur(4px);
 }
 
 .timeframe-btn.active {
