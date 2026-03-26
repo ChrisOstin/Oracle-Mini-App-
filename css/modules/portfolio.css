@@ -3,13 +3,14 @@
 /* График */
 .chart-container {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 12px;
+    border-radius: 28px;
+    padding: 16px;
     margin-bottom: 16px;
-    height: 280px;
+    height: 320px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .chart-header {
@@ -398,14 +399,16 @@
 
 /* ТАЙМФРЕЙМЫ ВНУТРИ ГРАФИКА */
 .timeframe-btn {
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #aaa;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 11px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #ccc;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
+    backdrop-filter: blur(4px);
 }
 
 .timeframe-btn.active {
@@ -422,4 +425,12 @@
 /* Отступ для контента, чтобы панель не перекрывала */
 #portfolio-content {
     padding-bottom: 80px;
+}
+
+.timeframe-selector {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
 }
