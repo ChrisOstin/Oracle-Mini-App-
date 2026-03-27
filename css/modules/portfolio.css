@@ -356,7 +356,7 @@
 /* ИКОНКА ТЕМЫ */
 .theme-icon {
     position: fixed;
-    top: 120px;
+    top: 130px;
     left: 16px;
     z-index: 10000;
     width: 48px;
@@ -491,6 +491,7 @@
     padding: 8px 20px;
     margin-bottom: 12px;
     margin-left: 70px;
+    margin-right: 30ox;
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
     position: relative;
     overflow: hidden;
