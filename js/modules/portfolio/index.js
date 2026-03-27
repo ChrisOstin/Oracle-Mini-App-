@@ -80,7 +80,14 @@ const MORI_PORTFOLIO = {
 
         return `
            
-            <div class="chart-header">
+                  <div class="current-price-large">
+                <span class="price-big">$${this.state.price.toFixed(6)}</span>
+                <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
+                    ${changeSign}${this.state.change24h.toFixed(2)}%
+                </span>
+            </div>
+
+             <div class="chart-header">
                 <span class="chart-title">График MORI</span>
                 <button id="expand-chart-btn" class="chart-expand-btn">⛶</button>
                 </div>
@@ -96,13 +103,6 @@ const MORI_PORTFOLIO = {
                     <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
                     <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
                 </div>
-            </div>
-
-            <div class="current-price-large">
-                <span class="price-big">$${this.state.price.toFixed(6)}</span>
-                <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
-                    ${changeSign}${this.state.change24h.toFixed(2)}%
-                </span>
             </div>
 
             <div class="solana-compare">
