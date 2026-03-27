@@ -371,7 +371,6 @@
     background: #ffaa33;
 }
 
-/* ИКОНКА ТЕМЫ */
 .theme-icon {
     position: fixed;
     top: 16px;
@@ -389,6 +388,16 @@
     cursor: pointer;
     backdrop-filter: blur(4px);
     transition: all 0.2s ease;
+    animation: maskFloat 3s infinite ease-in-out;
+}
+
+@keyframes maskFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
 }
 
 .theme-icon:hover {
