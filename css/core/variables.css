@@ -122,3 +122,55 @@ body > * {
     position: relative;
     z-index: 1;
 }
+
+/* ФОНЫ С ЧЕРЕПОМ (варианты) */
+
+body[data-skull="cracks"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><path fill="none" stroke="%23ffd700" stroke-width="1.5" d="M400 300 L380 340 L400 380 L420 340 L400 300 M400 380 L380 420 L400 460 L420 420 L400 460 M340 400 L380 400 M420 400 L460 400 M400 460 L380 500 L400 540 L420 500 L400 460 M320 500 L360 480 M480 500 L440 480 M360 540 L400 560 L440 540 M360 620 L400 640 L440 620"/><circle cx="400" cy="300" r="140" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="270" r="12" fill="%23ffd700"/><circle cx="460" cy="270" r="12" fill="%23ffd700"/><path d="M360 340 L400 350 L440 340" stroke="%23ffd700" fill="none" stroke-width="2"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="tears"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="280" r="120" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="250" r="10" fill="%23ffd700"/><circle cx="460" cy="250" r="10" fill="%23ffd700"/><path d="M360 320 L350 380 L340 440 M440 320 L450 380 L460 440" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M340 440 L330 500 L320 560 M460 440 L470 500 L480 560" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M320 560 L310 620 L300 680 M480 560 L490 620 L500 680" stroke="%23ffd700" fill="none" stroke-width="2"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="melted"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="280" r="120" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="250" r="10" fill="%23ffd700"/><circle cx="460" cy="250" r="10" fill="%23ffd700"/><path d="M360 320 L350 400 L340 480 L350 560 L360 640 M440 320 L450 400 L460 480 L450 560 L440 640" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M340 480 L300 520 L260 560 M460 480 L500 520 L540 560" stroke="%23ffd700" fill="none" stroke-width="2"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="crown"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="300" r="130" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="270" r="12" fill="%23ffd700"/><circle cx="460" cy="270" r="12" fill="%23ffd700"/><path d="M360 350 L400 370 L440 350" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M400 180 L370 220 L400 200 L430 220 L400 180" fill="none" stroke="%23ffd700" stroke-width="2"/><path d="M370 220 L380 260 M430 220 L420 260" stroke="%23ffd700" stroke-width="1.5"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="veins"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="300" r="130" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="270" r="10" fill="%23ffd700"/><circle cx="460" cy="270" r="10" fill="%23ffd700"/><path d="M380 340 L360 380 L340 420 L320 460 M420 340 L440 380 L460 420 L480 460 M400 380 L380 440 L360 500 M400 380 L420 440 L440 500" stroke="%23ffd700" fill="none" stroke-width="1.5"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="halo"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="300" r="120" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="270" r="10" fill="%23ffd700"/><circle cx="460" cy="270" r="10" fill="%23ffd700"/><path d="M360 340 L400 350 L440 340" stroke="%23ffd700" fill="none" stroke-width="2"/><circle cx="400" cy="200" r="40" fill="none" stroke="%23ffd700" stroke-width="1.5"/><circle cx="400" cy="200" r="55" fill="none" stroke="%23ffd700" stroke-width="1"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="smoke"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="320" r="120" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="290" r="10" fill="%23ffd700"/><circle cx="460" cy="290" r="10" fill="%23ffd700"/><path d="M360 360 L400 370 L440 360" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M400 370 L380 430 L360 490 L380 550 M400 370 L420 430 L440 490 L420 550" stroke="%23ffd700" fill="none" stroke-width="1.5" stroke-dasharray="3 2"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="runes"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="300" r="130" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="270" r="10" fill="%23ffd700"/><circle cx="460" cy="270" r="10" fill="%23ffd700"/><text x="380" y="380" fill="%23ffd700" font-size="18" font-family="monospace">ᚠ</text><text x="420" y="380" fill="%23ffd700" font-size="18">ᚢ</text><text x="360" y="420" fill="%23ffd700" font-size="18">ᚦ</text><text x="440" y="420" fill="%23ffd700" font-size="18">ᚨ</text><text x="400" y="460" fill="%23ffd700" font-size="18">ᚱ</text></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="web"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="300" r="130" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="270" r="10" fill="%23ffd700"/><circle cx="460" cy="270" r="10" fill="%23ffd700"/><path d="M400 300 L400 380 M380 320 L420 320 M360 340 L440 340 M340 360 L460 360 M320 380 L480 380" stroke="%23ffd700" stroke-width="1"/><path d="M400 380 L380 420 L360 460 M400 380 L420 420 L440 460" stroke="%23ffd700" stroke-width="1.5"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
+
+body[data-skull="aura"] {
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="300" r="120" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="270" r="10" fill="%23ffd700"/><circle cx="460" cy="270" r="10" fill="%23ffd700"/><path d="M360 340 L400 350 L440 340" stroke="%23ffd700" fill="none" stroke-width="2"/><circle cx="400" cy="300" r="160" fill="none" stroke="%23ffd700" stroke-width="1" stroke-dasharray="5 3"/><circle cx="400" cy="300" r="190" fill="none" stroke="%23ffd700" stroke-width="0.8"/><path d="M270 300 L310 290 L290 320 L270 300 M530 300 L490 290 L510 320 L530 300" stroke="%23ffd700" fill="none" stroke-width="1"/></svg>') center/cover no-repeat fixed;
+    opacity: 0.4;
+}
