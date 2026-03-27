@@ -354,7 +354,7 @@
 }
 
 /* ИКОНКА ТЕМЫ */
-.theme-icon {
+/*.theme-icon {
     position: fixed;
     top: 120px;
     left: 16px;
@@ -407,6 +407,7 @@
     box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
 }
 
+/*Таймфреймы*/
 .timeframe-btn {
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.2);
