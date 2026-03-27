@@ -46,7 +46,7 @@
 }
 
 /* Объект слева вверху */
-.theme-mori-classic .theme-icon::before {
+/*.theme-mori-classic .theme-icon::before {
     content: '🎭';
     font-size: 1.8rem;
     position: fixed;
@@ -67,7 +67,7 @@
 }
 
 /* Анимация для объекта */
-@keyframes maskFloat {
+/*@keyframes maskFloat {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
 }
