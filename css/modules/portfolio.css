@@ -421,17 +421,18 @@
 .price-main-container {
     position: relative;
     background: #0a0a0a;
-    background-image: radial-gradient(circle at 15% 25%, rgba(212, 175, 55, 0.22) 2px, transparent 3px),
-                      radial-gradient(circle at 55% 65%, rgba(212, 175, 55, 0.18) 1.8px, transparent 2.8px),
-                      radial-gradient(circle at 80% 35%, rgba(212, 175, 55, 0.2) 2.2px, transparent 3.2px);
-    background-size: 90px 90px, 110px 110px, 100px 100px;
+    background-image: radial-gradient(circle at 15% 30%, rgba(212, 175, 55, 0.2) 1px, transparent 1px),
+                      radial-gradient(circle at 45% 70%, rgba(212, 175, 55, 0.16) 1.2px, transparent 1.2px),
+                      radial-gradient(circle at 75% 20%, rgba(212, 175, 55, 0.18) 0.8px, transparent 0.8px);
+    background-size: 50px 50px, 70px 70px, 60px 60px;
     background-repeat: repeat;
     border: 2px solid #ffd700;
-    border-radius: 24px;
-    padding: 28px 24px 24px 24px;
+    border-radius: 20px;
+    padding: 16px 20px;
     margin: 20px auto;
-    max-width: 380px;
+    max-width: 600px;
     text-align: right;
+    backdrop-filter: blur(10px);
 }
 
 /* Овальная рамка с ценой */
@@ -439,10 +440,11 @@
     display: inline-block;
     background: #0a0a0a;
     border: 1.5px solid #ffd700;
-    border-radius: 50px;
-    padding: 10px 24px;
+    border-radius: 60px;
+    padding: 10px 28px;
     margin-bottom: 16px;
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    backdrop-filter: blur(4px);
 }
 
 .price-big {
@@ -457,9 +459,10 @@
     display: inline-block;
     background: rgba(212, 175, 55, 0.2);
     border: 1px solid rgba(212, 175, 55, 0.5);
-    border-radius: 10px;
-    padding: 4px 12px;
+    border-radius: 12px;
+    padding: 6px 16px;
     margin-left: 16px;
+    backdrop-filter: blur(4px);
 }
 
 .price-change {
