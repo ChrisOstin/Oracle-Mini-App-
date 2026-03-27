@@ -373,8 +373,8 @@
 
 .theme-icon {
     position: fixed;
-    top: 16px;
-    left: 16px;
+    top: 8px;
+    left: 8px;
     z-index: 10000;
     width: 44px;
     height: 44px;
@@ -383,7 +383,7 @@
     justify-content: center;
     background: rgba(0, 0, 0, 0.5);
     border: 1.5px solid #ffd700;
-    border-radius: 50%;
+    border-radius: 16px;
     font-size: 24px;
     cursor: pointer;
     backdrop-filter: blur(4px);
