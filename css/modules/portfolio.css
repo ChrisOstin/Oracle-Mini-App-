@@ -347,22 +347,37 @@
 /* ИКОНКА ТЕМЫ */
 .theme-icon {
     position: fixed;
-    top: 4px;
-    left: 4px;
+    top: 16px;
+    left: 16px;
     z-index: 10000;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1.5px solid #ffd700;
-    border-radius: 12px;
+    background: #000000;
+    border: 2px solid #FFD700;
+    border-radius: 16px;
     font-size: 24px;
     cursor: pointer;
-    backdrop-filter: blur(4px);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    overflow: hidden;
     transition: all 0.2s ease;
+    position: relative;
     animation: maskFloat 3s infinite ease-in-out;
+}
+
+.theme-icon::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        repeating-linear-gradient(45deg, transparent 0px, transparent 20px, rgba(255, 215, 0, 0.05) 20px, rgba(255, 215, 0, 0.05) 40px);
+    pointer-events: none;
+    animation: goldDrip 20s linear infinite;
 }
 
 @keyframes maskFloat {
@@ -374,9 +389,14 @@
     }
 }
 
+@keyframes goldDrip {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(2%, 2%) rotate(1deg); }
+}
+
 .theme-icon:hover {
     transform: scale(1.02);
-    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
 }
 
 .timeframe-btn {
@@ -420,63 +440,88 @@
 /* Большая прямоугольная рамка */
 .price-main-container {
     position: relative;
-    background: #0a0a0a;
-    background-image: radial-gradient(circle at 15% 30%, rgba(212, 175, 55, 0.2) 1px, transparent 1px),
-                      radial-gradient(circle at 45% 70%, rgba(212, 175, 55, 0.16) 1.2px, transparent 1.2px),
-                      radial-gradient(circle at 75% 20%, rgba(212, 175, 55, 0.18) 0.8px, transparent 0.8px);
-    background-size: 50px 50px, 70px 70px, 60px 60px;
-    background-repeat: repeat;
-    border: 2px solid #ffd700;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.9);
     border-radius: 20px;
     padding: 16px 20px;
     margin: 20px auto;
     max-width: 600px;
     text-align: right;
-    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.price-main-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(135deg, transparent 30%, rgba(255, 215, 0, 0.02) 40%, transparent 50%),
+        repeating-linear-gradient(45deg, rgba(255, 215, 0, 0.01) 0px, rgba(255, 215, 0, 0.01) 1px, transparent 1px, transparent 5px);
+    pointer-events: none;
+}
+
+.price-main-container:hover {
+    border-color: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
 }
 
 /* Овальная рамка с ценой */
 .price-oval {
     display: inline-block;
-    background: #0a0a0a;
-    border: 1.5px solid #ffd700;
-    border-radius: 60px;
-    padding: 10px 28px;
-    margin-bottom: 16px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-    backdrop-filter: blur(4px);
+    background: #000000;
+    color: #FFD700;
+    border: 2px solid #FFD700;
+    border-radius: 30px;
+    padding: 8px 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    position: relative;
+    overflow: hidden;
 }
 
-.price-big {
-    font-size: 28px;
-    font-weight: bold;
-    color: #ffd700;
-    text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+.price-oval::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    animation: rotate 10s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Маленькая прямоугольная рамка с процентом */
 .price-percent-box {
     display: inline-block;
-    background: rgba(212, 175, 55, 0.2);
-    border: 1px solid rgba(212, 175, 55, 0.5);
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 215, 0, 0.3);
     border-radius: 12px;
     padding: 6px 16px;
     margin-left: 16px;
-    backdrop-filter: blur(4px);
 }
 
 .price-change {
     font-size: 16px;
-    font-weight: normal;
+    font-weight: 600;
     transition: all 0.2s ease;
 }
 
 .price-change.positive {
     color: #00ff88;
-    text-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
 }
 
 .price-change.negative {
     color: #ff4444;
-    text-shadow: 0 0 6px rgba(255, 68, 68, 0.5);
+    text-shadow: 0 0 8px rgba(255, 68, 68, 0.6);
 }
