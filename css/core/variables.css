@@ -109,13 +109,11 @@ body[data-theme="mori-gold"] {
 /* Глобальный фон */
 body {
     background: #0a0a0a;
-    background-image: repeating-linear-gradient(45deg, 
-        rgba(212, 175, 55, 0) 0px,
-        rgba(212, 175, 55, 0.08) 2px,
-        rgba(212, 175, 55, 0.2) 4px,
-        rgba(212, 175, 55, 0.08) 6px,
-        rgba(212, 175, 55, 0) 8px,
-        transparent 20px);
+    background-image: radial-gradient(circle at 15% 30%, rgba(212, 175, 55, 0.25) 1px, transparent 1px),
+                      radial-gradient(circle at 45% 70%, rgba(212, 175, 55, 0.2) 1.2px, transparent 1.2px),
+                      radial-gradient(circle at 75% 20%, rgba(212, 175, 55, 0.22) 0.8px, transparent 0.8px);
+    background-size: 60px 60px, 80px 80px, 50px 50px;
+    background-repeat: repeat;
     position: relative;
     min-height: 100vh;
 }

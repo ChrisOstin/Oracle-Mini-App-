@@ -430,51 +430,52 @@
         transparent 20px);
     border: 2px solid #ffd700;
     border-radius: 24px;
-    padding: 40px 30px 30px 30px;
+    padding: 28px 24px 24px 24px;
     margin: 20px auto;
-    max-width: 400px;
+    max-width: 380px;
     text-align: right;
 }
 
-/* Овальная рамка с ценой (сверху справа) */
+/* Овальная рамка с ценой */
 .price-oval {
     display: inline-block;
     background: #0a0a0a;
     border: 1.5px solid #ffd700;
-    border-radius: 60px;
-    padding: 12px 28px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    border-radius: 50px;
+    padding: 10px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
 }
 
-/* Цена */
 .price-big {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: bold;
     color: #ffd700;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
 }
 
 /* Маленькая прямоугольная рамка с процентом */
 .price-percent-box {
     display: inline-block;
-    background: rgba(212, 175, 55, 0.25);
+    background: rgba(212, 175, 55, 0.2);
     border: 1px solid rgba(212, 175, 55, 0.5);
-    border-radius: 12px;
-    padding: 6px 16px;
-    margin-left: 20px;
+    border-radius: 10px;
+    padding: 4px 12px;
+    margin-left: 16px;
 }
 
 .price-change {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: normal;
-    color: #ffd700;
+    transition: all 0.2s ease;
 }
 
 .price-change.positive {
-    color: #ffd700;
+    color: #00ff88;
+    text-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
 }
 
 .price-change.negative {
     color: #ff4444;
+    text-shadow: 0 0 6px rgba(255, 68, 68, 0.5);
 }
