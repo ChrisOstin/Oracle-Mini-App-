@@ -108,23 +108,10 @@ body[data-theme="mori-gold"] {
 
 /* Глобальный фон */
 body {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
-    position: relative;
-    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #2a1a0a 50%, #0a0a0a 100%);
 }
-
 body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
 }
 
 body > * {
