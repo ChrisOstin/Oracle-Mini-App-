@@ -108,16 +108,28 @@ body[data-theme="mori-gold"] {
 
 /* Глобальный фон */
 body {
-    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="280" r="120" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="250" r="10" fill="%23ffd700"/><circle cx="460" cy="250" r="10" fill="%23ffd700"/><path d="M360 320 L350 380 L340 440 M440 320 L450 380 L460 440" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M340 440 L330 500 L320 560 M460 440 L470 500 L480 560" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M320 560 L310 620 L300 680 M480 560 L490 620 L500 680" stroke="%23ffd700" fill="none" stroke-width="2"/></svg>') center/cover no-repeat fixed;
-    opacity: 0.4;
+    background: #000000;
+    position: relative;
+    min-height: 100vh;
 }
 
 body::before {
-    background-image: radial-gradient(2px 2px at 20px 30px, #ffd700, rgba(0,0,0,0)),
-                      radial-gradient(1px 1px at 80px 120px, #ffd700, rgba(0,0,0,0));
-    background-size: 200px 200px, 100px 100px;
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(2px 2px at 20% 30%, #ffd700, rgba(0,0,0,0)),
+                      radial-gradient(1px 1px at 50% 70%, #ffd700, rgba(0,0,0,0)),
+                      radial-gradient(3px 3px at 80% 20%, #ffd700, rgba(0,0,0,0)),
+                      radial-gradient(1px 1px at 10% 90%, #ffd700, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 95% 50%, #ffd700, rgba(0,0,0,0));
+    background-size: 300px 300px, 200px 200px, 400px 400px, 250px 250px, 350px 350px;
     background-repeat: repeat;
-    opacity: 0.3;
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
 }
 
 body > * {
