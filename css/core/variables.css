@@ -109,9 +109,7 @@ body[data-theme="mori-gold"] {
 /* Глобальный фон */
 body {
     background: #0a0a0a;
-    background-image: repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.25) 0px, rgba(212, 175, 55, 0.25) 2px, transparent 2px, transparent 40px),
-                      repeating-linear-gradient(135deg, rgba(212, 175, 55, 0.18) 0px, rgba(212, 175, 55, 0.18) 1px, transparent 1px, transparent 30px);
-    background-blend-mode: overlay;
+    background-image: repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.15) 0px, rgba(212, 175, 55, 0.15) 1px, transparent 1px, transparent 30px);
     position: relative;
     min-height: 100vh;
 }
