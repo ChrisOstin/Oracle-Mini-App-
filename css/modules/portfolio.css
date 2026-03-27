@@ -41,10 +41,20 @@
     height: 100%;
 }
 
-/* Крупная цена под графиком */
+/* Крупная цена над графиком */
 .current-price-large {
     text-align: center;
     margin: 16px 0;
+}
+
+.price-wrapper {
+    display: inline-block;
+    background: #0a0a0a;
+    border: 1.5px solid #ffd700;
+    border-radius: 60px;
+    padding: 12px 28px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
 }
 
 .price-big {
@@ -442,4 +452,29 @@
     margin-left: 90px;
     padding-right: 10px;
     padding-left: 10px;
+}
+
+/* Большая овальная рамка под ценой */
+.price-container {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.price-big-wrapper {
+    display: inline-block;
+    background: rgba(10, 10, 10, 0.6);
+    background-image: repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.12) 0px, rgba(212, 175, 55, 0.12) 1px, transparent 1px, transparent 20px);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 100px;
+    padding: 30px 50px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.price-big-wrapper .price-wrapper {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
 }

@@ -80,12 +80,16 @@ const MORI_PORTFOLIO = {
 
         return `
            
-                  <div class="current-price-large">
-                <span class="price-big">$${this.state.price.toFixed(6)}</span>
-                <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
-                    ${changeSign}${this.state.change24h.toFixed(2)}%
-                </span>
-            </div>
+              <div class="price-container">
+    <div class="price-big-wrapper">
+        <div class="price-wrapper">
+            <span class="price-big">$${this.state.price.toFixed(6)}</span>
+            <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
+                ${changeSign}${this.state.change24h.toFixed(2)}%
+            </span>
+        </div>
+    </div>
+</div>
 
              <div class="chart-header">
                 <span class="chart-title">График MORI</span>
