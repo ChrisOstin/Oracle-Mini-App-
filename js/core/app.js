@@ -218,26 +218,42 @@ pulse: function(element, duration = 1000) {
     },
 
     showDetailedLoading: function() {
-        let loader = document.getElementById('app-loader');
-        if (!loader) {
-            loader = document.createElement('div');
-            loader.id = 'app-loader';
-            document.body.appendChild(loader);
-        }
+    let loader = document.getElementById('app-loader');
+    if (!loader) {
+        loader = document.createElement('div');
+        loader.id = 'app-loader';
+        document.body.appendChild(loader);
+    }
 
-        loader.innerHTML = `
-            <div class="loading-detailed">
-                <div class="loading-logo">🔮 MORI Oracle</div>
-                <div class="loading-bar-container">
-                    <div class="loading-bar" id="loading-progress" style="width: 0%"></div>
-                </div>
-                <div class="loading-text" id="loading-text">Инициализация...</div>
-                <div class="loading-details" id="loading-details"></div>
-                <div class="loading-version">v${this.version}</div>
+    loader.innerHTML = `
+        <div class="loading-detailed">
+            <div class="loading-logo">🔮 MORI Oracle</div>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loading-progress" style="width: 0%"></div>
             </div>
-        `;
-        loader.style.display = 'flex';
-    },
+            <div class="loading-text" id="loading-text">Инициализация...</div>
+            <div class="loading-details" id="loading-details"></div>
+            <div class="loading-version">v${this.version}</div>
+        </div>
+    `;
+    loader.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a0a0a;
+        background-image: radial-gradient(circle at 15% 30%, rgba(212, 175, 55, 0.25) 1px, transparent 1px),
+                          radial-gradient(circle at 45% 70%, rgba(212, 175, 55, 0.2) 1.2px, transparent 1.2px),
+                          radial-gradient(circle at 75% 20%, rgba(212, 175, 55, 0.22) 0.8px, transparent 0.8px);
+        background-size: 60px 60px, 80px 80px, 50px 50px;
+        background-repeat: repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    `;
+},
 
     updateProgress: function(percent, message, details = '') {
         this.loadingProgress = percent;

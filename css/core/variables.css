@@ -109,7 +109,13 @@ body[data-theme="mori-gold"] {
 /* Глобальный фон */
 body {
     background: #0a0a0a;
-    background-image: repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.08) 0px, rgba(212, 175, 55, 0.08) 1px, transparent 1px, transparent 18px);
+    background-image: repeating-linear-gradient(45deg, 
+        rgba(212, 175, 55, 0) 0px,
+        rgba(212, 175, 55, 0.08) 2px,
+        rgba(212, 175, 55, 0.2) 4px,
+        rgba(212, 175, 55, 0.08) 6px,
+        rgba(212, 175, 55, 0) 8px,
+        transparent 20px);
     position: relative;
     min-height: 100vh;
 }
