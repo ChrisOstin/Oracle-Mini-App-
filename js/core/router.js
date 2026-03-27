@@ -448,19 +448,13 @@ const MORI_ROUTER = {
         let cached = this.domCache.get(screen.title);
         
         appDiv.innerHTML = cached || `
-            <div class="screen" data-screen="${(screen.title || screen.id).toLowerCase()}">
-                <header class="screen-header">
-                    <h2>${screen.icon} ${screen.title}</h2>
-                    <div class="header-actions">
-                        ${this.renderHeaderButtons()}
-                    </div>
-                </header>
-                <div class="screen-content" id="${screen.id}-content">
-                    <div class="loading">Загрузка ${screen.title}...</div>
-                </div>
-            </div>
-        `;
-        
+    <div class="screen" data-screen="${(screen.title || screen.id).toLowerCase()}">
+        <div class="screen-content" id="${screen.id}-content">
+           <div class="loading">Загрузка...</div>
+        </div>
+    </div>
+`;
+
         // Кэшируем
         if (!cached) this.domCache.set(screen.title, appDiv.innerHTML);
         
