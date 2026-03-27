@@ -2,14 +2,22 @@
 
 /* График */
 .chart-container {
-    background: var(--bg-card);
+    background: #0a0a0a;
+    background-image: radial-gradient(circle at 20% 30%, rgba(255,215,0,0.03) 1px, transparent 1px),
+                      radial-gradient(circle at 70% 60%, rgba(255,215,0,0.02) 1.2px, transparent 1.2px);
+    background-size: 40px 40px, 60px 60px;
+    background-repeat: repeat;
+    border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 28px;
     padding: 12px;
     margin-bottom: 16px;
     height: 280px;
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+.chart-container:hover {
+    border-color: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
 }
 
 .chart-header {
@@ -410,16 +418,19 @@
     transition: all 0.2s;
 }
 
+.timeframe-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: rgba(255, 215, 0, 0.6);
+    color: #ffd700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    transform: translateY(-2px);
+}
+
 .timeframe-btn.active {
     background: rgba(255, 215, 0, 0.2);
     border-color: #ffd700;
     color: #ffd700;
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-}
-
-.timeframe-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
 }
 /* Отступ для контента, чтобы панель не перекрывала */
 #portfolio-content {
@@ -478,6 +489,7 @@
     border-radius: 30px;
     padding: 8px 20px;
     margin-bottom: 12px;
+    margin-left: 20px;
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
     position: relative;
     overflow: hidden;
