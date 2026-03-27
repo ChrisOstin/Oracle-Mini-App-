@@ -236,23 +236,26 @@ pulse: function(element, duration = 1000) {
             <div class="loading-version">v${this.version}</div>
         </div>
     `;
+
     loader.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #0a0a0a;
-        background-image: radial-gradient(circle at 15% 30%, rgba(212, 175, 55, 0.25) 1px, transparent 1px),
-                          radial-gradient(circle at 45% 70%, rgba(212, 175, 55, 0.2) 1.2px, transparent 1.2px),
-                          radial-gradient(circle at 75% 20%, rgba(212, 175, 55, 0.22) 0.8px, transparent 0.8px);
-        background-size: 60px 60px, 80px 80px, 50px 50px;
-        background-repeat: repeat;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-    `;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0a;
+    background-image: radial-gradient(circle at 15% 30%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+                      radial-gradient(circle at 45% 70%, rgba(255, 255, 255, 0.25) 1.2px, transparent 1.2px),
+                      radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.28) 0.8px, transparent 0.8px),
+                      radial-gradient(circle at 90% 85%, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
+    background-size: 80px 80px, 100px 100px, 70px 70px, 90px 90px;
+    background-repeat: repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+`;
+
 },
 
     updateProgress: function(percent, message, details = '') {
@@ -877,6 +880,16 @@ style.textContent = `
         0%, 100% { opacity: 1; }
         50% { opacity: 0.7; }
     }
+
+    @keyframes starFall {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 30px;
+    }
+}
+
 `;
 
 document.head.appendChild(style);
