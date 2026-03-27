@@ -448,7 +448,7 @@ const MORI_ROUTER = {
         let cached = this.domCache.get(screen.title);
         
         appDiv.innerHTML = cached || `
-            <div class="screen" data-screen="${screen.title.toLowerCase()}">
+            <div class="screen" data-screen="${(screen.title || screen.id).toLowerCase()}">
                 <header class="screen-header">
                     <h2>${screen.icon} ${screen.title}</h2>
                     <div class="header-actions">
