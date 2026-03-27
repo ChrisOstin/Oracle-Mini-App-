@@ -454,27 +454,57 @@
     padding-left: 10px;
 }
 
-/* Большая овальная рамка под ценой */
+/* Контейнер для двух рамок */
 .price-container {
     text-align: center;
-    margin: 20px 0;
-    position: relative;
+    margin: 30px 0;
 }
 
+/* Внешняя большая рамка (с диагональными линиями) */
 .price-big-wrapper {
     display: inline-block;
     background: rgba(10, 10, 10, 0.6);
     background-image: repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.12) 0px, rgba(212, 175, 55, 0.12) 1px, transparent 1px, transparent 20px);
     border: 1px solid rgba(212, 175, 55, 0.4);
-    border-radius: 100px;
-    padding: 30px 50px;
+    border-radius: 80px;
+    padding: 24px 48px;
     backdrop-filter: blur(8px);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
 }
 
-.price-big-wrapper .price-wrapper {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    padding: 0;
+/* Внутренняя рамка вокруг цены (чёрная с золотой обводкой) */
+.price-wrapper {
+    display: inline-block;
+    background: #0a0a0a;
+    border: 1.5px solid #ffd700;
+    border-radius: 50px;
+    padding: 10px 24px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.25);
+}
+
+/* Цена */
+.price-big {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+    letter-spacing: 0.5px;
+}
+
+/* Процент */
+.price-change {
+    font-size: 16px;
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+.price-change.positive {
+    color: #00ff88;
+    text-shadow: 0 0 4px rgba(0, 255, 136, 0.3);
+}
+
+.price-change.negative {
+    color: #ff4444;
+    text-shadow: 0 0 4px rgba(255, 68, 68, 0.3);
 }
