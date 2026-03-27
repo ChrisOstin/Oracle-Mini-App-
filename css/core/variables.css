@@ -108,10 +108,14 @@ body[data-theme="mori-gold"] {
 
 /* Глобальный фон */
 body {
-    background: linear-gradient(135deg, #0a0a0a 0%, #2a1a0a 50%, #0a0a0a 100%);
+    background: #0a0a0a;
 }
 body::before {
-    background-image: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    background-image: radial-gradient(2px 2px at 20px 30px, #ffd700, rgba(0,0,0,0)),
+                      radial-gradient(1px 1px at 80px 120px, #ffd700, rgba(0,0,0,0));
+    background-size: 200px 200px, 100px 100px;
+    background-repeat: repeat;
+    opacity: 0.3;
 }
 
 body > * {
