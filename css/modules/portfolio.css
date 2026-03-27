@@ -495,7 +495,7 @@
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
     position: relative;
     overflow: hidden;
-    transform: translateX(30px);
+    transform: translateX(80px);
 }
 
 .price-oval::before {
