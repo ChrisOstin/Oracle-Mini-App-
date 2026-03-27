@@ -156,22 +156,6 @@ const MORI_PROFILE = {
 
                 ${this.state.isEditing ? this.renderEditModal() : ''}
                 ${this.state.showAvatarSelector ? this.renderAvatarSelector() : ''}
-           <div class="profile-skull-switch">
-    <h3>Фон с черепом</h3>
-    <select id="skull-select">
-        <option value="">Без черепа</option>
-        <option value="cracks">Трещины</option>
-        <option value="tears">Золотые слёзы</option>
-        <option value="melted">Расплавленный</option>
-        <option value="crown">Корона</option>
-        <option value="veins">Золотые вены</option>
-        <option value="halo">Нимб</option>
-        <option value="smoke">Золотой дым</option>
-        <option value="runes">Руны</option>
-        <option value="web">Паутина</option>
-        <option value="aura">Ореол</option>
-    </select>
-</div> 
            </div>
         `;
     },
@@ -364,19 +348,6 @@ const MORI_PROFILE = {
         document.getElementById('go-to-auth')?.addEventListener('click', () => {
             MORI_ROUTER.navigate('auth');
         });
-   
-        const skullSelect = document.getElementById('skull-select');
-if (skullSelect) {
-    const saved = localStorage.getItem('skull_theme') || '';
-    skullSelect.value = saved;
-    document.body.setAttribute('data-skull', saved);
-    
-    skullSelect.addEventListener('change', (e) => {
-        const value = e.target.value;
-        localStorage.setItem('skull_theme', value);
-        document.body.setAttribute('data-skull', value);
-    });
-}
 
     },
 
