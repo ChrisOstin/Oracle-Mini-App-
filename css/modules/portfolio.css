@@ -262,8 +262,9 @@
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    background: #1a1a1a !important;
+    background: rgba(0, 0, 0, 0.95) !important;
     border-top: 2px solid #ffd700 !important;
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.9) !important;
     padding: 10px 0 !important;
     z-index: 99999 !important;
     display: flex !important;
@@ -288,6 +289,7 @@
 
 .nav-btn.active {
     color: #ffd700;
+    background: rgba(255, 215, 0, 0.05);
 }
 
 .nav-icon {
@@ -389,7 +391,7 @@
     transition: all 0.2s ease;
     position: relative;
     z-index: 1;
-    transform: translate(-4px, -4px);
+    transform: translate(0px, 0px);
 }
 
 @keyframes goldDrip {
@@ -451,7 +453,7 @@
     box-shadow: inset 0 0 50px rgba(0,0,0,0.9);
     border-radius: 20px;
     padding: 16px 20px;
-    margin: 40px auto;
+    margin: 60px auto;
     max-width: 600px;
     text-align: right;
     overflow: hidden;
