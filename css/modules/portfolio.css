@@ -375,7 +375,7 @@
     position: relative;
     animation: maskFloat 3s infinite ease-in-out;
 }
-
+*/
 .theme-icon::after {
     content: '';
     position: absolute;
@@ -396,7 +396,7 @@
         transform: translateY(-3px);
     }
 }
-*/
+
 @keyframes goldDrip {
     0% { transform: translate(0, 0) rotate(0deg); }
     100% { transform: translate(2%, 2%) rotate(1deg); }
