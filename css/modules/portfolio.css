@@ -492,11 +492,11 @@
     margin-bottom: 12px;
     margin-left: 0px;
     margin-right: 50ox;
-    margin-top: -10px;
+    margin-top: -40px;
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
     position: relative;
     overflow: hidden;
-    transform: translateX(100px);
+    transform: translateX(120px);
 }
 
 .price-oval::before {
