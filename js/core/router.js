@@ -23,13 +23,13 @@ const MORI_ROUTER = {
         },
 
         // Портфель
-     //   portfolio: {
+        portfolio: {
        //     title: 'Портфель',
-         //   module: 'MORI_PORTFOLIO',
-       //     guard: 'user',
-       //     icon: '📊',
-         //   id: 'portfolio'
-     //   },
+            module: 'MORI_PORTFOLIO',
+            guard: 'user',
+           icon: '📊',
+            id: 'portfolio'
+        },
 
         // MORI AI
         'ai-chat': {
