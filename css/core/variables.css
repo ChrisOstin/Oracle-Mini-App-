@@ -112,9 +112,76 @@ body {
     background-image: repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.12) 0px, rgba(212, 175, 55, 0.12) 2px, transparent 2px, transparent 40px),
                       repeating-linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0px, rgba(212, 175, 55, 0.08) 1px, transparent 1px, transparent 30px);
     background-blend-mode: overlay;
+    position: relative;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+    opacity: 0.3;
+    z-index: 100;
+    pointer-events: none;
 }
 
 body > * {
     position: relative;
     z-index: 1;
+}
+
+/* Карточки */
+.bg-card,
+.stat-card,
+.about-section,
+.whales-section,
+.solana-compare,
+.chart-container {
+    background: rgba(20, 20, 20, 0.7) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 20px;
+}
+
+/* Золотые акценты */
+.price-big,
+.whale-amount,
+.about-value,
+.nav-btn.active,
+.nav-btn.active .nav-icon {
+    color: #d4af37;
+}
+
+/* Таймфреймы */
+.timeframe-btn {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    color: #a0a0a0;
+    border-radius: 30px;
+    padding: 4px 12px;
+    font-size: 11px;
+}
+
+.timeframe-btn.active {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: #d4af37;
+    color: #d4af37;
+}
+
+/* Скролл */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 4px;
 }
