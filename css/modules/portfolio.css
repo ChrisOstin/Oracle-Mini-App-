@@ -3,8 +3,7 @@
 /* График */
 .chart-container {
     background: #0a0a0a;
-    background-image: radial-gradient(circle at 20% 30%, rgba(255,215,0,0.03) 1px, transparent 1px),
-                      radial-gradient(circle at 70% 60%, rgba(255,215,0,0.02) 1.2px, transparent 1.2px);
+    background-image: repeating-linear-gradient(45deg, rgba(255,215,0,0.08) 0px, rgba(255,215,0,0.08) 1px, transparent 1px, transparent 8px);
     background-size: 40px 40px, 60px 60px;
     background-repeat: repeat;
     border: 1px solid rgba(255, 215, 0, 0.2);
