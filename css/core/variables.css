@@ -108,7 +108,7 @@ body[data-theme="mori-gold"] {
 
 /* Глобальный фон */
 body {
-    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><path fill="none" stroke="%23ffd700" stroke-width="1.5" d="M400 300 L380 340 L400 380 L420 340 L400 300 M400 380 L380 420 L400 460 L420 420 L400 460 M340 400 L380 400 M420 400 L460 400 M400 460 L380 500 L400 540 L420 500 L400 460 M320 500 L360 480 M480 500 L440 480 M360 540 L400 560 L440 540 M360 620 L400 640 L440 620"/><circle cx="400" cy="300" r="140" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="270" r="12" fill="%23ffd700"/><circle cx="460" cy="270" r="12" fill="%23ffd700"/><path d="M360 340 L400 350 L440 340" stroke="%23ffd700" fill="none" stroke-width="2"/></svg>') center/cover no-repeat fixed;
+    background: #000000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200"><circle cx="400" cy="280" r="120" fill="none" stroke="%23ffd700" stroke-width="2"/><circle cx="340" cy="250" r="10" fill="%23ffd700"/><circle cx="460" cy="250" r="10" fill="%23ffd700"/><path d="M360 320 L350 380 L340 440 M440 320 L450 380 L460 440" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M340 440 L330 500 L320 560 M460 440 L470 500 L480 560" stroke="%23ffd700" fill="none" stroke-width="2"/><path d="M320 560 L310 620 L300 680 M480 560 L490 620 L500 680" stroke="%23ffd700" fill="none" stroke-width="2"/></svg>') center/cover no-repeat fixed;
     opacity: 0.4;
 }
 
