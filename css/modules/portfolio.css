@@ -421,13 +421,11 @@
 .price-main-container {
     position: relative;
     background: #0a0a0a;
-    background-image: repeating-linear-gradient(45deg, 
-        rgba(212, 175, 55, 0) 0px,
-        rgba(212, 175, 55, 0.08) 2px,
-        rgba(212, 175, 55, 0.2) 4px,
-        rgba(212, 175, 55, 0.08) 6px,
-        rgba(212, 175, 55, 0) 8px,
-        transparent 20px);
+    background-image: radial-gradient(circle at 15% 25%, rgba(212, 175, 55, 0.22) 2px, transparent 3px),
+                      radial-gradient(circle at 55% 65%, rgba(212, 175, 55, 0.18) 1.8px, transparent 2.8px),
+                      radial-gradient(circle at 80% 35%, rgba(212, 175, 55, 0.2) 2.2px, transparent 3.2px);
+    background-size: 90px 90px, 110px 110px, 100px 100px;
+    background-repeat: repeat;
     border: 2px solid #ffd700;
     border-radius: 24px;
     padding: 28px 24px 24px 24px;
