@@ -59,6 +59,11 @@ const MORI_API = {
             }
             return null;
         }
+       
+        // Если skipCache, то очищаем кэш для этого эндпоинта
+if (options.skipCache) {
+    this.invalidateCache(endpoint);
+}
 
         // Попытки с retry
         for (let i = 0; i <= retries; i++) {
