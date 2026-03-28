@@ -357,7 +357,7 @@
 /* ИКОНКА ТЕМЫ */
 .theme-icon {
     position: fixed;
-    top: 135px;
+    top: 140px;
     left: 16px;
     z-index: 10000;
     width: 48px;
@@ -491,7 +491,7 @@
     border-radius: 30px;
     padding: 8px 20px;
     margin-bottom: 12px;
-    margin-left: 0px;
+    margin-left: 40px;
     margin-right: 50ox;
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
     position: relative;
