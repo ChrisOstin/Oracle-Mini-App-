@@ -356,11 +356,12 @@ const MORI_API = {
     },
 
     // ========== 2. ПОРТФЕЛЬ (3 метода) ==========
-    getMoriPrice: async function() {
-        return this.safeRequest('/mori/price', { 
-            timeout: this.timeouts.critical 
-        });
-    },
+    getMoriPrice: async function(skipCache = false) {
+    return this.safeRequest('/mori/price', {
+        timeout: this.timeouts.critical,
+        skipCache: skipCache
+    });
+},
 
     getMoriHistory: async function(timeframe = '1h') {
         return this.safeRequest(`/mori/history?timeframe=${timeframe}`, { 

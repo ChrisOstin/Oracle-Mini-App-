@@ -467,7 +467,7 @@ if (expandBtn) {
     }
 
     try {
-        const priceData = await MORI_API.getMoriPrice();
+        const priceData = await MORI_API.getMoriPrice(true);
         if (priceData) {
             const newData = {
                 price: priceData.price,
