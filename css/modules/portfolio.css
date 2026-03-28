@@ -2,11 +2,7 @@
 
 /* График */
 .chart-container {
-    background: #030303;
-    background-image: radial-gradient(circle at 30% 40%, rgba(255,215,0,0.18) 1.5px, transparent 2px),
-                      radial-gradient(circle at 70% 60%, rgba(255,215,0,0.14) 1px, transparent 1.5px);
-    background-size: 40px 40px, 60px 60px;
-    background-repeat: repeat;
+    background: #111111;
     border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 28px;
     padding: 12px;
@@ -527,8 +523,8 @@
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(255, 215, 0, 0.3);
     border-radius: 12px;
-    padding: 6px 16px;
-    margin-left: 16px;
+    padding: 3px 8px;
+    margin-left: 20px;
     transform: translateY(10px);
 }
 
