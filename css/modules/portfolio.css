@@ -357,7 +357,7 @@
 /* ИКОНКА ТЕМЫ */
 .theme-icon {
     position: fixed;
-    top: 130px;
+    top: 120px;
     left: 16px;
     z-index: 10000;
     width: 48px;
@@ -498,6 +498,8 @@
     overflow: hidden;
     transform: translateX(250px);
     transform: translateY(0px);
+    position: relative;
+    left: 50px;
 }
 
 .price-oval::before {
