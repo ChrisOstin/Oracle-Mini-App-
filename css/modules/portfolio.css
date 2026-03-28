@@ -496,7 +496,7 @@
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
     position: relative;
     overflow: hidden;
-    transform: translateX(160px);
+    transform: translateX(200px);
     transform: translateY(0px);
 }
 
