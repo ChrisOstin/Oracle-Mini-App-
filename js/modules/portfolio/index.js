@@ -39,12 +39,15 @@ const MORI_PORTFOLIO = {
     this.updateTimer = setInterval(() => {
         this.loadData(true);
         this.loadChartData(this.state.timeframe);
+        this.loadWhales();
+   
     }, 5000);
 },
 
     init: function() {
         console.log('MORI_PORTFOLIO инициализация...');
         this.loadData();
+        this.loadWhales();
         this.startAutoUpdate();
         
         const completedTasks = MORI_TASKS ? MORI_TASKS.getCompletedCount() : 0;
@@ -178,22 +181,17 @@ const MORI_PORTFOLIO = {
     },
 
     renderWhales: function() {
-        const whales = [
-            { address: '0x1234...5678', amount: 15000000, percentage: 15 },
-            { address: '0x8765...4321', amount: 12000000, percentage: 12 },
-            { address: '0xabcd...efgh', amount: 8000000, percentage: 8 },
-            { address: '0xefgh...ijkl', amount: 5000000, percentage: 5 },
-            { address: '0xijkl...mnop', amount: 3000000, percentage: 3 }
-        ];
-
-        return whales.map(whale => `
-            <div class="whale-item">
-                <span class="whale-address">${whale.address}</span>
-                <span class="whale-amount">${MORI_UTILS.formatLargeNumber(whale.amount)} MORI</span>
-                <span class="whale-percentage">${whale.percentage}%</span>
-            </div>
-        `).join('');
-    },
+    if (!this.whales || !this.whales.length) {
+        return '<div class="whale-item">Загрузка китов...</div>';
+    }
+    return this.whales.map(whale => `
+        <div class="whale-item" data-address="${whale.address}">
+            <span class="whale-address">${whale.address}</span>
+            <span class="whale-amount">${MORI_UTILS.formatLargeNumber(whale.amount)} MORI</span>
+            <span class="whale-percentage">${whale.percentage}%</span>
+        </div>
+    `).join('');
+},
 
     renderNavButtons: function() {
         const level = MORI_APP.accessLevel;
@@ -456,43 +454,68 @@ if (expandBtn) {
     },
 
     loadData: async function(force = false) {
-        this.setState({ isLoading: true });
-        
-        const cacheKey = `portfolio_data_${this.state.timeframe}`;
-        const cached = MORI_STORAGE?.get(cacheKey);
-        const cacheAge = cached?.timestamp ? Date.now() - cached.timestamp : Infinity;
-        
-        if (!force && cached && cacheAge < 30000) {
-            this.setState(cached.data);
-            this.setState({ isLoading: false });
-            return;
-        }
-        
-        try {
-            const priceData = await MORI_API.getMoriPrice();
-            if (priceData) {
-                const newData = {
-                    price: priceData.price,
-                    change24h: priceData.change24h,
-                    volume24h: priceData.volume24h,
-                    liquidity: priceData.liquidity,
-                    fdv: priceData.fdv,
-                    marketCap: priceData.marketCap,
-                    circulatingSupply: priceData.circulatingSupply,
-                    lastUpdate: Date.now()
-                };
-                this.setState(newData);
-                MORI_STORAGE?.set(cacheKey, { data: newData, timestamp: Date.now() });
-            }
-            await this.loadChartData(this.state.timeframe);
-        } catch (error) {
-            console.error('Error loading portfolio data:', error);
-            MORI_APP.showToast('Ошибка загрузки данных', 'error');
-            this.playSound('error');
-            this.vibrate([100, 50, 100]);
-        }
+    this.setState({ isLoading: true });
+
+    const cacheKey = `portfolio_data_${this.state.timeframe}`;
+    const cached = MORI_STORAGE?.get(cacheKey);
+    const cacheAge = cached?.timestamp ? Date.now() - cached.timestamp : Infinity;
+
+    if (!force && cached && cacheAge < 30000) {
+        this.setState(cached.data);
         this.setState({ isLoading: false });
-    },
+        return;
+    }
+
+    try {
+        const priceData = await MORI_API.getMoriPrice();
+        if (priceData) {
+            const newData = {
+                price: priceData.price,
+                change24h: priceData.change24h,
+                volume24h: priceData.volume24h,
+                liquidity: priceData.liquidity,
+                fdv: priceData.fdv,
+                marketCap: priceData.marketCap,
+                circulatingSupply: priceData.circulatingSupply,
+                lastUpdate: Date.now()
+            };
+            this.setState(newData);
+            MORI_STORAGE?.set(cacheKey, { data: newData, timestamp: Date.now() });
+        }
+        await this.loadChartData(this.state.timeframe);
+    } catch (error) {
+        console.error('Error loading portfolio data:', error);
+        MORI_APP.showToast('Ошибка загрузки данных', 'error');
+        this.playSound('error');
+        this.vibrate([100, 50, 100]);
+    }
+    this.setState({ isLoading: false });
+},
+
+    loadWhales: async function() {
+    try {
+        const whalesData = await MORI_API.getWhales();
+        if (whalesData && whalesData.length) {
+            this.whales = whalesData;
+            this.renderWhalesList();
+        }
+    } catch (error) {
+        console.error('Error loading whales:', error);
+    }
+},
+
+renderWhalesList: function() {
+    const whalesList = document.getElementById('whales-list');
+    if (whalesList && this.whales) {
+        whalesList.innerHTML = this.whales.map(whale => `
+            <div class="whale-item" data-address="${whale.address}">
+                <span class="whale-address">${whale.address}</span>
+                <span class="whale-amount">${MORI_UTILS.formatLargeNumber(whale.amount)} MORI</span>
+                <span class="whale-percentage">${whale.percentage}%</span>
+            </div>
+        `).join('');
+    }
+},
 
     loadChartData: async function(timeframe) {
         try {
