@@ -62,7 +62,13 @@ const MORI_API = {
        
         // Если skipCache, то очищаем кэш для этого эндпоинта
 if (options.skipCache) {
-    this.invalidateCache(endpoint);
+    const endpointKey = endpoint.split('?')[0];
+    for (const key in this.cache.store) {
+        if (key.includes(endpointKey)) {
+            delete this.cache.store[key];
+        }
+    }
+    console.log('🧹 Кэш очищен для:', endpointKey);
 }
 
         // Попытки с retry
