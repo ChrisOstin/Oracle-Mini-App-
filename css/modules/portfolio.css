@@ -568,3 +568,8 @@
         text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
     }
 }
+
+/* Иконка темы скрыта до загрузки */
+.theme-icon {
+    display: none;
+}

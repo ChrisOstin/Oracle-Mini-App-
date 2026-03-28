@@ -532,6 +532,14 @@ pulse: function(element, duration = 1000) {
         setTimeout(() => {
             this.preloadAllModules();
         }, 2000);
+        // ПОКАЗЫВАЕМ ИКОНКУ ПОСЛЕ ЗАГРУЗКИ
+        setTimeout(() => {
+            const themeIcon = document.querySelector('.theme-icon');
+            if (themeIcon) {
+                themeIcon.style.display = 'flex';
+            }
+        }, 500);
+
     },
 
     reload: function() {
