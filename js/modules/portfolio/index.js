@@ -5,7 +5,7 @@
 
 const MORI_PORTFOLIO = {
     state: {
-        price: 0.006887,
+        price: null,
         change24h: 0,
         volume24h: 0,
         liquidity: 0,
@@ -85,11 +85,11 @@ const MORI_PORTFOLIO = {
            
               <div class="price-main-container">
     <div class="price-oval">
-        <span class="price-big">$${this.state.price.toFixed(6)}</span>
+        <span class="price-big">${this.state.price ? `$${this.state.price.toFixed(6)}` : 'Загрузка...'}</span>
     </div>
     <div class="price-percent-box">
         <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
-            ${changeSign}${this.state.change24h.toFixed(2)}%
+            ${this.state.change24h !== null ? `${changeSign}${this.state.change24h.toFixed(2)}%` : '...'}
         </span>
     </div>
 </div>
