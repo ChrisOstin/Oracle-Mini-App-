@@ -254,6 +254,7 @@ pulse: function(element, duration = 1000) {
     align-items: center;
     justify-content: center;
     z-index: 9999;
+    animation: starFall 0.5s linear infinite;
 `;
 
 },
