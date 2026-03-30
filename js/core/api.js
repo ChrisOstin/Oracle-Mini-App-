@@ -374,11 +374,12 @@ if (options.skipCache) {
     });
 },
 
-    getMoriHistory: async function(timeframe = '1h') {
-        return this.safeRequest(`/mori/history?timeframe=${timeframe}`, { 
-            method: 'GET' 
-        });
-    },
+    getMoriHistory: async function(timeframe = '1h', skipCache = false) {
+    return this.safeRequest(`/mori/history?timeframe=${timeframe}`, {
+        method: 'GET',
+        skipCache: skipCache
+    });
+},
 
     getWhales: async function() {
         return this.safeRequest('/mori/whales');

@@ -520,7 +520,7 @@ renderWhalesList: function() {
 
     loadChartData: async function(timeframe) {
     try {
-        const data = await MORI_API.getMoriHistory(timeframe);
+        const data = await MORI_API.getMoriHistory(timeframe, true);
         if (data && data.length) {
             this.chartData = data;
             this.renderChart();
