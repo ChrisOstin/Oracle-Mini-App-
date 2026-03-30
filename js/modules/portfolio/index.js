@@ -73,8 +73,7 @@ const MORI_PORTFOLIO = {
             return;
         }
         content.innerHTML = this.getHTML();
-        this.initTradingView();
-       // this.renderChart();
+        this.renderChart();
         this.attachEvents();
        
     },
@@ -102,7 +101,7 @@ const MORI_PORTFOLIO = {
                 </div>
       
             <div class="chart-container">
-    <div id="tradingview_chart" style="height: 100%; width: 100%;"></div>
+     <canvas id="mori-chart"></canvas>
     <div class="timeframe-selector">
         <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
         <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
@@ -303,7 +302,7 @@ const MORI_PORTFOLIO = {
             });
         });
 
-       /* // График: клик и двойной тап
+       /// График: клик и двойной тап
         const chartCanvas = document.getElementById('mori-chart');
         if (chartCanvas) {
             chartCanvas.addEventListener('click', (e) => {
@@ -330,7 +329,7 @@ const MORI_PORTFOLIO = {
                 }
                 lastTap = now;
             });
-        }*/
+        }
 
         // Кнопка разворачивания/сворачивания графика
 const expandBtn = document.getElementById('expand-chart-btn');
@@ -524,14 +523,14 @@ renderWhalesList: function() {
             const data = await MORI_API.getMoriHistory(timeframe);
             if (data) {
                 this.chartData = data;
-                this.updateChart();
+                this.renderChart();
             }
         } catch (error) {
             console.error('Error loading chart data:', error);
         }
     },
 
-   /* renderChart: function() {
+    renderChart: function() {
     const ctx = document.getElementById('mori-chart')?.getContext('2d');
     if (!ctx) return;
     if (this.chart) this.chart.destroy();
@@ -677,7 +676,7 @@ renderWhalesList: function() {
     }
 
     setTimeout(() => this.drawPriceLevels(), 100);
-},*/
+},
 
     updateChart: function() {
         if (!this.chart) return;
@@ -803,7 +802,7 @@ renderWhalesList: function() {
                                     expandBtn.textContent = '⛶';
                                     this.state.isExpanded = false;
                                     innerBtn.remove();
-                                  //  setTimeout(() => this.renderChart(), 50);
+                                    setTimeout(() => this.renderChart(), 50);
                                 }
                             };
                             container.appendChild(innerBtn);
@@ -824,58 +823,6 @@ renderWhalesList: function() {
         }
     }
 }
-
-       initTradingView: function() {
-    const container = document.getElementById('tradingview_chart');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    const intervalMap = {
-        '12h': '15',
-        '1d': '60',
-        '3d': '240',
-        '1m': '1D',
-        '3m': '1D',
-        '6m': '1W',
-        '12m': '1M'
-    };
-    
-    const interval = intervalMap[this.state.timeframe] || '60';
-    
-    if (!document.getElementById('tv-script')) {
-        const script = document.createElement('script');
-        script.id = 'tv-script';
-        script.src = 'https://s3.tradingview.com/tv.js';
-        script.onload = () => this.createWidget(interval);
-        document.head.appendChild(script);
-    } else {
-        this.createWidget(interval);
-    }
-},
-
-createWidget: function(interval) {
-    if (typeof TradingView === 'undefined') return;
-    
-    new TradingView.widget({
-        container_id: "tradingview_chart",
-        width: "100%",
-        height: "100%",
-        symbol: "SOLUSDT",
-        interval: interval,
-        timezone: "Etc/UTC",
-        theme: "dark",
-        style: "1",
-        locale: "ru",
-        toolbar_bg: "#f1f3f6",
-        enable_publishing: false,
-        allow_symbol_change: false,
-        studies: [],
-        hide_side_toolbar: false,
-        save_image: false,
-        autosize: true
-    });
-},
 
 };
 
