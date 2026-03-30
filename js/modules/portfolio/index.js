@@ -41,7 +41,7 @@ const MORI_PORTFOLIO = {
         this.loadChartData(this.state.timeframe);
         this.loadWhales();
    
-    }, 5000);
+    }, 30000);
 },
 
     init: function() {
@@ -519,16 +519,22 @@ renderWhalesList: function() {
 },
 
     loadChartData: async function(timeframe) {
-        try {
-            const data = await MORI_API.getMoriHistory(timeframe);
-            if (data) {
-                this.chartData = data;
-                this.renderChart();
-            }
-        } catch (error) {
-            console.error('Error loading chart data:', error);
+    try {
+        const data = await MORI_API.getMoriHistory(timeframe);
+        if (data && data.length) {
+            this.chartData = data;
+            this.renderChart();
+        } else if (this.chartData && this.chartData.length) {
+            // Если новых данных нет, оставляем старые
+            console.log('Нет новых данных, оставляем текущий график');
+        } else {
+            // Если данных нет вообще — показываем заглушку
+            console.warn('Нет данных для графика');
         }
-    },
+    } catch (error) {
+        console.error('Error loading chart data:', error);
+    }
+},
 
     renderChart: function() {
     const ctx = document.getElementById('mori-chart')?.getContext('2d');
