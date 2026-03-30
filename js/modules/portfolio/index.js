@@ -519,20 +519,21 @@ renderWhalesList: function() {
 },
 
     loadChartData: async function(timeframe) {
+    console.log('📊 Загрузка графика для', timeframe);
     try {
-        const data = await MORI_API.getMoriHistory(timeframe, true);
+        // Прямой запрос, минуя кэш
+        const response = await fetch(`https://mori-server.onrender.com/api/mori/history?timeframe=${timeframe}&t=${Date.now()}`);
+        const data = await response.json();
+        console.log('✅ Получено точек:', data.length);
+        
         if (data && data.length) {
             this.chartData = data;
             this.renderChart();
-        } else if (this.chartData && this.chartData.length) {
-            // Если новых данных нет, оставляем старые
-            console.log('Нет новых данных, оставляем текущий график');
         } else {
-            // Если данных нет вообще — показываем заглушку
-            console.warn('Нет данных для графика');
+            console.warn('⚠️ Нет данных для графика');
         }
     } catch (error) {
-        console.error('Error loading chart data:', error);
+        console.error('❌ Ошибка загрузки графика:', error);
     }
 },
 
