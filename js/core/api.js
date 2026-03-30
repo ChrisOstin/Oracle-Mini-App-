@@ -374,7 +374,7 @@ if (options.skipCache) {
     });
 },
 
-    getMoriHistory: async function(timeframe = '1h', skipCache = false) {
+    getMoriHistory: async function(timeframe = '1h', skipCache = true) {
     return this.safeRequest(`/mori/history?timeframe=${timeframe}`, {
         method: 'GET',
         skipCache: skipCache
