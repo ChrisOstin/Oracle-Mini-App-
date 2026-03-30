@@ -74,6 +74,7 @@ const MORI_PORTFOLIO = {
         }
         content.innerHTML = this.getHTML();
         this.initTradingView();
+       // this.renderChart();
         this.attachEvents();
        
     },
@@ -302,7 +303,7 @@ const MORI_PORTFOLIO = {
             });
         });
 
-        // График: клик и двойной тап
+       /* // График: клик и двойной тап
         const chartCanvas = document.getElementById('mori-chart');
         if (chartCanvas) {
             chartCanvas.addEventListener('click', (e) => {
@@ -329,7 +330,7 @@ const MORI_PORTFOLIO = {
                 }
                 lastTap = now;
             });
-        }
+        }*/
 
         // Кнопка разворачивания/сворачивания графика
 const expandBtn = document.getElementById('expand-chart-btn');
@@ -530,7 +531,7 @@ renderWhalesList: function() {
         }
     },
 
-    renderChart: function() {
+   /* renderChart: function() {
     const ctx = document.getElementById('mori-chart')?.getContext('2d');
     if (!ctx) return;
     if (this.chart) this.chart.destroy();
@@ -676,7 +677,7 @@ renderWhalesList: function() {
     }
 
     setTimeout(() => this.drawPriceLevels(), 100);
-},
+},*/
 
     updateChart: function() {
         if (!this.chart) return;
@@ -802,7 +803,7 @@ renderWhalesList: function() {
                                     expandBtn.textContent = '⛶';
                                     this.state.isExpanded = false;
                                     innerBtn.remove();
-                                    setTimeout(() => this.renderChart(), 50);
+                                  //  setTimeout(() => this.renderChart(), 50);
                                 }
                             };
                             container.appendChild(innerBtn);
