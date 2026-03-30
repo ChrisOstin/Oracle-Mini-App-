@@ -73,8 +73,9 @@ const MORI_PORTFOLIO = {
             return;
         }
         content.innerHTML = this.getHTML();
+        this.initTradingView();
         this.attachEvents();
-        this.renderChart();
+       
     },
 
     getHTML: function() {
@@ -100,17 +101,17 @@ const MORI_PORTFOLIO = {
                 </div>
       
             <div class="chart-container">
-                <canvas id="mori-chart"></canvas>
-                <div class="timeframe-selector">
-                    <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
-                    <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
-                    <button class="timeframe-btn ${this.state.timeframe === '3d' ? 'active' : ''}" data-timeframe="3d">3д</button>
-                    <button class="timeframe-btn ${this.state.timeframe === '1m' ? 'active' : ''}" data-timeframe="1m">1м</button>
-                    <button class="timeframe-btn ${this.state.timeframe === '3m' ? 'active' : ''}" data-timeframe="3m">3м</button>
-                    <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
-                    <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
-                </div>
-            </div>
+    <div id="tradingview_chart" style="height: 100%; width: 100%;"></div>
+    <div class="timeframe-selector">
+        <button class="timeframe-btn ${this.state.timeframe === '12h' ? 'active' : ''}" data-timeframe="12h">12ч</button>
+        <button class="timeframe-btn ${this.state.timeframe === '1d' ? 'active' : ''}" data-timeframe="1d">1д</button>
+        <button class="timeframe-btn ${this.state.timeframe === '3d' ? 'active' : ''}" data-timeframe="3d">3д</button>
+        <button class="timeframe-btn ${this.state.timeframe === '1m' ? 'active' : ''}" data-timeframe="1m">1м</button>
+        <button class="timeframe-btn ${this.state.timeframe === '3m' ? 'active' : ''}" data-timeframe="3m">3м</button>
+        <button class="timeframe-btn ${this.state.timeframe === '6m' ? 'active' : ''}" data-timeframe="6m">6м</button>
+        <button class="timeframe-btn ${this.state.timeframe === '12m' ? 'active' : ''}" data-timeframe="12m">12м</button>
+    </div>
+</div>
 
             <div class="solana-compare">
                 <div class="solana-label">Сравнение с Solana</div>
@@ -534,35 +535,145 @@ renderWhalesList: function() {
     if (!ctx) return;
     if (this.chart) this.chart.destroy();
 
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, 'rgba(255, 215, 0, 0.4)');
-    gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+    // Проверяем, есть ли данные
+    if (!this.chartData || !this.chartData.length) {
+        console.warn('Нет данных для графика');
+        return;
+    }
 
-    const data = this.chartData.length ? this.chartData : this.generateMockData();
+    // Определяем, свечи это или линейные данные
+    const isCandlestick = this.chartData[0].open !== undefined;
 
-    this.chart = new Chart(ctx, {
-        type: 'line',
-        data: { datasets: [{ label: 'MORI Price', data: data, borderColor: '#ffd700', backgroundColor: gradient, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, pointHoverBackgroundColor: '#ffd700', pointHoverBorderColor: '#ffffff', tension: 0.2, fill: true }] },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1a1a1a', titleColor: '#ffffff', bodyColor: '#ffd700', borderColor: '#ffd700', borderWidth: 1, callbacks: { label: (context) => `$${context.parsed.y.toFixed(6)}` } } },
-            scales: {
-                x: {
-                    type: 'time',
-                    time: { unit: this.getTimeUnit(this.state.timeframe), displayFormats: { minute: 'HH:mm', hour: 'HH:mm', day: 'dd MMM', week: 'dd MMM', month: 'MMM yyyy' } },
-                    grid: { display: false },
-                    ticks: { display: false }  // <--- убираем метки времени
-                },
-                y: {
-                    grid: { color: 'rgba(255,255,255,0.1)', drawBorder: false },
-                    ticks: { color: '#888', callback: (value) => '$' + value.toFixed(6) }
-                }
+    if (isCandlestick) {
+        // Свечной график
+        this.chart = new Chart(ctx, {
+            type: 'candlestick',
+            data: {
+                datasets: [{
+                    label: 'MORI Price',
+                    data: this.chartData,
+                    borderColor: '#ffd700',
+                    color: {
+                        up: '#00ff88',
+                        down: '#ff4444',
+                        unchanged: '#888'
+                    }
+                }]
             },
-            animation: { duration: 1000, easing: 'easeOutQuart' },
-            hover: { mode: 'index', intersect: false }
-        }
-    });
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1a1a1a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffd700',
+                        borderColor: '#ffd700',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: (context) => {
+                                const ohlc = context.raw;
+                                return [
+                                    `Open: $${ohlc.o.toFixed(6)}`,
+                                    `High: $${ohlc.h.toFixed(6)}`,
+                                    `Low: $${ohlc.l.toFixed(6)}`,
+                                    `Close: $${ohlc.c.toFixed(6)}`
+                                ];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: this.getTimeUnit(this.state.timeframe),
+                            displayFormats: {
+                                minute: 'HH:mm',
+                                hour: 'HH:mm',
+                                day: 'dd MMM',
+                                week: 'dd MMM',
+                                month: 'MMM yyyy'
+                            }
+                        },
+                        grid: { display: false },
+                        ticks: { display: false }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)', drawBorder: false },
+                        ticks: { color: '#888', callback: (value) => '$' + value.toFixed(6) }
+                    }
+                },
+                animation: { duration: 1000, easing: 'easeOutQuart' },
+                hover: { mode: 'index', intersect: false }
+            }
+        });
+    } else {
+        // Линейный график (для длинных таймфреймов)
+        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(255, 215, 0, 0.4)');
+        gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+
+        this.chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'MORI Price',
+                    data: this.chartData,
+                    borderColor: '#ffd700',
+                    backgroundColor: gradient,
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointHoverBackgroundColor: '#ffd700',
+                    pointHoverBorderColor: '#ffffff',
+                    tension: 0.2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1a1a1a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffd700',
+                        borderColor: '#ffd700',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: (context) => `$${context.parsed.y.toFixed(6)}`
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: this.getTimeUnit(this.state.timeframe),
+                            displayFormats: {
+                                minute: 'HH:mm',
+                                hour: 'HH:mm',
+                                day: 'dd MMM',
+                                week: 'dd MMM',
+                                month: 'MMM yyyy'
+                            }
+                        },
+                        grid: { display: false },
+                        ticks: { display: false }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255,255,255,0.1)', drawBorder: false },
+                        ticks: { color: '#888', callback: (value) => '$' + value.toFixed(6) }
+                    }
+                },
+                animation: { duration: 1000, easing: 'easeOutQuart' },
+                hover: { mode: 'index', intersect: false }
+            }
+        });
+    }
 
     setTimeout(() => this.drawPriceLevels(), 100);
 },
@@ -652,7 +763,6 @@ renderWhalesList: function() {
         if (content) {
             content.innerHTML = this.getHTML();
             this.attachEvents();
-            this.renderChart();
 
             if (wasExpanded) {
                 setTimeout(() => {
@@ -713,6 +823,59 @@ renderWhalesList: function() {
         }
     }
 }
+
+       initTradingView: function() {
+    const container = document.getElementById('tradingview_chart');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    const intervalMap = {
+        '12h': '15',
+        '1d': '60',
+        '3d': '240',
+        '1m': '1D',
+        '3m': '1D',
+        '6m': '1W',
+        '12m': '1M'
+    };
+    
+    const interval = intervalMap[this.state.timeframe] || '60';
+    
+    if (!document.getElementById('tv-script')) {
+        const script = document.createElement('script');
+        script.id = 'tv-script';
+        script.src = 'https://s3.tradingview.com/tv.js';
+        script.onload = () => this.createWidget(interval);
+        document.head.appendChild(script);
+    } else {
+        this.createWidget(interval);
+    }
+},
+
+createWidget: function(interval) {
+    if (typeof TradingView === 'undefined') return;
+    
+    new TradingView.widget({
+        container_id: "tradingview_chart",
+        width: "100%",
+        height: "100%",
+        symbol: "SOLUSDT",
+        interval: interval,
+        timezone: "Etc/UTC",
+        theme: "dark",
+        style: "1",
+        locale: "ru",
+        toolbar_bg: "#f1f3f6",
+        enable_publishing: false,
+        allow_symbol_change: false,
+        studies: [],
+        hide_side_toolbar: false,
+        save_image: false,
+        autosize: true
+    });
+},
+
 };
 
 window.MORI_PORTFOLIO = MORI_PORTFOLIO;
