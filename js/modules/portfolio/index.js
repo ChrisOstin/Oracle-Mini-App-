@@ -521,8 +521,7 @@ renderWhalesList: function() {
     loadChartData: async function(timeframe) {
     console.log('📊 Загрузка графика для', timeframe);
     try {
-        // Прямой запрос, минуя кэш
-        const response = await fetch(`https://mori-server.onrender.com/api/mori/history?timeframe=${timeframe}&t=${Date.now()}`);
+        const response = await fetch(`https://mori-server.onrender.com/api/mori/history?timeframe=${timeframe}&_=${Date.now()}`);
         const data = await response.json();
         console.log('✅ Получено точек:', data.length);
         
