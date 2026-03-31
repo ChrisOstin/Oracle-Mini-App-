@@ -1,4 +1,4 @@
-/**
+ /**
  * PORTFOLIO MODULE — ПОЛНАЯ ПЕРЕЗАПИСЬ
  * Версия: 3.0.0 (с гарантированной панелью навигации)
  */
@@ -16,6 +16,8 @@ const MORI_PORTFOLIO = {
         isLoading: false,
         lastUpdate: null,
         isExpanded: false
+        solanaPrice: 0,
+        solanaChange24h: 0
     },
 
     chart: null,
@@ -40,7 +42,8 @@ const MORI_PORTFOLIO = {
         this.loadData(true);
         this.loadChartData(this.state.timeframe);
         this.loadWhales();
-   
+        this.loadSolanaData();
+    
     }, 30000);
 },
 
@@ -48,6 +51,7 @@ const MORI_PORTFOLIO = {
         console.log('MORI_PORTFOLIO инициализация...');
         this.loadData();
         this.loadWhales();
+        this.loadSolanaData();
         this.startAutoUpdate();
         
         const completedTasks = MORI_TASKS ? MORI_TASKS.getCompletedCount() : 0;
@@ -114,9 +118,12 @@ const MORI_PORTFOLIO = {
 </div>
 
             <div class="solana-compare">
-                <div class="solana-label">Сравнение с Solana</div>
-                <div class="solana-value">+2.34% за 24ч</div>
-            </div>
+    <div class="solana-label">Сравнение с Solana</div>
+    <div class="solana-value">
+        ${this.state.solanaChange24h >= 0 ? '+' : ''}${this.state.solanaChange24h.toFixed(2)}% за 24ч
+        ($${this.state.solanaPrice.toFixed(2)})
+    </div>
+</div>
 
             <button class="info-btn" id="toggle-mori-info">🪙 О MORI</button>
 
@@ -210,11 +217,11 @@ const MORI_PORTFOLIO = {
         buttons.push({ id: 'library', icon: '📚', label: 'Библиотека', locked: !libraryUnlocked, unlockTask: { id: 11, title: 'Читатель', desc: 'Написать 20 сообщений' } });
 
         if (showChat) {
-            buttons.push({ id: 'chat', icon: '💬', label: 'Чат', locked: false });
+            buttons.push({ id: 'chat', icon: '💬', label: 'MORIGRAM', locked: false });
         }
 
         const aiUnlocked = this.isModuleUnlocked('ai-chat');
-        buttons.push({ id: 'ai-chat', icon: '🤖', label: 'AI-чат', locked: !aiUnlocked, unlockTask: { id: 18, title: 'Любознательный', desc: 'Написать 30 сообщений' } });
+        buttons.push({ id: 'ai-chat', icon: '🤖', label: 'AI', locked: !aiUnlocked, unlockTask: { id: 18, title: 'Любознательный', desc: 'Написать 30 сообщений' } });
 
         buttons.push({ id: 'profile', icon: '👤', label: 'Профиль', locked: false });
 
@@ -502,6 +509,20 @@ if (expandBtn) {
         }
     } catch (error) {
         console.error('Error loading whales:', error);
+    }
+},
+
+    loadSolanaData: async function() {
+    try {
+        const data = await MORI_API.getSolanaPrice(true);
+        if (data) {
+            this.setState({
+                solanaPrice: data.price,
+                solanaChange24h: data.change24h
+            });
+        }
+    } catch (error) {
+        console.error('Error loading Solana data:', error);
     }
 },
 

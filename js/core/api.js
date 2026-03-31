@@ -374,6 +374,13 @@ if (options.skipCache) {
     });
 },
 
+    getSolanaPrice: async function(skipCache = false) {
+    return this.safeRequest('/solana/price', {
+        method: 'GET',
+        skipCache: skipCache
+    });
+},
+
     getMoriHistory: async function(timeframe = '1h', skipCache = true) {
     return this.safeRequest(`/mori/history?timeframe=${timeframe}`, {
         method: 'GET',
