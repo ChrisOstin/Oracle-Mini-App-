@@ -371,10 +371,47 @@ const MORI_ROUTER = {
         
         // Загружаем модуль
         this.loadModule(screen);
-        
+        this.updateTitle(screenId);
         // Применяем тему
         this.applyScreenTheme(screenId);
         
+        updateTitle: function(screenId) {
+        const titleMap = {
+            'portfolio': 'portfolio-title',
+            'calculator': 'calculator-title',
+            'library': 'library-title',
+            'ai-chat': 'ai-chat-title',
+            'profile': 'profile-title',
+            'tasks': 'tasks-title',
+            'chat': 'chat-title',
+            'house': 'house-title',
+            'family': 'family-title',
+            'music': 'music-title',
+            'voice': 'voice-title',
+            'demigurge': 'demigurge-title',
+            'all-apps': 'all-apps-title',
+            'games': 'games-title',
+            'mori-wallet': 'mori-wallet-title',
+            'mori-work': 'mori-work-title',
+            'retro-phone': 'retro-phone-title',
+            'mori-story': 'mori-story-title'
+        };
+    
+        const titleId = titleMap[screenId];
+        if (!titleId) return;
+    
+        // Скрываем все заголовки
+        document.querySelectorAll('.module-title').forEach(title => {
+            title.style.display = 'none';
+        });
+    
+        // Показываем нужный
+        const activeTitle = document.getElementById(titleId);
+        if (activeTitle) {
+            activeTitle.style.display = 'block';
+        }
+    },
+
         // Обновляем навигацию
         setTimeout(() => this.updateNavigation(), 100);
     },
