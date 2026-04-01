@@ -35,8 +35,7 @@ const MORI_ROUTER = {
             title: 'Калькулятор',
             module: 'MORI_CALCULATOR',
             guard: 'user',
-            icon: '🧮',
-            id: 'calculator'
+            icon: '🧮'
         },
         library: {
             title: 'Библиотека',
