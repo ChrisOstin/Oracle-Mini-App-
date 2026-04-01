@@ -121,6 +121,17 @@
     <script src="js/core/user.js"></script>
     <script src="js/core/router.js"></script>
     <script src="js/core/app.js"></script>
+    <script>
+(function() {
+    setTimeout(function() {
+        if (window.MORI_ROUTER && MORI_ROUTER.screens && MORI_ROUTER.screens.calculator && !MORI_ROUTER.screens.calculator.id) {
+            MORI_ROUTER.screens.calculator.id = 'calculator';
+            console.log('✅ Калькулятор id добавлен');
+        }
+    }, 500);
+})();
+</script>
+
 </body>
 </html>
 
