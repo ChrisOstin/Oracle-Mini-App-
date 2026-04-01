@@ -46,14 +46,73 @@
             padding: 0;
             min-height: 100vh;
         }
+    
+        .module-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    animation: logoPulse 2s ease-in-out infinite;
+    margin: 16px 0;
+    white-space: nowrap;
+}
+
+@keyframes logoPulse {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        opacity: 0.8;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    }
+}
+   
     </style>
 </head>
 <body>
     <div class="theme-icon">🎭</div>
-    <div class="mori-logo-text">Портфель</div>
+     <div class="module-title" id="portfolio-title" style="display: block;">Портфель</div>
+<div class="module-title" id="calculator-title" style="display: none;">Калькулятор</div>
+<div class="module-title" id="library-title" style="display: none;">Библиотека</div>
+<div class="module-title" id="ai-chat-title" style="display: none;">AI-чат</div>
+<div class="module-title" id="profile-title" style="display: none;">Профиль</div>
+<div class="module-title" id="tasks-title" style="display: none;">Задания</div>
+<div class="module-title" id="chat-title" style="display: none;">Чат</div>
+<div class="module-title" id="house-title" style="display: none;">Дом</div>
+<div class="module-title" id="family-title" style="display: none;">Семья</div>
+<div class="module-title" id="music-title" style="display: none;">Музыка</div>
+<div class="module-title" id="voice-title" style="display: none;">Голосовые</div>
+<div class="module-title" id="demigurge-title" style="display: none;">Демиург</div>
+<div class="module-title" id="all-apps-title" style="display: none;">Все приложения</div>
+<div class="module-title" id="games-title" style="display: none;">Игры</div>
+<div class="module-title" id="mori-wallet-title" style="display: none;">MORI Wallet</div>
+<div class="module-title" id="mori-work-title" style="display: none;">MORI Work</div>
+<div class="module-title" id="retro-phone-title" style="display: none;">Ретро-телефон</div>
+<div class="module-title" id="mori-story-title" style="display: none;">MORI Story</div>
     <div id="app"></div>
-    <div id="calculator-content" class="module-container" style="display: none;"></div>
-
+<!-- Контейнеры для всех модулей -->
+<div id="portfolio-content" class="module-container" style="display: none;"></div>
+<div id="calculator-content" class="module-container" style="display: none;"></div>
+<div id="library-content" class="module-container" style="display: none;"></div>
+<div id="ai-chat-content" class="module-container" style="display: none;"></div>
+<div id="profile-content" class="module-container" style="display: none;"></div>
+<div id="tasks-content" class="module-container" style="display: none;"></div>
+<div id="chat-content" class="module-container" style="display: none;"></div>
+<div id="house-content" class="module-container" style="display: none;"></div>
+<div id="family-content" class="module-container" style="display: none;"></div>
+<div id="music-content" class="module-container" style="display: none;"></div>
+<div id="voice-content" class="module-container" style="display: none;"></div>
+<div id="demigurge-content" class="module-container" style="display: none;"></div>
+<div id="all-apps-content" class="module-container" style="display: none;"></div>
+<!-- Игры и дополнительные модули -->
+<div id="games-content" class="module-container" style="display: none;"></div>
+<div id="mori-wallet-content" class="module-container" style="display: none;"></div>
+<div id="mori-work-content" class="module-container" style="display: none;"></div>
+<div id="retro-phone-content" class="module-container" style="display: none;"></div>
+<div id="mori-story-content" class="module-container" style="display: none;"></div>
+  
     <script src="js/core/utils.js"></script>
     <script src="js/core/notifications.js"></script>
     <script src="js/core/storage.js"></script>
