@@ -311,3 +311,74 @@ body > * {
 .calc-action-btn:active {
     transform: scale(0.98);
 }
+
+/* ===== КОМПАКТНЫЙ РЕЖИМ ДЛЯ КАЛЬКУЛЯТОРА ===== */
+
+.calculator-screen {
+    padding: 12px !important;
+}
+
+.converter-section,
+.staking-section {
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+}
+
+.converter-section h3,
+.staking-section h3 {
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+}
+
+.currency-selector {
+    margin-bottom: 12px !important;
+    gap: 4px !important;
+}
+
+.currency-selector button {
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+}
+
+.calc-input-group {
+    margin-bottom: 10px !important;
+}
+
+.calc-input-group label {
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+}
+
+.calc-input-group input {
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+}
+
+.result-container {
+    padding: 10px !important;
+    margin: 10px 0 !important;
+}
+
+.result-label {
+    font-size: 10px !important;
+}
+
+.result-value {
+    font-size: 20px !important;
+}
+
+.calc-action-btn {
+    padding: 10px !important;
+    font-size: 12px !important;
+    margin-top: 10px !important;
+}
+
+.staking-card {
+    padding: 10px !important;
+    margin: 6px 0 !important;
+}
+
+.staking-card p {
+    font-size: 12px !important;
+    margin: 4px 0 !important;
+}
