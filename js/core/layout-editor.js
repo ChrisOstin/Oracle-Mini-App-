@@ -437,4 +437,44 @@
     setTimeout(loadLayout, 1000);
     
     console.log('✨ Layout Editor ULTIMATE готов — 20+ режимов редактирования');
+
+    // Принудительный запуск после загрузки
+setTimeout(() => {
+    console.log('🔥 Принудительный запуск Layout Editor');
+    if (!document.querySelector('#layout-panel') && !document.querySelector('#layout-edit-btn')) {
+        console.log('Кнопка не найдена, создаю заново');
+        const btn = document.createElement('button');
+        btn.innerHTML = '✨';
+        btn.style.cssText = `
+            position: fixed;
+            bottom: 80px;
+            right: 16px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            border: none;
+            color: #0a0a0a;
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        `;
+        
+        let editing = false;
+        btn.onclick = () => {
+            editing = !editing;
+            if (editing) {
+                btn.style.transform = 'scale(1.1)';
+                alert('Режим редактирования включен');
+            } else {
+                btn.style.transform = 'scale(1)';
+                alert('Режим редактирования выключен');
+            }
+        };
+        document.body.appendChild(btn);
+        console.log('✅ Кнопка создана принудительно');
+    }
+}, 2000);
+
 })();
