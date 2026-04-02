@@ -398,3 +398,49 @@
         padding: var(--spacing-xl);
     }
 }
+
+/* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ КАЛЬКУЛЯТОРА ===== */
+.calculator-module {
+    padding: 20px;
+    background: #1a1a2e;
+    border-radius: 16px;
+    color: #fff;
+}
+
+.calculator-module h3 {
+    color: #ffd700;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.converter-section,
+.staking-section {
+    margin-bottom: 24px;
+}
+
+.staking-card {
+    background: #0f0f1a;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+
+.staking-card button {
+    background: #ffd700;
+    color: #0a0a0a;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.calculator-module input {
+    background: #0f0f1a;
+    border: 1px solid #ffd700;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 12px;
+}
