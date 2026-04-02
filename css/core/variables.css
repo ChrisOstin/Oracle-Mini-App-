@@ -382,3 +382,23 @@ body > * {
     font-size: 12px !important;
     margin: 4px 0 !important;
 }
+
+/* Опускаем весь контент вниз */
+body {
+    padding-top: 60px !important;
+}
+
+/* Опускаем иконку темы, чтобы она не налезала */
+.theme-icon {
+    top: 60px !important;
+}
+
+/* Адаптив для телефона */
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px !important;
+    }
+    .theme-icon {
+        top: 70px !important;
+    }
+}
