@@ -1,9 +1,12 @@
-// Layout Editor — рабочая версия
+// Layout Editor — ждет загрузки приложения
 (function() {
     console.log('🎨 Layout Editor загружается...');
     
     function createButton() {
+        if (document.getElementById('mori-edit-btn')) return;
+        
         const btn = document.createElement('button');
+        btn.id = 'mori-edit-btn';
         btn.innerHTML = '✨';
         btn.style.cssText = `
             position: fixed;
@@ -26,25 +29,26 @@
         btn.onclick = () => {
             editing = !editing;
             if (editing) {
-                btn.style.transform = 'scale(1.1)';
                 btn.style.background = '#ff4444';
-                alert('✨ Режим редактирования ВКЛЮЧЕН\n\nТеперь можно перетаскивать элементы!');
-                // Делаем элементы перетаскиваемыми
+                btn.style.transform = 'scale(1.1)';
+                alert('✨ Режим редактирования ВКЛЮЧЕН\n\nПеретаскивай элементы!');
                 document.querySelectorAll('.converter-section, .staking-section, .result-container, .history-section, .chart-container, .calculator-card, .portfolio-card')
                     .forEach(el => {
-                        el.style.cursor = 'grab';
-                        el.style.border = '2px dashed #d4af37';
-                        el.setAttribute('draggable', 'true');
+                        if (el) {
+                            el.style.border = '2px dashed #d4af37';
+                            el.style.cursor = 'grab';
+                        }
                     });
             } else {
-                btn.style.transform = 'scale(1)';
                 btn.style.background = 'linear-gradient(135deg, #d4af37, #b8941f)';
+                btn.style.transform = 'scale(1)';
                 alert('✨ Режим редактирования ВЫКЛЮЧЕН');
                 document.querySelectorAll('.converter-section, .staking-section, .result-container, .history-section, .chart-container, .calculator-card, .portfolio-card')
                     .forEach(el => {
-                        el.style.cursor = '';
-                        el.style.border = '';
-                        el.removeAttribute('draggable');
+                        if (el) {
+                            el.style.border = '';
+                            el.style.cursor = '';
+                        }
                     });
             }
         };
@@ -53,10 +57,21 @@
         console.log('✅ Кнопка редактирования создана');
     }
     
-    // Ждем загрузки страницы
+    // Ждем, пока приложение загрузится
+    function waitForApp() {
+        if (window.MORI_APP && MORI_APP.accessLevel !== 'guest') {
+            console.log('✅ Приложение загружено, создаем кнопку');
+            createButton();
+        } else {
+            console.log('⏳ Ждем загрузки приложения...');
+            setTimeout(waitForApp, 500);
+        }
+    }
+    
+    // Запускаем ожидание
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', createButton);
+        document.addEventListener('DOMContentLoaded', waitForApp);
     } else {
-        createButton();
+        waitForApp();
     }
 })();
