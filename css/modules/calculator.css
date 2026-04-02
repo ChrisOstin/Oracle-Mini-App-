@@ -1,416 +1,124 @@
-/* ===== CALCULATOR MODULE ===== */
+/* ===== CALCULATOR MODULE — STYLE MORIARTI ===== */
 
 .calculator-screen {
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 16px;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 }
 
-/* Переключатель режимов (покупка/продажа) */
-.calculator-tabs {
-    display: flex;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-    background: var(--bg-card);
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-xl);
-}
-
-.calc-tab {
-    flex: 1;
-    padding: var(--spacing-md) var(--spacing-lg);
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-lg);
-    color: var(--text-secondary);
+/* Заголовки */
+.calculator-module h3 {
+    color: #d4af37;
+    font-size: 18px;
     font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all var(--transition-fast);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
 }
 
-.calc-tab.active {
-    background: var(--accent-primary);
-    color: var(--mori-black);
-}
-
-.calc-tab:active {
-    transform: scale(0.98);
-}
-
-/* Карточка калькулятора */
-.calculator-card {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
+.calculator-module h4 {
+    color: #b8b8b8;
+    font-size: 14px;
+    margin-bottom: 8px;
 }
 
 /* Переключатель валют */
 .currency-selector {
     display: flex;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
-    background: var(--bg-primary);
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-lg);
+    gap: 8px;
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .currency-btn {
     flex: 1;
-    padding: var(--spacing-md);
+    padding: 10px;
     background: transparent;
     border: none;
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    font-weight: 500;
+    border-radius: 8px;
+    color: #8a8a8a;
+    font-weight: 600;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
 .currency-btn.active {
-    background: var(--accent-primary);
-    color: var(--mori-black);
+    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+    color: #0a0a0a;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
 }
 
-/* Поле ввода */
+/* Поля ввода */
 .calc-input-group {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 16px;
 }
 
 .calc-label {
     display: block;
-    margin-bottom: var(--spacing-xs);
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.calc-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+    margin-bottom: 8px;
+    color: #b8b8b8;
+    font-size: 12px;
+    letter-spacing: 0.5px;
 }
 
 .calc-input {
     width: 100%;
-    padding: var(--spacing-lg);
-    background: var(--bg-primary);
-    border: 2px solid transparent;
-    border-radius: var(--radius-lg);
-    color: var(--text-primary);
-    font-size: 1.5rem;
-    font-weight: 600;
-    transition: all var(--transition-fast);
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
 }
 
 .calc-input:focus {
-    border-color: var(--accent-primary);
+    border-color: #d4af37;
     outline: none;
-}
-
-.calc-input.error {
-    border-color: var(--accent-danger);
-}
-
-.calc-currency {
-    position: absolute;
-    right: var(--spacing-lg);
-    color: var(--text-secondary);
-    font-size: 1.25rem;
-    font-weight: 600;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
 }
 
 /* Результат */
 .result-container {
-    background: var(--bg-primary);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 16px;
     text-align: center;
+    margin: 16px 0;
+    border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .result-label {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    margin-bottom: var(--spacing-xs);
+    color: #b8b8b8;
+    font-size: 12px;
+    margin-bottom: 8px;
 }
 
 .result-value {
-    font-size: 3rem;
+    font-size: 28px;
     font-weight: 700;
-    color: var(--accent-primary);
-    line-height: 1.2;
-    margin-bottom: var(--spacing-xs);
+    color: #d4af37;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
-.result-sub {
-    color: var(--text-secondary);
-    font-size: 1rem;
-}
-
-/* Дополнительная информация */
-.calc-info {
-    background: var(--bg-primary);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-between;
-    padding: var(--spacing-sm) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.info-row:last-child {
-    border-bottom: none;
-}
-
-.info-label {
-    color: var(--text-secondary);
-}
-
-.info-value {
-    font-weight: 600;
-    color: var(--accent-primary);
-}
-
-/* Кнопка действия */
-.calc-action-btn {
-    width: 100%;
-    padding: var(--spacing-lg);
-    background: var(--accent-primary);
-    border: none;
-    border-radius: var(--radius-lg);
-    color: var(--mori-black);
-    font-weight: 700;
-    font-size: 1.125rem;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    margin-top: var(--spacing-lg);
-}
-
-.calc-action-btn:active {
-    transform: scale(0.98);
-    opacity: 0.9;
-}
-
-.calc-action-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* История расчётов */
-.history-section {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    margin-top: var(--spacing-md);
-}
-
-.history-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-md);
-}
-
-.history-header h3 {
-    color: var(--text-primary);
-    font-size: 1.125rem;
-}
-
-.history-clear {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    cursor: pointer;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-fast);
-}
-
-.history-clear:hover {
-    background: var(--bg-primary);
-    color: var(--accent-danger);
-}
-
-.history-list {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.history-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-md);
-    background: var(--bg-primary);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--spacing-xs);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.history-item:active {
-    transform: scale(0.99);
-}
-
-.history-left {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-}
-
-.history-from {
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.history-to {
-    color: var(--accent-primary);
-    font-weight: 600;
-}
-
-.history-time {
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-}
-
-.history-right {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-.history-repeat {
-    background: transparent;
-    border: none;
-    color: var(--accent-primary);
-    font-size: 1.25rem;
-    cursor: pointer;
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-sm);
-}
-
-.history-repeat:active {
-    background: rgba(255, 215, 0, 0.1);
-}
-
-.history-delete {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 1.25rem;
-    cursor: pointer;
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-sm);
-}
-
-.history-delete:active {
-    color: var(--accent-danger);
-}
-
-.history-empty {
-    text-align: center;
-    color: var(--text-secondary);
-    padding: var(--spacing-xl);
-    font-style: italic;
-}
-
-/* График в калькуляторе */
-.calc-chart {
-    height: 100px;
-    margin: var(--spacing-md) 0;
-    background: var(--bg-primary);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-sm);
-}
-
-/* Точность */
-.precision-selector {
-    display: flex;
-    gap: var(--spacing-xs);
-    margin-top: var(--spacing-sm);
-}
-
-.precision-btn {
-    flex: 1;
-    padding: var(--spacing-sm);
-    background: var(--bg-primary);
-    border: 1px solid var(--text-muted);
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.precision-btn.active {
-    background: var(--accent-primary);
-    border-color: var(--accent-primary);
-    color: var(--mori-black);
-    font-weight: 600;
-}
-
-/* Состояния загрузки */
-.calc-skeleton {
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-}
-
-.calc-skeleton-line {
-    height: 24px;
-    background: linear-gradient(
-        90deg,
-        var(--bg-card) 25%,
-        var(--bg-secondary) 50%,
-        var(--bg-card) 75%
-    );
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
-    border-radius: var(--radius-sm);
-    margin: var(--spacing-sm) 0;
-}
-
-/* Адаптивность */
-@media (max-width: 360px) {
-    .result-value {
-        font-size: 2rem;
-    }
-    
-    .calc-input {
-        font-size: 1.25rem;
-        padding: var(--spacing-md);
-    }
-    
-    .currency-btn {
-        padding: var(--spacing-sm);
-        font-size: 0.875rem;
-    }
-}
-
-@media (min-width: 768px) {
-    .calculator-card {
-        padding: var(--spacing-xl);
-    }
-}
-
-/* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ КАЛЬКУЛЯТОРА ===== */
-.calculator-module {
-    padding: 20px;
-    background: #1a1a2e;
+/* Карточки */
+.calculator-card,
+.staking-card {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
     border-radius: 16px;
-    color: #fff;
-}
-
-.calculator-module h3 {
-    color: #ffd700;
-    font-size: 18px;
+    padding: 16px;
     margin-bottom: 16px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .converter-section,
@@ -418,29 +126,122 @@
     margin-bottom: 24px;
 }
 
-.staking-card {
-    background: #0f0f1a;
-    padding: 16px;
-    border-radius: 12px;
-    margin: 12px 0;
-}
-
+/* Кнопки */
+.calc-action-btn,
 .staking-card button {
-    background: #ffd700;
-    color: #0a0a0a;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
     border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-    margin-top: 12px;
+    border-radius: 12px;
+    color: #0a0a0a;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.calculator-module input {
-    background: #0f0f1a;
-    border: 1px solid #ffd700;
-    color: #fff;
+.calc-action-btn:hover,
+.staking-card button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+}
+
+.calc-action-btn:active,
+.staking-card button:active {
+    transform: scale(0.98);
+}
+
+/* Вкладки */
+.calculator-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.calc-tab {
+    flex: 1;
     padding: 10px;
+    background: transparent;
+    border: none;
     border-radius: 8px;
-    width: 100%;
+    color: #8a8a8a;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calc-tab.active {
+    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+    color: #0a0a0a;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}
+
+/* История */
+.history-section {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 16px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 12px;
+}
+
+.history-header h3 {
+    color: #d4af37;
+    font-size: 14px;
+    margin: 0;
+}
+
+.history-clear {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    color: #d4af37;
+    padding: 4px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.history-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 2px solid #d4af37;
+}
+
+.history-time {
+    font-size: 10px;
+    color: #666;
+}
+
+.history-delete {
+    background: transparent;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    font-size: 16px;
 }
