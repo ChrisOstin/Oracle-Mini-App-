@@ -7,21 +7,20 @@
         btn.id = 'edit-btn';
         btn.innerHTML = '✏️';
         btn.style.cssText = `
-            position: fixed;
-            bottom: 80px;
-            right: 16px;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: #d4af37;
-            border: none;
-            color: black;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 9999;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        `;
-        
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: #d4af37;
+        border: none;
+        color: black;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 9999;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    `;        
         btn.onclick = toggleEdit;
         document.body.appendChild(btn);
     }
