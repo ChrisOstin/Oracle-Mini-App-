@@ -354,8 +354,8 @@
 
 /* ИКОНКА ТЕМЫ */
 .theme-icon {
-    position: fixed;
-    top: 200px;
+    position: fixed !important;
+    top: 300px !important;
     left: 16px;
     z-index: 10000;
     width: 48px;
