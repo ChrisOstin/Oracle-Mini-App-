@@ -15,7 +15,7 @@ const MORI_PORTFOLIO = {
         timeframe: '12h',
         isLoading: false,
         lastUpdate: null,
-        isExpanded: false
+        isExpanded: false,
         solanaPrice: 0,
         solanaChange24h: 0
     },
