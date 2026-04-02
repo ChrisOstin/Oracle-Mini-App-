@@ -1,448 +1,8 @@
-// Layout Editor ULTIMATE — полный контроль над интерфейсом
+// Layout Editor — рабочая версия
 (function() {
-    console.log('🎨 Layout Editor ULTIMATE загружен');
+    console.log('🎨 Layout Editor загружается...');
     
-    let editing = false;
-    let selectedElement = null;
-    let mode = 'move'; // move, resize, text, rotate, color, margin, padding, border, shadow, opacity, zindex, radius, gap, align, font, weight, spacing, lineheight
-    let activePanel = null;
-    
-    // ========== 20+ РЕЖИМОВ РЕДАКТИРОВАНИЯ ==========
-    const modes = [
-        { id: 'move', icon: '✋', name: 'Перемещать', cursor: 'grab' },
-        { id: 'resize', icon: '📏', name: 'Размер', cursor: 'se-resize' },
-        { id: 'text', icon: '🔤', name: 'Размер текста', cursor: 'ns-resize' },
-        { id: 'rotate', icon: '🔄', name: 'Поворот', cursor: 'ew-resize' },
-        { id: 'color', icon: '🎨', name: 'Цвет текста', cursor: 'pointer' },
-        { id: 'bgcolor', icon: '🖌️', name: 'Цвет фона', cursor: 'pointer' },
-        { id: 'margin', icon: '⬅️➡️', name: 'Отступы', cursor: 'move' },
-        { id: 'padding', icon: '📦', name: 'Внутр. отступ', cursor: 'move' },
-        { id: 'border', icon: '▯', name: 'Рамка', cursor: 'pointer' },
-        { id: 'shadow', icon: '🌑', name: 'Тень', cursor: 'pointer' },
-        { id: 'opacity', icon: '👻', name: 'Прозрачность', cursor: 'ew-resize' },
-        { id: 'zindex', icon: '🔢', name: 'Слой', cursor: 'ew-resize' },
-        { id: 'radius', icon: '⭕', name: 'Скругление', cursor: 'ew-resize' },
-        { id: 'gap', icon: '📏', name: 'Расстояние', cursor: 'ew-resize' },
-        { id: 'align', icon: '📐', name: 'Выравнивание', cursor: 'pointer' },
-        { id: 'font', icon: '🔤', name: 'Шрифт', cursor: 'pointer' },
-        { id: 'weight', icon: '💪', name: 'Жирность', cursor: 'ew-resize' },
-        { id: 'spacing', icon: '🔡', name: 'Интервал букв', cursor: 'ew-resize' },
-        { id: 'lineheight', icon: '📝', name: 'Высота строки', cursor: 'ew-resize' },
-        { id: 'hide', icon: '👁️', name: 'Скрыть', cursor: 'pointer' }
-    ];
-    
-    // ========== СОХРАНЕНИЕ ==========
-    function saveLayout() {
-        const layout = {};
-        const allElements = document.querySelectorAll('.editable-element');
-        
-        allElements.forEach(el => {
-            const id = el.id || `el_${Date.now()}_${Math.random()}`;
-            if (!el.id) el.id = id;
-            
-            const styles = window.getComputedStyle(el);
-            layout[id] = {
-                // Позиция
-                top: el.style.top,
-                left: el.style.left,
-                position: el.style.position,
-                // Размер
-                width: el.style.width,
-                height: el.style.height,
-                // Текст
-                fontSize: el.style.fontSize,
-                color: el.style.color,
-                fontWeight: el.style.fontWeight,
-                letterSpacing: el.style.letterSpacing,
-                lineHeight: el.style.lineHeight,
-                textAlign: el.style.textAlign,
-                fontFamily: el.style.fontFamily,
-                // Внешний вид
-                backgroundColor: el.style.backgroundColor,
-                border: el.style.border,
-                borderRadius: el.style.borderRadius,
-                boxShadow: el.style.boxShadow,
-                opacity: el.style.opacity,
-                zIndex: el.style.zIndex,
-                // Отступы
-                margin: el.style.margin,
-                padding: el.style.padding,
-                gap: el.style.gap,
-                transform: el.style.transform
-            };
-        });
-        
-        localStorage.setItem('mori_layout_ultimate', JSON.stringify(layout));
-        showToast('✅ Все настройки сохранены!');
-    }
-    
-    function loadLayout() {
-        const saved = localStorage.getItem('mori_layout_ultimate');
-        if (!saved) return;
-        
-        const layout = JSON.parse(saved);
-        for (let id in layout) {
-            const el = document.getElementById(id);
-            if (el) {
-                const styles = layout[id];
-                for (let prop in styles) {
-                    if (styles[prop]) el.style[prop] = styles[prop];
-                }
-            }
-        }
-        showToast('📦 Сохраненный дизайн загружен');
-    }
-    
-    function resetLayout() {
-        if (confirm('Сбросить все настройки интерфейса?')) {
-            localStorage.removeItem('mori_layout_ultimate');
-            location.reload();
-        }
-    }
-    
-    // ========== TOAST УВЕДОМЛЕНИЯ ==========
-    function showToast(msg) {
-        const toast = document.createElement('div');
-        toast.textContent = msg;
-        toast.style.cssText = `
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.9);
-            color: #d4af37;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 14px;
-            z-index: 10001;
-            border: 1px solid #d4af37;
-            white-space: nowrap;
-        `;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 2000);
-    }
-    
-    // ========== ПАНЕЛЬ УПРАВЛЕНИЯ ==========
-    function createControlPanel() {
-        if (activePanel) activePanel.remove();
-        
-        const panel = document.createElement('div');
-        panel.id = 'layout-panel';
-        panel.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(10,10,10,0.98);
-            backdrop-filter: blur(15px);
-            border-radius: 60px;
-            padding: 8px 16px;
-            z-index: 10000;
-            border: 1px solid #d4af37;
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            max-width: 95vw;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        `;
-        
-        // Кнопки режимов
-        modes.forEach(m => {
-            const btn = document.createElement('button');
-            btn.innerHTML = `${m.icon} ${m.name}`;
-            btn.style.cssText = `
-                background: ${mode === m.id ? '#d4af37' : '#333'};
-                border: none;
-                padding: 8px 14px;
-                border-radius: 40px;
-                cursor: pointer;
-                color: ${mode === m.id ? '#000' : '#fff'};
-                font-size: 12px;
-                font-weight: 500;
-                transition: all 0.2s;
-            `;
-            btn.onclick = () => setMode(m.id);
-            panel.appendChild(btn);
-        });
-        
-        // Дополнительные кнопки
-        const saveBtn = document.createElement('button');
-        saveBtn.innerHTML = '💾 Сохранить всё';
-        saveBtn.style.cssText = `background:#d4af37; border:none; padding:8px 16px; border-radius:40px; cursor:pointer; font-weight:bold;`;
-        saveBtn.onclick = saveLayout;
-        
-        const resetBtn = document.createElement('button');
-        resetBtn.innerHTML = '🗑 Сброс';
-        resetBtn.style.cssText = `background:#ff4444; border:none; padding:8px 16px; border-radius:40px; cursor:pointer; color:#fff;`;
-        resetBtn.onclick = resetLayout;
-        
-        const exitBtn = document.createElement('button');
-        exitBtn.innerHTML = '❌ Выход';
-        exitBtn.style.cssText = `background:#666; border:none; padding:8px 16px; border-radius:40px; cursor:pointer; color:#fff;`;
-        exitBtn.onclick = exitEditMode;
-        
-        panel.appendChild(saveBtn);
-        panel.appendChild(resetBtn);
-        panel.appendChild(exitBtn);
-        
-        document.body.appendChild(panel);
-        activePanel = panel;
-    }
-    
-    // ========== УСТАНОВКА РЕЖИМА ==========
-    function setMode(newMode) {
-        mode = newMode;
-        
-        // Обновляем курсор
-        const m = modes.find(m => m.id === mode);
-        if (m) document.body.style.cursor = m.cursor;
-        
-        // Обновляем панель
-        if (activePanel) {
-            activePanel.querySelectorAll('button').forEach(btn => {
-                if (btn.textContent.includes(m.name)) {
-                    btn.style.background = '#d4af37';
-                    btn.style.color = '#000';
-                } else if (!btn.textContent.includes('Сохранить') && !btn.textContent.includes('Сброс') && !btn.textContent.includes('Выход')) {
-                    btn.style.background = '#333';
-                    btn.style.color = '#fff';
-                }
-            });
-        }
-        
-        showToast(`Режим: ${m?.name || mode}`);
-    }
-    
-    // ========== ПРИМЕНЕНИЕ ИЗМЕНЕНИЙ ==========
-    let activeElement = null;
-    let isDragging = false;
-    let dragStart = {};
-    
-    function applyStyle(element, prop, value) {
-        element.style[prop] = value;
-        showToast(`${prop}: ${value}`);
-    }
-    
-    function onMouseDown(e) {
-        if (!editing) return;
-        
-        let target = e.target.closest('.editable-element');
-        if (!target) return;
-        
-        activeElement = target;
-        
-        const rect = target.getBoundingClientRect();
-        dragStart = {
-            x: e.clientX,
-            y: e.clientY,
-            width: target.offsetWidth,
-            height: target.offsetHeight,
-            top: parseInt(target.style.top) || 0,
-            left: parseInt(target.style.left) || 0,
-            fontSize: parseInt(window.getComputedStyle(target).fontSize) || 16,
-            opacity: parseFloat(target.style.opacity) || 1,
-            zIndex: parseInt(target.style.zIndex) || 0,
-            borderRadius: parseInt(target.style.borderRadius) || 0,
-            gap: parseInt(target.style.gap) || 0,
-            letterSpacing: parseFloat(target.style.letterSpacing) || 0,
-            lineHeight: parseFloat(target.style.lineHeight) || 1.4,
-            fontWeight: parseInt(target.style.fontWeight) || 400,
-            rotation: 0
-        };
-        
-        isDragging = true;
-        e.preventDefault();
-    }
-    
-    function onMouseMove(e) {
-        if (!isDragging || !activeElement) return;
-        
-        const deltaX = e.clientX - dragStart.x;
-        const deltaY = e.clientY - dragStart.y;
-        
-        switch(mode) {
-            case 'move':
-                activeElement.style.position = 'relative';
-                activeElement.style.top = (dragStart.top + deltaY) + 'px';
-                activeElement.style.left = (dragStart.left + deltaX) + 'px';
-                break;
-            case 'resize':
-                activeElement.style.width = Math.max(50, dragStart.width + deltaX) + 'px';
-                activeElement.style.height = Math.max(30, dragStart.height + deltaY) + 'px';
-                break;
-            case 'text':
-                activeElement.style.fontSize = Math.max(8, dragStart.fontSize + deltaY / 5) + 'px';
-                break;
-            case 'rotate':
-                const rotation = (dragStart.rotation + deltaX) % 360;
-                activeElement.style.transform = `rotate(${rotation}deg)`;
-                dragStart.rotation = rotation;
-                break;
-            case 'opacity':
-                const opacity = Math.min(1, Math.max(0, dragStart.opacity + deltaY / 200));
-                activeElement.style.opacity = opacity;
-                break;
-            case 'zindex':
-                const zIndex = Math.max(0, dragStart.zIndex + (deltaY > 0 ? 1 : -1));
-                activeElement.style.zIndex = zIndex;
-                break;
-            case 'radius':
-                const radius = Math.max(0, dragStart.borderRadius + deltaY / 2);
-                activeElement.style.borderRadius = radius + 'px';
-                break;
-            case 'gap':
-                const gap = Math.max(0, dragStart.gap + deltaY / 2);
-                activeElement.style.gap = gap + 'px';
-                break;
-            case 'weight':
-                const weight = Math.min(900, Math.max(100, dragStart.fontWeight + (deltaY > 0 ? 10 : -10)));
-                activeElement.style.fontWeight = weight;
-                break;
-            case 'spacing':
-                const spacing = Math.max(-5, Math.min(10, dragStart.letterSpacing + deltaY / 50));
-                activeElement.style.letterSpacing = spacing + 'px';
-                break;
-            case 'lineheight':
-                const lineHeight = Math.max(0.8, Math.min(3, dragStart.lineHeight + deltaY / 100));
-                activeElement.style.lineHeight = lineHeight;
-                break;
-            case 'margin':
-                activeElement.style.margin = `${deltaY}px`;
-                break;
-            case 'padding':
-                activeElement.style.padding = `${deltaY}px`;
-                break;
-        }
-    }
-    
-    function onMouseUp() {
-        isDragging = false;
-        activeElement = null;
-    }
-    
-    // ========== КЛИК ДЛЯ ЦВЕТА ==========
-    function onClick(e) {
-        if (!editing) return;
-        
-        let target = e.target.closest('.editable-element');
-        if (!target) return;
-        
-        if (mode === 'color') {
-            const color = prompt('Цвет текста (hex, rgb, название):', '#d4af37');
-            if (color) target.style.color = color;
-        } else if (mode === 'bgcolor') {
-            const color = prompt('Цвет фона:', '#1a1a2a');
-            if (color) target.style.backgroundColor = color;
-        } else if (mode === 'border') {
-            const border = prompt('Рамка (толщина стиль цвет):', '1px solid #d4af37');
-            if (border) target.style.border = border;
-        } else if (mode === 'shadow') {
-            const shadow = prompt('Тень:', '0 4px 12px rgba(0,0,0,0.3)');
-            if (shadow) target.style.boxShadow = shadow;
-        } else if (mode === 'align') {
-            const align = prompt('Выравнивание (left, center, right, justify):', 'center');
-            if (align) target.style.textAlign = align;
-        } else if (mode === 'font') {
-            const font = prompt('Шрифт:', 'Inter, sans-serif');
-            if (font) target.style.fontFamily = font;
-        } else if (mode === 'hide') {
-            if (confirm('Скрыть этот элемент?')) {
-                target.style.display = 'none';
-            }
-        }
-    }
-    
-    // ========== ВКЛЮЧЕНИЕ/ВЫКЛЮЧЕНИЕ ==========
-    function startEditing() {
-        editing = true;
-        
-        // Подсвечиваем ВСЕ возможные элементы
-        const allElements = document.querySelectorAll('*');
-        allElements.forEach(el => {
-            if (el.tagName !== 'BODY' && el.tagName !== 'HTML' && el !== toggleBtn) {
-                el.classList.add('editable-element');
-                el.style.outline = '1px dashed rgba(212, 175, 55, 0.3)';
-                el.style.transition = 'all 0.1s';
-                el.style.cursor = 'pointer';
-            }
-        });
-        
-        createControlPanel();
-        setMode('move');
-        
-        document.addEventListener('mousedown', onMouseDown);
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('click', onClick);
-        
-        showToast('🎨 Режим редактирования включен. Выбери инструмент в панели внизу');
-    }
-    
-    function exitEditMode() {
-        editing = false;
-        
-        if (activePanel) activePanel.remove();
-        activePanel = null;
-        
-        document.body.style.cursor = '';
-        
-        document.querySelectorAll('.editable-element').forEach(el => {
-            el.classList.remove('editable-element');
-            el.style.outline = '';
-            el.style.cursor = '';
-        });
-        
-        document.removeEventListener('mousedown', onMouseDown);
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-        document.removeEventListener('click', onClick);
-        
-        showToast('❌ Режим редактирования выключен');
-    }
-    
-    // ========== КНОПКА ВКЛЮЧЕНИЯ ==========
-    const toggleBtn = document.createElement('button');
-    toggleBtn.innerHTML = '✨';
-    toggleBtn.style.cssText = `
-        position: fixed;
-        bottom: 80px;
-        right: 16px;
-        width: 52px;
-        height: 52px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #d4af37, #b8941f);
-        border: none;
-        color: #0a0a0a;
-        font-size: 26px;
-        cursor: pointer;
-        z-index: 9999;
-        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-        transition: all 0.2s;
-    `;
-    
-    toggleBtn.onclick = () => {
-        if (editing) {
-            exitEditMode();
-            toggleBtn.style.transform = 'scale(1)';
-        } else {
-            startEditing();
-            toggleBtn.style.transform = 'scale(1.1)';
-        }
-    };
-    
-    document.body.appendChild(toggleBtn);
-    
-    // Загружаем сохранения
-    setTimeout(loadLayout, 1000);
-    
-    console.log('✨ Layout Editor ULTIMATE готов — 20+ режимов редактирования');
-
-    // Принудительный запуск после загрузки
-setTimeout(() => {
-    console.log('🔥 Принудительный запуск Layout Editor');
-    if (!document.querySelector('#layout-panel') && !document.querySelector('#layout-edit-btn')) {
-        console.log('Кнопка не найдена, создаю заново');
+    function createButton() {
         const btn = document.createElement('button');
         btn.innerHTML = '✨';
         btn.style.cssText = `
@@ -462,19 +22,41 @@ setTimeout(() => {
         `;
         
         let editing = false;
+        
         btn.onclick = () => {
             editing = !editing;
             if (editing) {
                 btn.style.transform = 'scale(1.1)';
-                alert('Режим редактирования включен');
+                btn.style.background = '#ff4444';
+                alert('✨ Режим редактирования ВКЛЮЧЕН\n\nТеперь можно перетаскивать элементы!');
+                // Делаем элементы перетаскиваемыми
+                document.querySelectorAll('.converter-section, .staking-section, .result-container, .history-section, .chart-container, .calculator-card, .portfolio-card')
+                    .forEach(el => {
+                        el.style.cursor = 'grab';
+                        el.style.border = '2px dashed #d4af37';
+                        el.setAttribute('draggable', 'true');
+                    });
             } else {
                 btn.style.transform = 'scale(1)';
-                alert('Режим редактирования выключен');
+                btn.style.background = 'linear-gradient(135deg, #d4af37, #b8941f)';
+                alert('✨ Режим редактирования ВЫКЛЮЧЕН');
+                document.querySelectorAll('.converter-section, .staking-section, .result-container, .history-section, .chart-container, .calculator-card, .portfolio-card')
+                    .forEach(el => {
+                        el.style.cursor = '';
+                        el.style.border = '';
+                        el.removeAttribute('draggable');
+                    });
             }
         };
+        
         document.body.appendChild(btn);
-        console.log('✅ Кнопка создана принудительно');
+        console.log('✅ Кнопка редактирования создана');
     }
-}, 2000);
-
+    
+    // Ждем загрузки страницы
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createButton);
+    } else {
+        createButton();
+    }
 })();
