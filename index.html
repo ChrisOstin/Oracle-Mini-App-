@@ -112,6 +112,48 @@
 <div id="mori-work-content" class="module-container" style="display: none;"></div>
 <div id="retro-phone-content" class="module-container" style="display: none;"></div>
 <div id="mori-story-content" class="module-container" style="display: none;"></div>
+
+<!-- Глобальная панель навигации (будет заполняться динамически) -->
+<div class="bottom-nav" id="global-bottom-nav"></div>
+
+<script>
+// Переносим панель навигации из портфеля в глобальный блок
+function moveNavigationToGlobal() {
+    const portfolioNav = document.querySelector('#portfolio-content .bottom-nav');
+    const globalNav = document.getElementById('global-bottom-nav');
+    
+    if (portfolioNav && globalNav && globalNav.children.length === 0) {
+        // Копируем все кнопки
+        const buttons = portfolioNav.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => {
+            globalNav.appendChild(btn.cloneNode(true));
+        });
+        
+        // Перепривязываем события
+        document.querySelectorAll('#global-bottom-nav .nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const module = btn.dataset.module;
+                const isLocked = btn.classList.contains('locked');
+                const unlockTask = btn.dataset.unlockTask ? JSON.parse(btn.dataset.unlockTask) : null;
+                
+                if (isLocked && unlockTask) {
+                    MORI_APP.showToast(`🔒 Функция "${btn.querySelector('.nav-label')?.textContent}" заблокирована.`, 'warning', 3000);
+                    return;
+                }
+                
+                if (module === 'portfolio') {
+                    MORI_PORTFOLIO.loadData();
+                } else if (window.MORI_ROUTER) {
+                    MORI_ROUTER.navigate(module);
+                }
+            });
+        });
+    }
+}
+
+// Ждём загрузки портфеля и переносим панель
+setTimeout(moveNavigationToGlobal, 1000);
+</script>
   
     <script src="js/core/utils.js"></script>
     <script src="js/core/notifications.js"></script>
