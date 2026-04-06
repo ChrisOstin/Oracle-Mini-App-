@@ -587,6 +587,6 @@
 .theme-icon {
     position: relative !important;
     top: auto !important;
-    margin-top: 0px !important;
+    margin-top: 100px !important;
     left: 16px !important;
 }
