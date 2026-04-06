@@ -129,6 +129,9 @@ function moveNavigationToGlobal() {
             globalNav.appendChild(btn.cloneNode(true));
         });
         
+        // Скрываем старую панель в портфеле
+        portfolioNav.style.display = 'none';
+        
         // Перепривязываем события
         document.querySelectorAll('#global-bottom-nav .nav-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -137,12 +140,14 @@ function moveNavigationToGlobal() {
                 const unlockTask = btn.dataset.unlockTask ? JSON.parse(btn.dataset.unlockTask) : null;
                 
                 if (isLocked && unlockTask) {
-                    MORI_APP.showToast(`🔒 Функция "${btn.querySelector('.nav-label')?.textContent}" заблокирована.`, 'warning', 3000);
+                    if (window.MORI_APP) {
+                        MORI_APP.showToast(`🔒 Функция "${btn.querySelector('.nav-label')?.textContent}" заблокирована.`, 'warning', 3000);
+                    }
                     return;
                 }
                 
                 if (module === 'portfolio') {
-                    MORI_PORTFOLIO.loadData();
+                    if (window.MORI_PORTFOLIO) MORI_PORTFOLIO.loadData();
                 } else if (window.MORI_ROUTER) {
                     MORI_ROUTER.navigate(module);
                 }
@@ -152,7 +157,7 @@ function moveNavigationToGlobal() {
 }
 
 // Ждём загрузки портфеля и переносим панель
-setTimeout(moveNavigationToGlobal, 1000);
+setTimeout(moveNavigationToGlobal, 1500);
 </script>
   
     <script src="js/core/utils.js"></script>
