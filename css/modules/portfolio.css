@@ -590,3 +590,61 @@
     margin-top: 100px !important;
     left: 16px !important;
 }
+
+/* Глобальная панель навигации — стили */
+#global-bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(0, 0, 0, 0.95) !important;
+    border-top: 2px solid #ffd700 !important;
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.9) !important;
+    padding: 10px 0 !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    border-radius: 20px 20px 0 0 !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+}
+
+#global-bottom-nav .nav-btn {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: none !important;
+    color: #888 !important;
+    font-size: 11px !important;
+    cursor: pointer !important;
+    padding: 4px 8px !important;
+    border-radius: 8px !important;
+    transition: all 0.2s !important;
+    position: relative !important;
+}
+
+#global-bottom-nav .nav-btn.active {
+    color: #ffd700 !important;
+    background: rgba(255, 215, 0, 0.05) !important;
+}
+
+#global-bottom-nav .nav-icon {
+    font-size: 20px !important;
+    margin-bottom: 2px !important;
+}
+
+#global-bottom-nav .nav-btn.locked {
+    opacity: 0.5 !important;
+}
+
+#global-bottom-nav .lock-icon {
+    position: absolute !important;
+    top: -4px !important;
+    right: -4px !important;
+    font-size: 10px !important;
+    background: rgba(0,0,0,0.7) !important;
+    border-radius: 10px !important;
+    padding: 0 2px !important;
+}
