@@ -1,247 +1,453 @@
-/* ===== CALCULATOR MODULE — STYLE MORIARTI ===== */
+/* ===== CALCULATOR MODULE — ПРОФЕССОР МОРИАРТИ ===== */
+/* Золотая элегантность, свечение, премиум стиль */
 
-.calculator-screen {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-}
-
-/* Заголовки */
-.calculator-module h3 {
-    color: #d4af37;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
-}
-
-.calculator-module h4 {
-    color: #b8b8b8;
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-
-/* Переключатель валют */
-.currency-selector {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
+/* Основной контейнер */
+.calculator-container {
     padding: 8px;
-    border-radius: 12px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.05), transparent);
 }
 
-.currency-btn {
-    flex: 1;
-    padding: 10px;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    color: #8a8a8a;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.currency-btn.active {
-    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
-    color: #0a0a0a;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-}
-
-/* Поля ввода */
-.calc-input-group {
-    margin-bottom: 16px;
-}
-
-.calc-label {
-    display: block;
-    margin-bottom: 8px;
-    color: #b8b8b8;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-}
-
-.calc-input {
-    width: 100%;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 12px;
-    color: #fff;
-    font-size: 16px;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-.calc-input:focus {
-    border-color: #d4af37;
-    outline: none;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-}
-
-/* Результат */
-.result-container {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 16px;
+/* Заголовок */
+.calculator-header {
+    margin-bottom: 10px;
     text-align: center;
-    margin: 16px 0;
-    border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-.result-label {
-    color: #b8b8b8;
-    font-size: 12px;
-    margin-bottom: 8px;
-}
-
-.result-value {
-    font-size: 28px;
+.calculator-title {
+    font-size: 14px;
     font-weight: 700;
     color: #d4af37;
-    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-}
-
-/* Карточки */
-.calculator-card,
-.staking-card {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.converter-section,
-.staking-section {
-    margin-bottom: 24px;
-}
-
-/* Кнопки */
-.calc-action-btn,
-.staking-card button {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
-    border: none;
-    border-radius: 12px;
-    color: #0a0a0a;
-    font-weight: 700;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 8px;
-    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
     letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
-.calc-action-btn:hover,
-.staking-card button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+.calculator-price {
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 4px;
 }
 
-.calc-action-btn:active,
-.staking-card button:active {
-    transform: scale(0.98);
+.price-value {
+    color: #d4af37;
+    font-weight: bold;
+    text-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
 }
 
-/* Вкладки */
+.price-change.positive {
+    color: #00ff88;
+    text-shadow: 0 0 4px #00ff88;
+}
+
+.price-change.negative {
+    color: #ff4444;
+    text-shadow: 0 0 4px #ff4444;
+}
+
+/* Вкладки — золотые кнопки */
 .calculator-tabs {
     display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    padding: 8px;
-    border-radius: 12px;
+    gap: 6px;
+    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 6px;
+    border-radius: 50px;
     border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .calc-tab {
     flex: 1;
-    padding: 10px;
+    padding: 6px 4px;
+    font-size: 10px;
+    font-weight: 600;
     background: transparent;
     border: none;
-    border-radius: 8px;
-    color: #8a8a8a;
-    font-weight: 600;
+    border-radius: 40px;
+    color: #aaa;
     cursor: pointer;
-    transition: all 0.3s ease;
+    text-align: center;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
 }
 
 .calc-tab.active {
-    background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+    background: linear-gradient(135deg, #d4af37, #b8941f);
     color: #0a0a0a;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+    text-shadow: none;
 }
 
-/* История */
-.history-section {
-    background: rgba(0, 0, 0, 0.5);
+/* Карточки */
+.calc-card {
+    background: rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 16px;
-    margin-top: 16px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.history-header {
-    display: flex;
-    justify-content: space-between;
+    border-radius: 20px;
+    padding: 12px;
     margin-bottom: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-.history-header h3 {
+/* Поля ввода */
+.calc-input-group {
+    margin-bottom: 10px;
+}
+
+.calc-input-group label {
+    display: block;
+    font-size: 9px;
     color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.calc-input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 16px;
+    color: #fff;
     font-size: 14px;
-    margin: 0;
+    font-weight: 500;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
 }
 
-.history-clear {
-    background: transparent;
-    border: 1px solid rgba(212, 175, 55, 0.5);
-    color: #d4af37;
-    padding: 4px 12px;
-    border-radius: 8px;
+.calc-input-group input:focus {
+    border-color: #d4af37;
+    outline: none;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+    background: #0a0a0a;
+}
+
+/* Переключатель валют */
+.calc-currency-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.currency-btn {
+    flex: 1;
+    padding: 8px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 40px;
+    color: #ccc;
     cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.currency-btn.active {
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    color: #0a0a0a;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    border-color: #d4af37;
+}
+
+/* Результат */
+.calc-result {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+    border-radius: 20px;
+    padding: 12px;
+    text-align: center;
+    margin: 12px 0;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.result-label {
+    font-size: 9px;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.result-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #d4af37;
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+    letter-spacing: 1px;
+}
+
+.result-sub {
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+/* Кнопки */
+.calc-actions {
+    margin-top: 10px;
+}
+
+.calc-btn {
+    width: 100%;
+    padding: 10px;
     font-size: 12px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    border: none;
+    border-radius: 40px;
+    color: #0a0a0a;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.history-list {
-    max-height: 200px;
-    overflow-y: auto;
+.calc-btn:active {
+    transform: scale(0.97);
 }
 
-.history-item {
+.calc-btn.small {
+    padding: 6px 12px;
+    font-size: 10px;
+    width: auto;
+}
+
+/* Позиции */
+.positions-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 6px;
+}
+
+.positions-header h3 {
+    font-size: 11px;
+    color: #d4af37;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.positions-list {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.position-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
     background: rgba(0, 0, 0, 0.4);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    border-left: 2px solid #d4af37;
-}
-
-.history-time {
+    padding: 8px 10px;
+    border-radius: 14px;
+    margin-bottom: 6px;
+    border-left: 3px solid #d4af37;
     font-size: 10px;
-    color: #666;
 }
 
-.history-delete {
+.position-date {
+    font-size: 8px;
+    color: #888;
+    min-width: 55px;
+}
+
+.position-amount {
+    font-weight: bold;
+    color: #fff;
+}
+
+.position-price {
+    color: #b8b8b8;
+}
+
+.position-profit {
+    min-width: 55px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.position-profit.positive {
+    color: #00ff88;
+    text-shadow: 0 0 4px #00ff88;
+}
+
+.position-profit.negative {
+    color: #ff4444;
+    text-shadow: 0 0 4px #ff4444;
+}
+
+.position-delete {
     background: transparent;
     border: none;
-    color: #ff4444;
+    color: #ff6666;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
+    padding: 0 4px;
+    transition: all 0.2s;
+}
+
+.position-delete:active {
+    transform: scale(0.9);
+}
+
+/* Стейкинг */
+.staking-terms {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.term-btn {
+    flex: 1;
+    padding: 8px 4px;
+    font-size: 10px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 40px;
+    color: #ccc;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.term-btn.active {
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    color: #0a0a0a;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.staking-info {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.staking-balance {
+    font-size: 11px;
+    color: #d4af37;
+    font-weight: bold;
+}
+
+.staking-list {
+    margin-top: 14px;
+}
+
+.staking-list h3 {
+    font-size: 11px;
+    color: #d4af37;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 4px;
+}
+
+.staking-item {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 16px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.staking-amount {
+    font-size: 12px;
+    font-weight: bold;
+    color: #d4af37;
+}
+
+.staking-term {
+    font-size: 9px;
+    color: #aaa;
+}
+
+.staking-progress {
+    height: 4px;
+    background: #222;
+    border-radius: 4px;
+    margin: 8px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #d4af37, #ffd700);
+    border-radius: 4px;
+    box-shadow: 0 0 6px rgba(212, 175, 55, 0.5);
+}
+
+.staking-date {
+    font-size: 8px;
+    color: #777;
+}
+
+.staking-penalty {
+    font-size: 8px;
+    color: #ff8888;
+    margin-top: 4px;
+}
+
+.staking-actions {
+    margin-top: 8px;
+}
+
+.staking-withdraw, .staking-early {
+    padding: 6px 12px;
+    font-size: 10px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #d4af37, #b8941f);
+    border: none;
+    border-radius: 30px;
+    color: #0a0a0a;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.staking-early {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: #fff;
+}
+
+.staking-withdraw:active, .staking-early:active {
+    transform: scale(0.96);
+}
+
+.staking-withdrawn {
+    font-size: 9px;
+    color: #00ff88;
+    font-weight: bold;
+}
+
+.empty-state {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+    font-size: 11px;
+    font-style: italic;
+}
+
+/* Скролл */
+.positions-list::-webkit-scrollbar,
+.staking-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.positions-list::-webkit-scrollbar-track,
+.staking-list::-webkit-scrollbar-track {
+    background: #111;
+    border-radius: 3px;
+}
+
+.positions-list::-webkit-scrollbar-thumb,
+.staking-list::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 3px;
 }
