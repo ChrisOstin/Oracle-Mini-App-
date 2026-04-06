@@ -573,3 +573,20 @@
 .theme-icon {
     display: none;
 }
+
+/* НАСТРОЙКИ ПОЛЬЗОВАТЕЛЯ — НЕ ТРОГАТЬ */
+.module-title {
+    margin-top: -40px !important;
+    margin-bottom: 35px !important;
+}
+
+.price-main-container {
+    margin-top: 30px !important;
+}
+
+.theme-icon {
+    position: relative !important;
+    top: auto !important;
+    margin-top: -40px !important;
+    left: 16px !important;
+}
