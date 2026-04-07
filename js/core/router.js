@@ -35,8 +35,8 @@ const MORI_ROUTER = {
             title: 'Калькулятор',
             module: 'MORI_CALCULATOR',
             guard: 'user',
-            icon: '🧮', 
-            id: 'calculator' 
+            icon: '🧮',
+            id: 'calculator'
         },
         library: {
             title: 'Библиотека',
@@ -48,7 +48,8 @@ const MORI_ROUTER = {
             title: 'Профиль',
             module: 'MORI_PROFILE',
             guard: 'user',
-            icon: '👤'
+            icon: '👤',
+            id: 'profile'
         },
         achievements: {
             title: 'Достижения',
