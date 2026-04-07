@@ -473,11 +473,16 @@ body {
     margin-bottom: 8px;
 }
 
-.auth-subtitle {
-    font-size: 11px;
-    color: #aaa;
-    margin-bottom: 32px;
-    letter-spacing: 1px;
+.auth-subtitle::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4af37, #ffd700, #d4af37, transparent);
+    border-radius: 2px;
 }
 
 .auth-input-group {
