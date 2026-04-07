@@ -184,6 +184,31 @@ document.querySelectorAll('#global-bottom-nav .nav-btn').forEach(btn => {
 // Запускаем перенос
 setTimeout(moveNavigationToGlobal, 1000);
 </script>
+
+<script>
+// Скрываем иконку темы в модулях, кроме портфеля
+function toggleThemeIcon() {
+    const themeIcon = document.querySelector('.theme-icon');
+    const currentScreen = window.MORI_ROUTER ? MORI_ROUTER.currentScreen : null;
+    
+    if (themeIcon) {
+        if (currentScreen === 'portfolio') {
+            themeIcon.style.display = 'flex';
+        } else {
+            themeIcon.style.display = 'none';
+        }
+    }
+}
+
+if (window.MORI_ROUTER) {
+    const originalNavigate = MORI_ROUTER.navigate;
+    MORI_ROUTER.navigate = function(screenId, options) {
+        originalNavigate.call(this, screenId, options);
+        setTimeout(toggleThemeIcon, 100);
+    };
+    setTimeout(toggleThemeIcon, 500);
+}
+</script>
   
     <script src="js/core/utils.js"></script>
     <script src="js/core/notifications.js"></script>
