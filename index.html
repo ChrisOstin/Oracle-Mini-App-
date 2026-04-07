@@ -113,8 +113,8 @@
 <div id="retro-phone-content" class="module-container" style="display: none;"></div>
 <div id="mori-story-content" class="module-container" style="display: none;"></div>
 
-<!-- Глобальная панель навигации (будет заполняться динамически) -->
-<div class="bottom-nav" id="global-bottom-nav"></div>
+<!-- Глобальная панель навигации (скрыта до загрузки) -->
+<div class="bottom-nav" id="global-bottom-nav" style="display: none;"></div>
 
 <script>
 // Переносим панель навигации из портфеля в глобальный блок
@@ -134,6 +134,9 @@ function moveNavigationToGlobal() {
                 globalNav.appendChild(btn.cloneNode(true));
             });
             
+            // Показываем панель
+            globalNav.style.display = 'flex';
+
             // Скрываем старую панель в портфеле
             portfolioNav.style.display = 'none';
             
