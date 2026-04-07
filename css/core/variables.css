@@ -411,6 +411,11 @@ body {
     right: 0;
     bottom: 0;
     background: #0a0a0a;
+    background-image: radial-gradient(circle at 15% 30%, rgba(212, 175, 55, 0.15) 1px, transparent 1px),
+                      radial-gradient(circle at 45% 70%, rgba(212, 175, 55, 0.1) 1.2px, transparent 1.2px),
+                      radial-gradient(circle at 75% 20%, rgba(212, 175, 55, 0.12) 0.8px, transparent 0.8px);
+    background-size: 60px 60px, 80px 80px, 50px 50px;
+    background-repeat: repeat;
     display: flex;
     flex-direction: column;
 }
@@ -435,7 +440,7 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 100px;
+    padding-top: 130px;
 }
 
 .auth-container {
