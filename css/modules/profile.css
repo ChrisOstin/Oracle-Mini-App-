@@ -3,7 +3,7 @@
 
 .profile-container {
     padding: 12px;
-    padding-bottom: 50px;
+    padding-bottom: 70px;
     max-width: 500px;
     margin: 0 auto;
 }
@@ -72,7 +72,7 @@
     border: none;
     border-radius: 40px;
     color: #aaa;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
