@@ -409,7 +409,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    background: #0a0a0a;
     position: relative;
     overflow: hidden;
 }
@@ -419,6 +419,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
     height: 2px;
     background: linear-gradient(90deg, transparent, #d4af37, #ffd700, #d4af37, transparent);
     animation: goldShine 3s ease-in-out infinite;

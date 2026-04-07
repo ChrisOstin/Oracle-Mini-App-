@@ -434,10 +434,6 @@ const MORI_ROUTER = {
                         <span>🚀 Войти</span>
                     </button>
                 </div>
-                
-                <div class="auth-footer">
-                    <span class="auth-hint">Пароли: MORI | MORIFAMILY | MORIADMIN</span>
-                </div>
             </div>
         </div>
     `;
