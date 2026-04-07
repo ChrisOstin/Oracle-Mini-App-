@@ -5,7 +5,7 @@
 
 const MORI_PROFILE = {
     state: {
-        activeTab: 'info',      // info, stats, settings, referrals, leaderboard, customization, privacy, friends
+        activeTab: 'info',      // info, stats, settings, referrals, leaderboard, customization, privacy, friends,
         user: null,
         level: 1,
         exp: 0,
