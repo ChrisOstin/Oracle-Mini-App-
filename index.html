@@ -114,7 +114,7 @@
 <div id="mori-story-content" class="module-container" style="display: none;"></div>
 
 <!-- Глобальная панель навигации (скрыта до загрузки) -->
-<div class="bottom-nav" id="global-bottom-nav" style="display: none;"></div>
+<div class="bottom-nav" id="global-bottom-nav" style="display: none !important; visibility: hidden !important; opacity: 0 !important;"></div>
 
 <script>
 // Переносим панель навигации из портфеля в глобальный блок
@@ -136,7 +136,10 @@ function moveNavigationToGlobal() {
             
             // Показываем панель
             globalNav.style.display = 'flex';
-
+            globalNav.style.visibility = 'visible';
+            globalNav.style.opacity = '1';
+            globalNav.classList.add('visible');
+            
             // Скрываем старую панель в портфеле
             portfolioNav.style.display = 'none';
             

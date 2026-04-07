@@ -648,3 +648,16 @@
     border-radius: 10px !important;
     padding: 0 2px !important;
 }
+
+/* Скрываем глобальную панель до загрузки */
+#global-bottom-nav {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+#global-bottom-nav.visible {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
