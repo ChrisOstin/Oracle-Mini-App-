@@ -140,26 +140,29 @@ function moveNavigationToGlobal() {
             console.log('✅ Кнопок скопировано:', globalNav.children.length);
             
             // Перепривязываем события
-            document.querySelectorAll('#global-bottom-nav .nav-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const module = btn.dataset.module;
-                    const isLocked = btn.classList.contains('locked');
-                    const unlockTask = btn.dataset.unlockTask ? JSON.parse(btn.dataset.unlockTask) : null;
-                    
-                    if (isLocked && unlockTask) {
-                        if (window.MORI_APP) {
-                            MORI_APP.showToast(`🔒 Функция "${btn.querySelector('.nav-label')?.textContent}" заблокирована.`, 'warning', 3000);
-                        }
-                        return;
-                    }
-                    
-                    if (module === 'portfolio') {
-                        if (window.MORI_PORTFOLIO) MORI_PORTFOLIO.loadData();
-                    } else if (window.MORI_ROUTER) {
-                        MORI_ROUTER.navigate(module);
-                    }
-                });
-            });
+document.querySelectorAll('#global-bottom-nav .nav-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const module = btn.dataset.module;
+        const isLocked = btn.classList.contains('locked');
+        const unlockTask = btn.dataset.unlockTask ? JSON.parse(btn.dataset.unlockTask) : null;
+        
+        if (isLocked && unlockTask) {
+            if (window.MORI_APP) {
+                MORI_APP.showToast(`🔒 Функция "${btn.querySelector('.nav-label')?.textContent}" заблокирована.`, 'warning', 3000);
+            }
+            return;
+        }
+        
+        if (module === 'portfolio') {
+            if (window.MORI_ROUTER) {
+                MORI_ROUTER.navigate('portfolio');
+            }
+        } else if (window.MORI_ROUTER) {
+            MORI_ROUTER.navigate(module);
+        }
+    });
+});
+
         } else if (buttons.length === 0) {
             // Если кнопок нет, пробуем снова через секунду
             console.log('Кнопок пока нет, повторяем...');
