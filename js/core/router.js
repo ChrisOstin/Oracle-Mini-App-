@@ -413,45 +413,58 @@ const MORI_ROUTER = {
 
     // ========== ЭКРАН АВТОРИЗАЦИИ ==========
     showAuthScreen: function() {
-        const appDiv = document.getElementById('app');
-        if (!appDiv) return;
-        appDiv.innerHTML = `
-            <div class="screen auth-screen">
-                <header class="screen-header">
-                    <h1>🔮 MORI Oracle</h1>
-                </header>
-                <div class="screen-content">
-                    <div class="auth-form">
-                        <div class="form-group">
-                            <label for="auth-password">Введите пароль</label>
-                            <input type="password" id="auth-password" placeholder="••••••••" autofocus>
-                        </div>
-                        <button class="auth-btn" id="auth-login">🚀 Войти</button>
+    const appDiv = document.getElementById('app');
+    if (!appDiv) return;
+    
+    appDiv.innerHTML = `
+        <div class="auth-screen">
+            <div class="auth-gold-line"></div>
+            <div class="auth-container">
+                <div class="auth-logo">🎭</div>
+                <h1 class="auth-title">MORI Oracle</h1>
+                <p class="auth-subtitle">Введите пароль для доступа</p>
+                
+                <div class="auth-form">
+                    <div class="auth-input-group">
+                        <input type="password" id="auth-password" placeholder="••••••••" autofocus>
+                        <span class="auth-input-icon">🔒</span>
                     </div>
+                    
+                    <button class="auth-btn" id="auth-login">
+                        <span>🚀 Войти</span>
+                    </button>
+                </div>
+                
+                <div class="auth-footer">
+                    <span class="auth-hint">Пароли: MORI | MORIFAMILY | MORIADMIN</span>
                 </div>
             </div>
-        `;
-        setTimeout(() => {
-            const loginBtn = document.getElementById('auth-login');
-            const passwordInput = document.getElementById('auth-password');
-            if (loginBtn && passwordInput) {
-                loginBtn.onclick = () => {
-                    const password = passwordInput.value.trim();
-                    if (password) {
-                        loginBtn.disabled = true;
-                        loginBtn.textContent = '⏳ Вход...';
-                        MORI_AUTH.login(password).finally(() => {
-                            loginBtn.disabled = false;
-                            loginBtn.textContent = '🚀 Войти';
-                        });
-                    }
-                };
-                passwordInput.onkeypress = (e) => {
-                    if (e.key === 'Enter') loginBtn.click();
-                };
-            }
-        }, 100);
-    },
+        </div>
+    `;
+    
+    setTimeout(() => {
+        const loginBtn = document.getElementById('auth-login');
+        const passwordInput = document.getElementById('auth-password');
+        
+        if (loginBtn && passwordInput) {
+            loginBtn.onclick = () => {
+                const password = passwordInput.value.trim();
+                if (password) {
+                    loginBtn.disabled = true;
+                    loginBtn.innerHTML = '<span>⏳ Вход...</span>';
+                    MORI_AUTH.login(password).finally(() => {
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = '<span>🚀 Войти</span>';
+                    });
+                }
+            };
+            
+            passwordInput.onkeypress = (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            };
+        }
+    }, 100);
+},
 
     // ========== ЖЕСТЫ ==========
     setupGestures: function() {
