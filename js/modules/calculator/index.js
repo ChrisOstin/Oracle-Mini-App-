@@ -337,7 +337,6 @@ const MORI_CALCULATOR = {
         <div class="texture-overlay"></div>
         <div class="inner-glow"></div>
         <div class="calculator-header">
-            <div class="calculator-title">🧮 Калькулятор MORI</div>
             <div class="calculator-price">
                 Текущая цена: <span class="price-value">$${this.state.moriPrice.toFixed(6)}</span>
                 <span class="price-change ${this.state.change24h >= 0 ? 'positive' : 'negative'}">
