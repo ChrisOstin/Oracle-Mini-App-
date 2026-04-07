@@ -411,14 +411,13 @@ body {
     justify-content: center;
     background: #0a0a0a;
     position: relative;
-    padding-top: 80px;
+    padding-top: 120px;
 }
 
 .auth-gold-line {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
     width: 100%;
     height: 2px;
     background: linear-gradient(90deg, transparent, #d4af37, #ffd700, #d4af37, transparent);
@@ -433,10 +432,10 @@ body {
 .auth-container {
     text-align: center;
     padding: 32px 24px;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.8);
     border-radius: 40px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
     width: 280px;
 }
 
@@ -510,18 +509,8 @@ body {
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-bottom: 24px;
 }
 
 .auth-btn:active {
     transform: scale(0.98);
-}
-
-.auth-footer {
-    font-size: 9px;
-    color: #666;
-}
-
-.auth-hint {
-    letter-spacing: 0.5px;
 }
