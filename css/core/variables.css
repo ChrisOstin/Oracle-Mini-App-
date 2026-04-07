@@ -528,3 +528,7 @@ body {
 .auth-btn:active {
     transform: scale(0.98);
 }
+
+.auth-form {
+    margin-left: -2px;  /* Отрицательное значение сдвигает ВЛЕВО */
+}
