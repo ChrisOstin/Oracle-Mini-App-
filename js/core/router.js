@@ -412,6 +412,7 @@ const MORI_ROUTER = {
     },
 
     // ========== ЭКРАН АВТОРИЗАЦИИ ==========
+
     showAuthScreen: function() {
     const appDiv = document.getElementById('app');
     if (!appDiv) return;
@@ -419,20 +420,22 @@ const MORI_ROUTER = {
     appDiv.innerHTML = `
         <div class="auth-screen">
             <div class="auth-gold-line"></div>
-            <div class="auth-container">
-                <div class="auth-logo">🎭</div>
-                <h1 class="auth-title">MORI Oracle</h1>
-                <p class="auth-subtitle">Введите пароль для доступа</p>
-                
-                <div class="auth-form">
-                    <div class="auth-input-group">
-                        <input type="password" id="auth-password" placeholder="••••••••" autofocus>
-                        <span class="auth-input-icon">🔒</span>
-                    </div>
+            <div class="auth-wrapper">
+                <div class="auth-container">
+                    <div class="auth-logo">🎭</div>
+                    <h1 class="auth-title">MORI Oracle</h1>
+                    <p class="auth-subtitle">Введите пароль</p>
                     
-                    <button class="auth-btn" id="auth-login">
-                        <span>🚀 Войти</span>
-                    </button>
+                    <div class="auth-form">
+                        <div class="auth-input-group">
+                            <input type="password" id="auth-password" placeholder="••••••••" autofocus>
+                            <span class="auth-input-icon">🔒</span>
+                        </div>
+                        
+                        <button class="auth-btn" id="auth-login">
+                            <span>🚀 Войти</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
