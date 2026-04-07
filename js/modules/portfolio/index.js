@@ -208,7 +208,7 @@ const MORI_PORTFOLIO = {
         const showChat = (level === 'user' && !allTasksCompleted);
 
         let buttons = [];
-        buttons.push({ id: 'portfolio', icon: '📊', label: 'Портфель', locked: false });
+        buttons.push({ id: 'portfolio', icon: '💼', label: 'Портфель', locked: false });
 
         const calculatorUnlocked = this.isModuleUnlocked('calculator');
         buttons.push({ id: 'calculator', icon: '🧮', label: 'Калькулятор', locked: !calculatorUnlocked, unlockTask: { id: 5, title: 'Исследователь', desc: 'Написать 10 сообщений' } });
@@ -221,7 +221,7 @@ const MORI_PORTFOLIO = {
         }
 
         const aiUnlocked = this.isModuleUnlocked('ai-chat');
-        buttons.push({ id: 'ai-chat', icon: '🤖', label: 'AI', locked: !aiUnlocked, unlockTask: { id: 18, title: 'Любознательный', desc: 'Написать 30 сообщений' } });
+        buttons.push({ id: 'ai-chat', icon: '🧠', label: 'AI', locked: !aiUnlocked, unlockTask: { id: 18, title: 'Любознательный', desc: 'Написать 30 сообщений' } });
 
         buttons.push({ id: 'profile', icon: '👤', label: 'Профиль', locked: false });
 
