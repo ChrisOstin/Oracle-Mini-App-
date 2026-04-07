@@ -4,7 +4,7 @@
 /* Основной контейнер */
 .calculator-container {
     padding: 8px;
-    background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.05), transparent);
+   /* background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.05), transparent);*/
 }
 
 /* Заголовок */
