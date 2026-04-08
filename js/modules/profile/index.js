@@ -391,7 +391,6 @@ const MORI_PROFILE = {
     </div>
 </div>
 ` : ''}
-}
             </div>
         `;
     },
