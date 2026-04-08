@@ -461,17 +461,13 @@ const MORI_ROUTER = {
                         </div>
 
                         <div class="auth-input-group">
-                            <input type="text" id="auth-ref-code" placeholder="Реферальный код (опционально)" value="${refCode}">
+                            <input type="text" id="auth-ref-code" placeholder="Реферальный код" value="${refCode}">
                             <span class="auth-input-icon">🎁</span>
                         </div>
 
                         <button class="auth-btn" id="auth-login">
                             <span>🚀 Войти</span>
                         </button>
-                    </div>
-
-                    <div class="auth-footer">
-                        <span class="auth-hint">Пароли: MORI | MORIFAMILY | MORIADMIN</span>
                     </div>
                 </div>
             </div>

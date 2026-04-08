@@ -440,7 +440,7 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 140px;
+    padding-top: 120px;
 }
 
 .auth-container {
