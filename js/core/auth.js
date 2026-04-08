@@ -135,6 +135,17 @@ const MORI_AUTH = {
                 MORI_APP.currentUser = response.user;
                 MORI_APP.accessLevel = response.user.access_level;
                 
+                // Разблокируем все темы для админа
+                if (MORI_APP.accessLevel === 'admin' && window.MORI_THEMES) {
+                    MORI_THEMES.list.forEach(theme => {
+                        if (!MORI_THEMES.unlockedThemes.includes(theme.id)) {
+                            MORI_THEMES.unlockedThemes.push(theme.id);
+                        }
+                    });
+                    MORI_THEMES.save();
+                    console.log('👑 Админ: все темы разблокированы');
+                }
+
                 // Сохраняем в sessionStorage для восстановления
                 sessionStorage.setItem('mori_user', JSON.stringify(response.user));
                 sessionStorage.setItem('mori_level', response.user.access_level);
