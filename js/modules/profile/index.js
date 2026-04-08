@@ -709,7 +709,7 @@ const MORI_PROFILE = {
                 <span style="color: #d4af37; font-size: 14px; font-weight: bold;">${monthNames[month]} ${year}</span>
             </div>`;
 
-    let html = `<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px;">`;
+    html += `<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px;">`;
     weekdays.forEach(day => { html += `<div class="calendar-weekday">${day}</div>`; });
     html += `</div><div class="calendar-grid">`;
     
