@@ -330,7 +330,9 @@ const MORI_PROFILE = {
     renderActiveTab: function() {
         switch(this.state.activeTab) {
             case 'info': return this.renderInfoTab();
-            case 'stats': return this.renderStatsTab();
+            case 'stats': 
+            setTimeout(() => this.renderCalendar(), 50);
+            return this.renderStatsTab();
             case 'achievements': return this.renderAchievementsTab();
             case 'settings': return this.renderSettingsTab();
             case 'privacy': return this.renderPrivacyTab();
@@ -745,6 +747,10 @@ const MORI_PROFILE = {
                 const tab = e.target.dataset.tab;
                 this.state.activeTab = tab;
                 this.render();
+                if (tab === 'stats') {
+                    setTimeout(() => this.renderCalendar(), 100);
+                }
+
             });
         });
         
