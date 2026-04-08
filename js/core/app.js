@@ -453,18 +453,6 @@ pulse: function(element, duration = 1000) {
 
         });
        
-        // Обработчик иконки темы
-        setTimeout(() => {
-            const themeIcon = document.querySelector('.theme-icon');
-            if (themeIcon) {
-                themeIcon.addEventListener('click', () => {
-                    console.log('🎨 Меню тем');
-                    this.showToast('🎨 Меню выбора тем будет доступно в профиле', 'info', 3000);
-                });
-            }
-        }, 1000);
-    },
-
     startBackgroundTasks: function() {
         this.addBackgroundTask('sync', () => this.syncOfflineData(), 60000);
         this.addBackgroundTask('updates', () => this.checkForUpdates(), 3600000);
