@@ -887,98 +887,58 @@ input:checked + .slider:before {
     letter-spacing: 0.5px;
 }
 
-/* Сетка кнопок тем */
+/* Сетка кнопок тем — компактная */
 .theme-category-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 6px;
 }
 
-/* Кнопка выбора темы */
+/* Кнопка выбора темы — компактная */
 .theme-option {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 4px;
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 40px;
-    padding: 10px 6px;
+    border-radius: 30px;
+    padding: 6px 4px;
     cursor: pointer;
     transition: all 0.2s ease;
-    position: relative;
-}
-
-.theme-option.active {
-    background: linear-gradient(135deg, #d4af37, #b8941f);
-    border-color: #d4af37;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
-}
-
-.theme-option.active .theme-name {
-    color: #0a0a0a;
-}
-
-.theme-option.locked {
-    opacity: 0.5;
 }
 
 .theme-option .theme-icon {
-    font-size: 18px;
-    margin: 0;
-    display: inline-block;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    width: auto;
-    height: auto;
-    position: static;
-    animation: none;
+    font-size: 14px;
 }
 
 .theme-option .theme-name {
-    font-size: 11px;
+    font-size: 9px;
     color: #ddd;
-    font-weight: 500;
 }
 
-.theme-option .theme-lock {
-    font-size: 10px;
-    margin-left: 2px;
-}
-
+.theme-option .theme-lock,
 .theme-option .theme-check {
-    font-size: 10px;
+    font-size: 8px;
     margin-left: 2px;
-    color: #0a0a0a;
 }
 
 /* Адаптив для маленьких экранов */
 @media (max-width: 480px) {
     .theme-category-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        gap: 6px;
     }
     
     .theme-option {
-        padding: 8px 4px;
+        padding: 5px 3px;
     }
     
     .theme-option .theme-name {
-        font-size: 10px;
+        font-size: 8px;
     }
     
     .theme-option .theme-icon {
-        font-size: 16px;
+        font-size: 12px;
     }
 }
-
-/* Стиль для пустого состояния */
-.empty {
-    text-align: center;
-    color: #888;
-    padding: 20px;
-    font-size: 12px;
-}
-
-
