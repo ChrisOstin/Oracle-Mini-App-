@@ -302,7 +302,7 @@ const MORI_ROUTER = {
 
         this.loadModule(screen);
         this.updateTitle(screenId);
-        this.applyScreenTheme(screenId);
+       // this.applyScreenTheme(screenId);
 
         setTimeout(() => this.updateNavigation(), 100);
     },
