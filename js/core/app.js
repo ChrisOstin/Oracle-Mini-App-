@@ -450,8 +450,9 @@ pulse: function(element, duration = 1000) {
             this.saveCheckpoint();
             this.stopTimers();
             this.saveMetrics();
-
         });
+
+    },
        
     startBackgroundTasks: function() {
         this.addBackgroundTask('sync', () => this.syncOfflineData(), 60000);
