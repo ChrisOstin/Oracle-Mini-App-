@@ -379,7 +379,7 @@ const MORI_PROFILE = {
                     <button class="daily-bonus-btn" id="daily-bonus-btn">Забрать бонус</button>
                 </div>
                 
-                ${this.state.user.access_level === 'admin' ? `
+                ${(MORI_APP?.accessLevel === 'admin' || this.state.user.access_level === 'admin') ? `
                 <div class="admin-section">
                     <div class="admin-label">👑 Админ-панель</div>
                     <div class="admin-id">ID: ${this.state.user.id}</div>
