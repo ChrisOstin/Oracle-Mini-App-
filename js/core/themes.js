@@ -46,9 +46,29 @@ const MORI_THEMES = {
     currentTheme: 'mori-classic',
 
     init: function() {
-        this.load();
-        this.applyCurrentTheme();
-    },
+    this.load();
+    this.applyCurrentTheme();
+    // Если админ — разблокируем все темы после загрузки
+    setTimeout(() => {
+        if (window.MORI_APP && window.MORI_APP.accessLevel === 'admin') {
+            this.unlockAllThemesForAdmin();
+        }
+    }, 500);
+},
+
+unlockAllThemesForAdmin: function() {
+    let changed = false;
+    this.list.forEach(theme => {
+        if (!this.unlockedThemes.includes(theme.id)) {
+            this.unlockedThemes.push(theme.id);
+            changed = true;
+        }
+    });
+    if (changed) {
+        this.save();
+        console.log('👑 Админ: все темы разблокированы');
+    }
+},
 
     load: function() {
     // Загружаем разблокированные темы
