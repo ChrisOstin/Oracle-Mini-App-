@@ -20,24 +20,24 @@ const MORI_THEMES = {
         // ===== ЦВЕТОВЫЕ ТЕМЫ (10) — бесплатные, но через задания =====
         { id: 'color-blue', name: 'Синяя', icon: '💙', category: 'colors', locked: true, taskId: 'unlock_blue_theme', taskName: 'Написать 5 сообщений', price: 0 },
         { id: 'color-brown', name: 'Коричневая', icon: '🤎', category: 'colors', locked: true, taskId: 'unlock_brown_theme', taskName: 'Сыграть 3 игры', price: 0 },
-        { id: 'color-cyan', name: 'Бирюзовая', icon: '💚', category: 'colors', locked: true, taskId: 'unlock_cyan_theme', taskName: 'Сделать 10 расчётов', price: 0 },
+        { id: 'color-cyan', name: 'Бирюзовая', icon: '🩵', category: 'colors', locked: true, taskId: 'unlock_cyan_theme', taskName: 'Сделать 10 расчётов', price: 0 },
         { id: 'color-gray', name: 'Серая', icon: '🩶', category: 'colors', locked: true, taskId: 'unlock_gray_theme', taskName: 'Задать 5 вопросов AI', price: 0 },
         { id: 'color-green', name: 'Зелёная', icon: '💚', category: 'colors', locked: true, taskId: 'unlock_green_theme', taskName: 'Застейкать 100 MORI', price: 0 },
         { id: 'color-orange', name: 'Оранжевая', icon: '🧡', category: 'colors', locked: true, taskId: 'unlock_orange_theme', taskName: 'Достичь 5 уровня', price: 0 },
-        { id: 'color-pink', name: 'Розовая', icon: '💗', category: 'colors', locked: true, taskId: 'unlock_pink_theme', taskName: 'Подарить подарок другу', price: 0 },
+        { id: 'color-pink', name: 'Розовая', icon: '💓', category: 'colors', locked: true, taskId: 'unlock_pink_theme', taskName: 'Подарить подарок другу', price: 0 },
         { id: 'color-purple', name: 'Фиолетовая', icon: '💜', category: 'colors', locked: true, taskId: 'unlock_purple_theme', taskName: 'Выполнить 3 задания', price: 0 },
         { id: 'color-red', name: 'Красная', icon: '❤️', category: 'colors', locked: true, taskId: 'unlock_red_theme', taskName: 'Написать 10 сообщений', price: 0 },
         { id: 'color-yellow', name: 'Жёлтая', icon: '💛', category: 'colors', locked: true, taskId: 'unlock_yellow_theme', taskName: 'Получить 5 лайков', price: 0 },
         
         // ===== СЕМЕЙНЫЕ ТЕМЫ (9) =====
         { id: 'family-blackfire', name: 'Чёрный огонь', icon: '🔥', category: 'family', locked: true, taskId: 'unlock_blackfire_theme', taskName: 'Создать семью', price: 0 },
-        { id: 'family-coder-cat', name: 'Кот-кодер', icon: '🐱💻', category: 'family', locked: true, taskId: 'unlock_codercat_theme', taskName: 'Написать 50 сообщений', price: 0 },
+        { id: 'family-coder-cat', name: 'Девушка-кодер', icon: '🐱💻', category: 'family', locked: true, taskId: 'unlock_codercat_theme', taskName: 'Написать 50 сообщений', price: 0 },
         { id: 'family-demon', name: 'Демон', icon: '👿', category: 'family', locked: true, taskId: 'unlock_demon_theme', taskName: 'Выиграть 10 игр', price: 0 },
-        { id: 'family-fox', name: 'Лиса', icon: '🦊', category: 'family', locked: true, taskId: 'unlock_fox_theme', taskName: 'Достичь 10 уровня', price: 0 },
+        { id: 'family-fox', name: 'Лис', icon: '🦊', category: 'family', locked: true, taskId: 'unlock_fox_theme', taskName: 'Достичь 10 уровня', price: 0 },
         { id: 'family-ghosts', name: 'Призраки', icon: '👻', category: 'family', locked: true, taskId: 'unlock_ghosts_theme', taskName: 'Задать 30 вопросов AI', price: 0 },
         { id: 'family-oscar', name: 'Оскар', icon: '🏆', category: 'family', locked: true, taskId: 'unlock_oscar_theme', taskName: 'Получить достижение', price: 0 },
-        { id: 'family-rabbit', name: 'Кролик', icon: '🐰', category: 'family', locked: true, taskId: 'unlock_rabbit_theme', taskName: 'Пригласить 3 друзей', price: 0 },
-        { id: 'family-scientist', name: 'Учёный', icon: '🧪', category: 'family', locked: true, taskId: 'unlock_scientist_theme', taskName: 'Сделать 100 расчётов', price: 0 },
+        { id: 'family-rabbit', name: 'Чайный Кролик', icon: '🐰', category: 'family', locked: true, taskId: 'unlock_rabbit_theme', taskName: 'Пригласить 3 друзей', price: 0 },
+        { id: 'family-scientist', name: 'Бородач', icon: '🧔🏻‍♂️', category: 'family', locked: true, taskId: 'unlock_scientist_theme', taskName: 'Сделать 100 расчётов', price: 0 },
         { id: 'family-skulls', name: 'Черепа', icon: '💀', category: 'family', locked: true, taskId: 'unlock_skulls_theme', taskName: 'Сыграть 50 игр', price: 0 }
     ],
 
