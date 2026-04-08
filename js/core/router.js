@@ -277,7 +277,13 @@ const MORI_ROUTER = {
     // ========== НАВИГАЦИЯ ==========
     navigate: function(screenId, options = {}) {
         console.log(`🚀 Навигация на ${screenId}`);
-
+        const icon = document.querySelector('.theme-icon');
+        if (icon) {
+            icon.style.visibility = 'hidden';
+            icon.style.opacity = '0';
+            icon.style.position = 'absolute';
+        }
+        
         this.saveSession();
 
         if (!this.checkAccess(screenId)) {
@@ -303,6 +309,13 @@ const MORI_ROUTER = {
         this.loadModule(screen);
         this.updateTitle(screenId);
        // this.applyScreenTheme(screenId);
+
+        if (screenId === 'portfolio' && icon) {
+            icon.style.visibility = 'visible';
+            icon.style.opacity = '1';
+            icon.style.position = 'relative';
+            icon.style.bottom = '40px';
+        }
 
         setTimeout(() => this.updateNavigation(), 100);
     },
