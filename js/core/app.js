@@ -337,7 +337,13 @@ pulse: function(element, duration = 1000) {
             this.currentUser = MORI_USER.current;
             this.accessLevel = this.currentUser.access_level || 'user';
             if (window.MORI_THEMES && this.accessLevel === 'admin') {
-                MORI_THEMES.unlockAllThemesForAdmin();
+                MORI_THEMES.list.forEach(theme => {
+                    if (!MORI_THEMES.unlockedThemes.includes(theme.id)) {
+                        MORI_THEMES.unlockedThemes.push(theme.id);
+                    }
+                });
+                MORI_THEMES.save();
+                console.log('👑 Админ: все темы разблокированы');
             }
            
             console.log(`✅ Пользователь загружен: ${this.currentUser.nickname}, уровень: ${this.accessLevel}`);
