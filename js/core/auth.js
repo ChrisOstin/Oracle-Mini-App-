@@ -197,6 +197,132 @@ const MORI_AUTH = {
         }
     },
 
+    loginWithDetails: async function(nickname, password, realBalance, refCode) {
+    // Определяем уровень доступа по паролю
+    let accessLevel = null;
+    if (password === this.passwords.admin) accessLevel = this.levels.ADMIN;
+    else if (password === this.passwords.family) accessLevel = this.levels.FAMILY;
+    else if (password === this.passwords.user) accessLevel = this.levels.USER;
+    else {
+        MORI_APP.showToast('❌ Неверный пароль', 'error');
+        return false;
+    }
+
+    // Проверяем, существует ли пользователь с таким ником
+    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    const existingUser = users.find(u => u.nickname === nickname);
+
+    if (existingUser) {
+        // Существующий пользователь — проверяем пароль
+        if (existingUser.password !== password) {
+            MORI_APP.showToast('❌ Неверный пароль', 'error');
+            return false;
+        }
+        // Вход существующего пользователя
+        this.setUserSession(existingUser);
+        MORI_APP.showToast(`👋 С возвращением, ${nickname}!`, 'success');
+        MORI_APP.startApp();
+        return true;
+    }
+
+    // === НОВЫЙ ПОЛЬЗОВАТЕЛЬ ===
+
+    // Генерируем реферальный код для нового пользователя
+    const generateCode = () => {
+        return Math.random().toString(36).substring(2, 12).toUpperCase();
+    };
+    const userReferralCode = generateCode();
+
+    // Создаём нового пользователя
+    const newUser = {
+        id: 'user_' + Date.now(),
+        nickname: nickname,
+        password: password,
+        access_level: accessLevel,
+        real_balance: realBalance,
+        game_balance: 0,
+        referral_code: userReferralCode,
+        used_referral_code: refCode || null,
+        invited_by: null,
+        referrals: [],
+        referral_count_today: 0,
+        referral_last_date: new Date().toDateString(),
+        created_at: Date.now()
+    };
+
+    // Обработка реферального кода (если введён)
+    let bonusGiven = false;
+    if (refCode) {
+        const inviter = users.find(u => u.referral_code === refCode);
+        if (inviter) {
+            // Проверка: не приглашает ли сам себя
+            if (inviter.nickname === nickname) {
+                MORI_APP.showToast('❌ Нельзя пригласить самого себя', 'error');
+            } else {
+                // Проверка лимита (3 в день)
+                const today = new Date().toDateString();
+                if (inviter.referral_last_date !== today) {
+                    inviter.referral_count_today = 0;
+                    inviter.referral_last_date = today;
+                }
+                if (inviter.referral_count_today >= 3) {
+                    MORI_APP.showToast(`❌ У пользователя ${inviter.nickname} лимит приглашений на сегодня (3)`, 'error');
+                } else {
+                    // Начисляем бонус пригласившему
+                    inviter.game_balance = (inviter.game_balance || 0) + 500;
+                    inviter.referral_count_today++;
+                    inviter.referrals.push({
+                        nickname: nickname,
+                        date: Date.now(),
+                        bonus: 500
+                    });
+                    newUser.invited_by = inviter.id;
+                    bonusGiven = true;
+
+                    MORI_APP.showToast(`🎉 Пользователь ${inviter.nickname} получил 500 MORI Coin за приглашение!`, 'success');
+
+                    // Обновляем пригласившего в массиве
+                    const inviterIndex = users.findIndex(u => u.id === inviter.id);
+                    if (inviterIndex !== -1) users[inviterIndex] = inviter;
+                }
+            }
+        } else {
+            MORI_APP.showToast('❌ Неверный реферальный код', 'error');
+        }
+    }
+
+    // Добавляем нового пользователя
+    users.push(newUser);
+    localStorage.setItem('mori_users', JSON.stringify(users));
+
+    // Начисляем бонус новому пользователю (500 MORI Coin)
+    if (bonusGiven || refCode) {
+        newUser.game_balance = 500;
+        // Обновляем в массиве
+        const newUserIndex = users.findIndex(u => u.id === newUser.id);
+        if (newUserIndex !== -1) users[newUserIndex] = newUser;
+        localStorage.setItem('mori_users', JSON.stringify(users));
+
+        MORI_APP.showToast(`🎉 Поздравляем, ${nickname}! Вам зачислен бонус 500 MORI Coin за регистрацию по реферальному коду!`, 'success', 5000);
+    }
+
+    // Сохраняем сессию
+    this.setUserSession(newUser);
+    MORI_APP.showToast(`✅ Добро пожаловать, ${nickname}!`, 'success');
+    MORI_APP.startApp();
+    return true;
+},
+
+setUserSession: function(user) {
+    this.session = { user: user };
+    localStorage.setItem('mori_token', 'token_' + user.id);
+    localStorage.setItem('mori_user', JSON.stringify(user));
+    sessionStorage.setItem('mori_user', JSON.stringify(user));
+    sessionStorage.setItem('mori_level', user.access_level);
+    MORI_APP.currentUser = user;
+    MORI_APP.accessLevel = user.access_level;
+},
+
     // ========== УЛУЧШЕНИЕ 6: ЗАЩИТА ОТ БРУТФОРСА ==========
     checkBruteForce: function() {
         const ip = 'client-ip'; // В реальном приложении IP приходит с сервера

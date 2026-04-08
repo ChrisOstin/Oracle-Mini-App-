@@ -430,7 +430,11 @@ const MORI_ROUTER = {
     showAuthScreen: function() {
     const appDiv = document.getElementById('app');
     if (!appDiv) return;
-    
+
+    // Читаем реферальный код из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref') || '';
+
     appDiv.innerHTML = `
         <div class="auth-screen">
             <div class="auth-gold-line"></div>
@@ -438,41 +442,87 @@ const MORI_ROUTER = {
                 <div class="auth-container">
                     <div class="auth-logo">🎭</div>
                     <h1 class="auth-title">MORI Oracle</h1>
-                    <p class="auth-subtitle">Введите пароль</p>
-                    
+                    <p class="auth-subtitle">Введите данные</p>
+
                     <div class="auth-form">
                         <div class="auth-input-group">
-                            <input type="password" id="auth-password" placeholder="••••••••" autofocus>
+                            <input type="text" id="auth-nickname" placeholder="Никнейм" autofocus>
+                            <span class="auth-input-icon">👤</span>
+                        </div>
+
+                        <div class="auth-input-group">
+                            <input type="password" id="auth-password" placeholder="Пароль">
                             <span class="auth-input-icon">🔒</span>
                         </div>
-                        
+
+                        <div class="auth-input-group">
+                            <input type="number" id="auth-real-balance" placeholder="REAL баланс $MORI" step="any">
+                            <span class="auth-input-icon">💰</span>
+                        </div>
+
+                        <div class="auth-input-group">
+                            <input type="text" id="auth-ref-code" placeholder="Реферальный код (опционально)" value="${refCode}">
+                            <span class="auth-input-icon">🎁</span>
+                        </div>
+
                         <button class="auth-btn" id="auth-login">
                             <span>🚀 Войти</span>
                         </button>
+                    </div>
+
+                    <div class="auth-footer">
+                        <span class="auth-hint">Пароли: MORI | MORIFAMILY | MORIADMIN</span>
                     </div>
                 </div>
             </div>
         </div>
     `;
-    
+
     setTimeout(() => {
         const loginBtn = document.getElementById('auth-login');
         const passwordInput = document.getElementById('auth-password');
-        
+        const nicknameInput = document.getElementById('auth-nickname');
+        const realBalanceInput = document.getElementById('auth-real-balance');
+        const refCodeInput = document.getElementById('auth-ref-code');
+
         if (loginBtn && passwordInput) {
             loginBtn.onclick = () => {
+                const nickname = nicknameInput?.value.trim();
                 const password = passwordInput.value.trim();
-                if (password) {
-                    loginBtn.disabled = true;
-                    loginBtn.innerHTML = '<span>⏳ Вход...</span>';
-                    MORI_AUTH.login(password).finally(() => {
-                        loginBtn.disabled = false;
-                        loginBtn.innerHTML = '<span>🚀 Войти</span>';
-                    });
+                const realBalance = parseFloat(realBalanceInput?.value);
+                const refCode = refCodeInput?.value.trim();
+
+                if (!nickname) {
+                    MORI_APP.showToast('❌ Введите никнейм', 'error');
+                    return;
                 }
+                if (!password) {
+                    MORI_APP.showToast('❌ Введите пароль', 'error');
+                    return;
+                }
+                if (isNaN(realBalance) || realBalance < 0) {
+                    MORI_APP.showToast('❌ Введите корректный REAL баланс', 'error');
+                    return;
+                }
+
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<span>⏳ Вход...</span>';
+                MORI_AUTH.loginWithDetails(nickname, password, realBalance, refCode).finally(() => {
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<span>🚀 Войти</span>';
+                });
             };
-            
+
             passwordInput.onkeypress = (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            };
+            nicknameInput.onkeypress = (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            };
+            realBalanceInput.onkeypress = (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            };
+            refCodeInput.onkeypress = (e) => {
                 if (e.key === 'Enter') loginBtn.click();
             };
         }
