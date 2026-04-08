@@ -39,6 +39,7 @@ const MORI_PROFILE = {
     loadUserData: function() {
         if (window.MORI_USER && MORI_USER.current) {
             this.state.user = MORI_USER.current;
+            this.state.user.access_level = this.state.user.access_level || MORI_APP?.accessLevel;
             this.state.level = this.state.user.level || 1;
             this.state.exp = this.state.user.experience || 0;
             const progress = MORI_USER.getLevelProgress();
