@@ -51,23 +51,36 @@ const MORI_THEMES = {
     },
 
     load: function() {
-        // Загружаем разблокированные темы
-        const saved = localStorage.getItem('mori_unlocked_themes');
-        if (saved) {
-            this.unlockedThemes = JSON.parse(saved);
-        } else {
-            // По умолчанию разблокирована только классическая
-            this.unlockedThemes = ['mori-classic'];
-        }
-        
-        // Загружаем текущую тему
-        const current = localStorage.getItem('mori_current_theme');
-        if (current && this.getThemeById(current)) {
-            this.currentTheme = current;
-        } else {
-            this.currentTheme = 'mori-classic';
-        }
-    },
+    // Проверяем, админ ли пользователь
+    const isAdmin = window.MORI_APP && MORI_APP.accessLevel === 'admin';
+    
+    // Загружаем разблокированные темы
+    const saved = localStorage.getItem('mori_unlocked_themes');
+    if (saved) {
+        this.unlockedThemes = JSON.parse(saved);
+    } else {
+        // По умолчанию разблокирована только классическая
+        this.unlockedThemes = ['mori-classic'];
+    }
+    
+    // Если админ — разблокируем ВСЕ темы
+    if (isAdmin) {
+        this.list.forEach(theme => {
+            if (!this.unlockedThemes.includes(theme.id)) {
+                this.unlockedThemes.push(theme.id);
+            }
+        });
+        this.save();
+    }
+    
+    // Загружаем текущую тему
+    const current = localStorage.getItem('mori_current_theme');
+    if (current && this.getThemeById(current)) {
+        this.currentTheme = current;
+    } else {
+        this.currentTheme = 'mori-classic';
+    }
+},
 
     save: function() {
         localStorage.setItem('mori_unlocked_themes', JSON.stringify(this.unlockedThemes));
@@ -88,9 +101,9 @@ const MORI_THEMES = {
 
     getThemesByCategory: function() {
         const categories = {
-            mori: { name: '🎭 MORI', icon: '🎭', themes: [] },
-            colors: { name: '🎨 Цветовые', icon: '🎨', themes: [] },
-            family: { name: '👨‍👩‍👧‍👦 Семейные', icon: '👨‍👩‍👧‍👦', themes: [] }
+            mori: { name: '🎭 MORI', icon: '', themes: [] },
+            colors: { name: '🎨 Цветовые', icon: '', themes: [] },
+            family: { name: '👨‍👩‍👧‍👦 Семейные', icon: '', themes: [] }
         };
         
         this.list.forEach(theme => {
