@@ -414,7 +414,8 @@ const MORI_PROFILE = {
                 
                 <div class="activity-calendar">
                     <h4>📅 Активность</h4>
-                    <div class="calendar-placeholder">Календарь активности загружается...</div>
+                    <div id="calendar-container"></div>
+                    <div class="streak-info" id="streak-info"></div>
                 </div>
             </div>
         `;
@@ -748,6 +749,7 @@ const MORI_PROFILE = {
             btn.addEventListener('click', (e) => {
                 this.state.leaderboardType = e.target.dataset.type;
                 this.renderLeaderboard();
+                this.renderCalendar();
                 document.querySelectorAll('.leaderboard-type').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
             });
@@ -791,5 +793,57 @@ document.querySelectorAll('.theme-option').forEach(btn => {
         console.log('👤 MORI_PROFILE уничтожен');
     }
 };
+
+    renderCalendar: function() {
+    const container = document.getElementById('calendar-container');
+    if (!container) return;
+    
+    const activityLog = JSON.parse(localStorage.getItem('user_activity') || '[]');
+    const activeDays = new Set();
+    
+    activityLog.forEach(log => {
+        activeDays.add(new Date(log.timestamp).toDateString());
+    });
+    
+    const today = new Date().toDateString();
+    activeDays.add(today);
+    
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startDayOfWeek = firstDay.getDay();
+    const daysInMonth = lastDay.getDate();
+    const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    
+    let html = `<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px;">`;
+    weekdays.forEach(day => { html += `<div class="calendar-weekday">${day}</div>`; });
+    html += `</div><div class="calendar-grid">`;
+    
+    for (let i = 0; i < (startDayOfWeek === 0 ? 6 : startDayOfWeek - 1); i++) {
+        html += `<div class="calendar-day"></div>`;
+    }
+    
+    for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month, d);
+        const isActive = activeDays.has(date.toDateString());
+        const isToday = date.toDateString() === today;
+        html += `<div class="calendar-day ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}">${d}</div>`;
+    }
+    
+    html += `</div>`;
+    container.innerHTML = html;
+    
+    let streak = 0;
+    let checkDate = new Date();
+    while (activeDays.has(checkDate.toDateString())) {
+        streak++;
+        checkDate.setDate(checkDate.getDate() - 1);
+    }
+    
+    const streakInfo = document.getElementById('streak-info');
+    if (streakInfo) streakInfo.innerHTML = `🔥 Текущая серия: ${streak} ${streak === 1 ? 'день' : (streak < 5 ? 'дня' : 'дней')}`;
+},
 
 window.MORI_PROFILE = MORI_PROFILE;
