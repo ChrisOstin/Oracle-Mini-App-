@@ -537,35 +537,3 @@ body {
 .auth-form {
     margin-left: -2px;  /* Отрицательное значение сдвигает ВЛЕВО */
 }
-
-/* ===== ЗОЛОТОЙ СКРОЛЛ ДЛЯ ВСЕГО ПРИЛОЖЕНИЯ ===== */
-
-/* Основной скролл всей страницы */
-::-webkit-scrollbar {
-    width: 4px;
-}
-
-::-webkit-scrollbar-track {
-    background: #0a0a0a;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #d4af37, #ffd700, #d4af37);
-    border-radius: 4px;
-    box-shadow: 0 0 6px rgba(212, 175, 55, 0.6);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #ffd700, #d4af37, #ffd700);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-}
-
-/* Для горизонтального скролла */
-::-webkit-scrollbar:horizontal {
-    height: 4px;
-}
-
-::-webkit-scrollbar-thumb:horizontal {
-    background: linear-gradient(90deg, #d4af37, #ffd700, #d4af37);
-}
