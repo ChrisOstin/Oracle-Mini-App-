@@ -753,24 +753,6 @@ const MORI_PROFILE = {
         });
     },
 
-    // Выбор темы
-document.querySelectorAll('.theme-option').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const themeId = btn.dataset.theme;
-        const isLocked = btn.classList.contains('locked');
-        
-        if (isLocked) {
-            const taskName = btn.dataset.task;
-            MORI_APP.showToast(`🔒 Тема заблокирована. ${taskName}`, 'error');
-        } else {
-            if (window.MORI_THEMES) {
-                MORI_THEMES.applyTheme(themeId);
-                this.render();
-            }
-        }
-    });
-});
-
     renderBalances: function() {
         const realEl = document.querySelector('.balance-card.real .balance-value');
         const gameEl = document.querySelector('.balance-card.game .balance-value');
