@@ -138,23 +138,37 @@ const MORI_THEMES = {
         return false;
     },
 
-    applyTheme: function(themeId) {
-        const theme = this.getThemeById(themeId);
-        if (!theme) return false;
-        
-        if (!this.isUnlocked(themeId) && themeId !== 'mori-classic') {
-            MORI_APP.showToast(`🔒 Тема "${theme.name}" заблокирована. Выполните задание: ${theme.taskName}`, 'error');
-            return false;
-        }
-        
-        // Применяем тему
+   applyTheme: function(themeId) {
+    const theme = this.getThemeById(themeId);
+    if (!theme) return false;
+    
+    if (!this.isUnlocked(themeId) && themeId !== 'mori-classic') {
+        MORI_APP.showToast(`🔒 Тема "${theme.name}" заблокирована. Выполните задание: ${theme.taskName}`, 'error');
+        return false;
+    }
+    
+    // Удаляем старые темы
+    document.querySelectorAll('link[href*="themes/"]').forEach(link => link.remove());
+    
+    // Загружаем новую тему
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `css/themes/${themeId}.css`;
+    link.onload = () => {
         document.body.className = `theme-${themeId}`;
         this.currentTheme = themeId;
         this.save();
-        
         MORI_APP.showToast(`🎭 Тема "${theme.name}" применена`, 'success');
-        return true;
-    },
+    };
+    link.onerror = () => {
+        // Если файла темы нет, применяем классическую
+        document.body.className = 'theme-mori-classic';
+        MORI_APP.showToast(`⚠️ Тема "${theme.name}" не найдена, применена классическая`, 'error');
+    };
+    document.head.appendChild(link);
+    
+    return true;
+},
 
     applyCurrentTheme: function() {
         document.body.className = `theme-${this.currentTheme}`;
