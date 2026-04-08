@@ -3,7 +3,7 @@
 
 .profile-container {
     padding: 12px;
-    padding-bottom: 80px;
+    padding-bottom: 90px;
     max-width: 500px;
     margin: 0 auto;
 }
@@ -684,4 +684,147 @@ input:checked + .slider:before {
     font-weight: bold;
     font-size: 11px;
     cursor: pointer;
+}
+
+/* ===== ДОСТИЖЕНИЯ — СТИЛЬ ПРОФЕССОРА МОРИАРТИ ===== */
+
+/* Общая статистика */
+.achievements-stats {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.5));
+    border-radius: 28px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    text-align: center;
+}
+
+.achievements-progress {
+    height: 8px;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.achievements-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #d4af37, #ffd700, #d4af37);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
+.achievements-count {
+    font-size: 12px;
+    color: #d4af37;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Список достижений */
+.achievements-list {
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Карточка достижения */
+.achievement-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 24px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: all 0.2s ease;
+}
+
+.achievement-card.unlocked {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.4));
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
+}
+
+.achievement-card.locked {
+    opacity: 0.6;
+}
+
+.achievement-icon {
+    font-size: 42px;
+    min-width: 60px;
+    text-align: center;
+    filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.3));
+}
+
+.achievement-card.unlocked .achievement-icon {
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
+}
+
+.achievement-info {
+    flex: 1;
+}
+
+.achievement-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #d4af37;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.achievement-desc {
+    font-size: 10px;
+    color: #aaa;
+    margin-bottom: 6px;
+}
+
+.achievement-progress {
+    font-size: 9px;
+    color: #888;
+    background: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-top: 4px;
+}
+
+.achievement-badge {
+    font-size: 24px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.achievement-card.unlocked .achievement-badge {
+    text-shadow: 0 0 8px #00ff88;
+}
+
+/* Стилизованный скролл для списка достижений */
+.achievements-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.achievements-list::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 3px;
+}
+
+.achievements-list::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 3px;
+}
+
+/* Анимация при разблокировке */
+@keyframes achievementUnlock {
+    0% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.02); opacity: 1; background: rgba(212, 175, 55, 0.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.achievement-card.unlocked {
+    animation: achievementUnlock 0.5s ease;
 }
