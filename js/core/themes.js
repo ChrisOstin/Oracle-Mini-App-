@@ -63,16 +63,18 @@ const MORI_THEMES = {
         this.unlockedThemes = ['mori-classic'];
     }
     
-    // Если админ — разблокируем ВСЕ темы
-    if (isAdmin) {
-        this.list.forEach(theme => {
-            if (!this.unlockedThemes.includes(theme.id)) {
-                this.unlockedThemes.push(theme.id);
-            }
-        });
-        this.save();
-    }
-    
+       // Если админ — разблокируем все темы
+       if (window.MORI_APP && MORI_APP.accessLevel === 'admin') {
+           this.list.forEach(theme => {
+               if (!this.unlockedThemes.includes(theme.id)) {
+                   this.unlockedThemes.push(theme.id);
+               }
+           });
+       }
+
+       this.save();
+
+
     // Загружаем текущую тему
     const current = localStorage.getItem('mori_current_theme');
     if (current && this.getThemeById(current)) {
