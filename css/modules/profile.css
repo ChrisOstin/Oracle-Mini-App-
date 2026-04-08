@@ -993,31 +993,31 @@ input:checked + .slider:before {
 
 /* ===== АДМИН-ПАНЕЛЬ ===== */
 .admin-panel {
-    margin-top: 20px;
+    margin-top: 16px;
     background: rgba(0, 0, 0, 0.4);
-    border-radius: 20px;
-    padding: 12px;
+    border-radius: 16px;
+    padding: 10px;
     border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .admin-tabs {
     display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 6px;
+    margin-bottom: 10px;
     border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-    padding-bottom: 8px;
+    padding-bottom: 6px;
 }
 
 .admin-tab {
     flex: 1;
-    padding: 6px;
+    padding: 5px;
     background: transparent;
     border: none;
     border-radius: 20px;
     color: #aaa;
     cursor: pointer;
-    font-size: 11px;
-    transition: all 0.2s;
+    font-size: 10px;
+    white-space: nowrap;
 }
 
 .admin-tab.active {
@@ -1026,10 +1026,14 @@ input:checked + .slider:before {
 }
 
 .admin-content {
-    padding: 8px;
+    padding: 6px;
 }
 
+/* Список пользователей — сетка 2 колонки */
 .admin-user-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
     max-height: 300px;
     overflow-y: auto;
 }
@@ -1037,69 +1041,102 @@ input:checked + .slider:before {
 .admin-user-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px;
+    gap: 6px;
+    padding: 6px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 12px;
-    margin-bottom: 6px;
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .admin-user-avatar {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .admin-user-info {
     flex: 1;
+    min-width: 0;
 }
 
 .admin-user-name {
     font-weight: bold;
     color: #d4af37;
+    font-size: 9px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .admin-user-id {
-    font-size: 8px;
+    font-size: 7px;
     color: #888;
 }
 
 .admin-user-stats {
     text-align: right;
+    font-size: 8px;
 }
 
 .admin-coin-input {
     display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .admin-coin-input input {
     flex: 1;
-    padding: 8px;
+    padding: 6px;
     background: #1a1a1a;
     border: 1px solid #d4af37;
     border-radius: 20px;
     color: #fff;
+    font-size: 11px;
 }
 
 .admin-coin-input button {
-    padding: 8px 16px;
+    padding: 6px 12px;
     background: #d4af37;
     border: none;
     border-radius: 20px;
     color: #0a0a0a;
     cursor: pointer;
+    font-size: 10px;
+    white-space: nowrap;
 }
 
 .admin-log-list {
-    max-height: 300px;
+    max-height: 250px;
     overflow-y: auto;
-    font-size: 9px;
+    font-size: 8px;
     font-family: monospace;
 }
 
 .admin-log-item {
-    padding: 6px;
+    padding: 4px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     color: #aaa;
+    word-break: break-all;
+}
+
+.admin-info {
+    text-align: center;
+    color: #888;
+    padding: 10px;
+    font-size: 10px;
+}
+
+/* Скролл только вертикальный */
+.admin-user-list::-webkit-scrollbar,
+.admin-log-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.admin-user-list::-webkit-scrollbar-track,
+.admin-log-list::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.admin-user-list::-webkit-scrollbar-thumb,
+.admin-log-list::-webkit-scrollbar-thumb {
+    background: #d4af37;
 }
