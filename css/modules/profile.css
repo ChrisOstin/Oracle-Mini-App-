@@ -890,22 +890,20 @@ input:checked + .slider:before {
 /* Сетка кнопок тем — компактная */
 .theme-category-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
 }
 
-/* Кнопка выбора темы — компактная */
 .theme-option {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
+    justify-content: flex-start;
+    gap: 6px;
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 30px;
-    padding: 6px 4px;
+    padding: 6px 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
 .theme-option .theme-icon {
@@ -913,17 +911,11 @@ input:checked + .slider:before {
 }
 
 .theme-option .theme-name {
-    font-size: 9px;
+    font-size: 11px;
     color: #ddd;
 }
 
-.theme-option .theme-lock,
-.theme-option .theme-check {
-    font-size: 8px;
-    margin-left: 2px;
-}
-
-/* Адаптив для маленьких экранов */
+/* Адаптив */
 @media (max-width: 480px) {
     .theme-category-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -931,21 +923,10 @@ input:checked + .slider:before {
     }
     
     .theme-option {
-        padding: 5px 3px;
+        padding: 5px 8px;
     }
     
     .theme-option .theme-name {
-        font-size: 8px;
+        font-size: 10px;
     }
-    
-    .theme-option .theme-icon {
-        font-size: 12px;
-    }
-}
-
-/* Иконки тем в настройках */
-.theme-option .theme-icon {
-    font-size: 16px;
-    margin-right: 4px;
-    display: inline-block;
 }
