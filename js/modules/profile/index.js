@@ -310,6 +310,7 @@ const MORI_PROFILE = {
                 <div class="profile-tabs">
                     <button class="profile-tab ${this.state.activeTab === 'info' ? 'active' : ''}" data-tab="info">👤 Инфо</button>
                     <button class="profile-tab ${this.state.activeTab === 'stats' ? 'active' : ''}" data-tab="stats">📊 Статистика</button>
+                    <button class="profile-tab ${this.state.activeTab === 'achievements' ? 'active' : ''}" data-tab="achievements">🏆 Достижения</button>
                     <button class="profile-tab ${this.state.activeTab === 'settings' ? 'active' : ''}" data-tab="settings">⚙️ Настройки</button>
                     <button class="profile-tab ${this.state.activeTab === 'privacy' ? 'active' : ''}" data-tab="privacy">🔒 Приватность</button>
                     <button class="profile-tab ${this.state.activeTab === 'referrals' ? 'active' : ''}" data-tab="referrals">👥 Рефералы</button>
@@ -329,6 +330,7 @@ const MORI_PROFILE = {
         switch(this.state.activeTab) {
             case 'info': return this.renderInfoTab();
             case 'stats': return this.renderStatsTab();
+            case 'achievements': return this.renderAchievementsTab();
             case 'settings': return this.renderSettingsTab();
             case 'privacy': return this.renderPrivacyTab();
             case 'referrals': return this.renderReferralsTab();
@@ -592,6 +594,37 @@ const MORI_PROFILE = {
             </div>
         `;
     },
+
+    renderAchievementsTab: function() {
+    if (!window.MORI_PROFILE_ACHIEVEMENTS) {
+        return '<div class="empty">Система достижений не загружена</div>';
+    }
+    
+    const achievements = MORI_PROFILE_ACHIEVEMENTS.getAll();
+    const stats = MORI_PROFILE_ACHIEVEMENTS.getStats();
+    
+    return `
+        <div class="achievements-stats">
+            <div class="achievements-progress">
+                <div class="achievements-progress-bar" style="width: ${stats.percent}%"></div>
+            </div>
+            <div class="achievements-count">${stats.unlocked} / ${stats.total} достижений</div>
+        </div>
+        <div class="achievements-list">
+            ${achievements.map(ach => `
+                <div class="achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}">
+                    <div class="achievement-icon">${ach.icon}</div>
+                    <div class="achievement-info">
+                        <div class="achievement-name">${ach.name}</div>
+                        <div class="achievement-desc">${ach.description}</div>
+                        ${!ach.unlocked ? `<div class="achievement-progress">Прогресс: ${ach.progress.current} / ${ach.progress.max}</div>` : ''}
+                    </div>
+                    <div class="achievement-badge">${ach.unlocked ? '✅' : '🔒'}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+},
 
     renderLeaderboard: async function() {
         const container = document.getElementById('leaderboard-list');

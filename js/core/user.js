@@ -572,6 +572,15 @@ const MORI_USER = {
             }).catch(() => {});
         }
         
+        // Проверка достижений после добавления опыта
+if (window.MORI_PROFILE_ACHIEVEMENTS) {
+    // Обновляем достижения по типу 'exp' или 'level'
+    if (this.current) {
+        MORI_PROFILE_ACHIEVEMENTS.checkAchievements('exp', this.current.experience);
+        MORI_PROFILE_ACHIEVEMENTS.checkAchievements('level', this.current.level);
+    }
+}
+
         this.save();
     },
 
