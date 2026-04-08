@@ -465,7 +465,7 @@ const MORI_PROFILE = {
             </div>
             
             <div class="setting-item themes-section">
-                <span>🎭 Темы оформления</span>
+                <span>Темы оформления</span>
                 <div class="themes-container">
                     ${themesHtml || '<div class="empty">Загрузка тем...</div>'}
                 </div>
