@@ -524,6 +524,26 @@ pulse: function(element, duration = 1000) {
             if (window.MORI_ROUTER) MORI_ROUTER.navigate(lastScreen);
         }
 
+        // Записываем активность пользователя при запуске
+const today = new Date().toDateString();
+let activityLog = JSON.parse(localStorage.getItem('user_activity') || '[]');
+
+// Проверяем, была ли уже запись сегодня
+const alreadyLogged = activityLog.some(log => {
+    return log.type === 'login' && new Date(log.timestamp).toDateString() === today;
+});
+
+if (!alreadyLogged) {
+    activityLog.push({
+        type: 'login',
+        timestamp: Date.now()
+    });
+    // Храним последние 90 дней
+    if (activityLog.length > 90) activityLog = activityLog.slice(-90);
+    localStorage.setItem('user_activity', JSON.stringify(activityLog));
+    console.log('📅 Активность записана');
+}
+
         this.runHooks('afterStart');
         this.trackEvent('app_start', { level: this.accessLevel });
 
