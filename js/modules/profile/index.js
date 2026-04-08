@@ -6,6 +6,7 @@
 const MORI_PROFILE = {
     state: {
         activeTab: 'info',      // info, stats, settings, referrals, leaderboard, customization, privacy, friends,
+        adminTab: 'coins',
         user: null,
         level: 1,
         exp: 0,
@@ -378,14 +379,19 @@ const MORI_PROFILE = {
                     </div>
                     <button class="daily-bonus-btn" id="daily-bonus-btn">Забрать бонус</button>
                 </div>
-                
                 ${(MORI_APP?.accessLevel === 'admin' || this.state.user.access_level === 'admin') ? `
-                <div class="admin-section">
-                    <div class="admin-label">👑 Админ-панель</div>
-                    <div class="admin-id">ID: ${this.state.user.id}</div>
-                    <button class="admin-edit-balance" id="admin-edit-balance">💰 Редактировать REAL баланс</button>
-                </div>
-                ` : ''}
+<div class="admin-panel">
+    <div class="admin-tabs">
+        <button class="admin-tab ${this.state.adminTab === 'coins' ? 'active' : ''}" data-admin-tab="coins">💰 MORI Coin</button>
+        <button class="admin-tab ${this.state.adminTab === 'users' ? 'active' : ''}" data-admin-tab="users">👥 Пользователи</button>
+        <button class="admin-tab ${this.state.adminTab === 'logs' ? 'active' : ''}" data-admin-tab="logs">📜 Логи</button>
+    </div>
+    <div class="admin-content">
+        ${this.renderAdminTab()}
+    </div>
+</div>
+` : ''}
+}
             </div>
         `;
     },
@@ -646,6 +652,73 @@ const MORI_PROFILE = {
     `;
 },
 
+renderAdminTab: function() {
+    switch(this.state.adminTab) {
+        case 'coins':
+            return `
+                <div class="admin-coin-input">
+                    <input type="text" id="admin-username" placeholder="Ник пользователя">
+                    <input type="number" id="admin-amount" placeholder="Сумма MORI Coin">
+                    <button id="admin-add-coins">➕ Начислить</button>
+                </div>
+                <div class="admin-info">💰 Начисление MORI Coin пользователям</div>
+            `;
+        case 'users':
+            return this.renderAdminUsers();
+        case 'logs':
+            return this.renderAdminLogs();
+        default:
+            return '';
+    }
+},
+
+renderAdminUsers: function() {
+    const users = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key === 'mori_user') {
+            try {
+                const user = JSON.parse(localStorage.getItem(key));
+                users.push(user);
+            } catch(e) {}
+        }
+    }
+    if (users.length === 0) return '<div class="admin-info">👥 Нет сохранённых пользователей</div>';
+    return `
+        <div class="admin-user-list">
+            ${users.map(user => `
+                <div class="admin-user-item">
+                    <div class="admin-user-avatar">${user.avatar || '👤'}</div>
+                    <div class="admin-user-info">
+                        <div class="admin-user-name">${user.nickname || 'Без имени'}</div>
+                        <div class="admin-user-id">${user.id || 'нет ID'}</div>
+                    </div>
+                    <div class="admin-user-stats">
+                        <div>💰 $${(user.balance || 0).toFixed(2)}</div>
+                        <div>🎮 ${(user.gameBalance || 0)} Coin</div>
+                        <div>🏆 Ур.${user.level || 1} (${user.experience || 0} XP)</div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+},
+
+renderAdminLogs: function() {
+    const errors = JSON.parse(localStorage.getItem('app_errors') || '[]');
+    if (errors.length === 0) return '<div class="admin-info">📜 Нет ошибок в логах</div>';
+    return `
+        <div class="admin-log-list">
+            ${errors.slice(-20).reverse().map(err => `
+                <div class="admin-log-item">
+                    <div>❌ ${err.context || 'Ошибка'}: ${err.message || err}</div>
+                    <div>📅 ${new Date(err.time || Date.now()).toLocaleString()}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+},
+
     renderLeaderboard: async function() {
         const container = document.getElementById('leaderboard-list');
         if (!container) return;
@@ -806,6 +879,48 @@ const MORI_PROFILE = {
         
         const addRefBtn = document.getElementById('add-referral-btn');
         if (addRefBtn) addRefBtn.addEventListener('click', () => this.addReferral());
+
+        // Админ-панель: переключение вкладок
+document.querySelectorAll('.admin-tab').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        this.state.adminTab = e.target.dataset.adminTab;
+        this.render();
+    });
+});
+
+// Админ-панель: начисление MORI Coin
+const addCoinsBtn = document.getElementById('admin-add-coins');
+if (addCoinsBtn) {
+    addCoinsBtn.addEventListener('click', () => {
+        const username = document.getElementById('admin-username')?.value;
+        const amount = parseInt(document.getElementById('admin-amount')?.value);
+        if (!username || isNaN(amount) || amount <= 0) {
+            MORI_APP.showToast('❌ Введите ник и сумму', 'error');
+            return;
+        }
+        let user = null;
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key === 'mori_user') {
+                try {
+                    const u = JSON.parse(localStorage.getItem(key));
+                    if (u.nickname === username) {
+                        user = u;
+                        break;
+                    }
+                } catch(e) {}
+            }
+        }
+        if (!user) {
+            MORI_APP.showToast(`❌ Пользователь "${username}" не найден`, 'error');
+            return;
+        }
+        user.gameBalance = (user.gameBalance || 0) + amount;
+        localStorage.setItem('mori_user', JSON.stringify(user));
+        MORI_APP.showToast(`✅ Начислено ${amount} MORI Coin пользователю ${username}`, 'success');
+        this.render();
+    });
+}
         
         // Лидерборд типы
         document.querySelectorAll('.leaderboard-type').forEach(btn => {
