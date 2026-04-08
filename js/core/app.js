@@ -336,6 +336,10 @@ pulse: function(element, duration = 1000) {
         if (window.MORI_USER && MORI_USER.current) {
             this.currentUser = MORI_USER.current;
             this.accessLevel = this.currentUser.access_level || 'user';
+            if (window.MORI_THEMES && this.accessLevel === 'admin') {
+                MORI_THEMES.refreshForAdmin();
+            }
+           
             console.log(`✅ Пользователь загружен: ${this.currentUser.nickname}, уровень: ${this.accessLevel}`);
         } else {
             console.log('👤 Пользователь не авторизован');

@@ -205,6 +205,23 @@ const MORI_THEMES = {
     getLockedCount: function() {
         return this.list.length - this.unlockedThemes.length;
     }
+
+    refreshForAdmin: function() {
+    if (window.MORI_APP && window.MORI_APP.accessLevel === 'admin') {
+        let changed = false;
+        this.list.forEach(theme => {
+            if (!this.unlockedThemes.includes(theme.id)) {
+                this.unlockedThemes.push(theme.id);
+                changed = true;
+            }
+        });
+        if (changed) {
+            this.save();
+            console.log('👑 Админ: все темы разблокированы');
+        }
+    }
+},
+
 };
 
 // Инициализация
