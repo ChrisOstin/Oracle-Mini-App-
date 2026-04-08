@@ -204,7 +204,7 @@ const MORI_THEMES = {
 
     getLockedCount: function() {
         return this.list.length - this.unlockedThemes.length;
-    }
+    },
 
     refreshForAdmin: function() {
     if (window.MORI_APP && window.MORI_APP.accessLevel === 'admin') {
