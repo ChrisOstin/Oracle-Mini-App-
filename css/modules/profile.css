@@ -942,3 +942,10 @@ input:checked + .slider:before {
         font-size: 12px;
     }
 }
+
+/* Иконки тем в настройках */
+.theme-option .theme-icon {
+    font-size: 16px;
+    margin-right: 4px;
+    display: inline-block;
+}
