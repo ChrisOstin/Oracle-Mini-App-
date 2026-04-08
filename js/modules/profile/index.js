@@ -698,12 +698,17 @@ const MORI_PROFILE = {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth();
+    const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const startDayOfWeek = firstDay.getDay();
     const daysInMonth = lastDay.getDate();
     const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     
+    let html = `<div style="text-align: center; margin-bottom: 12px;">
+                <span style="color: #d4af37; font-size: 14px; font-weight: bold;">${monthNames[month]} ${year}</span>
+            </div>`;
+
     let html = `<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px;">`;
     weekdays.forEach(day => { html += `<div class="calendar-weekday">${day}</div>`; });
     html += `</div><div class="calendar-grid">`;
