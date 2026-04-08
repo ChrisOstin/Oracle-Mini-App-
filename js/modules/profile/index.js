@@ -420,43 +420,59 @@ const MORI_PROFILE = {
     },
 
     renderSettingsTab: function() {
-        const soundEnabled = this.getSetting('sound', 'true') === 'true';
-        const vibrationEnabled = this.getSetting('vibration', 'true') === 'true';
-        const currentTheme = this.getSetting('theme', 'mori-classic');
-        
-        const themes = [
-            { id: 'mori-classic', name: 'Классическая' },
-            { id: 'mori-dark', name: 'Тёмная' },
-            { id: 'mori-gold', name: 'Золотая' }
-        ];
-        
-        return `
-            <div class="settings-tab">
-                <div class="setting-item">
-                    <span>🔊 Звук</span>
-                    <label class="switch">
-                        <input type="checkbox" id="setting-sound" ${soundEnabled ? 'checked' : ''}>
-                        <span class="slider"></span>
-                    </label>
+    const soundEnabled = this.getSetting('sound', 'true') === 'true';
+    const vibrationEnabled = this.getSetting('vibration', 'true') === 'true';
+    
+    // Получаем темы из MORI_THEMES
+    let themesHtml = '';
+    if (window.MORI_THEMES) {
+        const categories = MORI_THEMES.getThemesByCategory();
+        for (const [key, cat] of Object.entries(categories)) {
+            themesHtml += `<div class="theme-category">
+                <div class="theme-category-title">${cat.icon} ${cat.name}</div>
+                <div class="theme-category-grid">
+                    ${cat.themes.map(theme => `
+                        <button class="theme-option ${theme.isCurrent ? 'active' : ''} ${!theme.isUnlocked ? 'locked' : ''}" 
+                                data-theme="${theme.id}" 
+                                ${!theme.isUnlocked ? `data-task="${theme.taskName}"` : ''}>
+                            <span class="theme-icon">${theme.icon}</span>
+                            <span class="theme-name">${theme.name}</span>
+                            ${!theme.isUnlocked ? '<span class="theme-lock">🔒</span>' : ''}
+                            ${theme.isCurrent ? '<span class="theme-check">✅</span>' : ''}
+                        </button>
+                    `).join('')}
                 </div>
-                
-                <div class="setting-item">
-                    <span>📳 Вибрация</span>
-                    <label class="switch">
-                        <input type="checkbox" id="setting-vibration" ${vibrationEnabled ? 'checked' : ''}>
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <span>🎭 Тема</span>
-                    <select id="setting-theme">
-                        ${themes.map(t => `<option value="${t.id}" ${currentTheme === t.id ? 'selected' : ''}>${t.name}</option>`).join('')}
-                    </select>
+            </div>`;
+        }
+    }
+    
+    return `
+        <div class="settings-tab">
+            <div class="setting-item">
+                <span>🔊 Звук</span>
+                <label class="switch">
+                    <input type="checkbox" id="setting-sound" ${soundEnabled ? 'checked' : ''}>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="setting-item">
+                <span>📳 Вибрация</span>
+                <label class="switch">
+                    <input type="checkbox" id="setting-vibration" ${vibrationEnabled ? 'checked' : ''}>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div class="setting-item themes-section">
+                <span>🎭 Темы оформления</span>
+                <div class="themes-container">
+                    ${themesHtml || '<div class="empty">Загрузка тем...</div>'}
                 </div>
             </div>
-        `;
-    },
+        </div>
+    `;
+},
 
     renderPrivacyTab: function() {
         const privacyItems = [
@@ -736,6 +752,24 @@ const MORI_PROFILE = {
             });
         });
     },
+
+    // Выбор темы
+document.querySelectorAll('.theme-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const themeId = btn.dataset.theme;
+        const isLocked = btn.classList.contains('locked');
+        
+        if (isLocked) {
+            const taskName = btn.dataset.task;
+            MORI_APP.showToast(`🔒 Тема заблокирована. ${taskName}`, 'error');
+        } else {
+            if (window.MORI_THEMES) {
+                MORI_THEMES.applyTheme(themeId);
+                this.render();
+            }
+        }
+    });
+});
 
     renderBalances: function() {
         const realEl = document.querySelector('.balance-card.real .balance-value');

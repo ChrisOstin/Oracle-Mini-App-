@@ -209,6 +209,131 @@ if (window.MORI_ROUTER) {
     setTimeout(toggleThemeIcon, 500);
 }
 </script>
+
+<script>
+// Меню иконки темы — быстрый доступ к темам
+(function() {
+    const themeIcon = document.querySelector('.theme-icon');
+    if (!themeIcon) return;
+    
+    // Создаём меню
+    let menu = document.getElementById('quick-theme-menu');
+    if (!menu) {
+        menu = document.createElement('div');
+        menu.id = 'quick-theme-menu';
+        menu.style.cssText = `
+            position: fixed;
+            top: 70px;
+            right: 16px;
+            background: #1a1a1a;
+            border: 1px solid #d4af37;
+            border-radius: 16px;
+            padding: 12px;
+            z-index: 10001;
+            display: none;
+            max-width: 280px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        `;
+        document.body.appendChild(menu);
+    }
+    
+    // Открыть меню по клику на иконку
+    themeIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (menu.style.display === 'none' || menu.style.display === '') {
+            renderMenu();
+            menu.style.display = 'block';
+        } else {
+            menu.style.display = 'none';
+        }
+    });
+    
+    // Закрыть при клике вне меню
+    document.addEventListener('click', () => {
+        menu.style.display = 'none';
+    });
+    menu.addEventListener('click', (e) => e.stopPropagation());
+    
+    function renderMenu() {
+        if (!window.MORI_THEMES) {
+            menu.innerHTML = '<div style="color:#aaa; padding:8px;">Загрузка тем...</div>';
+            return;
+        }
+        
+        const categories = MORI_THEMES.getThemesByCategory();
+        let html = '';
+        
+        for (const [key, cat] of Object.entries(categories)) {
+            html += `<div style="margin-bottom: 12px;">
+                <div style="color:#d4af37; font-size:11px; margin-bottom:6px;">${cat.icon} ${cat.name}</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">`;
+            
+            cat.themes.forEach(theme => {
+                html += `
+                    <button class="quick-theme-btn ${theme.isCurrent ? 'active' : ''} ${!theme.isUnlocked ? 'locked' : ''}"
+                            data-theme="${theme.id}"
+                            style="background: ${theme.isCurrent ? '#d4af37' : '#333'}; 
+                                   border: none; 
+                                   border-radius: 20px; 
+                                   padding: 4px 8px; 
+                                   color: ${theme.isCurrent ? '#000' : '#fff'}; 
+                                   font-size: 10px; 
+                                   cursor: pointer;
+                                   display: inline-flex;
+                                   align-items: center;
+                                   gap: 4px;
+                                   opacity: ${!theme.isUnlocked ? '0.5' : '1'};">
+                        <span>${theme.icon}</span>
+                        <span>${theme.name}</span>
+                        ${!theme.isUnlocked ? '<span>🔒</span>' : ''}
+                    </button>
+                `;
+            });
+            
+            html += `</div></div>`;
+        }
+        
+        html += `<div style="border-top: 1px solid #333; margin-top: 8px; padding-top: 8px;">
+                    <button id="open-themes-in-profile" style="width:100%; background:#d4af37; border:none; border-radius:20px; padding:6px; color:#000; cursor:pointer;">🎨 Все темы в профиле</button>
+                </div>`;
+        
+        menu.innerHTML = html;
+        
+        // Добавляем обработчики
+        document.querySelectorAll('.quick-theme-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const themeId = btn.dataset.theme;
+                const isLocked = btn.classList.contains('locked');
+                
+                if (isLocked) {
+                    MORI_APP.showToast('🔒 Выполните задание для разблокировки', 'error');
+                } else if (window.MORI_THEMES) {
+                    MORI_THEMES.applyTheme(themeId);
+                    renderMenu();
+                }
+                menu.style.display = 'none';
+            });
+        });
+        
+        const openProfileBtn = document.getElementById('open-themes-in-profile');
+        if (openProfileBtn) {
+            openProfileBtn.addEventListener('click', () => {
+                if (window.MORI_ROUTER) {
+                    MORI_ROUTER.navigate('profile');
+                    setTimeout(() => {
+                        const settingsTab = document.querySelector('.profile-tab[data-tab="settings"]');
+                        if (settingsTab) settingsTab.click();
+                    }, 300);
+                }
+                menu.style.display = 'none';
+            });
+        }
+    }
+})();
+</script>
   
     <script src="js/core/utils.js"></script>
     <script src="js/core/notifications.js"></script>
@@ -219,6 +344,7 @@ if (window.MORI_ROUTER) {
     <script src="js/core/router.js"></script>
     <script src="js/core/app.js"></script>
     <script src="js/core/achievements.js"></script>
+    <script src="js/core/themes.js"></script>
     <script>;
 </body>
 </html>
