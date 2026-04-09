@@ -532,8 +532,6 @@ const MORI_PROFILE = {
                 <button class="copy-code-btn" id="copy-code-btn">📋 Копировать код</button>
             </div>
             <div class="referral-link-section">
-                <div class="referral-link-label">🔗 Ваша реферальная ссылка:</div>
-                <div class="referral-link">${referralLink}</div>
                 <button class="copy-link-btn" id="copy-link-btn">📋 Копировать ссылку</button>
             </div>
             <div class="referral-stats">
