@@ -426,7 +426,7 @@ setUserSession: function(user) {
         if (!this.isAuthenticated()) return;
         
         try {
-            const devices = await MORI_API.getDevices?.() || [];
+            const devices = MORI_API.getDevices ? await MORI_API.getDevices() : [];
             
             if (devices.length > 1) {
                 MORI_APP.showToast(`📱 Активно устройств: ${devices.length}`, 'info');
@@ -445,7 +445,7 @@ setUserSession: function(user) {
 
     terminateOtherSessions: async function() {
         try {
-            await MORI_API.terminateOtherSessions?.();
+            if (MORI_API.terminateOtherSessions) await MORI_API.terminateOtherSessions();
             MORI_APP.showToast('✅ Сессии на других устройствах завершены', 'success');
         } catch (error) {
             console.error('Ошибка завершения сессий:', error);
@@ -681,7 +681,7 @@ setUserSession: function(user) {
 
         if (registerBtn) {
             registerBtn.addEventListener('click', async () => {
-                const nickname = document.getElementById('nickname')?.value.trim();
+                const nickname = document.getElementById('nickname') ? document.getElementById('nickname').value.trim() : '';
                 
                 if (!nickname || nickname.length < 3) {
                     MORI_APP.showToast('❌ Никнейм должен быть минимум 3 символа', 'error');
@@ -694,9 +694,9 @@ setUserSession: function(user) {
                 const userData = {
                     ...tempUser,
                     nickname,
-                    avatar: avatarPreview?.textContent || '👤',
-                    balance: parseFloat(document.getElementById('balance')?.value) || 0,
-                    inviteCode: document.getElementById('invite-code')?.value.trim() || null
+                    avatar: avatarPreview ? avatarPreview.textContent : '👤',
+                    balance: parseFloat(document.getElementById('balance') ? document.getElementById('balance').value : 0) || 0,
+                    inviteCode: document.getElementById('invite-code') ? document.getElementById('invite-code').value.trim() : null,
                 };
 
                 const success = await this.register(userData);
@@ -711,7 +711,7 @@ setUserSession: function(user) {
         if (nicknameInput) {
             nicknameInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    registerBtn?.click();
+                    if (registerBtn) registerBtn.click();
                 }
             });
         }
