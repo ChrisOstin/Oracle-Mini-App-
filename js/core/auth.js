@@ -797,6 +797,7 @@ setUserSession: function(user) {
     MORI_APP.startApp();
     return true;
 },
+};
 
 // ========== ЗАПУСК ==========
 window.MORI_AUTH = MORI_AUTH;
