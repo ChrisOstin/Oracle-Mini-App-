@@ -468,6 +468,18 @@ setUserSession: function(user) {
         return false;
     }
 
+    // Проверка Device ID (защита от мультиаккаунтов) — пропускаем, если есть реферальный код
+    const deviceId = localStorage.getItem('mori_device_id');
+    const existingDevice = users.find(u => u.device_id === deviceId);
+    if (existingDevice && !refCode) {
+        MORI_APP.showToast('❌ На этом устройстве уже зарегистрирован аккаунт. Используйте реферальный код для создания второго.', 'error');
+        return false;
+    }
+
+    if (existingDevice && refCode) {
+        MORI_APP.showToast('🔓 Реферальный код активирован! Создаём второй аккаунт.', 'info');
+    }
+
     const generateCode = () => Math.random().toString(36).substring(2, 12).toUpperCase();
     const userReferralCode = generateCode();
 
@@ -485,6 +497,7 @@ setUserSession: function(user) {
         referral_count_today: 0,
         referral_last_date: new Date().toDateString(),
         created_at: Date.now()
+        device_id: deviceId,
     };
 
     let bonusGiven = false;
