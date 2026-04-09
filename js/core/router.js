@@ -456,7 +456,7 @@ const MORI_ROUTER = {
                         </div>
 
                         <div class="auth-input-group">
-                            <input type="number" id="auth-real-balance" placeholder="REAL баланс $MORI" step="any">
+                            <input type="number" id="auth-real-balance" placeholder="Баланс $MORI" step="any">
                             <span class="auth-input-icon">💰</span>
                         </div>
 
@@ -500,7 +500,7 @@ const MORI_ROUTER = {
                     return;
                 }
                 if (isNaN(realBalance) || realBalance < 0) {
-                    MORI_APP.showToast('❌ Введите корректный REAL баланс', 'error');
+                    MORI_APP.showToast('❌ Введите корректный баланс', 'error');
                     return;
                 }
 
@@ -528,6 +528,133 @@ const MORI_ROUTER = {
     }, 100);
 },
 
+  showError: function(screenTitle, errorMessage) {
+        const content = document.getElementById(`${screenTitle.toLowerCase()}-content`);
+        if (content) {
+            content.innerHTML = `
+                <div class="error-container">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Ошибка загрузки</h3>
+                    <p>${errorMessage}</p>
+                    <button class="retry-btn" onclick="MORI_ROUTER.reload()">Повторить</button>
+                </div>
+            `;
+        }
+    },
+
+    // ========== ЭКРАН РЕГИСТРАЦИИ ==========
+
+    showRegisterScreen: function() {
+    const appDiv = document.getElementById('app');
+    if (!appDiv) return;
+
+    // Читаем реферальный код из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref') || '';
+
+    appDiv.innerHTML = `
+        <div class="auth-screen">
+            <div class="auth-gold-line"></div>
+            <div class="auth-wrapper">
+                <div class="auth-container">
+                    <div class="auth-logo">🎭</div>
+                    <h1 class="auth-title">MORI Oracle</h1>
+                    <p class="auth-subtitle">Зарегистрируйтесь</p>
+
+                    <div class="auth-form">
+                        <div class="auth-input-group">
+                            <input type="text" id="auth-nickname" placeholder="Никнейм" autofocus>
+                            <span class="auth-input-icon">👤</span>
+                        </div>
+
+                        <div class="auth-input-group">
+                            <input type="password" id="auth-password" placeholder="Пароль">
+                            <span class="auth-input-icon">🔒</span>
+                        </div>
+
+                        <div class="auth-input-group">
+                            <input type="number" id="auth-real-balance" placeholder="Баланс $MORI" step="any">
+                            <span class="auth-input-icon">💰</span>
+                        </div>
+
+                        <div class="auth-input-group">
+                            <input type="text" id="auth-ref-code" placeholder="Реферальный код" value="${refCode}">
+                            <span class="auth-input-icon">🎁</span>
+                        </div>
+
+                        <button class="auth-btn" id="auth-register">
+                            <span>📝 Зарегистрироваться</span>
+                        </button>
+                        <div class="auth-footer">
+                            <span class="auth-login-link" id="auth-login-link">🔹 Уже есть аккаунт? Войти</span>
+                        </div>
+                    </div>
+                </div>
+            </div>                                                                                                            </div>
+    `;
+
+    setTimeout(() => {
+        const loginBtn = document.getElementById('auth-login');
+        const passwordInput = document.getElementById('auth-password');
+        const nicknameInput = document.getElementById('auth-nickname');
+        const realBalanceInput = document.getElementById('auth-real-balance');
+        const refCodeInput = document.getElementById('auth-ref-code');
+
+        if (loginBtn && passwordInput) {
+            loginBtn.onclick = () => {
+                const nickname = nicknameInput?.value.trim();
+                const password = passwordInput.value.trim();
+                const realBalance = parseFloat(realBalanceInput?.value);
+                const refCode = refCodeInput?.value.trim();
+
+                if (!nickname) {
+                    MORI_APP.showToast('❌ Введите никнейм', 'error');
+                    return;
+                }
+                if (!password) {
+                    MORI_APP.showToast('❌ Введите пароль', 'error');
+                    return;
+                }
+                if (isNaN(realBalance) || realBalance < 0) {
+                    MORI_APP.showToast('❌ Введите корректный баланс', 'error');                                                                    return;
+                }
+
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<span>⏳ Регистрация...</span>';
+                MORI_AUTH.loginWithDetails(nickname, password, realBalance, refCode).finally(() => {
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<span>🚀 Войти</span>';
+                });
+            };
+                                                                                                                                                 passwordInput.onkeypress = (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            };
+            nicknameInput.onkeypress = (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            };
+            realBalanceInput.onkeypress = (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            };
+            refCodeInput.onkeypress = (e) => {
+                if (e.key === 'Enter') loginBtn.click();
+            };
+        }
+    }, 100);
+},
+
+  showError: function(screenTitle, errorMessage) {
+        const content = document.getElementById(`${screenTitle.toLowerCase()}-content`);
+        if (content) {
+            content.innerHTML = `
+                <div class="error-container">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Ошибка загрузки</h3>
+                    <p>${errorMessage}</p>
+                    <button class="retry-btn" onclick="MORI_ROUTER.reload()">Повторить</button>
+                </div>
+            `;
+        }
+    },
     // ========== ЖЕСТЫ ==========
     setupGestures: function() {
         let touchStartX = 0;
