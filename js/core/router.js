@@ -454,17 +454,6 @@ const MORI_ROUTER = {
                             <input type="password" id="auth-password" placeholder="Пароль">
                             <span class="auth-input-icon">🔒</span>
                         </div>
-
-                        <div class="auth-input-group">
-                            <input type="number" id="auth-real-balance" placeholder="Баланс $MORI" step="any">
-                            <span class="auth-input-icon">💰</span>
-                        </div>
-
-                        <div class="auth-input-group">
-                            <input type="text" id="auth-ref-code" placeholder="Реферальный код" value="${refCode}">
-                            <span class="auth-input-icon">🎁</span>
-                        </div>
-
                         <button class="auth-btn" id="auth-login">
                             <span>🚀 Войти</span>
                         </button>
@@ -488,9 +477,7 @@ const MORI_ROUTER = {
             loginBtn.onclick = () => {
                 const nickname = nicknameInput?.value.trim();
                 const password = passwordInput.value.trim();
-                const realBalance = parseFloat(realBalanceInput?.value);
-                const refCode = refCodeInput?.value.trim();
-
+                
                 if (!nickname) {
                     MORI_APP.showToast('❌ Введите никнейм', 'error');
                     return;
@@ -506,7 +493,7 @@ const MORI_ROUTER = {
 
                 loginBtn.disabled = true;
                 loginBtn.innerHTML = '<span>⏳ Вход...</span>';
-                MORI_AUTH.loginWithDetails(nickname, password, realBalance, refCode).finally(() => {
+                MORI_AUTH.login(nickname, password).finally(() => {
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<span>🚀 Войти</span>';
                 });
