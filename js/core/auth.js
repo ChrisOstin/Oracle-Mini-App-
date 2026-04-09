@@ -256,10 +256,10 @@ const MORI_AUTH = {
         referral_last_date: new Date().toDateString(),
         created_at: Date.now()
 
-        console.log('newUser:', newUser);
-        console.log('newUser.used_referral_code:', newUser.used_referral_code);
-
     };
+
+    console.log('newUser:', newUser);
+    console.log('newUser.used_referral_code:', newUser.used_referral_code);
 
     // Обработка реферального кода (если введён)
     let bonusGiven = false;
