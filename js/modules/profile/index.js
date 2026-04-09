@@ -891,15 +891,15 @@ if (copyCodeBtn) {
     });
 }
 
+// Копирование реферальной ссылки
 const copyLinkBtn = document.getElementById('copy-link-btn');
 if (copyLinkBtn) {
-    copyLinkBtn.addEventListener('click', () => {
-        const link = document.querySelector('.referral-link')?.textContent;
-        if (link) {
-            navigator.clipboard.writeText(link);
-            MORI_APP.showToast('✅ Реферальная ссылка скопирована!', 'success');
-        }
-    });
+    copyLinkBtn.onclick = () => {
+        const currentUser = JSON.parse(localStorage.getItem('mori_user'));
+        const link = `https://chrisostin.github.io/Oracle-Mini-App-/?ref=${currentUser?.referral_code || ''}`;
+        navigator.clipboard.writeText(link);
+        MORI_APP.showToast('✅ Реферальная ссылка скопирована!', 'success');
+    };
 }
 
 // Удаляем старую кнопку "Добавить приглашённого", если есть
