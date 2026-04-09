@@ -87,44 +87,27 @@ const MORI_NOTIFICATIONS = {
     },
 
     show: function(message, type = 'info', options = {}) {
-        const config = { ...this.types[type] || this.types.info, ...options };
-        const duration = options.duration || config.duration || this.defaults.duration;
-        const id = 'notif_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        const action = options.action || null;
-        const replyable = options.replyable || false;
-        const onReply = options.onReply || null;
-        const animation = config.animation || this.defaults.animation;
-
-        const notification = {
-            id, message, type,
-            icon: config.icon,
-            color: config.color,
-            duration,
-            timestamp: Date.now(),
-            read: false,
-            action,
-            replyable,
-            onReply,
-            animation,
-            ...options
-        };
-
-        this.state.queue.push(notification);
-        this.state.history.unshift(notification);
-        if (this.state.history.length > 100) this.state.history.pop();
-        MORI_STORAGE?.set('notification_history', this.state.history);
-        this.state.unreadCount++;
-        this.updateUnreadCount();
-
-        if (this.state.soundEnabled && config.sound) this.playSound(config.sound);
-        if (this.state.vibrationEnabled) this.vibrate(options.vibration || this.defaults.vibration);
-        this.render(notification);
-
-        if (!options.persistent && !this.defaults.persistent) {
-            setTimeout(() => this.hide(id), duration);
-        }
-        return id;
-    },
+    const duration = options.duration || 10000;
+    
+    // Удаляем старые уведомления
+    const oldToast = document.querySelector('.mori-toast');
+    if (oldToast) oldToast.remove();
+    
+    // Создаём новое уведомление
+    const toast = document.createElement('div');
+    toast.className = `mori-toast ${type}`;
+    toast.textContent = message;
+    
+    document.body.appendChild(toast);
+    
+    // Исчезновение через duration
+    setTimeout(() => {
+        toast.classList.add('hide');
+        setTimeout(() => {
+            if (toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 300);
+    }, duration);
+},
 
     success: function(message, options = {}) { return this.show(message, 'success', options); },
     error: function(message, options = {}) { return this.show(message, 'error', { duration: 7000, ...options }); },
