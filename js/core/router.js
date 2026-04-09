@@ -557,12 +557,12 @@ const MORI_ROUTER = {
                         </div>
 
                         <div class="auth-input-group">
-                            <input type="number" id="auth-real-balance" placeholder="Баланс $MORI" step="any">
+                            <input type="number" id="reg-real-balance" placeholder="Баланс $MORI" step="any">
                             <span class="auth-input-icon">💰</span>
                         </div>
 
                         <div class="auth-input-group">
-                            <input type="text" id="auth-ref-code" placeholder="Реферальный код" value="${refCode}">
+                            <input type="text" id="reg-ref-code" placeholder="Реферальный код" value="${refCode}">
                             <span class="auth-input-icon">🎁</span>
                         </div>
 
