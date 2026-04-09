@@ -518,41 +518,44 @@ const MORI_PROFILE = {
     },
 
     renderReferralsTab: function() {
-        const todayRefs = this.state.referrals.filter(r => {
-            const refDate = new Date(r.date).toDateString();
-            return refDate === new Date().toDateString();
-        }).length;
-        
-        return `
-            <div class="referrals-tab">
-                <div class="referral-link-section">
-                    <div class="referral-link">${this.state.referralLink}</div>
-                    <button class="copy-link-btn" id="copy-link-btn">📋 Копировать</button>
-                </div>
-                
-                <div class="referral-stats">
-                    <div class="stat">👥 Приглашено: ${this.state.referrals.length}</div>
-                    <div class="stat">📅 Сегодня: ${todayRefs}/3</div>
-                    <div class="stat">🎁 Бонус: 500 MORI Coin</div>
-                </div>
-                
-                <button class="add-referral-btn" id="add-referral-btn">+ Добавить приглашённого</button>
-                
-                <div class="referrals-list">
-                    <h4>История приглашений</h4>
-                    ${this.state.referrals.length === 0 ? '<div class="empty">Нет приглашений</div>' : 
-                        this.state.referrals.map(ref => `
-                            <div class="referral-item">
-                                <span>👤 ${ref.name}</span>
-                                <span>${new Date(ref.date).toLocaleDateString()}</span>
-                                <span class="bonus">+${ref.bonus}</span>
-                            </div>
-                        `).join('')
-                    }
-                </div>
+    const currentUser = JSON.parse(localStorage.getItem('mori_user'));
+    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    const myReferrals = users.filter(u => u.used_referral_code === currentUser?.referral_code && u.nickname !== currentUser?.nickname);
+    const today = new Date().toDateString();
+    const todayReferrals = myReferrals.filter(r => new Date(r.created_at).toDateString() === today).length;
+    const referralLink = `https://chrisostin.github.io/Oracle-Mini-App-/?ref=${currentUser?.referral_code || ''}`;
+    return `
+        <div class="referrals-tab">
+            <div class="referral-code-section">
+                <div class="referral-code-label">🎁 Ваш реферальный код:</div>
+                <div class="referral-code-value" id="referral-code">${currentUser?.referral_code || 'Нет кода'}</div>
+                <button class="copy-code-btn" id="copy-code-btn">📋 Копировать код</button>
             </div>
-        `;
-    },
+            <div class="referral-link-section">
+                <div class="referral-link-label">🔗 Ваша реферальная ссылка:</div>
+                <div class="referral-link">${referralLink}</div>
+                <button class="copy-link-btn" id="copy-link-btn">📋 Копировать ссылку</button>
+            </div>
+            <div class="referral-stats">
+                <div class="stat">👥 Приглашено всего: ${myReferrals.length}</div>
+                <div class="stat">📅 Сегодня: ${todayReferrals}/3</div>
+                <div class="stat">🎁 Бонус: 500 MORI Coin за приглашение</div>
+            </div>
+            <div class="referrals-list">
+                <h4>📋 История приглашений</h4>
+                ${myReferrals.length === 0 ? '<div class="empty">Нет приглашённых</div>' :
+                    myReferrals.map(ref => `
+                        <div class="referral-item">
+                            <span>👤 ${ref.nickname}</span>
+                            <span>📅 ${new Date(ref.created_at).toLocaleDateString()}</span>
+                            <span class="bonus">+500</span>
+                        </div>
+                    `).join('')
+                }
+            </div>
+        </div>
+    `;
+},
 
     renderLeaderboardTab: function() {
         const types = [
@@ -867,18 +870,33 @@ renderAdminLogs: function() {
             });
         });
         
-        // Рефералы
-        const copyBtn = document.getElementById('copy-link-btn');
-        if (copyBtn) {
-            copyBtn.addEventListener('click', () => {
-                navigator.clipboard.writeText(this.state.referralLink);
-                MORI_APP.showToast('✅ Ссылка скопирована!', 'success');
-            });
+        // Рефералы — копирование кода и ссылки
+const copyCodeBtn = document.getElementById('copy-code-btn');
+if (copyCodeBtn) {
+    copyCodeBtn.addEventListener('click', () => {
+        const code = document.getElementById('referral-code')?.textContent;
+        if (code) {
+            navigator.clipboard.writeText(code);
+            MORI_APP.showToast('✅ Реферальный код скопирован!', 'success');
         }
-        
-        const addRefBtn = document.getElementById('add-referral-btn');
-        if (addRefBtn) addRefBtn.addEventListener('click', () => this.addReferral());
+    });
+}
 
+const copyLinkBtn = document.getElementById('copy-link-btn');
+if (copyLinkBtn) {
+    copyLinkBtn.addEventListener('click', () => {
+        const link = document.querySelector('.referral-link')?.textContent;
+        if (link) {
+            navigator.clipboard.writeText(link);
+            MORI_APP.showToast('✅ Реферальная ссылка скопирована!', 'success');
+        }
+    });
+}
+
+// Удаляем старую кнопку "Добавить приглашённого", если есть
+const addRefBtn = document.getElementById('add-referral-btn');
+if (addRefBtn) addRefBtn.remove();
+  
         // Админ-панель: переключение вкладок
 document.querySelectorAll('.admin-tab').forEach(btn => {
     btn.addEventListener('click', (e) => {
