@@ -102,239 +102,74 @@ const MORI_AUTH = {
     },
 
     // ========== ВХОД ==========
-    login: async function(password) {
-        // УЛУЧШЕНИЕ 6: Проверка на брутфорс
-        if (!this.checkBruteForce()) {
-            return false;
-        }
+    login: async function(nickname, password) {
+    // УЛУЧШЕНИЕ 6: Проверка на брутфорс
+    if (!this.checkBruteForce()) {
+        return false;
+    }
 
-        // Определяем уровень доступа по паролю (для UI)
-        let accessLevel = null;
-        if (password === this.passwords.admin) accessLevel = this.levels.ADMIN;
-        else if (password === this.passwords.family) accessLevel = this.levels.FAMILY;
-        else if (password === this.passwords.user) accessLevel = this.levels.USER;
-        else {
-            MORI_APP.showToast('❌ Неверный пароль', 'error');
-            
-            // УЛУЧШЕНИЕ 6: Увеличиваем счётчик попыток
-            this.recordFailedAttempt();
-            return false;
-        }
+    // Ищем пользователя в localStorage
+    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    const user = users.find(u => u.nickname === nickname);
 
-        try {
-            MORI_APP.showToast('🔄 Вход...', 'info');
-            
-            const response = await MORI_API.login(password);
-            
-            if (response && response.success) {
-                // Сохраняем сессию
-                this.session = response.session;
-                localStorage.setItem('mori_token', response.token);
-                
-                // Сохраняем данные пользователя
-                MORI_APP.currentUser = response.user;
-                MORI_APP.accessLevel = response.user.access_level;
-                
-                // Разблокируем все темы для админа
-                if (MORI_APP.accessLevel === 'admin' && window.MORI_THEMES) {
-                    MORI_THEMES.list.forEach(theme => {
-                        if (!MORI_THEMES.unlockedThemes.includes(theme.id)) {
-                            MORI_THEMES.unlockedThemes.push(theme.id);
-                        }
-                    });
-                    MORI_THEMES.save();
-                    console.log('👑 Админ: все темы разблокированы');
-                }
+    if (!user) {
+        MORI_APP.showToast('❌ Пользователь не найден', 'error');
+        this.recordFailedAttempt();
+        return false;
+    }
 
-                // Сохраняем в sessionStorage для восстановления
-                sessionStorage.setItem('mori_user', JSON.stringify(response.user));
-                sessionStorage.setItem('mori_level', response.user.access_level);
-                
-                // Очищаем кэш API при смене пользователя
-                MORI_API.clearUserCache();
-                
-                // Запускаем таймер обновления токена
-                this.startTokenRefresh();
-                
-                // УЛУЧШЕНИЕ 5: Сбрасываем таймер неактивности
-                this.startInactivityTimer();
-                
-                // УЛУЧШЕНИЕ 6: Сбрасываем счётчик попыток при успешном входе
-                this.resetBruteForce();
-                
-                // УЛУЧШЕНИЕ 9: Синхронизация между устройствами
-                this.syncSession();
-                
-                MORI_APP.showToast(`✅ Добро пожаловать, ${response.user.nickname}!`, 'success');
-                
-                // Запускаем приложение
-                MORI_APP.startApp();
-                
-                return true;
-            } else {
-                MORI_APP.showToast('❌ Ошибка при входе', 'error');
-                
-                // УЛУЧШЕНИЕ 6: Увеличиваем счётчик попыток
-                this.recordFailedAttempt();
-                
-                return false;
-            }
-        } catch (error) {
-            console.error('❌ Ошибка входа:', error);
-            
-            // УЛУЧШЕНИЕ 6: Увеличиваем счётчик попыток
-            this.recordFailedAttempt();
-            
-            if (error.message.includes('401')) {
-                MORI_APP.showToast('❌ Неверный пароль', 'error');
-            } else if (!navigator.onLine) {
-                MORI_APP.showToast('📴 Нет интернета', 'warning');
-            } else {
-                MORI_APP.showToast('❌ Ошибка соединения', 'error');
-            }
-            
-            return false;
-        }
-    },
+    if (user.password !== password) {
+        MORI_APP.showToast('❌ Неверный пароль', 'error');
+        this.recordFailedAttempt();
+        return false;
+    }
 
-    loginWithDetails: async function(nickname, password, realBalance, refCode) {
-    
-    console.log('=== loginWithDetails ===');
-    console.log('nickname:', nickname);
-    console.log('password:', password);
-    console.log('realBalance:', realBalance);
-    console.log('refCode:', refCode);
-
-    // Определяем уровень доступа по паролю
+    // Определяем уровень доступа
     let accessLevel = null;
     if (password === this.passwords.admin) accessLevel = this.levels.ADMIN;
     else if (password === this.passwords.family) accessLevel = this.levels.FAMILY;
     else if (password === this.passwords.user) accessLevel = this.levels.USER;
-    else {
-        MORI_APP.showToast('❌ Неверный пароль', 'error');
-        return false;
-    }
-
-    // Проверяем, существует ли пользователь с таким ником
-    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
-    const existingUser = users.find(u => u.nickname === nickname);
-
-    if (existingUser) {
-        // Существующий пользователь — проверяем пароль
-        if (existingUser.password !== password) {
-            MORI_APP.showToast('❌ Неверный пароль', 'error');
-            return false;
-        }
-        // Вход существующего пользователя
-        this.setUserSession(existingUser);
-       
-        // Загружаем REAL и GAME балансы пользователя
-        localStorage.setItem('mori_real_balance', existingUser.real_balance);
-        localStorage.setItem('mori_game_balance', existingUser.game_balance || 0);
-
-        MORI_APP.showToast(`👋 С возвращением, ${nickname}!`, 'success');
-        MORI_APP.startApp();
-        return true;
-    }
-
-    // === НОВЫЙ ПОЛЬЗОВАТЕЛЬ ===
-
-    // Генерируем реферальный код для нового пользователя
-    const generateCode = () => {
-        return Math.random().toString(36).substring(2, 12).toUpperCase();
-    };
-    const userReferralCode = generateCode();
-
-    // Создаём нового пользователя
-    const newUser = {
-        id: 'user_' + Date.now(),
-        nickname: nickname,
-        password: password,
-        access_level: accessLevel,
-        real_balance: realBalance,
-        game_balance: 0,
-        referral_code: userReferralCode,
-        used_referral_code: refCode || null,
-        invited_by: null,
-        referrals: [],
-        referral_count_today: 0,
-        referral_last_date: new Date().toDateString(),
-        created_at: Date.now()
-
-    };
-
-    console.log('newUser:', newUser);
-    console.log('newUser.used_referral_code:', newUser.used_referral_code);
-
-    // Обработка реферального кода (если введён)
-    let bonusGiven = false;
-    if (refCode) {
-        const inviter = users.find(u => u.referral_code === refCode);
-        if (inviter) {
-            // Проверка: не приглашает ли сам себя
-            if (inviter.nickname === nickname) {
-                MORI_APP.showToast('❌ Нельзя пригласить самого себя', 'error');
-            } else {
-                // Проверка лимита (3 в день)
-                const today = new Date().toDateString();
-                if (inviter.referral_last_date !== today) {
-                    inviter.referral_count_today = 0;
-                    inviter.referral_last_date = today;
-                }
-                if (inviter.referral_count_today >= 3) {
-                    MORI_APP.showToast(`❌ У пользователя ${inviter.nickname} лимит приглашений на сегодня (3)`, 'error');
-                } else {
-                    // Начисляем бонус пригласившему
-                    inviter.game_balance = (inviter.game_balance || 0) + 500;
-                    inviter.referral_count_today++;
-                    inviter.referrals.push({
-                        nickname: nickname,
-                        date: Date.now(),
-                        bonus: 500
-                    });
-                    newUser.invited_by = inviter.id;
-                    bonusGiven = true;
-
-                    MORI_APP.showToast(`🎉 Пользователь ${inviter.nickname} получил 500 MORI Coin за приглашение!`, 'success');
-
-                    // Обновляем пригласившего в массиве
-                    const inviterIndex = users.findIndex(u => u.id === inviter.id);
-                    if (inviterIndex !== -1) users[inviterIndex] = inviter;
-                }
-            }
-        } else {
-            MORI_APP.showToast('❌ Неверный реферальный код', 'error');
-        }
-    }
-
-    // Добавляем нового пользователя
-    users.push(newUser);
-  
-    // Сохраняем REAL баланс для отображения в профиле
-    localStorage.setItem('mori_real_balance', realBalance);
-    localStorage.setItem('mori_game_balance', newUser.game_balance || 0);
-
-    console.log('Сохранённые пользователи:', JSON.parse(localStorage.getItem('mori_users')));
-
-    // Принудительно сохраняем использованный код в текущем пользователе
-    newUser.used_referral_code = refCode || null;
-
-    localStorage.setItem('mori_users', JSON.stringify(users));
-
-    // Начисляем бонус новому пользователю (500 MORI Coin)
-    if (bonusGiven || refCode) {
-        newUser.game_balance = 500;
-        // Обновляем в массиве
-        const newUserIndex = users.findIndex(u => u.id === newUser.id);
-        if (newUserIndex !== -1) users[newUserIndex] = newUser;
-        localStorage.setItem('mori_users', JSON.stringify(users));
-
-        MORI_APP.showToast(`🎉 Поздравляем, ${nickname}! Вам зачислен бонус 500 MORI Coin за регистрацию по реферальному коду!`, 'success', 5000);
-    }
 
     // Сохраняем сессию
-    this.setUserSession(newUser);
-    MORI_APP.showToast(`✅ Добро пожаловать, ${nickname}!`, 'success');
+    this.session = { user: user };
+    localStorage.setItem('mori_token', 'token_' + user.id);
+    localStorage.setItem('mori_user', JSON.stringify(user));
+    sessionStorage.setItem('mori_user', JSON.stringify(user));
+    sessionStorage.setItem('mori_level', accessLevel);
+    MORI_APP.currentUser = user;
+    MORI_APP.accessLevel = accessLevel;
+
+    // Разблокируем все темы для админа
+    if (MORI_APP.accessLevel === 'admin' && window.MORI_THEMES) {
+        MORI_THEMES.list.forEach(theme => {
+            if (!MORI_THEMES.unlockedThemes.includes(theme.id)) {
+                MORI_THEMES.unlockedThemes.push(theme.id);
+            }
+        });
+        MORI_THEMES.save();
+        console.log('👑 Админ: все темы разблокированы');
+    }
+
+    // Сохраняем балансы для отображения в профиле
+    localStorage.setItem('mori_real_balance', user.real_balance);
+    localStorage.setItem('mori_game_balance', user.game_balance || 0);
+
+    // Запускаем таймер обновления токена
+    this.startTokenRefresh();
+
+    // УЛУЧШЕНИЕ 5: Сбрасываем таймер неактивности
+    this.startInactivityTimer();
+
+    // УЛУЧШЕНИЕ 6: Сбрасываем счётчик попыток при успешном входе
+    this.resetBruteForce();
+
+    // УЛУЧШЕНИЕ 9: Синхронизация между устройствами
+    this.syncSession();
+
+    // Очищаем кэш API
+    MORI_API.clearUserCache();
+
+    MORI_APP.showToast(`👋 С возвращением, ${nickname}!`, 'success');
     MORI_APP.startApp();
     return true;
 },
@@ -612,109 +447,6 @@ setUserSession: function(user) {
                 selector.remove();
             }
         });
-    },
-
-    // ========== ПОКАЗ ЭКРАНА РЕГИСТРАЦИИ ==========
-    showRegistration: function(tempUser) {
-        const appDiv = document.getElementById('app');
-        if (!appDiv) return;
-
-        appDiv.innerHTML = `
-            <div class="screen auth-screen">
-                <header class="screen-header">
-                    <h2>🔮 Регистрация</h2>
-                </header>
-                <div class="screen-content">
-                    <div class="auth-form">
-                        <div class="avatar-selector">
-                            <div class="current-avatar" id="avatar-preview">👤</div>
-                            <button class="change-avatar-btn" id="change-avatar">
-                                Выбрать аватар
-                            </button>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nickname">Никнейм *</label>
-                            <input type="text" id="nickname"
-                                   placeholder="Введите никнейм"
-                                   maxlength="20" required>
-                            <small>Минимум 3 символа</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="balance">Баланс MORI (можно указать позже)</label>
-                            <input type="number" id="balance"
-                                   placeholder="0" min="0" step="100">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="invite-code">Пригласительный код (если есть)</label>
-                            <input type="text" id="invite-code"
-                                   placeholder="XXXXXXXX">
-                        </div>
-
-                        <button class="register-btn" id="register-btn">
-                            Завершить регистрацию
-                        </button>
-
-                        <p class="form-note">* — обязательные поля</p>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        this.setupRegistrationHandlers(tempUser);
-    },
-
-    // ========== НАСТРОЙКА ОБРАБОТЧИКОВ РЕГИСТРАЦИИ ==========
-    setupRegistrationHandlers: function(tempUser) {
-        const registerBtn = document.getElementById('register-btn');
-        const avatarBtn = document.getElementById('change-avatar');
-        const avatarPreview = document.getElementById('avatar-preview');
-        const nicknameInput = document.getElementById('nickname');
-
-        if (avatarBtn && avatarPreview) {
-            avatarBtn.addEventListener('click', () => {
-                this.showAvatarSelector(avatarPreview);
-            });
-        }
-
-        if (registerBtn) {
-            registerBtn.addEventListener('click', async () => {
-                const nickname = document.getElementById('nickname') ? document.getElementById('nickname').value.trim() : '';
-                
-                if (!nickname || nickname.length < 3) {
-                    MORI_APP.showToast('❌ Никнейм должен быть минимум 3 символа', 'error');
-                    return;
-                }
-
-                registerBtn.disabled = true;
-                registerBtn.textContent = '⏳ Регистрация...';
-
-                const userData = {
-                    ...tempUser,
-                    nickname,
-                    avatar: avatarPreview ? avatarPreview.textContent : '👤',
-                    balance: parseFloat(document.getElementById('balance') ? document.getElementById('balance').value : 0) || 0,
-                    inviteCode: document.getElementById('invite-code') ? document.getElementById('invite-code').value.trim() : null,
-                };
-
-                const success = await this.register(userData);
-                
-                if (!success) {
-                    registerBtn.disabled = false;
-                    registerBtn.textContent = 'Завершить регистрацию';
-                }
-            });
-        }
-
-        if (nicknameInput) {
-            nicknameInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    if (registerBtn) registerBtn.click();
-                }
-            });
-        }
     },
 
     // ========== РЕГИСТРАЦИЯ ==========
