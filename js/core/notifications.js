@@ -86,28 +86,200 @@ const MORI_NOTIFICATIONS = {
         }
     },
 
+    /**
+ * NOTIFICATIONS MODULE — Уведомления в стиле Мориарти
+ */
+
+const MORI_NOTIFICATIONS = {
+    state: {
+        soundEnabled: true,
+        vibrationEnabled: true
+    },
+
+    init: function() {
+        console.log('🔔 MORI_NOTIFICATIONS инициализация...');
+        this.loadSettings();
+    },
+
+    loadSettings: function() {
+        const saved = localStorage.getItem('mori_notifications_settings');
+        if (saved) {
+            this.state = JSON.parse(saved);
+        }
+    },
+
+    saveSettings: function() {
+        localStorage.setItem('mori_notifications_settings', JSON.stringify(this.state));
+    },
+
+    playSound: function(type) {
+        if (!this.state.soundEnabled) return;
+        // Звуки опционально
+    },
+
+    vibrate: function(pattern) {
+        if (!this.state.vibrationEnabled) return;
+        if (navigator.vibrate) navigator.vibrate(pattern);
+    },
+
     show: function(message, type = 'info', options = {}) {
-    const duration = options.duration || 10000;
-    
-    // Удаляем старые уведомления
-    const oldToast = document.querySelector('.mori-toast');
-    if (oldToast) oldToast.remove();
-    
-    // Создаём новое уведомление
-    const toast = document.createElement('div');
-    toast.className = `mori-toast ${type}`;
-    toast.textContent = message;
-    
-    document.body.appendChild(toast);
-    
-    // Исчезновение через duration
-    setTimeout(() => {
+        const duration = options.duration || 8000;
+        const onClick = options.onClick || null;
+        const moduleToOpen = options.module || null;
+        
+        // Удаляем старые уведомления
+        const oldToast = document.querySelector('.mori-toast');
+        if (oldToast) oldToast.remove();
+        
+        // Создаём новое уведомление
+        const toast = document.createElement('div');
+        toast.className = `mori-toast ${type}`;
+        
+        // Текст уведомления
+        const textSpan = document.createElement('span');
+        textSpan.textContent = message;
+        toast.appendChild(textSpan);
+        
+        // Крестик закрытия
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '✕';
+        closeBtn.className = 'mori-toast-close';
+        closeBtn.onclick = (e) => {
+            e.stopPropagation();
+            this.hideToast(toast);
+        };
+        toast.appendChild(closeBtn);
+        
+        // Свайп вверх для закрытия
+        let touchStartY = 0;
+        toast.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+        toast.addEventListener('touchmove', (e) => {
+            const deltaY = e.touches[0].clientY - touchStartY;
+            if (deltaY < -50) { // Свайп вверх
+                e.preventDefault();
+                this.hideToast(toast);
+            }
+        });
+        
+        // Клик по уведомлению
+        toast.onclick = () => {
+            if (onClick) onClick();
+            if (moduleToOpen && window.MORI_ROUTER) {
+                MORI_ROUTER.navigate(moduleToOpen);
+            }
+            this.hideToast(toast);
+        };
+        
+        document.body.appendChild(toast);
+        
+        // Автоисчезновение
+        let timeoutId = setTimeout(() => {
+            this.hideToast(toast);
+        }, duration);
+        
+        // Останавливаем автоисчезновение при наведении
+        toast.onmouseenter = () => clearTimeout(timeoutId);
+        toast.onmouseleave = () => {
+            timeoutId = setTimeout(() => {
+                this.hideToast(toast);
+            }, duration);
+        };
+        
+        this.vibrate(20);
+        this.playSound(type);
+    },
+
+    hideToast: function(toast) {
         toast.classList.add('hide');
         setTimeout(() => {
             if (toast.parentNode) toast.parentNode.removeChild(toast);
         }, 300);
-    }, duration);
-},
+    },
+
+    // Уведомление о реферале
+    notifyReferral: function(referrerName, newUserName) {
+        this.show(
+            `🎉 ${referrerName} пригласил(а) ${newUserName}! +500 MORI Coin`,
+            'success',
+            {
+                duration: 8000,
+                module: 'profile',
+                onClick: () => {
+                    if (window.MORI_ROUTER) {
+                        MORI_ROUTER.navigate('profile');
+                        setTimeout(() => {
+                            const referralsTab = document.querySelector('.profile-tab[data-tab="referrals"]');
+                            if (referralsTab) referralsTab.click();
+                        }, 300);
+                    }
+                }
+            }
+        );
+    },
+
+    // Напоминание о ежедневном бонусе
+    remindDailyBonus: function() {
+        const lastClaim = localStorage.getItem('daily_last');
+        const today = new Date().toDateString();
+        
+        if (lastClaim !== today) {
+            setTimeout(() => {
+                this.show(
+                    `🎁 Не забудь перейти в профиль, чтобы забрать ежедневный бонус!`,
+                    'warning',
+                    {
+                        duration: 10000,
+                        module: 'profile',
+                        onClick: () => {
+                            if (window.MORI_ROUTER) {
+                                MORI_ROUTER.navigate('profile');
+                                setTimeout(() => {
+                                    const dailyBtn = document.getElementById('daily-bonus-btn');
+                                    if (dailyBtn) dailyBtn.click();
+                                }, 300);
+                            }
+                        }
+                    }
+                );
+            }, 5000);
+        }
+    },
+
+    // Уведомление о достижении
+    notifyAchievement: function(achievementName) {
+        this.show(
+            `🏆 Достижение "${achievementName}" разблокировано!`,
+            'success',
+            {
+                duration: 8000,
+                module: 'profile'
+            }
+        );
+    },
+
+    // Уведомление о новом уровне
+    notifyLevelUp: function(level) {
+        this.show(
+            `🎉 Поздравляем! Вы достигли ${level} уровня!`,
+            'success',
+            {
+                duration: 8000,
+                module: 'profile'
+            }
+        );
+    }
+};
+
+// Автозапуск напоминания о бонусе
+setTimeout(() => {
+    if (MORI_NOTIFICATIONS) {
+        MORI_NOTIFICATIONS.remindDailyBonus();
+    }
+}, 3000);
+
+window.MORI_NOTIFICATIONS = MORI_NOTIFICATIONS;
 
     success: function(message, options = {}) { return this.show(message, 'success', options); },
     error: function(message, options = {}) { return this.show(message, 'error', { duration: 7000, ...options }); },
