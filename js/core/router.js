@@ -525,6 +525,15 @@ const MORI_ROUTER = {
                 if (e.key === 'Enter') loginBtn.click();
             };
         }
+
+        // Переключение на экран регистрации
+        const registerLink = document.getElementById('auth-register-link');
+        if (registerLink) {
+            registerLink.onclick = () => {
+                MORI_ROUTER.showRegisterScreen();
+            };
+        }
+
     }, 100);
 },
 
@@ -639,6 +648,15 @@ const MORI_ROUTER = {
                 if (e.key === 'Enter') loginBtn.click();
             };
         }
+        // Переключение на экран входа
+        const loginLink = document.getElementById('auth-login-link');
+        if (loginLink) {
+            loginLink.onclick = () => {
+                MORI_ROUTER.showAuthScreen();
+            };
+        }
+        
+
     }, 100);
 },
 
