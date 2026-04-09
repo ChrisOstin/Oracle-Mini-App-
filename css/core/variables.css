@@ -564,27 +564,51 @@ body {
 /* ===== УВЕДОМЛЕНИЯ В СТИЛЕ МОРИАРТИ ===== */
 .mori-toast {
     position: fixed;
-    top: 70px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
     color: #d4af37;
-    padding: 12px 24px;
-    padding-left: 20px;
+    padding: 16px 48px 16px 24px;
     border-radius: 50px;
     font-size: 14px;
     font-weight: 500;
     z-index: 10001;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
     text-align: center;
-    white-space: nowrap;
     letter-spacing: 0.5px;
     font-family: 'Inter', sans-serif;
     position: relative;
     overflow: hidden;
-    animation: toastFadeIn 0.3s ease;
+    animation: toastSlideIn 0.3s ease;
+    max-width: 80%;
+    min-width: 200px;
+}
+
+/* Крестик закрытия */
+.mori-toast-close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    color: #d4af37;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.mori-toast-close:hover {
+    background: rgba(212, 175, 55, 0.2);
 }
 
 /* Левая цветная полоска */
@@ -598,46 +622,44 @@ body {
     background: #d4af37;
 }
 
-.mori-toast.success::before {
-    background: #00ff88;
-    box-shadow: 0 0 8px #00ff88;
-}
-
-.mori-toast.error::before {
-    background: #ff4444;
-    box-shadow: 0 0 8px #ff4444;
-}
-
-.mori-toast.warning::before {
-    background: #ffaa33;
-    box-shadow: 0 0 8px #ffaa33;
-}
-
-.mori-toast.info::before {
-    background: #d4af37;
-    box-shadow: 0 0 8px #d4af37;
-}
+.mori-toast.success::before { background: #00ff88; box-shadow: 0 0 8px #00ff88; }
+.mori-toast.error::before { background: #ff4444; box-shadow: 0 0 8px #ff4444; }
+.mori-toast.warning::before { background: #ffaa33; box-shadow: 0 0 8px #ffaa33; }
+.mori-toast.info::before { background: #d4af37; box-shadow: 0 0 8px #d4af37; }
 
 /* Анимация появления */
-@keyframes toastFadeIn {
+@keyframes toastSlideIn {
     from {
         opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
+        transform: translate(-50%, -50%) scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Анимация исчезновения */
+.mori-toast.hide {
+    animation: toastFadeOut 0.3s ease forwards;
+}
+
+@keyframes toastFadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
     }
 }
 
 /* Адаптив */
 @media (max-width: 480px) {
     .mori-toast {
-        white-space: normal;
-        max-width: 90%;
+        max-width: 85%;
         font-size: 12px;
-        padding: 10px 20px;
-        padding-left: 18px;
-        top: 60px;
+        padding: 14px 44px 14px 20px;
     }
 }
