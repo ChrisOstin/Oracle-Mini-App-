@@ -544,7 +544,7 @@ const MORI_PROFILE = {
         <span>📅 Сегодня</span>
     </div>
     <div class="stat">
-        <span>500</span>
+        <span>1 реферал</span>
         <span>🎁 Бонус: 500 MORI coin</span>
     </div>
 </div>
