@@ -1239,7 +1239,34 @@ input:checked + .slider:before {
     font-size: 11px;
 }
 
+/* Статистика рефералов — центрирование */
+.referral-stats {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+}
+
 .referral-stats .stat {
-    padding-top: 32px;
-    padding-bottom: 12px;
+    flex: 1;
+    text-align: center;
+    background: #0a0a0a;
+    padding: 10px 6px;
+    border-radius: 16px;
+    font-size: 10px;
+    color: #d4af37;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.referral-stats .stat span:first-child {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.referral-stats .stat span:last-child {
+    font-size: 9px;
+    color: #aaa;
 }

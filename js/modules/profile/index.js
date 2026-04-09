@@ -535,10 +535,19 @@ const MORI_PROFILE = {
                 <button class="copy-link-btn" id="copy-link-btn">📋 Копировать ссылку</button>
             </div>
             <div class="referral-stats">
-                <div class="stat">👥 Приглашено всего: ${myReferrals.length}</div>
-                <div class="stat">📅 Сегодня: ${todayReferrals}/3</div>
-                <div class="stat">🎁 Бонус: 500 MORI Coin за приглашение</div>
-            </div>
+    <div class="stat">
+        <span>${myReferrals.length}</span>
+        <span>👥 Приглашено всего</span>
+    </div>
+    <div class="stat">
+        <span>${todayReferrals}/3</span>
+        <span>📅 Сегодня</span>
+    </div>
+    <div class="stat">
+        <span>500</span>
+        <span>🎁 Бонус: 500 MORI coin</span>
+    </div>
+</div>
             <div class="referrals-list">
                 <h4>📋 История приглашений</h4>
                 ${myReferrals.length === 0 ? '<div class="empty">Нет приглашённых</div>' :
