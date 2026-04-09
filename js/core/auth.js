@@ -718,34 +718,85 @@ setUserSession: function(user) {
     },
 
     // ========== РЕГИСТРАЦИЯ ==========
-    register: async function(userData) {
-        try {
-            const response = await MORI_API.register(userData);
-            
-            if (response && response.success) {
-                localStorage.setItem('mori_token', response.token);
-                MORI_APP.currentUser = response.user;
-                MORI_APP.accessLevel = response.user.access_level;
-                
-                sessionStorage.setItem('mori_user', JSON.stringify(response.user));
-                sessionStorage.setItem('mori_level', response.user.access_level);
-                
-                MORI_APP.showToast('✅ Регистрация успешна!', 'success');
-                MORI_APP.startApp();
-                return true;
-            }
-        } catch (error) {
-            console.error('❌ Ошибка регистрации:', error);
-            
-            if (error.message.includes('409')) {
-                MORI_APP.showToast('❌ Пользователь уже существует', 'error');
-            } else {
-                MORI_APP.showToast('❌ Ошибка регистрации', 'error');
-            }
-        }
+    registerWithDetails: async function(nickname, password, realBalance, refCode) {
+    let accessLevel = null;
+    if (password === this.passwords.admin) accessLevel = this.levels.ADMIN;
+    else if (password === this.passwords.family) accessLevel = this.levels.FAMILY;
+    else if (password === this.passwords.user) accessLevel = this.levels.USER;
+    else {
+        MORI_APP.showToast('❌ Неверный пароль', 'error');
         return false;
     }
-};
+
+    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    const existingUser = users.find(u => u.nickname === nickname);
+
+    if (existingUser) {
+        MORI_APP.showToast('❌ Пользователь с таким ником уже существует', 'error');
+        return false;
+    }
+
+    const generateCode = () => Math.random().toString(36).substring(2, 12).toUpperCase();
+    const userReferralCode = generateCode();
+
+    const newUser = {
+        id: 'user_' + Date.now(),
+        nickname: nickname,
+        password: password,
+        access_level: accessLevel,
+        real_balance: realBalance,
+        game_balance: 0,
+        referral_code: userReferralCode,
+        used_referral_code: refCode || null,
+        invited_by: null,
+        referrals: [],
+        referral_count_today: 0,
+        referral_last_date: new Date().toDateString(),
+        created_at: Date.now()
+    };
+
+    let bonusGiven = false;
+    if (refCode) {
+        const inviter = users.find(u => u.referral_code === refCode);
+        if (inviter && inviter.nickname !== nickname) {
+            const today = new Date().toDateString();
+            if (inviter.referral_last_date !== today) {
+                inviter.referral_count_today = 0;
+                inviter.referral_last_date = today;
+            }
+            if (inviter.referral_count_today < 3) {
+                inviter.game_balance = (inviter.game_balance || 0) + 500;
+                inviter.referral_count_today++;
+                inviter.referrals.push({ nickname: nickname, date: Date.now(), bonus: 500 });
+                newUser.invited_by = inviter.id;
+                bonusGiven = true;
+                MORI_APP.showToast(`🎉 Пользователь ${inviter.nickname} получил 500 MORI Coin за приглашение!`, 'success');
+                const inviterIndex = users.findIndex(u => u.id === inviter.id);
+                if (inviterIndex !== -1) users[inviterIndex] = inviter;
+            } else {
+                MORI_APP.showToast(`❌ У пользователя ${inviter.nickname} лимит приглашений на сегодня (3)`, 'error');
+            }
+        } else {
+            MORI_APP.showToast('❌ Неверный реферальный код', 'error');
+        }
+    }
+
+    users.push(newUser);
+    localStorage.setItem('mori_users', JSON.stringify(users));
+
+    if (bonusGiven || refCode) {
+        newUser.game_balance = 500;
+        const newUserIndex = users.findIndex(u => u.id === newUser.id);
+        if (newUserIndex !== -1) users[newUserIndex] = newUser;
+        localStorage.setItem('mori_users', JSON.stringify(users));
+        MORI_APP.showToast(`🎉 Поздравляем, ${nickname}! Вам зачислен бонус 500 MORI Coin за регистрацию по реферальному коду!`, 'success', 5000);
+    }
+
+    this.setUserSession(newUser);
+    MORI_APP.showToast(`✅ Добро пожаловать, ${nickname}!`, 'success');
+    MORI_APP.startApp();
+    return true;
+},
 
 // ========== ЗАПУСК ==========
 window.MORI_AUTH = MORI_AUTH;
