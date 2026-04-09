@@ -323,16 +323,7 @@ setUserSession: function(user) {
     },
 
     // ========== ВЫХОД ==========
-    logout: async function(notifyServer = true) {
-    // Не пытаемся выйти на бэкенде, если токен невалидный
-    if (notifyServer && localStorage.getItem('mori_token')) {
-        try {
-            await MORI_API.logout();
-        } catch (error) {
-            console.log('Ошибка при выходе на бэкенде (игнорируем):', error);
-        }
-    }
-
+    logout: async function() {
     // Очищаем таймеры
     if (this.tokenRefreshTimer) {
         clearInterval(this.tokenRefreshTimer);
@@ -348,6 +339,9 @@ setUserSession: function(user) {
     // Очищаем localStorage
     localStorage.removeItem('mori_token');
     localStorage.removeItem('last_screen');
+    localStorage.removeItem('mori_user');
+    localStorage.removeItem('mori_real_balance');
+    localStorage.removeItem('mori_game_balance');
 
     // Очищаем sessionStorage
     sessionStorage.removeItem('mori_user');
