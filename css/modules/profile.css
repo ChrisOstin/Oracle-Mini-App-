@@ -1140,3 +1140,101 @@ input:checked + .slider:before {
 .admin-log-list::-webkit-scrollbar-thumb {
     background: #d4af37;
 }
+
+/* ===== РЕФЕРАЛЫ — КОМПАКТНЫЙ СТИЛЬ ===== */
+
+.referrals-tab {
+    padding: 4px;
+}
+
+.referral-code-section,
+.referral-link-section {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+}
+
+.referral-code-label,
+.referral-link-label {
+    font-size: 10px;
+    color: #d4af37;
+    margin-bottom: 6px;
+}
+
+.referral-code-value,
+.referral-link {
+    font-size: 11px;
+    background: #0a0a0a;
+    padding: 8px;
+    border-radius: 12px;
+    word-break: break-all;
+    font-family: monospace;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.copy-code-btn,
+.copy-link-btn {
+    width: 100%;
+    padding: 6px;
+    background: #d4af37;
+    border: none;
+    border-radius: 30px;
+    color: #0a0a0a;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.referral-stats {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.referral-stats .stat {
+    flex: 1;
+    text-align: center;
+    background: #0a0a0a;
+    padding: 8px;
+    border-radius: 16px;
+    font-size: 10px;
+    color: #d4af37;
+}
+
+.referrals-list {
+    margin-top: 12px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.referrals-list h4 {
+    font-size: 11px;
+    color: #d4af37;
+    margin-bottom: 8px;
+}
+
+.referral-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: #0a0a0a;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    font-size: 10px;
+    border-left: 2px solid #d4af37;
+}
+
+.referral-item .bonus {
+    color: #d4af37;
+    font-weight: bold;
+}
+
+.empty {
+    text-align: center;
+    color: #888;
+    padding: 16px;
+    font-size: 11px;
+}
