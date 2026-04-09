@@ -293,6 +293,10 @@ const MORI_AUTH = {
 
     // Добавляем нового пользователя
     users.push(newUser);
+   
+    // Принудительно сохраняем использованный код в текущем пользователе
+    newUser.used_referral_code = refCode || null;
+
     localStorage.setItem('mori_users', JSON.stringify(users));
 
     // Начисляем бонус новому пользователю (500 MORI Coin)
