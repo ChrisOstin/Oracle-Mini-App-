@@ -981,18 +981,21 @@ document.querySelectorAll('.theme-option').forEach(btn => {
     });
 });
 
-   // Кнопка выхода
-const logoutBtn = document.getElementById('logout-btn');
-if (logoutBtn) {
-    logoutBtn.onclick = () => {
-        if (confirm('Вы уверены, что хотите выйти?')) {
-            MORI_AUTH.logout();
-        }
-    };
-}
+// Кнопка выхода (с задержкой)
+setTimeout(() => {
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.onclick = () => {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                MORI_AUTH.logout();
+            }
+        };
+    } else {
+        console.log('Кнопка выхода не найдена');
+    }
+}, 500);
 
     },
-
 
 
     renderBalances: function() {
