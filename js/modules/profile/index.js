@@ -393,6 +393,7 @@ const MORI_PROFILE = {
 ` : ''}
 
         <button class="logout-btn" id="logout-btn">🚪 Выйти из аккаунта</button>
+        <button class="delete-account-btn" id="delete-account-btn">🗑 Удалить аккаунт</button>
     </div>
     
 
@@ -995,8 +996,41 @@ setTimeout(() => {
     }
 }, 500);
 
-    },
+    
+// Кнопка выхода (с задержкой)
+setTimeout(() => {
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.onclick = () => {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                MORI_AUTH.logout();
+            }
+        };
+    } else {
+        console.log('Кнопка выхода не найдена');
+    }
+}, 500);
 
+
+   // Кнопка удаления аккаунта (без задержки)
+   const deleteBtn = document.getElementById('delete-account-btn');
+   if (deleteBtn) {
+       deleteBtn.onclick = () => {
+           if (confirm('⚠️ ВНИМАНИЕ! Вы уверены, что хотите УДАЛИТЬ аккаунт?\n\nВсе данные будут потеряны без возможности восстановления.')) {
+               if (confirm('Это действие необратимо. Удалить аккаунт?')) {
+                   const currentUser = JSON.parse(localStorage.getItem('mori_user'));
+                   const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+                   const updatedUsers = users.filter(u => u.id !== currentUser.id);
+                   localStorage.setItem('mori_users', JSON.stringify(updatedUsers));
+                   MORI_AUTH.logout();
+                   setTimeout(() => location.reload(), 500);
+               }
+           }
+       };
+   }
+
+
+    },
 
     renderBalances: function() {
         const realEl = document.querySelector('.balance-card.real .balance-value');
