@@ -324,51 +324,57 @@ setUserSession: function(user) {
 
     // ========== ВЫХОД ==========
     logout: async function(notifyServer = true) {
-        if (notifyServer) {
-            try {
-                await MORI_API.logout();
-            } catch (error) {
-                console.error('Ошибка при выходе:', error);
-            }
+    // Не пытаемся выйти на бэкенде, если токен невалидный
+    if (notifyServer && localStorage.getItem('mori_token')) {
+        try {
+            await MORI_API.logout();
+        } catch (error) {
+            console.log('Ошибка при выходе на бэкенде (игнорируем):', error);
         }
-        
-        // Очищаем таймеры
-        if (this.tokenRefreshTimer) {
-            clearInterval(this.tokenRefreshTimer);
-            this.tokenRefreshTimer = null;
-        }
-        
-        if (this.inactivityTimer) {
-            clearTimeout(this.inactivityTimer);
-        }
-        
-        if (this.warningTimer) {
-            clearTimeout(this.warningTimer);
-        }
-        
-        // Очищаем localStorage
-        localStorage.removeItem('mori_token');
-        localStorage.removeItem('last_screen');
-        
-        // Очищаем sessionStorage
-        sessionStorage.removeItem('mori_user');
-        sessionStorage.removeItem('mori_level');
-        
-        // Сбрасываем состояние
-        this.session = null;
-        this.refreshAttempts = 0;
-        
-        MORI_APP.currentUser = null;
-        MORI_APP.accessLevel = this.levels.GUEST;
-        
-        // Очищаем кэш API
+    }
+
+    // Очищаем таймеры
+    if (this.tokenRefreshTimer) {
+        clearInterval(this.tokenRefreshTimer);
+        this.tokenRefreshTimer = null;
+    }
+    if (this.inactivityTimer) {
+        clearTimeout(this.inactivityTimer);
+    }
+    if (this.warningTimer) {
+        clearTimeout(this.warningTimer);
+    }
+
+    // Очищаем localStorage
+    localStorage.removeItem('mori_token');
+    localStorage.removeItem('last_screen');
+
+    // Очищаем sessionStorage
+    sessionStorage.removeItem('mori_user');
+    sessionStorage.removeItem('mori_level');
+
+    // Сбрасываем состояние
+    this.session = null;
+    this.refreshAttempts = 0;
+
+    MORI_APP.currentUser = null;
+    MORI_APP.accessLevel = this.levels.GUEST;
+
+    // Очищаем кэш API
+    if (MORI_API && MORI_API.clearCache) {
         MORI_API.clearCache();
-        
-        console.log('👋 Выход выполнен');
-        
-        // Переходим на экран авторизации
+    }
+
+    console.log('👋 Выход выполнен');
+
+    // Переходим на экран авторизации
+    if (MORI_ROUTER) {
         MORI_ROUTER.navigate('auth');
-    },
+    } else {
+        window.location.hash = 'auth';
+        location.reload();
+    }
+},
 
     // ========== ПРОВЕРКА ПРАВ ==========
     isAdmin: function() {
