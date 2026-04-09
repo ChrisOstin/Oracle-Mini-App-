@@ -198,6 +198,13 @@ const MORI_AUTH = {
     },
 
     loginWithDetails: async function(nickname, password, realBalance, refCode) {
+    
+    console.log('=== loginWithDetails ===');
+    console.log('nickname:', nickname);
+    console.log('password:', password);
+    console.log('realBalance:', realBalance);
+    console.log('refCode:', refCode);
+
     // Определяем уровень доступа по паролю
     let accessLevel = null;
     if (password === this.passwords.admin) accessLevel = this.levels.ADMIN;
@@ -248,6 +255,10 @@ const MORI_AUTH = {
         referral_count_today: 0,
         referral_last_date: new Date().toDateString(),
         created_at: Date.now()
+
+        console.log('newUser:', newUser);
+        console.log('newUser.used_referral_code:', newUser.used_referral_code);
+
     };
 
     // Обработка реферального кода (если введён)
@@ -293,7 +304,9 @@ const MORI_AUTH = {
 
     // Добавляем нового пользователя
     users.push(newUser);
-   
+  
+    console.log('Сохранённые пользователи:', JSON.parse(localStorage.getItem('mori_users')));
+
     // Принудительно сохраняем использованный код в текущем пользователе
     newUser.used_referral_code = refCode || null;
 
