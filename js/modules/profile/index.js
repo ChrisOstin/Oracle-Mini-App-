@@ -524,6 +524,7 @@ const MORI_PROFILE = {
     const today = new Date().toDateString();
     const todayReferrals = myReferrals.filter(r => new Date(r.created_at).toDateString() === today).length;
     const referralLink = `https://chrisostin.github.io/Oracle-Mini-App-/?ref=${currentUser?.referral_code || ''}`;
+    
     return `
         <div class="referrals-tab">
             <div class="referral-code-section">
@@ -532,22 +533,23 @@ const MORI_PROFILE = {
                 <button class="copy-code-btn" id="copy-code-btn">📋 Копировать код</button>
             </div>
             <div class="referral-link-section">
+                <div class="referral-link-label">🔗 Ваша реферальная ссылка:</div>
                 <button class="copy-link-btn" id="copy-link-btn">📋 Копировать ссылку</button>
             </div>
             <div class="referral-stats">
-    <div class="stat">
-        <span>${myReferrals.length}</span>
-        <span>👥 Приглашено всего</span>
-    </div>
-    <div class="stat">
-        <span>${todayReferrals}/3</span>
-        <span>📅 Сегодня</span>
-    </div>
-    <div class="stat">
-        <span>1 реферал</span>
-        <span>🎁 Бонус: 500 MORI coin</span>
-    </div>
-</div>
+                <div class="stat">
+                    <span>${myReferrals.length}</span>
+                    <span>👥 Приглашено всего</span>
+                </div>
+                <div class="stat">
+                    <span>${todayReferrals}/3</span>
+                    <span>📅 Сегодня</span>
+                </div>
+                <div class="stat">
+                    <span>1 РЕФЕРАЛ</span>
+                    <span>🎁 Бонус: 500 MORI coin</span>
+                </div>
+            </div>
             <div class="referrals-list">
                 <h4>📋 История приглашений</h4>
                 ${myReferrals.length === 0 ? '<div class="empty">Нет приглашённых</div>' :
