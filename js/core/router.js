@@ -595,7 +595,6 @@ const passwordInput = document.getElementById('reg-password');
 const realBalanceInput = document.getElementById('reg-real-balance');
 const refCodeInput = document.getElementById('reg-ref-code');
 const registerBtn = document.getElementById('auth-register');
-const loginLink = document.getElementById('auth-login-link');
 
 if (registerBtn) {
     registerBtn.onclick = () => {
