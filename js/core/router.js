@@ -590,51 +590,38 @@ const MORI_ROUTER = {
     `;
 
     setTimeout(() => {
-        const loginBtn = document.getElementById('auth-login');
-        const passwordInput = document.getElementById('auth-password');
-        const nicknameInput = document.getElementById('auth-nickname');
-        const realBalanceInput = document.getElementById('auth-real-balance');
-        const refCodeInput = document.getElementById('auth-ref-code');
+        const nicknameInput = document.getElementById('reg-nickname');
+const passwordInput = document.getElementById('reg-password');
+const realBalanceInput = document.getElementById('reg-real-balance');
+const refCodeInput = document.getElementById('reg-ref-code');
+const registerBtn = document.getElementById('auth-register');
+const loginLink = document.getElementById('auth-login-link');
 
-        if (loginBtn && passwordInput) {
-            loginBtn.onclick = () => {
-                const nickname = nicknameInput?.value.trim();
-                const password = passwordInput.value.trim();
-                const realBalance = parseFloat(realBalanceInput?.value);
-                const refCode = refCodeInput?.value.trim();
+if (registerBtn) {
+    registerBtn.onclick = () => {
+        const nickname = nicknameInput?.value.trim();
+        const password = passwordInput?.value.trim();
+        const realBalance = parseFloat(realBalanceInput?.value);
+        const refCode = refCodeInput?.value.trim();
 
-                if (!nickname) {
-                    MORI_APP.showToast('❌ Введите никнейм', 'error');
-                    return;
-                }
-                if (!password) {
-                    MORI_APP.showToast('❌ Введите пароль', 'error');
-                    return;
-                }
-                if (isNaN(realBalance) || realBalance < 0) {
-                    MORI_APP.showToast('❌ Введите корректный баланс', 'error');                                                                    return;
-                }
+        if (!nickname) { MORI_APP.showToast('❌ Введите никнейм', 'error'); return; }
+        if (!password) { MORI_APP.showToast('❌ Введите пароль', 'error'); return; }
+        if (isNaN(realBalance) || realBalance < 0) { MORI_APP.showToast('❌ Введите корректный REAL баланс', 'error'); return; }
 
-                loginBtn.disabled = true;
-                loginBtn.innerHTML = '<span>⏳ Регистрация...</span>';
-                MORI_AUTH.loginWithDetails(nickname, password, realBalance, refCode).finally(() => {
-                    loginBtn.disabled = false;
-                    loginBtn.innerHTML = '<span>🚀 Войти</span>';
-                });
-            };
-                                                                                                                                                 passwordInput.onkeypress = (e) => {
-                if (e.key === 'Enter') loginBtn.click();
-            };
-            nicknameInput.onkeypress = (e) => {
-                if (e.key === 'Enter') loginBtn.click();
-            };
-            realBalanceInput.onkeypress = (e) => {
-                if (e.key === 'Enter') loginBtn.click();
-            };
-            refCodeInput.onkeypress = (e) => {
-                if (e.key === 'Enter') loginBtn.click();
-            };
-        }
+        registerBtn.disabled = true;
+        registerBtn.innerHTML = '<span>⏳ Регистрация...</span>';
+        MORI_AUTH.registerWithDetails(nickname, password, realBalance, refCode).finally(() => {
+            registerBtn.disabled = false;
+            registerBtn.innerHTML = '<span>📝 Зарегистрироваться</span>';
+        });
+    };
+
+    passwordInput.onkeypress = (e) => { if (e.key === 'Enter') registerBtn.click(); };
+    nicknameInput.onkeypress = (e) => { if (e.key === 'Enter') registerBtn.click(); };
+    realBalanceInput.onkeypress = (e) => { if (e.key === 'Enter') registerBtn.click(); };
+    refCodeInput.onkeypress = (e) => { if (e.key === 'Enter') registerBtn.click(); };
+}
+
         // Переключение на экран входа
         const loginLink = document.getElementById('auth-login-link');
         if (loginLink) {
