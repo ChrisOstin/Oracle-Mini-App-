@@ -468,6 +468,9 @@ const MORI_ROUTER = {
                         <button class="auth-btn" id="auth-login">
                             <span>🚀 Войти</span>
                         </button>
+                        <div class="auth-footer">
+                            <span class="auth-register-link" id="auth-register-link">🔹 Нет аккаунта? Создать</span>
+                        </div>
                     </div>
                 </div>
             </div>
