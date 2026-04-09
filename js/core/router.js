@@ -470,9 +470,7 @@ const MORI_ROUTER = {
         const loginBtn = document.getElementById('auth-login');
         const passwordInput = document.getElementById('auth-password');
         const nicknameInput = document.getElementById('auth-nickname');
-        const realBalanceInput = document.getElementById('auth-real-balance');
-        const refCodeInput = document.getElementById('auth-ref-code');
-
+    
         if (loginBtn && passwordInput) {
             loginBtn.onclick = () => {
                 const nickname = nicknameInput?.value.trim();
@@ -484,10 +482,6 @@ const MORI_ROUTER = {
                 }
                 if (!password) {
                     MORI_APP.showToast('❌ Введите пароль', 'error');
-                    return;
-                }
-                if (isNaN(realBalance) || realBalance < 0) {
-                    MORI_APP.showToast('❌ Введите корректный баланс', 'error');
                     return;
                 }
 
@@ -503,12 +497,6 @@ const MORI_ROUTER = {
                 if (e.key === 'Enter') loginBtn.click();
             };
             nicknameInput.onkeypress = (e) => {
-                if (e.key === 'Enter') loginBtn.click();
-            };
-            realBalanceInput.onkeypress = (e) => {
-                if (e.key === 'Enter') loginBtn.click();
-            };
-            refCodeInput.onkeypress = (e) => {
                 if (e.key === 'Enter') loginBtn.click();
             };
         }
