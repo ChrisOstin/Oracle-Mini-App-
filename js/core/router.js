@@ -547,12 +547,12 @@ const MORI_ROUTER = {
 
                     <div class="auth-form">
                         <div class="auth-input-group">
-                            <input type="text" id="auth-nickname" placeholder="Никнейм" autofocus>
+                            <input type="text" id="reg-nickname" placeholder="Никнейм" autofocus>
                             <span class="auth-input-icon">👤</span>
                         </div>
 
                         <div class="auth-input-group">
-                            <input type="password" id="auth-password" placeholder="Пароль">
+                            <input type="password" id="reg-password" placeholder="Пароль">
                             <span class="auth-input-icon">🔒</span>
                         </div>
 
