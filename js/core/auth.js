@@ -227,6 +227,11 @@ const MORI_AUTH = {
         }
         // Вход существующего пользователя
         this.setUserSession(existingUser);
+       
+        // Загружаем REAL и GAME балансы пользователя
+        localStorage.setItem('mori_real_balance', existingUser.real_balance);
+        localStorage.setItem('mori_game_balance', existingUser.game_balance || 0);
+
         MORI_APP.showToast(`👋 С возвращением, ${nickname}!`, 'success');
         MORI_APP.startApp();
         return true;
@@ -305,6 +310,10 @@ const MORI_AUTH = {
     // Добавляем нового пользователя
     users.push(newUser);
   
+    // Сохраняем REAL баланс для отображения в профиле
+    localStorage.setItem('mori_real_balance', realBalance);
+    localStorage.setItem('mori_game_balance', newUser.game_balance || 0);
+
     console.log('Сохранённые пользователи:', JSON.parse(localStorage.getItem('mori_users')));
 
     // Принудительно сохраняем использованный код в текущем пользователе
@@ -338,6 +347,10 @@ setUserSession: function(user) {
     sessionStorage.setItem('mori_level', user.access_level);
     MORI_APP.currentUser = user;
     MORI_APP.accessLevel = user.access_level;
+
+    localStorage.setItem('mori_real_balance', user.real_balance);
+    localStorage.setItem('mori_game_balance', user.game_balance || 0);
+
 },
 
     // ========== УЛУЧШЕНИЕ 6: ЗАЩИТА ОТ БРУТФОРСА ==========
