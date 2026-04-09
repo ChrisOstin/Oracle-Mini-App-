@@ -2,6 +2,7 @@
  * CORE AUTH — АВТОРИЗАЦИЯ
  * Версия: 3.1.0 (БЕЗ ГОСТЕВОГО РЕЖИМА)
  */
+console.log('🔴 AUTH.JS НАЧАЛО ВЫПОЛНЕНИЯ');
 
 const MORI_AUTH = {
     // ========== УРОВНИ ДОСТУПА ==========
@@ -496,7 +497,7 @@ setUserSession: function(user) {
         referrals: [],
         referral_count_today: 0,
         referral_last_date: new Date().toDateString(),
-        created_at: Date.now()
+        created_at: Date.now(),
         device_id: deviceId,
     };
 
@@ -544,6 +545,7 @@ setUserSession: function(user) {
 },
 };
 
+console.log('🔴 AUTH.JS КОНЕЦ ВЫПОЛНЕНИЯ');
 // ========== ЗАПУСК ==========
 window.MORI_AUTH = MORI_AUTH;
 
