@@ -391,7 +391,11 @@ const MORI_PROFILE = {
     </div>
 </div>
 ` : ''}
-            </div>
+
+        <button class="logout-btn" id="logout-btn">🚪 Выйти из аккаунта</button>
+    </div>
+    
+
         `;
     },
 
@@ -976,6 +980,16 @@ document.querySelectorAll('.theme-option').forEach(btn => {
         }
     });
 });
+
+   // Кнопка выхода
+const logoutBtn = document.getElementById('logout-btn');
+if (logoutBtn) {
+    logoutBtn.onclick = () => {
+        if (confirm('Вы уверены, что хотите выйти?')) {
+            MORI_AUTH.logout();
+        }
+    };
+}
 
     },
 
