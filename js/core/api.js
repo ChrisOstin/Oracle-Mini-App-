@@ -389,8 +389,46 @@ if (options.skipCache) {
 },
 
     getWhales: async function() {
-        return this.safeRequest('/mori/whales');
-    },
+    try {
+        // Solscan API для получения топ-5 держателей токена
+        const response = await fetch('https://public-api.solscan.io/token/holders?tokenAddress=8ZHE4ow1a2jjxuoMfyExuNamQNALv5ekZhsBn5nMDf5e&limit=5');
+        
+        if (!response.ok) {
+            throw new Error('HTTP ' + response.status);
+        }
+        
+        const data = await response.json();
+        
+        if (data && data.data && data.data.length) {
+            // Преобразуем данные в нужный формат
+            const whales = data.data.map(holder => ({
+                address: holder.address,
+                amount: parseFloat(holder.amount) / 1e9, // делим на 1e9 (десятичные знаки токена)
+                percentage: parseFloat(holder.percentage).toFixed(2)
+            }));
+            
+            // Сохраняем в кэш
+            this.cache.set('whales', whales, 300000); // 5 минут
+            return whales;
+        }
+        
+        return this.getMockWhales();
+    } catch (error) {
+        console.error('❌ Ошибка загрузки китов:', error);
+        return this.getMockWhales();
+    }
+},
+
+getMockWhales: function() {
+    // Заглушка на случай ошибки
+    return [
+        { address: '8ZHE4ow1a2jjxuoMfyExuNamQNALv5ekZhsBn5nMDf5e', amount: 15000000, percentage: 15.0 },
+        { address: '7X3E...', amount: 12000000, percentage: 12.0 },
+        { address: '9Y5R...', amount: 8000000, percentage: 8.0 },
+        { address: '4W2T...', amount: 6500000, percentage: 6.5 },
+        { address: '2Q7U...', amount: 5000000, percentage: 5.0 }
+    ];
+},
 
     // ========== 3. БИБЛИОТЕКА (6 методов) ==========
     getBooks: async function() {
