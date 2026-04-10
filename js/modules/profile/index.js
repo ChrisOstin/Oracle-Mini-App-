@@ -385,6 +385,7 @@ const MORI_PROFILE = {
         <button class="admin-tab ${this.state.adminTab === 'coins' ? 'active' : ''}" data-admin-tab="coins">💰 MORI Coin</button>
         <button class="admin-tab ${this.state.adminTab === 'users' ? 'active' : ''}" data-admin-tab="users">👥 Пользователи</button>
         <button class="admin-tab ${this.state.adminTab === 'logs' ? 'active' : ''}" data-admin-tab="logs">📜 Логи</button>
+        <button class="admin-tab ${this.state.adminTab === 'whales' ? 'active' : ''}" data-admin-tab="whales">🐋 Киты</button>
     </div>
     <div class="admin-content">
         ${this.renderAdminTab()}
@@ -683,8 +684,11 @@ renderAdminTab: function() {
             return this.renderAdminUsers();
         case 'logs':
             return this.renderAdminLogs();
+        case 'whales':
+            return this.renderAdminWhales(); 
         default:
             return '';
+       
     }
 },
 
@@ -731,6 +735,32 @@ renderAdminLogs: function() {
                     <div>📅 ${new Date(err.time || Date.now()).toLocaleString()}</div>
                 </div>
             `).join('')}
+        </div>
+    `;
+},
+
+    renderAdminWhales: function() {
+    const whales = JSON.parse(localStorage.getItem('mori_whales') || '[]');
+    
+    return `
+        <div class="admin-whales">
+            <div class="add-whale-form">
+                <input type="text" id="whale-address" placeholder="Адрес кошелька" autocomplete="off">
+                <input type="number" id="whale-amount" placeholder="Количество MORI" step="any">
+                <button id="add-whale-btn">➕ Добавить кита</button>
+            </div>
+            <div class="whales-list">
+                <h4>Крупные держатели</h4>
+                ${whales.length === 0 ? '<div class="empty">Нет добавленных китов</div>' :
+                    whales.map((whale, i) => `
+                        <div class="whale-item-admin">
+                            <span class="whale-address">${whale.address}</span>
+                            <span class="whale-amount">${whale.amount.toFixed(2)} MORI</span>
+                            <button class="delete-whale" data-index="${i}">🗑️</button>
+                        </div>
+                    `).join('')
+                }
+            </div>
         </div>
     `;
 },
@@ -1029,6 +1059,38 @@ setTimeout(() => {
        };
    }
 
+
+    // Админ-панель: управление китами
+const addWhaleBtn = document.getElementById('add-whale-btn');
+if (addWhaleBtn) {
+    addWhaleBtn.addEventListener('click', () => {
+        const address = document.getElementById('whale-address')?.value.trim();
+        const amount = parseFloat(document.getElementById('whale-amount')?.value);
+        
+        if (!address || isNaN(amount) || amount <= 0) {
+            MORI_APP.showToast('❌ Введите адрес и сумму', 'error');
+            return;
+        }
+        
+        const whales = JSON.parse(localStorage.getItem('mori_whales') || '[]');
+        whales.push({ address, amount });
+        localStorage.setItem('mori_whales', JSON.stringify(whales));
+        
+        MORI_APP.showToast('✅ Кит добавлен', 'success');
+        this.render();
+    });
+}
+
+document.querySelectorAll('.delete-whale').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const index = parseInt(e.target.dataset.index);
+        const whales = JSON.parse(localStorage.getItem('mori_whales') || '[]');
+        whales.splice(index, 1);
+        localStorage.setItem('mori_whales', JSON.stringify(whales));
+        this.render();
+        MORI_APP.showToast('🗑️ Кит удалён', 'info');
+    });
+});
 
     },
 

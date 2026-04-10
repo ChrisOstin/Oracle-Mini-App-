@@ -500,16 +500,10 @@ if (expandBtn) {
     this.setState({ isLoading: false });
 },
 
-    loadWhales: async function() {
-    try {
-        const whalesData = await MORI_API.getWhales();
-        if (whalesData && whalesData.length) {
-            this.whales = whalesData;
-            this.renderWhalesList();
-        }
-    } catch (error) {
-        console.error('Error loading whales:', error);
-    }
+    loadWhales: function() {
+    const whales = JSON.parse(localStorage.getItem('mori_whales') || '[]');
+    this.whales = whales.slice(0, 5);
+    this.renderWhalesList();
 },
 
     loadSolanaData: async function() {
