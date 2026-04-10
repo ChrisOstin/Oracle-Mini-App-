@@ -536,6 +536,10 @@ setUserSession: function(user) {
         MORI_APP.showToast(`🎉 Поздравляем, ${nickname}! Вам зачислен бонус 500 MORI Coin за регистрацию по реферальному коду!`, 'success', 5000);
     }
 
+    if (bonusGiven && inviter) {
+        MORI_NOTIFICATIONS.notifyReferral(inviter.nickname, nickname);
+    }
+
     this.setUserSession(newUser);
     MORI_APP.showToast(`✅ Добро пожаловать, ${nickname}!`, 'success');
     MORI_APP.startApp();
