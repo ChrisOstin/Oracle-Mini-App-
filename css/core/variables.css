@@ -663,3 +663,17 @@ body {
         padding: 14px 44px 14px 20px;
     }
 }
+
+/* Убираем синюю подсветку при нажатии на элементы */
+* {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Для инпутов оставляем возможность выделять текст */
+input, textarea, [contenteditable="true"] {
+    -webkit-user-select: text;
+    user-select: text;
+}
