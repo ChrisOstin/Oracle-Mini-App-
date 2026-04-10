@@ -181,6 +181,16 @@ pulse: function(element, duration = 1000) {
     init: async function() {
         console.log(`🚀 MORI APP v${this.version} инициализация...`);
 
+        // Генерация или получение Device ID
+        const deviceId = localStorage.getItem('mori_device_id');
+        if (!deviceId) {
+            const newDeviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substring(2, 15);
+            localStorage.setItem('mori_device_id', newDeviceId);
+            console.log('🆔 Новый Device ID создан');
+        } else {
+            console.log('🆔 Device ID загружен:', deviceId);
+        }
+
         this.runHooks('beforeInit');
         this.transition(this.states.INIT);
 
@@ -545,6 +555,14 @@ if (!alreadyLogged) {
 }
 
         this.runHooks('afterStart');
+        
+        // Напоминание о ежедневном бонусе (только после входа)
+        if (MORI_NOTIFICATIONS && this.accessLevel !== 'guest') {
+            setTimeout(() => {
+                MORI_NOTIFICATIONS.remindDailyBonus();
+            }, 5000);
+        }
+
         this.trackEvent('app_start', { level: this.accessLevel });
 
         // Предзагрузка остальных модулей в фоне (через 2 секунды после старта)

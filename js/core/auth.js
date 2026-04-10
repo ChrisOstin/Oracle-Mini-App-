@@ -543,6 +543,14 @@ setUserSession: function(user) {
     this.setUserSession(newUser);
     MORI_APP.showToast(`✅ Добро пожаловать, ${nickname}!`, 'success');
     MORI_APP.startApp();
+  
+    // Напоминание о бонусе после регистрации
+    setTimeout(() => {
+        if (window.MORI_NOTIFICATIONS) {
+            MORI_NOTIFICATIONS.remindDailyBonus();
+        }
+    }, 5000);
+
     return true;
 },
 };

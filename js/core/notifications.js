@@ -184,13 +184,6 @@ const MORI_NOTIFICATIONS = {
     }
 };
 
-// Автозапуск напоминания о бонусе
-setTimeout(() => {
-    if (MORI_NOTIFICATIONS) {
-        MORI_NOTIFICATIONS.remindDailyBonus();
-    }
-}, 3000);
-
 window.MORI_NOTIFICATIONS = MORI_NOTIFICATIONS;
 
 // ========== CSS ==========
