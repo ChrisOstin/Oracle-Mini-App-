@@ -564,26 +564,26 @@ body {
 /* ===== УВЕДОМЛЕНИЯ В СТИЛЕ МОРИАРТИ ===== */
 .mori-toast {
     position: fixed;
-    top: 10px;   /* прижимает к верху */
+    top: 10px;
     left: 50%;
-    transform: translateX(-50%);  /* убираем translateY */
+    transform: translateX(-50%);
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
     color: #d4af37;
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: 500;
+    padding: 16px 32px;        /* больше отступы */
+    border-radius: 50px;        /* более скруглённые */
+    font-size: 18px;            /* крупнее шрифт */
+    font-weight: 600;           /* жирнее */
     z-index: 10001;
-    border: 1px solid rgba(212, 175, 55, 0.5);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    border: 2px solid rgba(212, 175, 55, 0.6);  /* толще рамка */
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);  /* больше свечение */
     text-align: center;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;        /* больше расстояние между буквами */
     font-family: 'Inter', sans-serif;
     overflow: hidden;
     animation: toastFadeIn 0.3s ease;
-   /* max-width: 80%;
-    min-width: 200px;*/
+    max-width: 85%;             /* шире */
+    min-width: 300px;           /* минимальная ширина больше */
 }
 
 /* Крестик закрытия */
