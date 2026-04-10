@@ -581,7 +581,7 @@ body {
     letter-spacing: 0.5px;
     font-family: 'Inter', sans-serif;
     overflow: hidden;
-    animation: toastSlideIn 0.3s ease;
+    animation: toastFadeIn 0.3s ease;
     max-width: 80%;
     min-width: 200px;
 }
@@ -627,14 +627,12 @@ body {
 .mori-toast.info::before { background: #d4af37; box-shadow: 0 0 8px #d4af37; }
 
 /* Анимация появления */
-@keyframes toastSlideIn {
+@keyframes toastFadeIn {
     from {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
     }
 }
 
