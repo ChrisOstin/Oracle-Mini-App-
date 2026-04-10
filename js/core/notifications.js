@@ -34,7 +34,7 @@ const MORI_NOTIFICATIONS = {
         if (navigator.vibrate) navigator.vibrate(pattern);
     },
 
-4a    show: function(message, type = 'info', options = {}) {
+    show: function(message, type = 'info', options = {}) {
         const duration = options.duration || 8000;
         const onClick = options.onClick || null;
         const moduleToOpen = options.module || null;
