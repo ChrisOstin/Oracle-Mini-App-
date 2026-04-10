@@ -41,7 +41,24 @@ const MORI_CALCULATOR = {
         
         isLoading: false
     },
-    
+   
+    dom: {
+        container: null,
+        resultValue: null,
+        resultSub: null,
+        amountInput: null,
+        currencyButtons: [],
+        dcaOwnedInput: null,
+        dcaAvgPriceInput: null,
+        dcaAddInput: null,
+        targetPriceInput: null,
+        targetAmountInput: null,
+        stakingAmountInput: null,
+        stakingTermButtons: [],
+        positionsList: null,
+        stakingsList: null
+    },
+
     // Таймер обновления цены
     updateTimer: null,
     
@@ -422,13 +439,13 @@ const MORI_CALCULATOR = {
                     <label>Добавить USD</label>
                     <input type="number" id="dca-add" value="${this.state.addAmount}" step="any" placeholder="0">
                 </div>
-                
-                <div class="calc-result">
-                    <div class="result-label">НОВАЯ СРЕДНЯЯ ЦЕНА</div>
-                    <div class="result-value">$${this.state.newAvgPrice.toFixed(6)}</div>
-                    <div class="result-sub">Итого MORI: ${this.formatNumber(this.state.totalMori)}</div>
-                    <div class="result-sub">Снижение: ${this.calcReduction()}%</div>
-                </div>
+               <div class="calc-result">
+                   <div class="result-label">НОВАЯ СРЕДНЯЯ ЦЕНА</div>
+                   <div class="result-value dca-result-value">$${this.state.newAvgPrice.toFixed(6)}</div>
+                   <div class="result-sub dca-total-mori">Итого MORI: ${this.formatNumber(this.state.totalMori)}</div>
+                   <div class="result-sub dca-reduction">Снижение: ${this.calcReduction()}%</div>
+              </div>
+               
             </div>
         `;
     },
@@ -448,14 +465,14 @@ const MORI_CALCULATOR = {
                     <label>Сумма (USD)</label>
                     <input type="number" id="target-amount" value="${this.state.amount}" step="any" placeholder="0">
                 </div>
-                
                 <div class="calc-result">
                     <div class="result-label">СЕЙЧАС</div>
-                    <div class="result-value">${this.formatNumber(this.state.currentMori)} MORI</div>
+                    <div class="result-value target-current">${this.formatNumber(this.state.currentMori)} MORI</div>
                     <div class="result-label">ПРИ ЦЕЛЕВОЙ ЦЕНЕ</div>
-                    <div class="result-value">${this.formatNumber(this.state.targetMori)} MORI</div>
-                    <div class="result-sub">Разница: +${this.formatNumber(diff)} MORI (${diffPercent.toFixed(1)}%)</div>
+                    <div class="result-value target-result">${this.formatNumber(this.state.targetMori)} MORI</div>
+                    <div class="result-sub target-diff">Разница: +${this.formatNumber(diff)} MORI (${diffPercent.toFixed(1)}%)</div>
                 </div>
+               
             </div>
         `;
     },
@@ -542,8 +559,8 @@ const MORI_CALCULATOR = {
                 
                 <div class="calc-result">
                     <div class="result-label">НАГРАДА</div>
-                    <div class="result-value">+${this.formatNumber(this.state.stakingReward)} MORI</div>
-                    <div class="result-sub">Всего через ${this.state.stakingTerm} мес: ${this.formatNumber(this.state.stakingTotal)} MORI</div>
+                    <div class="result-value staking-reward">+${this.formatNumber(this.state.stakingReward)} MORI</div>
+                    <div class="result-sub staking-total">Всего через ${this.state.stakingTerm} мес: ${this.formatNumber(this.state.stakingTotal)} MORI</div>
                 </div>
                 
                 <button id="start-staking" class="calc-btn primary">🔒 Застейкать</button>
@@ -558,124 +575,190 @@ const MORI_CALCULATOR = {
     
     // Навешивание обработчиков
     attachEvents: function() {
-        // Переключение вкладок
-        document.querySelectorAll('.calc-tab').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const tab = e.target.dataset.tab;
-                this.setTab(tab);
-            });
+    // Переключение вкладок
+    document.querySelectorAll('.calc-tab').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const tab = e.target.dataset.tab;
+            this.setTab(tab);
         });
-        
-        // Конвертер
-        const amountInput = document.getElementById('calc-amount');
-        if (amountInput) {
-            amountInput.addEventListener('input', (e) => {
-                this.setState({ amount: parseFloat(e.target.value) || 0 });
-            });
-        }
-        
-        document.querySelectorAll('.currency-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const currency = e.target.dataset.currency;
-                this.setState({ currency });
-            });
+    });
+
+    // ========== КОНВЕРТЕР ==========
+    const amountInput = document.getElementById('calc-amount');
+    if (amountInput) {
+        amountInput.addEventListener('input', (e) => {
+            this.state.amount = parseFloat(e.target.value) || 0;
+            this.calculate();
+            const resultEl = document.querySelector('.result-value');
+            const resultSubEl = document.querySelector('.result-sub');
+            if (resultEl) resultEl.textContent = this.formatNumber(this.state.result);
+            if (resultSubEl) resultSubEl.textContent = `≈ ${this.formatNumber(this.state.currency === 'mori' ? this.state.result * this.state.moriPrice : this.state.result)} ${this.state.currency === 'mori' ? 'USD' : 'MORI'}`;
         });
-        
-        // Сохранение позиции
-        const saveBtn = document.getElementById('calc-save-position');
-        if (saveBtn) {
-            saveBtn.addEventListener('click', () => this.savePosition());
-        }
-        
-        // DCA
-        const dcaOwned = document.getElementById('dca-owned');
-        if (dcaOwned) {
-            dcaOwned.addEventListener('input', (e) => {
-                this.setState({ ownedAmount: parseFloat(e.target.value) || 0 });
-            });
-        }
-        
-        const dcaAvgPrice = document.getElementById('dca-avg-price');
-        if (dcaAvgPrice) {
-            dcaAvgPrice.addEventListener('input', (e) => {
-                this.setState({ ownedAvgPrice: parseFloat(e.target.value) || 0 });
-            });
-        }
-        
-        const dcaAdd = document.getElementById('dca-add');
-        if (dcaAdd) {
-            dcaAdd.addEventListener('input', (e) => {
-                this.setState({ addAmount: parseFloat(e.target.value) || 0 });
-            });
-        }
-        
-        // Целевая цена
-        const targetPrice = document.getElementById('target-price');
-        if (targetPrice) {
-            targetPrice.addEventListener('input', (e) => {
-                this.setState({ targetPrice: parseFloat(e.target.value) || 0 });
-            });
-        }
-        
-        const targetAmount = document.getElementById('target-amount');
-        if (targetAmount) {
-            targetAmount.addEventListener('input', (e) => {
-                this.setState({ amount: parseFloat(e.target.value) || 0 });
-            });
-        }
-        
-        // Позиции — удаление
-        document.querySelectorAll('.position-delete').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const id = e.target.dataset.id;
-                this.deletePosition(id);
-            });
+    }
+
+    document.querySelectorAll('.currency-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const currency = e.target.dataset.currency;
+            this.state.currency = currency;
+            this.calculate();
+            const resultEl = document.querySelector('.result-value');
+            const resultSubEl = document.querySelector('.result-sub');
+            if (resultEl) resultEl.textContent = this.formatNumber(this.state.result);
+            if (resultSubEl) resultSubEl.textContent = `≈ ${this.formatNumber(this.state.currency === 'mori' ? this.state.result * this.state.moriPrice : this.state.result)} ${this.state.currency === 'mori' ? 'USD' : 'MORI'}`;
+            document.querySelectorAll('.currency-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
         });
-        
-        // Сохранение текущей позиции
-        const saveCurrentBtn = document.getElementById('save-current-position');
-        if (saveCurrentBtn) {
-            saveCurrentBtn.addEventListener('click', () => this.savePosition());
-        }
-        
-        // Стейкинг — выбор срока
-        document.querySelectorAll('.term-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const term = parseInt(e.target.dataset.term);
-                this.setState({ stakingTerm: term });
-            });
+    });
+
+    // Сохранение позиции
+    const saveBtn = document.getElementById('calc-save-position');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => this.savePosition());
+    }
+
+    // ========== DCA (УСРЕДНЕНИЕ) ==========
+    const dcaOwned = document.getElementById('dca-owned');
+    if (dcaOwned) {
+        dcaOwned.addEventListener('input', (e) => {
+            this.state.ownedAmount = parseFloat(e.target.value) || 0;
+            this.calculateDCA();
+            const dcaResultEl = document.querySelector('.dca-result-value');
+            const dcaTotalEl = document.querySelector('.dca-total-mori');
+            const dcaReductionEl = document.querySelector('.dca-reduction');
+            if (dcaResultEl) dcaResultEl.textContent = `$${this.state.newAvgPrice.toFixed(6)}`;
+            if (dcaTotalEl) dcaTotalEl.textContent = this.formatNumber(this.state.totalMori);
+            if (dcaReductionEl) dcaReductionEl.textContent = `${this.calcReduction()}%`;
         });
-        
-        // Стейкинг — сумма
-        const stakingAmount = document.getElementById('staking-amount');
-        if (stakingAmount) {
-            stakingAmount.addEventListener('input', (e) => {
-                this.setState({ stakingAmount: parseFloat(e.target.value) || 0 });
-            });
-        }
-        
-        // Начать стейкинг
-        const startStaking = document.getElementById('start-staking');
-        if (startStaking) {
-            startStaking.addEventListener('click', () => this.saveStaking());
-        }
-        
-        // Стейкинг — вывод
-        document.querySelectorAll('.staking-withdraw').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(e.target.dataset.id);
-                this.withdrawStaking(id);
-            });
+    }
+
+    const dcaAvgPrice = document.getElementById('dca-avg-price');
+    if (dcaAvgPrice) {
+        dcaAvgPrice.addEventListener('input', (e) => {
+            this.state.ownedAvgPrice = parseFloat(e.target.value) || 0;
+            this.calculateDCA();
+            const dcaResultEl = document.querySelector('.dca-result-value');
+            const dcaTotalEl = document.querySelector('.dca-total-mori');
+            const dcaReductionEl = document.querySelector('.dca-reduction');
+            if (dcaResultEl) dcaResultEl.textContent = `$${this.state.newAvgPrice.toFixed(6)}`;
+            if (dcaTotalEl) dcaTotalEl.textContent = this.formatNumber(this.state.totalMori);
+            if (dcaReductionEl) dcaReductionEl.textContent = `${this.calcReduction()}%`;
         });
-        
-        document.querySelectorAll('.staking-early').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(e.target.dataset.id);
-                this.earlyWithdraw(id);
-            });
+    }
+
+    const dcaAdd = document.getElementById('dca-add');
+    if (dcaAdd) {
+        dcaAdd.addEventListener('input', (e) => {
+            this.state.addAmount = parseFloat(e.target.value) || 0;
+            this.calculateDCA();
+            const dcaResultEl = document.querySelector('.dca-result-value');
+            const dcaTotalEl = document.querySelector('.dca-total-mori');
+            const dcaReductionEl = document.querySelector('.dca-reduction');
+            if (dcaResultEl) dcaResultEl.textContent = `$${this.state.newAvgPrice.toFixed(6)}`;
+            if (dcaTotalEl) dcaTotalEl.textContent = this.formatNumber(this.state.totalMori);
+            if (dcaReductionEl) dcaReductionEl.textContent = `${this.calcReduction()}%`;
         });
-    },
+    }
+
+    // ========== ЦЕЛЕВАЯ ЦЕНА ==========
+    const targetPrice = document.getElementById('target-price');
+    if (targetPrice) {
+        targetPrice.addEventListener('input', (e) => {
+            this.state.targetPrice = parseFloat(e.target.value) || 0;
+            this.calculateTarget();
+            const targetCurrentEl = document.querySelector('.target-current');
+            const targetResultEl = document.querySelector('.target-result');
+            const targetDiffEl = document.querySelector('.target-diff');
+            if (targetCurrentEl) targetCurrentEl.textContent = this.formatNumber(this.state.currentMori);
+            if (targetResultEl) targetResultEl.textContent = this.formatNumber(this.state.targetMori);
+            if (targetDiffEl) {
+                const diff = this.state.targetMori - this.state.currentMori;
+                const diffPercent = this.state.currentMori ? (diff / this.state.currentMori * 100) : 0;
+                targetDiffEl.textContent = `+${this.formatNumber(diff)} MORI (${diffPercent.toFixed(1)}%)`;
+            }
+        });
+    }
+
+    const targetAmount = document.getElementById('target-amount');
+    if (targetAmount) {
+        targetAmount.addEventListener('input', (e) => {
+            this.state.amount = parseFloat(e.target.value) || 0;
+            this.calculateTarget();
+            const targetCurrentEl = document.querySelector('.target-current');
+            const targetResultEl = document.querySelector('.target-result');
+            const targetDiffEl = document.querySelector('.target-diff');
+            if (targetCurrentEl) targetCurrentEl.textContent = this.formatNumber(this.state.currentMori);
+            if (targetResultEl) targetResultEl.textContent = this.formatNumber(this.state.targetMori);
+            if (targetDiffEl) {
+                const diff = this.state.targetMori - this.state.currentMori;
+                const diffPercent = this.state.currentMori ? (diff / this.state.currentMori * 100) : 0;
+                targetDiffEl.textContent = `+${this.formatNumber(diff)} MORI (${diffPercent.toFixed(1)}%)`;
+            }
+        });
+    }
+
+    // Позиции — удаление
+    document.querySelectorAll('.position-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = e.target.dataset.id;
+            this.deletePosition(id);
+        });
+    });
+
+    // Сохранение текущей позиции
+    const saveCurrentBtn = document.getElementById('save-current-position');
+    if (saveCurrentBtn) {
+        saveCurrentBtn.addEventListener('click', () => this.savePosition());
+    }
+
+    // ========== СТЕЙКИНГ ==========
+    document.querySelectorAll('.term-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const term = parseInt(e.target.dataset.term);
+            this.state.stakingTerm = term;
+            this.calculateStaking();
+            const stakingRewardEl = document.querySelector('.staking-reward');
+            const stakingTotalEl = document.querySelector('.staking-total');
+            if (stakingRewardEl) stakingRewardEl.textContent = `+${this.formatNumber(this.state.stakingReward)} MORI`;
+            if (stakingTotalEl) stakingTotalEl.textContent = this.formatNumber(this.state.stakingTotal);
+            document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+        });
+    });
+
+    const stakingAmount = document.getElementById('staking-amount');
+    if (stakingAmount) {
+        stakingAmount.addEventListener('input', (e) => {
+            this.state.stakingAmount = parseFloat(e.target.value) || 0;
+            this.calculateStaking();
+            const stakingRewardEl = document.querySelector('.staking-reward');
+            const stakingTotalEl = document.querySelector('.staking-total');
+            if (stakingRewardEl) stakingRewardEl.textContent = `+${this.formatNumber(this.state.stakingReward)} MORI`;
+            if (stakingTotalEl) stakingTotalEl.textContent = this.formatNumber(this.state.stakingTotal);
+        });
+    }
+
+    // Начать стейкинг
+    const startStaking = document.getElementById('start-staking');
+    if (startStaking) {
+        startStaking.addEventListener('click', () => this.saveStaking());
+    }
+
+    // Стейкинг — вывод
+    document.querySelectorAll('.staking-withdraw').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = parseInt(e.target.dataset.id);
+            this.withdrawStaking(id);
+        });
+    });
+
+    document.querySelectorAll('.staking-early').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = parseInt(e.target.dataset.id);
+            this.earlyWithdraw(id);
+        });
+    });
+},
     
     // Форматирование чисел
     formatNumber: function(num) {
