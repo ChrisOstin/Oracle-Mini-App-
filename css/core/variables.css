@@ -564,9 +564,9 @@ body {
 /* ===== УВЕДОМЛЕНИЯ В СТИЛЕ МОРИАРТИ ===== */
 .mori-toast {
     position: fixed;
-    top: -20px;   /* прижимает к верху */
+    top: 10px;   /* прижимает к верху */
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);  /* убираем translateY */
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
     color: #d4af37;
