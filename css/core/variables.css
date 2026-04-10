@@ -582,8 +582,8 @@ body {
     font-family: 'Inter', sans-serif;
     overflow: hidden;
     animation: toastFadeIn 0.3s ease;
-    max-width: 85%;             /* шире */
-    min-width: 300px;           /* минимальная ширина больше */
+    max-width: 95%;             /* шире */
+    width: 320px;           /* ширина больше */
 }
 
 /* Крестик закрытия */
