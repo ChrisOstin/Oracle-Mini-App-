@@ -570,20 +570,20 @@ body {
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
     color: #d4af37;
-    padding: 16px 48px 16px 24px;
+    padding: 12px 24px;
     border-radius: 50px;
     font-size: 14px;
     font-weight: 500;
     z-index: 10001;
     border: 1px solid rgba(212, 175, 55, 0.5);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     text-align: center;
     letter-spacing: 0.5px;
     font-family: 'Inter', sans-serif;
     overflow: hidden;
     animation: toastFadeIn 0.3s ease;
-    max-width: 80%;
-    min-width: 200px;
+   /* max-width: 80%;
+    min-width: 200px;*/
 }
 
 /* Крестик закрытия */
@@ -644,11 +644,9 @@ body {
 @keyframes toastFadeOut {
     from {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
     }
     to {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.9);
     }
 }
 
