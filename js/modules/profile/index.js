@@ -297,9 +297,9 @@ const MORI_PROFILE = {
                 <!-- Два баланса всегда вверху -->
                 <div class="profile-balances">
                     <div class="balance-card real">
-                        <span class="balance-icon">💰</span>
+                        <span class="balance-icon">🪙</span>
                         <span class="balance-value">$${this.state.realBalance.toFixed(2)}</span>
-                        <span class="balance-label">MORI Real</span>
+                        <span class="balance-label">$MORI</span>
                     </div>
                     <div class="balance-card game">
                         <span class="balance-icon">🎮</span>
@@ -597,7 +597,7 @@ const MORI_PROFILE = {
     },
 
     renderCustomizationTab: function() {
-        const avatars = ['👤', '🎭', '👑', '🦊', '🐉', '🦅', '🐺', '🦁', '🐉', '🦸', '🦹', '🧙', '🧚', '🧝', '🧞', '🕵️', '👨‍🚀', '👩‍🚀', '🤖', '👻'];
+        const avatars = ['👤', '🎭', '👑', '🦊', '🐉', '🦅', '🐺', '🦁', '🐉', '🦸', '🦹', '🧙', '🧚', '🧝', '🧞', '🕵️', '👨‍🚀', '🤖', '👻'];
         const price = 100;
         
         return `
