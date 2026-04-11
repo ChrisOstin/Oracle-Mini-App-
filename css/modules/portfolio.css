@@ -219,7 +219,7 @@
     border-bottom: none;
 }
 
-,.whale-address {
+.whale-address {
     font-family: monospace;
     font-size: 12px;
     word-break: break-all;
