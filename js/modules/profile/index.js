@@ -755,7 +755,7 @@ renderAdminLogs: function() {
                     whales.map((whale, i) => `
                         <div class="whale-item-admin">
                             <span class="whale-address">${whale.address}</span>
-                            <span class="whale-amount">${whale.amount.toFixed(2)} MORI</span>
+                            <span class="whale-amount">${whale.amount.toFixed(2)} MORI (${whale.percentage || 0}%)</span>
                             <button class="delete-whale" data-index="${i}">🗑️</button>
                         </div>
                     `).join('')
@@ -1066,17 +1066,22 @@ if (addWhaleBtn) {
     addWhaleBtn.addEventListener('click', () => {
         const address = document.getElementById('whale-address')?.value.trim();
         const amount = parseFloat(document.getElementById('whale-amount')?.value);
-        
+
         if (!address || isNaN(amount) || amount <= 0) {
             MORI_APP.showToast('❌ Введите адрес и сумму', 'error');
             return;
         }
-        
+
         const whales = JSON.parse(localStorage.getItem('mori_whales') || '[]');
-        whales.push({ address, amount });
-        localStorage.setItem('mori_whales', JSON.stringify(whales));
         
-        MORI_APP.showToast('✅ Кит добавлен', 'success');
+        // Расчёт процента от общего предложения (1B = 1 000 000 000 MORI)
+        const totalSupply = 1000000000;
+        const percentage = (amount / totalSupply * 100).toFixed(2);
+        
+        whales.push({ address, amount, percentage });
+        localStorage.setItem('mori_whales', JSON.stringify(whales));
+
+        MORI_APP.showToast(`✅ Кит добавлен: ${percentage}% от общего предложения`, 'success');
         this.render();
     });
 }
