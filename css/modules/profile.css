@@ -1451,3 +1451,78 @@ input:checked + .slider:before {
     border-radius: 20px;
     font-style: italic;
 }
+
+/* Компактный список китов в админ-панели */
+.admin-whales .whale-item-admin {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    margin: 4px 0;
+    background: rgba(255, 215, 0, 0.05);
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.admin-whales .whale-address {
+    font-family: monospace;
+    font-size: 11px;
+    word-break: break-all;
+    flex: 2;
+    color: #ffd700;
+}
+
+.admin-whales .whale-amount {
+    font-size: 11px;
+    white-space: nowrap;
+    color: #fff;
+}
+
+.admin-whales .delete-whale {
+    background: rgba(255, 68, 68, 0.2);
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.admin-whales .delete-whale:hover {
+    background: rgba(255, 68, 68, 0.5);
+}
+
+/* Компактная форма добавления кита */
+.add-whale-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.add-whale-form input {
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    flex: 1;
+}
+
+.add-whale-form button {
+    padding: 8px 12px;
+    font-size: 12px;
+    background: #ffd700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Заголовок списка китов */
+.whales-list h4 {
+    font-size: 13px;
+    margin: 12px 0 8px 0;
+    color: #ffd700;
+}
