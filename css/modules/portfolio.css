@@ -223,6 +223,7 @@
     font-family: monospace;
     font-size: 12px;
     word-break: break-all;
+    overflow-wrap: break word;
     color: #aaa;
 }
 
