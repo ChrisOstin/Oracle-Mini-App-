@@ -492,7 +492,7 @@ const MORI_PROFILE = {
     renderPrivacyTab: function() {
         const privacyItems = [
             { id: 'online', name: '🟢 Онлайн-статус' },
-            { id: 'balance', name: '💰 Баланс' },
+            { id: 'balance', name: '🪙 Баланс' },
             { id: 'level', name: '🏆 Уровень и достижения' },
             { id: 'friendsList', name: '👥 Список друзей' },
             { id: 'history', name: '📜 История активности' }
@@ -576,7 +576,7 @@ const MORI_PROFILE = {
         const types = [
             { id: 'level', name: '🏆 Уровень' },
             { id: 'exp', name: '⭐ Опыт' },
-            { id: 'balance', name: '💰 MORI Coin' },
+            { id: 'balance', name: '🎮 MORI Coin' },
             { id: 'achievements', name: '🏅 Достижения' }
         ];
         
@@ -597,7 +597,7 @@ const MORI_PROFILE = {
     },
 
     renderCustomizationTab: function() {
-        const avatars = ['👤', '🎭', '👑', '🦊', '🐉', '🦅', '🐺', '🦁', '🐉', '🦸', '🦹', '🧙', '🧚', '🧝', '🧞', '🕵️', '👨‍🚀', '🤖', '👻'];
+        const avatars = ['👤', '🎭', '👑', '🦊', '🔥', '💣', '🦅', '🐺', '🦁', '🐉', '🦸', '🦹', '🧙', '🧚', '🧝', '🧞', '🕵️', '👨‍🚀', '🤖', '👻'];
         const price = 100;
         
         return `
@@ -609,7 +609,7 @@ const MORI_PROFILE = {
                             <div class="avatar-item ${this.state.user.avatar === avatar ? 'active' : ''} ${this.state.purchasedAvatars.includes(avatar) || this.state.user.avatar === avatar ? '' : 'locked'}" 
                                  onclick="MORI_PROFILE.changeAvatar('${avatar}')">
                                 <div class="avatar-preview">${avatar}</div>
-                                ${!this.state.purchasedAvatars.includes(avatar) && this.state.user.avatar !== avatar ? '<div class="avatar-price">💰100</div>' : ''}
+                                ${!this.state.purchasedAvatars.includes(avatar) && this.state.user.avatar !== avatar ? '<div class="avatar-price">🪙100</div>' : ''}
                                 ${this.state.user.avatar === avatar ? '<div class="avatar-check">✅</div>' : ''}
                             </div>
                         `).join('')}
