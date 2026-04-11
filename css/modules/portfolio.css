@@ -221,10 +221,10 @@
 
 .whale-address {
     font-family: monospace;
-    font-size: 10px;           /* меньше шрифт */
+    font-size: 8px;           /* меньше шрифт */
     word-break: break-all;     /* перенос слов */
     overflow-wrap: break-word;
-    max-width: 200px;          /* ограничение ширины */
+    max-width: 220px;          /* ограничение ширины */
 }
 
 .whale-amount {
