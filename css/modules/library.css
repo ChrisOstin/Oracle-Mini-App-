@@ -123,8 +123,8 @@
 .filter-btn {
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(212, 175, 55, 0.25);
-    border-radius: 20px;
-    padding: 6px 12px;
+    border-radius: 16px;
+    padding: 4px 8px;
     font-size: 11px;
     color: #aaa;
     cursor: pointer;
