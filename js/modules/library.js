@@ -65,6 +65,12 @@ const MORI_LIBRARY = {
                 <!-- Шапка -->
                 <div class="library-header">
                     <h2>📚 Библиотека Мориарти</h2>
+                     <!-- Цитата дня -->
+<div class="daily-quote">
+    <div class="quote-icon">📜</div>
+    <div class="quote-text">"${MORI_LIBRARY_BOOKS.getDailyQuote().text}"</div>
+    <div class="quote-author">— ${MORI_LIBRARY_BOOKS.getDailyQuote().book}</div>
+</div>
                     <div class="library-stats">
                         <span>📖 ${stats.total} книг</span>
                         <span>🔓 ${stats.available} доступно</span>

@@ -605,3 +605,45 @@
         overflow-y: auto;
     }
 }
+
+/* Цитата дня */
+.daily-quote {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.3));
+    border-left: 3px solid #d4af37;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.quote-icon {
+    font-size: 28px;
+    opacity: 0.7;
+}
+
+.quote-text {
+    flex: 1;
+    font-size: 13px;
+    color: #e8d5a8;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.quote-author {
+    font-size: 11px;
+    color: #9a8c5c;
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .daily-quote {
+        flex-direction: column;
+        text-align: center;
+    }
+    .quote-author {
+        white-space: normal;
+    }
+}
