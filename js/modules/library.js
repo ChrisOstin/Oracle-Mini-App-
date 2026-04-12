@@ -135,6 +135,8 @@ const MORI_LIBRARY = {
 
                 <!-- Вишлист -->
                 ${this.renderWishlist()}
+                ${this.renderWishlist()}
+                ${this.renderBookmarks()}
             </div>
         `;
     },
@@ -228,6 +230,39 @@ const MORI_LIBRARY = {
             </div>
         `;
     },
+
+renderBookmarks: function() {
+    const bookmarks = MORI_LIBRARY_BOOKS.getBookmarks();
+    if (bookmarks.length === 0) return '';
+    
+    const bookmarkItems = bookmarks.slice(0, 10).map(bm => {
+        const book = MORI_LIBRARY_BOOKS.getById(bm.bookId);
+        if (!book) return '';
+        return `
+            <div class="bookmark-item" data-book-id="${bm.bookId}" data-page="${bm.page}">
+                <div class="bookmark-icon">🔖</div>
+                <div class="bookmark-info">
+                    <div class="bookmark-title">${book.title}</div>
+                    <div class="bookmark-page">Страница ${bm.page}</div>
+                    <div class="bookmark-date">${new Date(bm.date).toLocaleDateString()}</div>
+                </div>
+                <button class="bookmark-delete" data-bookmark-id="${bm.id}">🗑️</button>
+            </div>
+        `;
+    }).join('');
+    
+    return `
+        <div class="bookmarks-section">
+            <div class="bookmarks-header">
+                <h3>🔖 Закладки</h3>
+                <span class="bookmarks-count">${bookmarks.length}</span>
+            </div>
+            <div class="bookmarks-list">
+                ${bookmarkItems}
+            </div>
+        </div>
+    `;
+},
 
     renderSkeleton: function() {
     return `
@@ -364,6 +399,31 @@ document.querySelectorAll('.filter-group-header').forEach(header => {
                 this.toggleWishlist(bookId);
             };
         });
+
+        // Закладки — открытие книги на нужной странице
+document.querySelectorAll('.bookmark-item').forEach(item => {
+    item.onclick = (e) => {
+        if (e.target.classList.contains('bookmark-delete')) return;
+        const bookId = item.dataset.bookId;
+        const page = parseInt(item.dataset.page);
+        const book = MORI_LIBRARY_BOOKS.getById(bookId);
+        if (book && book.unlocked) {
+            // Сохраняем прогресс на нужную страницу
+            MORI_LIBRARY_BOOKS.saveProgress(bookId, page);
+            MORI_LIBRARY_READER.open(book);
+        }
+    };
+});
+
+// Удаление закладки
+document.querySelectorAll('.bookmark-delete').forEach(btn => {
+    btn.onclick = (e) => {
+        e.stopPropagation();
+        const bookmarkId = parseInt(btn.dataset.bookmarkId);
+        MORI_LIBRARY_BOOKS.removeBookmark(bookmarkId);
+        this.render();  // Перерисовываем библиотеку
+    };
+});
 
         // Удаление из вишлиста
         document.querySelectorAll('.wishlist-remove').forEach(btn => {

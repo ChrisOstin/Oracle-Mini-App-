@@ -384,4 +384,57 @@ getDailyQuote: function() {
     return quote;
 },
 
+/**
+ * Закладки
+ */
+getBookmarks: function(bookId = null) {
+    const saved = localStorage.getItem('bookmarks');
+    const bookmarks = saved ? JSON.parse(saved) : [];
+    
+    if (bookId) {
+        return bookmarks.filter(b => b.bookId === bookId);
+    }
+    return bookmarks;
+},
+
+addBookmark: function(bookId, page, title) {
+    const bookmarks = this.getBookmarks();
+    
+    // Проверяем, нет ли уже закладки на этой странице
+    const exists = bookmarks.some(b => b.bookId === bookId && b.page === page);
+    if (exists) {
+        MORI_APP.showToast('🔖 Закладка уже есть на этой странице', 'info');
+        return false;
+    }
+    
+    bookmarks.push({
+        id: Date.now(),
+        bookId: bookId,
+        page: page,
+        title: title,
+        date: Date.now()
+    });
+    
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    MORI_APP.showToast('🔖 Закладка добавлена', 'success');
+    return true;
+},
+
+removeBookmark: function(bookmarkId) {
+    let bookmarks = this.getBookmarks();
+    bookmarks = bookmarks.filter(b => b.id !== bookmarkId);
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    MORI_APP.showToast('🗑️ Закладка удалена', 'info');
+},
+
+getBookmarkPage: function(bookId) {
+    const bookmarks = this.getBookmarks(bookId);
+    if (bookmarks.length > 0) {
+        // Сортируем по дате, последняя добавленная — первая
+        bookmarks.sort((a, b) => b.date - a.date);
+        return bookmarks[0].page;
+    }
+    return null;
+}
+
 window.MORI_LIBRARY_BOOKS = MORI_LIBRARY_BOOKS;
