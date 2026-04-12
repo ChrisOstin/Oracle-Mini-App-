@@ -218,6 +218,14 @@ const MORI_ROUTER = {
     init: function() {
         console.log('🚀 MORI_ROUTER инициализация...');
         this.loadUserPreferences();
+        this.setupBackButton();
+   
+        // Загружаем историю
+    const savedHistory = localStorage.getItem('nav_history');
+    if (savedHistory) {
+        this.history = JSON.parse(savedHistory);
+    }
+
         window.addEventListener('hashchange', () => this.handleHashChange());
         window.addEventListener('load', () => {
             this.restoreSession();
@@ -229,6 +237,36 @@ const MORI_ROUTER = {
         setInterval(() => this.processOfflineQueue(), 5000);
         window.addEventListener('online', () => this.processOfflineQueue());
     },
+
+   /**
+ * Установка обработчика кнопки "Назад" (только в браузере)
+ */
+setupBackButton: function() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    
+    document.addEventListener('backbutton', (e) => {
+        e.preventDefault();
+        if (this.history.length > 1) {
+            this.goBack();
+        } else {
+            MORI_APP.customConfirm({
+                title: 'Выход',
+                message: 'Вы уверены, что хотите выйти из приложения?',
+                confirmText: 'Выйти',
+                cancelText: 'Отмена',
+                icon: '🚪'
+            }).then(result => {
+                if (result) {
+                    if (window.TelegramWebviewProxy) {
+                        TelegramWebviewProxy.postEvent('web_app_close', {});
+                    } else {
+                        window.close();
+                    }
+                }
+            });
+        }
+    });
+},
 
     // ========== ЗАГРУЗКА СОХРАНЁННЫХ ДАННЫХ ==========
     loadUserPreferences: function() {
@@ -278,6 +316,13 @@ const MORI_ROUTER = {
     // ========== НАВИГАЦИЯ ==========
     navigate: function(screenId, options = {}) {
         console.log(`🚀 Навигация на ${screenId}`);
+   
+        // Сохраняем текущий экран в историю
+    if (this.currentScreen && this.currentScreen !== screenId) {
+        this.history.push(this.currentScreen);
+        localStorage.setItem('nav_history', JSON.stringify(this.history));
+    }
+
         const icon = document.querySelector('.theme-icon');
         if (icon) {
             icon.style.visibility = 'hidden';
@@ -512,20 +557,6 @@ const MORI_ROUTER = {
 
     }, 100);
 },
-
-  showError: function(screenTitle, errorMessage) {
-        const content = document.getElementById(`${screenTitle.toLowerCase()}-content`);
-        if (content) {
-            content.innerHTML = `
-                <div class="error-container">
-                    <div class="error-icon">⚠️</div>
-                    <h3>Ошибка загрузки</h3>
-                    <p>${errorMessage}</p>
-                    <button class="retry-btn" onclick="MORI_ROUTER.reload()">Повторить</button>
-                </div>
-            `;
-        }
-    },
 
     // ========== ЭКРАН РЕГИСТРАЦИИ ==========
 
