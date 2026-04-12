@@ -108,13 +108,13 @@ const MORI_LIBRARY = {
     </div>
     <div class="filter-group">
         <div class="filter-group-header ${this.state.filterCollapsed.status ? 'collapsed' : ''}" data-filter-group="status">
-            <span class="filter-label">🔒 Статус</span>
+            <span class="filter-label">⏳ Статус</span>
             <span class="toggle-icon">▼</span>
         </div>
         <div class="filter-group-content ${this.state.filterCollapsed.status ? 'collapsed' : ''}">
             <div class="filter-buttons">
                 <button class="filter-btn ${this.state.filterStatus === 'all' ? 'active' : ''}" data-filter-status="all">Все</button>
-                <button class="filter-btn ${this.state.filterStatus === 'available' ? 'active' : ''}" data-filter-status="available">🔓 Доступные</button>
+                <button class="filter-btn ${this.state.filterStatus === 'available' ? 'active' : ''}" data-filter-status="available">✅ Доступные</button>
                 <button class="filter-btn ${this.state.filterStatus === 'locked' ? 'active' : ''}" data-filter-status="locked">🔒 Заблокированные</button>
             </div>
         </div>
