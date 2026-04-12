@@ -545,7 +545,7 @@ document.querySelectorAll('.bookmark-delete').forEach(btn => {
     /**
      * Получение метки по ID
      */
-    getTagById: function(tagId) {
+         getTagById: function(tagId) {
         const tags = {
             favorite: { id: 'favorite', name: 'Любимое', icon: '⭐', color: '#ffd700' },
             later: { id: 'later', name: 'Отложенное', icon: '📌', color: '#00aaff' },
@@ -559,45 +559,45 @@ document.querySelectorAll('.bookmark-delete').forEach(btn => {
         return tags[tagId] || null;
     },
 
-    /**
-     * Очистка при выходе
-     */
+    // ЭТА ФУНКЦИЯ ДОЛЖНА БЫТЬ ВНУТРИ ОБЪЕКТА
+    renderNotes: function() {
+        const notes = MORI_LIBRARY_BOOKS.getNotes();
+        if (notes.length === 0) return '';
+
+        const noteItems = notes.slice(0, 10).map(note => {
+            return `
+                <div class="note-item" data-book-id="${note.bookId}" data-page="${note.page}">
+                    <div class="note-icon">📝</div>
+                    <div class="note-info">
+                        <div class="note-title">${note.bookTitle}</div>
+                        <div class="note-page">Страница ${note.page}</div>
+                        <div class="note-text">${note.text.substring(0, 50)}${note.text.length > 50 ? '...' : ''}</div>
+                        <div class="note-date">${new Date(note.date).toLocaleDateString()}</div>
+                    </div>
+                    <button class="note-delete" data-note-id="${note.id}">🗑️</button>
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <div class="notes-section">
+                <div class="notes-header">
+                    <h3>📝 Заметки</h3>
+                    <span class="notes-count">${notes.length}</span>
+                </div>
+                <div class="notes-list">
+                    ${noteItems}
+                </div>
+            </div>
+        `;
+    },
+
+    // destroy ТОЖЕ ДОЛЖЕН БЫТЬ ВНУТРИ ОБЪЕКТА
     destroy: function() {
         this.saveWishlist();
         this.saveTags();
     }
-};
 
-renderNotes: function() {
-    const notes = MORI_LIBRARY_BOOKS.getNotes();
-    if (notes.length === 0) return '';
-    
-    const noteItems = notes.slice(0, 10).map(note => {
-        return `
-            <div class="note-item" data-book-id="${note.bookId}" data-page="${note.page}">
-                <div class="note-icon">📝</div>
-                <div class="note-info">
-                    <div class="note-title">${note.bookTitle}</div>
-                    <div class="note-page">Страница ${note.page}</div>
-                    <div class="note-text">${note.text.substring(0, 50)}${note.text.length > 50 ? '...' : ''}</div>
-                    <div class="note-date">${new Date(note.date).toLocaleDateString()}</div>
-                </div>
-                <button class="note-delete" data-note-id="${note.id}">🗑️</button>
-            </div>
-        `;
-    }).join('');
-    
-    return `
-        <div class="notes-section">
-            <div class="notes-header">
-                <h3>📝 Заметки</h3>
-                <span class="notes-count">${notes.length}</span>
-            </div>
-            <div class="notes-list">
-                ${noteItems}
-            </div>
-        </div>
-    `;
-},
+};  // <--- ЭТО ЗАКРЫТИЕ ОБЪЕКТА MORI_LIBRARY
 
 window.MORI_LIBRARY = MORI_LIBRARY;

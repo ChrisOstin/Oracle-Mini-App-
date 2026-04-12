@@ -14,10 +14,13 @@ const MORI_LIBRARY_READER = {
         fontSize: 18,
         fontFamily: 'Inter, sans-serif',
         lineHeight: 1.5,
-        theme: 'dark', // dark, light, sepia
+        theme: 'dark',
         readingTimer: null,
         timerStart: null,
-        pageReadFlag: false
+        pageReadFlag: false,
+        searchQuery: '',
+        searchResults: [],
+        searchCurrentIndex: -1
     },
 
     // Доступные шрифты
@@ -57,8 +60,7 @@ const MORI_LIBRARY_READER = {
     open: async function(book) {
         this.state.currentBook = book;
         this.state.totalPages = book.pages || 1;
-        
-        // Загружаем содержимое
+
         const savedContent = MORI_LIBRARY_BOOKS.loadContent(book.id);
         if (savedContent && savedContent.pages) {
             this.state.content = savedContent.pages;
@@ -66,11 +68,10 @@ const MORI_LIBRARY_READER = {
         } else {
             this.state.content = ['<p>Контент книги не загружен</p>'];
         }
-        
-        // Загружаем прогресс
+
         const progress = MORI_LIBRARY_BOOKS.getProgress(book.id);
         this.state.currentPage = progress.page || 1;
-        
+
         this.state.isOpen = true;
         this.renderReader();
     },
@@ -85,6 +86,171 @@ const MORI_LIBRARY_READER = {
         if (window.MORI_LIBRARY) {
             MORI_LIBRARY.render();
         }
+    },
+
+    /**
+     * Поиск по тексту книги
+     */
+    searchInBook: function(query) {
+        if (!query || query.trim() === '') {
+            this.state.searchResults = [];
+            this.state.searchCurrentIndex = -1;
+            this.renderReader();
+            return;
+        }
+
+        const searchTerm = query.toLowerCase();
+        const results = [];
+
+        for (let i = 0; i < this.state.content.length; i++) {
+            const page = this.state.content[i];
+            const text = page.replace(/<[^>]*>/g, ' ');
+
+            if (text.toLowerCase().includes(searchTerm)) {
+                const index = text.toLowerCase().indexOf(searchTerm);
+                let preview = text.substring(Math.max(0, index - 40), Math.min(text.length, index + searchTerm.length + 40));
+                if (index > 40) preview = '...' + preview;
+                if (index + searchTerm.length + 40 < text.length) preview = preview + '...';
+
+                results.push({
+                    page: i + 1,
+                    preview: preview
+                });
+            }
+        }
+
+        this.state.searchQuery = query;
+        this.state.searchResults = results;
+        this.state.searchCurrentIndex = results.length > 0 ? 0 : -1;
+
+        this.renderReader();
+
+        if (results.length === 0) {
+            MORI_APP.showToast('🔍 Ничего не найдено', 'info');
+        } else {
+            MORI_APP.showToast(`🔍 Найдено ${results.length} страниц`, 'success');
+            setTimeout(() => this.goToSearchResult(0), 200);
+        }
+    },
+
+    /**
+     * Перейти к результату поиска
+     */
+    goToSearchResult: function(index) {
+        if (this.state.searchResults.length === 0) return;
+        if (index < 0) index = 0;
+        if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
+
+        this.state.searchCurrentIndex = index;
+        const result = this.state.searchResults[index];
+        this.state.currentPage = result.page;
+        this.renderReader();
+
+        this.updateSearchNav();
+        setTimeout(() => this.highlightSearchTerm(), 100);
+    },
+
+    /**
+     * Обновить панель навигации поиска
+     */
+    updateSearchNav: function() {
+        const searchNav = document.getElementById('reader-search-nav');
+        const counter = document.getElementById('search-counter');
+        const searchResultsDiv = document.getElementById('reader-search-results');
+
+        if (!searchNav) return;
+
+        if (this.state.searchResults.length > 0) {
+            searchNav.style.display = 'flex';
+            if (counter) {
+                counter.textContent = `${this.state.searchCurrentIndex + 1}/${this.state.searchResults.length}`;
+            }
+
+            if (searchResultsDiv) {
+                searchResultsDiv.innerHTML = `
+                    <div class="search-results-list">
+                        ${this.state.searchResults.map((result, idx) => `
+                            <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}">
+                                <span class="search-result-page">Страница ${result.page}</span>
+                                <span class="search-result-preview">${result.preview}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                document.querySelectorAll('.search-result-item').forEach(item => {
+                    item.onclick = () => {
+                        const page = parseInt(item.dataset.page);
+                        const idx = this.state.searchResults.findIndex(r => r.page === page);
+                        if (idx !== -1) {
+                            this.goToSearchResult(idx);
+                        }
+                    };
+                });
+            }
+        } else {
+            searchNav.style.display = 'none';
+            if (searchResultsDiv && this.state.searchQuery) {
+                searchResultsDiv.innerHTML = '<div class="search-no-results">Ничего не найдено</div>';
+            }
+        }
+    },
+
+    /**
+     * Подсветка найденного слова на странице
+     */
+    highlightSearchTerm: function() {
+        const content = document.getElementById('reader-content');
+        if (!content || !this.state.searchQuery) return;
+
+        const searchTerm = this.state.searchQuery.toLowerCase();
+
+        const walker = document.createTreeWalker(
+            content,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: function(node) {
+                    if (node.parentElement?.classList?.contains('search-highlight')) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
+
+        const nodesToReplace = [];
+        while (walker.nextNode()) {
+            const node = walker.currentNode;
+            const text = node.textContent;
+            if (text.toLowerCase().includes(searchTerm)) {
+                nodesToReplace.push(node);
+            }
+        }
+
+        nodesToReplace.forEach(node => {
+            const span = document.createElement('span');
+            const text = node.textContent;
+            const regex = new RegExp(`(${this.escapeRegex(searchTerm)})`, 'gi');
+            span.innerHTML = text.replace(regex, '<mark class="search-highlight">$1</mark>');
+            node.parentNode.replaceChild(span, node);
+        });
+    },
+
+    /**
+     * Экранирование спецсимволов для регулярного выражения
+     */
+    escapeRegex: function(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    },
+
+    /**
+     * Закрыть поиск
+     */
+    closeSearch: function() {
+        this.state.searchQuery = '';
+        this.state.searchResults = [];
+        this.state.searchCurrentIndex = -1;
+        this.renderReader();
     },
 
     /**
@@ -104,27 +270,31 @@ const MORI_LIBRARY_READER = {
                     <!-- Шапка -->
                     <div class="reader-header" style="border-bottom: 1px solid ${theme.border};">
                         <button class="reader-back" id="reader-close">← Назад</button>
-                         <div class="reader-header" style="border-bottom: 1px solid ${theme.border};">
-    <button class="reader-back" id="reader-close">← Назад</button>
-    <div class="reader-title">
-        <span>${this.state.currentBook.title}</span>
-        <span style="font-size: 12px; opacity: 0.7;">${this.state.currentPage}/${this.state.totalPages}</span>
-    </div>
-    <div style="display: flex; gap: 8px;">
-        <button class="reader-bookmark-btn" id="reader-bookmark">🔖</button>
-        <button class="reader-settings-btn" id="reader-settings-btn">⚙️</button>
-    </div>
-</div>
-<div style="display: flex; gap: 8px;">
-    <button class="reader-note-btn" id="reader-note">📝</button>
-    <button class="reader-bookmark-btn" id="reader-bookmark">🔖</button>
-    <button class="reader-settings-btn" id="reader-settings-btn">⚙️</button>
-</div>
                         <div class="reader-title">
                             <span>${this.state.currentBook.title}</span>
                             <span style="font-size: 12px; opacity: 0.7;">${this.state.currentPage}/${this.state.totalPages}</span>
                         </div>
-                        <button class="reader-settings-btn" id="reader-settings-btn">⚙️</button>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="reader-search-btn" id="reader-search-btn">🔍</button>
+                            <button class="reader-note-btn" id="reader-note">📝</button>
+                            <button class="reader-bookmark-btn" id="reader-bookmark">🔖</button>
+                            <button class="reader-settings-btn" id="reader-settings-btn">⚙️</button>
+                        </div>
+                    </div>
+
+                    <!-- Панель поиска -->
+                    <div class="reader-search-bar" id="reader-search-bar" style="display: none;">
+                        <div class="reader-search-input-wrapper">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="reader-search-input" class="reader-search-input" placeholder="Поиск по книге...">
+                            <button id="reader-search-close" class="reader-search-close">✕</button>
+                        </div>
+                        <div class="reader-search-results" id="reader-search-results"></div>
+                        <div class="reader-search-nav" id="reader-search-nav" style="display: none;">
+                            <button id="search-prev" class="search-nav-btn">◀ Пред.</button>
+                            <span id="search-counter">0/0</span>
+                            <button id="search-next" class="search-nav-btn">След. ▶</button>
+                        </div>
                     </div>
 
                     <!-- Контент -->
@@ -169,7 +339,7 @@ const MORI_LIBRARY_READER = {
      */
     renderSettings: function() {
         const theme = this.themes[this.state.theme];
-        
+
         return `
             <div class="settings-group">
                 <label>Шрифт</label>
@@ -213,18 +383,15 @@ const MORI_LIBRARY_READER = {
      * Обработчики событий в читалке
      */
     attachReaderEvents: function() {
-        // Закрытие
         const closeBtn = document.getElementById('reader-close');
         if (closeBtn) closeBtn.onclick = () => this.close();
 
-        // Навигация
         const prevBtn = document.getElementById('reader-prev');
         if (prevBtn) prevBtn.onclick = () => this.prevPage();
-        
+
         const nextBtn = document.getElementById('reader-next');
         if (nextBtn) nextBtn.onclick = () => this.nextPage();
 
-        // Настройки
         const settingsBtn = document.getElementById('reader-settings-btn');
         const settingsPanel = document.getElementById('reader-settings-panel');
         if (settingsBtn && settingsPanel) {
@@ -241,45 +408,92 @@ const MORI_LIBRARY_READER = {
             };
         }
 
+        // ========== ПОИСК ==========
+        const searchBtn = document.getElementById('reader-search-btn');
+        const searchBar = document.getElementById('reader-search-bar');
+        const searchInput = document.getElementById('reader-search-input');
+        const searchClose = document.getElementById('reader-search-close');
+        const searchPrev = document.getElementById('search-prev');
+        const searchNext = document.getElementById('search-next');
+
+        if (searchBtn) {
+            searchBtn.onclick = () => {
+                searchBar.style.display = 'block';
+                setTimeout(() => searchInput?.focus(), 100);
+            };
+        }
+
+        if (searchClose) {
+            searchClose.onclick = () => {
+                searchBar.style.display = 'none';
+                this.closeSearch();
+            };
+        }
+
+        if (searchInput) {
+            let timeout;
+            searchInput.oninput = (e) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    this.searchInBook(e.target.value);
+                }, 500);
+            };
+        }
+
+        if (searchPrev) {
+            searchPrev.onclick = () => {
+                if (this.state.searchResults.length > 0) {
+                    const newIndex = this.state.searchCurrentIndex - 1;
+                    this.goToSearchResult(newIndex);
+                }
+            };
+        }
+
+        if (searchNext) {
+            searchNext.onclick = () => {
+                if (this.state.searchResults.length > 0) {
+                    const newIndex = this.state.searchCurrentIndex + 1;
+                    this.goToSearchResult(newIndex);
+                }
+            };
+        }
+
         // Шрифты
         const fontSelect = document.getElementById('reader-font');
         if (fontSelect) {
             fontSelect.onchange = (e) => this.setState({ fontFamily: e.target.value });
         }
 
-        // Размер шрифта
         const fontSizeInput = document.getElementById('font-size');
         if (fontSizeInput) {
             fontSizeInput.oninput = (e) => this.setState({ fontSize: parseInt(e.target.value) });
         }
-        
+
         const fontDecr = document.getElementById('font-decr');
         if (fontDecr) {
             fontDecr.onclick = () => this.setState({ fontSize: Math.max(12, this.state.fontSize - 1) });
         }
-        
+
         const fontIncr = document.getElementById('font-incr');
         if (fontIncr) {
             fontIncr.onclick = () => this.setState({ fontSize: Math.min(32, this.state.fontSize + 1) });
         }
 
-        // Межстрочный интервал
         const lineHeightInput = document.getElementById('line-height');
         if (lineHeightInput) {
             lineHeightInput.oninput = (e) => this.setState({ lineHeight: parseFloat(e.target.value) });
         }
-        
+
         const lineDecr = document.getElementById('line-decr');
         if (lineDecr) {
             lineDecr.onclick = () => this.setState({ lineHeight: Math.max(1, this.state.lineHeight - 0.1) });
         }
-        
+
         const lineIncr = document.getElementById('line-incr');
         if (lineIncr) {
             lineIncr.onclick = () => this.setState({ lineHeight: Math.min(2.5, this.state.lineHeight + 0.1) });
         }
 
-        // Темы
         document.querySelectorAll('.theme-btn').forEach(btn => {
             btn.onclick = () => {
                 const theme = btn.dataset.theme;
@@ -287,27 +501,24 @@ const MORI_LIBRARY_READER = {
             };
         });
 
-        // Закладка
-const bookmarkBtn = document.getElementById('reader-bookmark');
-if (bookmarkBtn) {
-    bookmarkBtn.onclick = () => {
-        MORI_LIBRARY_BOOKS.addBookmark(
-            this.state.currentBook.id,
-            this.state.currentPage,
-            this.state.currentBook.title
-        );
-    };
-}
+        const bookmarkBtn = document.getElementById('reader-bookmark');
+        if (bookmarkBtn) {
+            bookmarkBtn.onclick = () => {
+                MORI_LIBRARY_BOOKS.addBookmark(
+                    this.state.currentBook.id,
+                    this.state.currentPage,
+                    this.state.currentBook.title
+                );
+            };
+        }
 
-         // Заметка
-const noteBtn = document.getElementById('reader-note');
-if (noteBtn) {
-    noteBtn.onclick = () => {
-        this.showNoteDialog();
-    };
-}
+        const noteBtn = document.getElementById('reader-note');
+        if (noteBtn) {
+            noteBtn.onclick = () => {
+                this.showNoteDialog();
+            };
+        }
 
-        // Свайпы для телефона
         const content = document.getElementById('reader-content');
         if (content) {
             let touchStartX = 0;
@@ -377,15 +588,13 @@ if (noteBtn) {
      */
     markPageAsRead: function() {
         if (!this.state.currentBook) return;
-        
-        // Обновляем прогресс в хранилище
+
         this.saveProgress();
-        
-        // Обновляем статистику пользователя для заданий
+
         if (window.MORI_USER) {
             MORI_USER.updateStats('pagesRead', 1);
         }
-        
+
         console.log(`✅ Страница ${this.state.currentPage} книги "${this.state.currentBook.title}" прочитана`);
     },
 
@@ -412,6 +621,69 @@ if (noteBtn) {
     },
 
     /**
+     * Показать диалог заметки
+     */
+    showNoteDialog: function() {
+        const notes = MORI_LIBRARY_BOOKS.getNotes(this.state.currentBook.id);
+        const existingNote = notes.find(n => n.page === this.state.currentPage);
+
+        const modal = document.createElement('div');
+        modal.className = 'note-modal';
+        modal.innerHTML = `
+            <div class="note-modal-content">
+                <div class="note-modal-header">
+                    <span>📝 Заметка к странице ${this.state.currentPage}</span>
+                    <button class="note-modal-close">✕</button>
+                </div>
+                <textarea class="note-modal-textarea" placeholder="Введите вашу заметку...">${existingNote ? existingNote.text : ''}</textarea>
+                <div class="note-modal-buttons">
+                    <button class="note-modal-cancel">Отмена</button>
+                    <button class="note-modal-save">Сохранить</button>
+                    ${existingNote ? '<button class="note-modal-delete">🗑️ Удалить</button>' : ''}
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        const closeBtn = modal.querySelector('.note-modal-close');
+        const cancelBtn = modal.querySelector('.note-modal-cancel');
+        const saveBtn = modal.querySelector('.note-modal-save');
+        const deleteBtn = modal.querySelector('.note-modal-delete');
+        const textarea = modal.querySelector('.note-modal-textarea');
+
+        const close = () => modal.remove();
+
+        closeBtn.onclick = close;
+        cancelBtn.onclick = close;
+        modal.onclick = (e) => { if (e.target === modal) close(); };
+
+        saveBtn.onclick = () => {
+            const text = textarea.value.trim();
+            if (text) {
+                if (existingNote) {
+                    MORI_LIBRARY_BOOKS.updateNote(existingNote.id, text);
+                } else {
+                    MORI_LIBRARY_BOOKS.addNote(
+                        this.state.currentBook.id,
+                        this.state.currentPage,
+                        text,
+                        this.state.currentBook.title
+                    );
+                }
+            }
+            close();
+        };
+
+        if (deleteBtn) {
+            deleteBtn.onclick = () => {
+                MORI_LIBRARY_BOOKS.removeNote(existingNote.id);
+                close();
+            };
+        }
+    },
+
+    /**
      * Очистка при выходе
      */
     destroy: function() {
@@ -421,66 +693,5 @@ if (noteBtn) {
         }
     }
 };
-
-showNoteDialog: function() {
-    // Проверяем, есть ли уже заметка на этой странице
-    const notes = MORI_LIBRARY_BOOKS.getNotes(this.state.currentBook.id);
-    const existingNote = notes.find(n => n.page === this.state.currentPage);
-    
-    const modal = document.createElement('div');
-    modal.className = 'note-modal';
-    modal.innerHTML = `
-        <div class="note-modal-content">
-            <div class="note-modal-header">
-                <span>📝 Заметка к странице ${this.state.currentPage}</span>
-                <button class="note-modal-close">✕</button>
-            </div>
-            <textarea class="note-modal-textarea" placeholder="Введите вашу заметку...">${existingNote ? existingNote.text : ''}</textarea>
-            <div class="note-modal-buttons">
-                <button class="note-modal-cancel">Отмена</button>
-                <button class="note-modal-save">Сохранить</button>
-                ${existingNote ? '<button class="note-modal-delete">🗑️ Удалить</button>' : ''}
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    const closeBtn = modal.querySelector('.note-modal-close');
-    const cancelBtn = modal.querySelector('.note-modal-cancel');
-    const saveBtn = modal.querySelector('.note-modal-save');
-    const deleteBtn = modal.querySelector('.note-modal-delete');
-    const textarea = modal.querySelector('.note-modal-textarea');
-    
-    const close = () => modal.remove();
-    
-    closeBtn.onclick = close;
-    cancelBtn.onclick = close;
-    modal.onclick = (e) => { if (e.target === modal) close(); };
-    
-    saveBtn.onclick = () => {
-        const text = textarea.value.trim();
-        if (text) {
-            if (existingNote) {
-                MORI_LIBRARY_BOOKS.updateNote(existingNote.id, text);
-            } else {
-                MORI_LIBRARY_BOOKS.addNote(
-                    this.state.currentBook.id,
-                    this.state.currentPage,
-                    text,
-                    this.state.currentBook.title
-                );
-            }
-        }
-        close();
-    };
-    
-    if (deleteBtn) {
-        deleteBtn.onclick = () => {
-            MORI_LIBRARY_BOOKS.removeNote(existingNote.id);
-            close();
-        };
-    }
-},
 
 window.MORI_LIBRARY_READER = MORI_LIBRARY_READER;
