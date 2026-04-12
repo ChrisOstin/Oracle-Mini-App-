@@ -662,3 +662,34 @@
     visibility: visible !important;
     opacity: 1 !important;
 }
+
+/* Стиль профессора Мориарти для ссылки */
+.dexscreener-link {
+    margin-top: 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+    padding-top: 16px;
+}
+
+.mori-link {
+    color: #ffd700;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.mori-link:hover {
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    transform: translateX(4px);
+}
+
+.stat-sub {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+}
+
