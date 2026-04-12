@@ -219,7 +219,8 @@ const MORI_ROUTER = {
         console.log('🚀 MORI_ROUTER инициализация...');
         this.loadUserPreferences();
         this.setupBackButton();
-   
+        this.setupPopstateHandler();
+ 
         // Загружаем историю
     const savedHistory = localStorage.getItem('nav_history');
     if (savedHistory) {
@@ -239,11 +240,11 @@ const MORI_ROUTER = {
     },
 
    /**
- * Установка обработчика кнопки "Назад" (только в браузере)
+ * Установка обработчика кнопки "Назад" (для WebView)
  */
 setupBackButton: function() {
     if (typeof window === 'undefined' || typeof document === 'undefined') return;
-    
+
     document.addEventListener('backbutton', (e) => {
         e.preventDefault();
         if (this.history.length > 1) {
@@ -264,6 +265,20 @@ setupBackButton: function() {
                     }
                 }
             });
+        }
+    });
+},
+
+/**
+ * Установка обработчика для браузеров (popstate)
+ */
+setupPopstateHandler: function() {
+    if (typeof window === 'undefined') return;
+    
+    window.addEventListener('popstate', (e) => {
+        e.preventDefault();
+        if (this.history.length > 1) {
+            this.goBack();
         }
     });
 },
