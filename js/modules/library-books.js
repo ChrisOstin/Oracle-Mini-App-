@@ -322,7 +322,7 @@ const MORI_LIBRARY_BOOKS = {
             return true;
         }
         return false;
-    }
+    },
 
 // ========== ЗАКЛАДКИ ==========
 getBookmarks: function(bookId = null) {
