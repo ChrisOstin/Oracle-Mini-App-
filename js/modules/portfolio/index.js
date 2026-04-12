@@ -152,40 +152,35 @@ const MORI_PORTFOLIO = {
                 </div>
 
                 <div class="about-section">
-                    <h3 style="white-space: nowrap;">🎭 Секретные материалы профессора Мориарти</h3>
+                    <h3 style="white-space: nowrap;">🎭 $MORI ARCHIVE</h3>
                     <div class="about-grid">
-                        <div class="about-item">
-                            <div class="about-label">Токен</div>
-                            <div class="about-value">MORI</div>
-                        </div>
-                        <div class="about-item">
-                            <div class="about-label">Сеть</div>
-                            <div class="about-value">Solana</div>
-                        </div>
-                        <div class="about-item">
-                            <div class="about-label">Циркулирующее</div>
-                            <div class="about-value">${MORI_UTILS.formatLargeNumber(this.state.circulatingSupply)} MORI</div>
-                        </div>
-                        <div class="about-item">
-                            <div class="about-label">Макс. предложение</div>
-                            <div class="about-value">1 000 000 000 MORI</div>
-                            <div class="stat-sub">(1B, и не больше)</div>
-                        </div>
-                        <div class="about-item">
-                            <div class="about-label">🏆 Ранг на Solana</div>
-                            <div class="about-value" id="mori-rank">#???</div>
-                            <div class="stat-sub">по объёму за 24ч</div>
-                        </div>
-                    </div>
-                   
-                    <div class="about-item">
-                        <div class="about-label">🌐 Сайт</div>
-                        <div class="about-value">
-                            <a href="https://morico.in" target="_blank" rel="noopener noreferrer" style="color: #ffd700; text-decoration: none; font-size: 12px;">
-                                morico.in ↗
-                            </a>
-                        </div>
-                    </div>
+    <div class="about-item">
+        <div class="about-label">ТОКЕН</div>
+        <div class="about-value">MORI</div>
+    </div>
+    <div class="about-item">
+        <div class="about-label">СЕТЬ</div>
+        <div class="about-value">Solana</div>
+    </div>
+    <div class="about-item">
+        <div class="about-label">ЦИРКУЛИРУЮЩЕЕ</div>
+        <div class="about-value">${MORI_UTILS.formatLargeNumber(this.state.circulatingSupply)} MORI</div>
+    </div>
+    <div class="about-item">
+        <div class="about-label">МАКС. ПРЕДЛОЖЕНИЕ</div>
+        <div class="about-value">1 000 000 000 MORI</div>
+    </div>
+    <div class="about-item">
+        <div class="about-label">РАНГ НА SOLANA</div>
+        <div class="about-value" id="mori-rank-value">#???</div>
+    </div>
+    <div class="about-item">
+        <div class="about-label">САЙТ</div>
+        <div class="about-value">
+            <a href="https://morico.in" target="_blank" style="color:#ffd700; text-decoration:none;">morico.in ↗</a>
+                morico.in ↗
+        </div>
+    </div>
 
                     <div class="dexscreener-link">
                         <a href="https://dexscreener.com/solana/8ZHE4ow1a2jjxuoMfyExuNamQNALv5ekZhsBn5nMDf5e" 
