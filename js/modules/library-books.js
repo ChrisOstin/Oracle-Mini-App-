@@ -437,4 +437,54 @@ getBookmarkPage: function(bookId) {
     return null;
 }
 
+/**
+ * Заметки к книге
+ */
+getNotes: function(bookId = null) {
+    const saved = localStorage.getItem('book_notes');
+    const notes = saved ? JSON.parse(saved) : [];
+    
+    if (bookId) {
+        return notes.filter(n => n.bookId === bookId);
+    }
+    return notes;
+},
+
+addNote: function(bookId, page, text, bookTitle) {
+    const notes = this.getNotes();
+    
+    notes.push({
+        id: Date.now(),
+        bookId: bookId,
+        page: page,
+        text: text,
+        bookTitle: bookTitle,
+        date: Date.now()
+    });
+    
+    localStorage.setItem('book_notes', JSON.stringify(notes));
+    MORI_APP.showToast('📝 Заметка добавлена', 'success');
+    return true;
+},
+
+removeNote: function(noteId) {
+    let notes = this.getNotes();
+    notes = notes.filter(n => n.id !== noteId);
+    localStorage.setItem('book_notes', JSON.stringify(notes));
+    MORI_APP.showToast('🗑️ Заметка удалена', 'info');
+},
+
+updateNote: function(noteId, newText) {
+    let notes = this.getNotes();
+    const index = notes.findIndex(n => n.id === noteId);
+    if (index !== -1) {
+        notes[index].text = newText;
+        notes[index].date = Date.now();
+        localStorage.setItem('book_notes', JSON.stringify(notes));
+        MORI_APP.showToast('📝 Заметка обновлена', 'success');
+        return true;
+    }
+    return false;
+}
+
 window.MORI_LIBRARY_BOOKS = MORI_LIBRARY_BOOKS;

@@ -135,8 +135,8 @@ const MORI_LIBRARY = {
 
                 <!-- Вишлист -->
                 ${this.renderWishlist()}
-                ${this.renderWishlist()}
                 ${this.renderBookmarks()}
+                ${this.renderNotes()}
             </div>
         `;
     },
@@ -415,6 +415,30 @@ document.querySelectorAll('.bookmark-item').forEach(item => {
     };
 });
 
+// Заметки — открытие книги на нужной странице
+document.querySelectorAll('.note-item').forEach(item => {
+    item.onclick = (e) => {
+        if (e.target.classList.contains('note-delete')) return;
+        const bookId = item.dataset.bookId;
+        const page = parseInt(item.dataset.page);
+        const book = MORI_LIBRARY_BOOKS.getById(bookId);
+        if (book && book.unlocked) {
+            MORI_LIBRARY_BOOKS.saveProgress(bookId, page);
+            MORI_LIBRARY_READER.open(book);
+        }
+    };
+});
+
+// Удаление заметки
+document.querySelectorAll('.note-delete').forEach(btn => {
+    btn.onclick = (e) => {
+        e.stopPropagation();
+        const noteId = parseInt(btn.dataset.noteId);
+        MORI_LIBRARY_BOOKS.removeNote(noteId);
+        this.render();
+    };
+});
+
 // Удаление закладки
 document.querySelectorAll('.bookmark-delete').forEach(btn => {
     btn.onclick = (e) => {
@@ -543,5 +567,37 @@ document.querySelectorAll('.bookmark-delete').forEach(btn => {
         this.saveTags();
     }
 };
+
+renderNotes: function() {
+    const notes = MORI_LIBRARY_BOOKS.getNotes();
+    if (notes.length === 0) return '';
+    
+    const noteItems = notes.slice(0, 10).map(note => {
+        return `
+            <div class="note-item" data-book-id="${note.bookId}" data-page="${note.page}">
+                <div class="note-icon">📝</div>
+                <div class="note-info">
+                    <div class="note-title">${note.bookTitle}</div>
+                    <div class="note-page">Страница ${note.page}</div>
+                    <div class="note-text">${note.text.substring(0, 50)}${note.text.length > 50 ? '...' : ''}</div>
+                    <div class="note-date">${new Date(note.date).toLocaleDateString()}</div>
+                </div>
+                <button class="note-delete" data-note-id="${note.id}">🗑️</button>
+            </div>
+        `;
+    }).join('');
+    
+    return `
+        <div class="notes-section">
+            <div class="notes-header">
+                <h3>📝 Заметки</h3>
+                <span class="notes-count">${notes.length}</span>
+            </div>
+            <div class="notes-list">
+                ${noteItems}
+            </div>
+        </div>
+    `;
+},
 
 window.MORI_LIBRARY = MORI_LIBRARY;

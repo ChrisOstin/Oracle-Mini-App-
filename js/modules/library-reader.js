@@ -115,6 +115,11 @@ const MORI_LIBRARY_READER = {
         <button class="reader-settings-btn" id="reader-settings-btn">⚙️</button>
     </div>
 </div>
+<div style="display: flex; gap: 8px;">
+    <button class="reader-note-btn" id="reader-note">📝</button>
+    <button class="reader-bookmark-btn" id="reader-bookmark">🔖</button>
+    <button class="reader-settings-btn" id="reader-settings-btn">⚙️</button>
+</div>
                         <div class="reader-title">
                             <span>${this.state.currentBook.title}</span>
                             <span style="font-size: 12px; opacity: 0.7;">${this.state.currentPage}/${this.state.totalPages}</span>
@@ -294,6 +299,14 @@ if (bookmarkBtn) {
     };
 }
 
+         // Заметка
+const noteBtn = document.getElementById('reader-note');
+if (noteBtn) {
+    noteBtn.onclick = () => {
+        this.showNoteDialog();
+    };
+}
+
         // Свайпы для телефона
         const content = document.getElementById('reader-content');
         if (content) {
@@ -408,5 +421,66 @@ if (bookmarkBtn) {
         }
     }
 };
+
+showNoteDialog: function() {
+    // Проверяем, есть ли уже заметка на этой странице
+    const notes = MORI_LIBRARY_BOOKS.getNotes(this.state.currentBook.id);
+    const existingNote = notes.find(n => n.page === this.state.currentPage);
+    
+    const modal = document.createElement('div');
+    modal.className = 'note-modal';
+    modal.innerHTML = `
+        <div class="note-modal-content">
+            <div class="note-modal-header">
+                <span>📝 Заметка к странице ${this.state.currentPage}</span>
+                <button class="note-modal-close">✕</button>
+            </div>
+            <textarea class="note-modal-textarea" placeholder="Введите вашу заметку...">${existingNote ? existingNote.text : ''}</textarea>
+            <div class="note-modal-buttons">
+                <button class="note-modal-cancel">Отмена</button>
+                <button class="note-modal-save">Сохранить</button>
+                ${existingNote ? '<button class="note-modal-delete">🗑️ Удалить</button>' : ''}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    const closeBtn = modal.querySelector('.note-modal-close');
+    const cancelBtn = modal.querySelector('.note-modal-cancel');
+    const saveBtn = modal.querySelector('.note-modal-save');
+    const deleteBtn = modal.querySelector('.note-modal-delete');
+    const textarea = modal.querySelector('.note-modal-textarea');
+    
+    const close = () => modal.remove();
+    
+    closeBtn.onclick = close;
+    cancelBtn.onclick = close;
+    modal.onclick = (e) => { if (e.target === modal) close(); };
+    
+    saveBtn.onclick = () => {
+        const text = textarea.value.trim();
+        if (text) {
+            if (existingNote) {
+                MORI_LIBRARY_BOOKS.updateNote(existingNote.id, text);
+            } else {
+                MORI_LIBRARY_BOOKS.addNote(
+                    this.state.currentBook.id,
+                    this.state.currentPage,
+                    text,
+                    this.state.currentBook.title
+                );
+            }
+        }
+        close();
+    };
+    
+    if (deleteBtn) {
+        deleteBtn.onclick = () => {
+            MORI_LIBRARY_BOOKS.removeNote(existingNote.id);
+            close();
+        };
+    }
+},
 
 window.MORI_LIBRARY_READER = MORI_LIBRARY_READER;
