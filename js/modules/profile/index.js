@@ -34,6 +34,7 @@ const MORI_PROFILE = {
         this.loadStreak();
         this.loadReferralLink();
         this.loadPurchasedItems();
+        this.startLeaderboardAutoUpdate();
         this.render();
     },
 
@@ -573,15 +574,16 @@ const MORI_PROFILE = {
 },
 
     renderLeaderboardTab: function() {
-        const types = [
-            { id: 'level', name: '🏆 Уровень' },
-            { id: 'exp', name: '⭐ Опыт' },
-            { id: 'balance', name: '🎮 MORI Coin' },
-            { id: 'achievements', name: '🏅 Достижения' }
-        ];
-        
-        return `
-            <div class="leaderboard-tab">
+    const types = [
+        { id: 'level', name: '🏆 Уровень' },
+        { id: 'exp', name: '⭐ Опыт' },
+        { id: 'balance', name: '🎮 MORI Coin' },
+        { id: 'achievements', name: '🏅 Достижения' }
+    ];
+
+    return `
+        <div class="leaderboard-tab">
+            <div class="leaderboard-header">
                 <div class="leaderboard-type-selector">
                     ${types.map(t => `
                         <button class="leaderboard-type ${this.state.leaderboardType === t.id ? 'active' : ''}" data-type="${t.id}">
@@ -589,12 +591,16 @@ const MORI_PROFILE = {
                         </button>
                     `).join('')}
                 </div>
-                <div class="leaderboard-list" id="leaderboard-list">
-                    <div class="loading">Загрузка рейтинга...</div>
-                </div>
+                <button id="refresh-leaderboard-btn" class="refresh-leaderboard-btn">
+                    🔄 Обновить
+                </button>
             </div>
-        `;
-    },
+            <div class="leaderboard-list" id="leaderboard-list">
+                <div class="loading">Загрузка рейтинга...</div>
+            </div>
+        </div>
+    `;
+},
 
     renderCustomizationTab: function() {
         const avatars = ['👤', '🎭', '👑', '🦊', '🔥', '💣', '🦅', '🐺', '🦁', '🐉', '🦸', '🦹', '🧙', '🧚', '🧝', '🧞', '🕵️', '👨‍🚀', '🤖', '👻'];
@@ -765,42 +771,73 @@ renderAdminLogs: function() {
     `;
 },
 
-    renderLeaderboard: async function() {
-        const container = document.getElementById('leaderboard-list');
-        if (!container) return;
+renderLeaderboard: async function() {
+    const container = document.getElementById('leaderboard-list');
+    if (!container) return;
+
+    container.innerHTML = '<div class="loading">Загрузка...</div>';
+
+    // Получаем всех пользователей из localStorage
+    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    
+    // Преобразуем в массив с нужными данными
+    let leaderboardData = users.map(user => ({
+        nickname: user.nickname,
+        level: user.level || 1,
+        exp: user.experience || 0,
+        balance: user.game_balance || 0,
+        achievements: user.achievements_count || 0,
+        avatar: user.avatar || '👤'
+    }));
+
+    // Сортировка по выбранному типу
+    let sorted = [...leaderboardData];
+    switch(this.state.leaderboardType) {
+        case 'level':
+            sorted.sort((a, b) => b.level - a.level);
+            break;
+        case 'exp':
+            sorted.sort((a, b) => b.exp - a.exp);
+            break;
+        case 'balance':
+            sorted.sort((a, b) => b.balance - a.balance);
+            break;
+        case 'achievements':
+            sorted.sort((a, b) => b.achievements - a.achievements);
+            break;
+        default:
+            sorted.sort((a, b) => b.level - a.level);
+    }
+
+    // Берём топ-50
+    sorted = sorted.slice(0, 50);
+
+    if (sorted.length === 0) {
+        container.innerHTML = '<div class="empty">Нет пользователей</div>';
+        return;
+    }
+
+    // Рендерим список
+    container.innerHTML = sorted.map((user, idx) => {
+        let value = '';
+        switch(this.state.leaderboardType) {
+            case 'level': value = `${user.level} ур`; break;
+            case 'exp': value = `${user.exp} XP`; break;
+            case 'balance': value = `${user.balance} Coin`; break;
+            case 'achievements': value = `${user.achievements} ач`; break;
+            default: value = `${user.level} ур`;
+        }
         
-        container.innerHTML = '<div class="loading">Загрузка...</div>';
-        
-        // Имитация загрузки данных (позже заменим на API)
-        const mockData = [
-            { name: 'Абсолют', level: 30, exp: 38400, balance: 10000, achievements: 4 },
-            { name: 'Мориарти', level: 29, exp: 35700, balance: 8500, achievements: 3 },
-            { name: 'Легенда', level: 20, exp: 15900, balance: 5000, achievements: 2 }
-        ];
-        
-        const sorted = [...mockData].sort((a, b) => {
-            switch(this.state.leaderboardType) {
-                case 'level': return b.level - a.level;
-                case 'exp': return b.exp - a.exp;
-                case 'balance': return b.balance - a.balance;
-                case 'achievements': return b.achievements - a.achievements;
-                default: return b.level - a.level;
-            }
-        }).slice(0, 50);
-        
-        container.innerHTML = sorted.map((user, idx) => `
+        return `
             <div class="leaderboard-item ${idx < 3 ? `top-${idx + 1}` : ''}">
                 <div class="leaderboard-rank">${idx + 1}</div>
-                <div class="leaderboard-name">${user.name}</div>
-                <div class="leaderboard-value">
-                    ${this.state.leaderboardType === 'level' ? `${user.level} ур` : 
-                      this.state.leaderboardType === 'exp' ? `${user.exp} XP` :
-                      this.state.leaderboardType === 'balance' ? `${user.balance} Coin` :
-                      `${user.achievements} ач`}
-                </div>
+                <div class="leaderboard-avatar">${user.avatar}</div>
+                <div class="leaderboard-name">${user.nickname}</div>
+                <div class="leaderboard-value">${value}</div>
             </div>
-        `).join('');
-    },
+        `;
+    }).join('');
+},
 
    renderCalendar: function() {
     const container = document.getElementById('calendar-container');
@@ -994,6 +1031,15 @@ if (addCoinsBtn) {
             });
         });
     
+       // Кнопка обновления лидерборда
+const refreshBtn = document.getElementById('refresh-leaderboard-btn');
+if (refreshBtn) {
+    refreshBtn.addEventListener('click', () => {
+        this.renderLeaderboard();
+        MORI_APP.showToast('📊 Таблица лидеров обновлена', 'success');
+    });
+}
+
     // Выбор темы в настройках
 document.querySelectorAll('.theme-option').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1116,8 +1162,29 @@ document.querySelectorAll('.delete-whale').forEach(btn => {
     },
 
     destroy: function() {
+        this.stopLeaderboardAutoUpdate();
         console.log('👤 MORI_PROFILE уничтожен');
+    },
+
+    // Автообновление лидерборда
+startLeaderboardAutoUpdate: function() {
+    if (this.leaderboardUpdateTimer) clearInterval(this.leaderboardUpdateTimer);
+    
+    this.leaderboardUpdateTimer = setInterval(() => {
+        if (this.state.activeTab === 'leaderboard') {
+            console.log('🔄 Автообновление лидерборда...');
+            this.renderLeaderboard();
+        }
+    }, 3600000); // 1 час
+},
+
+stopLeaderboardAutoUpdate: function() {
+    if (this.leaderboardUpdateTimer) {
+        clearInterval(this.leaderboardUpdateTimer);
+        this.leaderboardUpdateTimer = null;
     }
+},
+
 };
 
 window.MORI_PROFILE = MORI_PROFILE;
