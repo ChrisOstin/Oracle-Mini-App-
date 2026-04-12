@@ -324,7 +324,7 @@ setupPopstateHandler: function() {
     },
 
     handleHashChange: function() {
-        let screen = window.location.hash.slice(1) || 'dashboard';
+        let screen = window.location.hash.slice(1) || 'portfolio';
         screen = screen.split('?')[0];
         this.navigate(screen);
     },
