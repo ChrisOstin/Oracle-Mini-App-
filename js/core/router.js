@@ -42,7 +42,8 @@ const MORI_ROUTER = {
             title: 'Библиотека',
             module: 'MORI_LIBRARY',
             guard: 'user',
-            icon: '📚'
+            icon: '📚',
+            id: 'library'
         },
         profile: {
             title: 'Профиль',
