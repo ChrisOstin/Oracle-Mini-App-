@@ -940,6 +940,40 @@ style.textContent = `
 
 document.head.appendChild(style);
 
+// Модальное окно вместо confirm
+MORI_APP.customConfirm = function(options) {
+    return new Promise((resolve) => {
+        const title = options.title || 'Подтверждение';
+        const message = options.message || 'Вы уверены?';
+        const confirmText = options.confirmText || 'Да';
+        const cancelText = options.cancelText || 'Нет';
+        const icon = options.icon || '❓';
+
+        const oldModal = document.querySelector('.mori-modal');
+        if (oldModal) oldModal.remove();
+
+        const modal = document.createElement('div');
+        modal.className = 'mori-modal';
+        modal.innerHTML = `
+            <div class="mori-modal-content">
+                <div class="mori-modal-icon">${icon}</div>
+                <div class="mori-modal-title">${title}</div>
+                <div class="mori-modal-message">${message}</div>
+                <div class="mori-modal-buttons">
+                    <button class="mori-modal-btn cancel">${cancelText}</button>
+                    <button class="mori-modal-btn confirm">${confirmText}</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        modal.querySelector('.confirm').onclick = () => { modal.remove(); resolve(true); };
+        modal.querySelector('.cancel').onclick = () => { modal.remove(); resolve(false); };
+        modal.onclick = (e) => { if (e.target === modal) { modal.remove(); resolve(false); } };
+    });
+};
+
 // ========== ЗАПУСК ==========
 window.MORI_APP = MORI_APP;
 

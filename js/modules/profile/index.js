@@ -1016,8 +1016,15 @@ document.querySelectorAll('.theme-option').forEach(btn => {
 setTimeout(() => {
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
-        logoutBtn.onclick = () => {
-            if (confirm('Вы уверены, что хотите выйти?')) {
+        logoutBtn.onclick = async () => {
+            const result = await MORI_APP.customConfirm({
+                title: 'Выход',
+                message: 'Вы уверены, что хотите выйти?',
+                confirmText: 'Выйти',
+                cancelText: 'Отмена',
+                icon: '🚪'
+            });
+            if (result) {
                 MORI_AUTH.logout();
             }
         };
@@ -1026,39 +1033,36 @@ setTimeout(() => {
     }
 }, 500);
 
-    
-// Кнопка выхода (с задержкой)
-setTimeout(() => {
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.onclick = () => {
-            if (confirm('Вы уверены, что хотите выйти?')) {
+// Кнопка удаления аккаунта (без задержки)
+const deleteBtn = document.getElementById('delete-account-btn');
+if (deleteBtn) {
+    deleteBtn.onclick = async () => {
+        const result = await MORI_APP.customConfirm({
+            title: '⚠️ Удаление аккаунта',
+            message: 'Вы уверены, что хотите удалить аккаунт? Все данные будут потеряны без возможности восстановления.',
+            confirmText: 'Удалить',
+            cancelText: 'Отмена',
+            icon: '🗑️'
+        });
+        if (result) {
+            const secondResult = await MORI_APP.customConfirm({
+                title: 'Подтверждение',
+                message: 'Это действие необратимо. Удалить аккаунт?',
+                confirmText: 'Да, удалить',
+                cancelText: 'Нет',
+                icon: '⚠️'
+            });
+            if (secondResult) {
+                const currentUser = JSON.parse(localStorage.getItem('mori_user'));
+                const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+                const updatedUsers = users.filter(u => u.id !== currentUser.id);
+                localStorage.setItem('mori_users', JSON.stringify(updatedUsers));
                 MORI_AUTH.logout();
+                setTimeout(() => location.reload(), 500);
             }
-        };
-    } else {
-        console.log('Кнопка выхода не найдена');
-    }
-}, 500);
-
-
-   // Кнопка удаления аккаунта (без задержки)
-   const deleteBtn = document.getElementById('delete-account-btn');
-   if (deleteBtn) {
-       deleteBtn.onclick = () => {
-           if (confirm('⚠️ ВНИМАНИЕ! Вы уверены, что хотите УДАЛИТЬ аккаунт?\n\nВсе данные будут потеряны без возможности восстановления.')) {
-               if (confirm('Это действие необратимо. Удалить аккаунт?')) {
-                   const currentUser = JSON.parse(localStorage.getItem('mori_user'));
-                   const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
-                   const updatedUsers = users.filter(u => u.id !== currentUser.id);
-                   localStorage.setItem('mori_users', JSON.stringify(updatedUsers));
-                   MORI_AUTH.logout();
-                   setTimeout(() => location.reload(), 500);
-               }
-           }
-       };
-   }
-
+        }
+    };
+}
 
     // Админ-панель: управление китами
 const addWhaleBtn = document.getElementById('add-whale-btn');

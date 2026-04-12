@@ -69,6 +69,99 @@
     }
 }
    
+/* MORI модальное окно */
+.mori-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+.mori-modal-content {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 1px solid #ffd700;
+    border-radius: 24px;
+    padding: 24px 20px;
+    max-width: 320px;
+    width: 85%;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+    animation: slideUp 0.2s ease;
+}
+
+.mori-modal-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.mori-modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 12px;
+}
+
+.mori-modal-message {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+.mori-modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.mori-modal-btn {
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.mori-modal-btn.confirm {
+    background: #ffd700;
+    color: #000;
+}
+
+.mori-modal-btn.confirm:hover {
+    background: #ffed4a;
+    transform: scale(1.02);
+}
+
+.mori-modal-btn.cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mori-modal-btn.cancel:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
     </style>
 </head>
 <body>
