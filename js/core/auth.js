@@ -108,7 +108,7 @@ const MORI_AUTH = {
     }
 
     // Ищем пользователя в localStorage
-    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    let users = JSON.parse(localStorage.getItem('mori_users') || '[]');
     const user = users.find(u => u.nickname === nickname);
 
     if (!user) {
