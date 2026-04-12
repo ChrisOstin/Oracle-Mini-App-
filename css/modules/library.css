@@ -115,7 +115,7 @@
 .filter-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
     max-height: none;
     overflow-y: visible;
 }
