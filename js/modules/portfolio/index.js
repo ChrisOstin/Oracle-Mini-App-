@@ -185,7 +185,7 @@ const MORI_PORTFOLIO = {
                            class="mori-link">
                             🔍 Наблюдать за графиком в DexScreener
                         </a>
-                        <div class="stat-sub">(там всё по-настоящему)</div>
+                        <div class="stat-sub">(Следи за захватом мира)</div>
                     </div>
                 </div>
             </div>
