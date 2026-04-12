@@ -152,7 +152,7 @@ const MORI_PORTFOLIO = {
                 </div>
 
                 <div class="about-section">
-                    <h3>🎭 Секретные материалы профессора Мориарти</h3>
+                    <h3 style="white-space: nowrap;">🎭 Секретные материалы профессора Мориарти</h3>
                     <div class="about-grid">
                         <div class="about-item">
                             <div class="about-label">Токен</div>
