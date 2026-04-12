@@ -177,7 +177,16 @@ const MORI_PORTFOLIO = {
                             <div class="stat-sub">по объёму за 24ч</div>
                         </div>
                     </div>
-        
+                   
+                    <div class="about-item">
+                        <div class="about-label">🌐 Сайт</div>
+                        <div class="about-value">
+                            <a href="https://morico.in" target="_blank" rel="noopener noreferrer" style="color: #ffd700; text-decoration: none; font-size: 12px;">
+                                morico.in ↗
+                            </a>
+                        </div>
+                    </div>
+
                     <div class="dexscreener-link">
                         <a href="https://dexscreener.com/solana/8ZHE4ow1a2jjxuoMfyExuNamQNALv5ekZhsBn5nMDf5e" 
                            target="_blank" 
