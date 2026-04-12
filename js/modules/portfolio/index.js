@@ -868,7 +868,7 @@ renderWhalesList: function() {
             changeEl.className = `price-change ${changeClass}`;
         }
     }
-}
+},
 
     // Получить ранг токена на DexScreener
 fetchTokenRank: async function() {
@@ -882,7 +882,8 @@ fetchTokenRank: async function() {
     } catch (error) {
         document.getElementById('mori-rank').textContent = '#??? (тайна)';
     }
-},
+
+  }
 
 };
 
