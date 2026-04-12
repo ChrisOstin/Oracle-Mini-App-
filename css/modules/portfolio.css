@@ -663,135 +663,199 @@
     opacity: 1 !important;
 }
 
-/* ===== СЕКЦИЯ "О MORI" В СТИЛЕ ПРОФЕССОРА МОРИАРТИ ===== */
+/* ===== СЕКЦИЯ "О MORI" — СТИЛЬ ПРОФЕССОРА МОРИАРТИ ===== */
 
-/* Стили для всей секции */
 .info-section {
-    margin-top: 20px;
-    padding: 16px;
-    background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(20,20,20,0.8) 100%);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 20px;
-    backdrop-filter: blur(4px);
+    margin-top: 24px;
+    padding: 20px 16px;
+    background: linear-gradient(145deg, rgba(0,0,0,0.85) 0%, rgba(20,15,5,0.9) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 28px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,215,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.info-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4af37, #ffd700, #d4af37, transparent);
 }
 
 /* Сетка статистики */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 14px;
+    margin-bottom: 24px;
 }
 
 .stat-card {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 16px;
-    padding: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    padding: 14px 8px;
     text-align: center;
-    border: 1px solid rgba(255, 215, 0, 0.15);
-    transition: all 0.2s;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
 }
 
 .stat-card:hover {
-    border-color: rgba(255, 215, 0, 0.4);
-    transform: translateY(-2px);
+    border-color: rgba(212, 175, 55, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
 .stat-label {
-    font-size: 11px;
-    color: #888;
+    font-size: 10px;
+    color: #9a8c5c;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    font-weight: 400;
 }
 
 .stat-value {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 700;
     color: #ffd700;
+    text-shadow: 0 0 5px rgba(255,215,0,0.3);
+    letter-spacing: 0.5px;
 }
 
 /* Секция "О токене" */
 .about-section {
-    border-top: 1px solid rgba(255, 215, 0, 0.2);
-    padding-top: 16px;
+    border-top: 1px solid rgba(212, 175, 55, 0.25);
+    padding-top: 20px;
     margin-top: 8px;
 }
 
 .about-section h3 {
-    font-size: 14px;
-    color: #ffd700;
+    font-size: 13px;
+    color: #d4af37;
     text-align: center;
-    margin-bottom: 12px;
-    letter-spacing: 1px;
+    margin-bottom: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+}
+
+.about-section h3::before,
+.about-section h3::after {
+    content: "✦";
+    color: #d4af37;
+    font-size: 10px;
+    margin: 0 10px;
+    opacity: 0.6;
 }
 
 .about-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
 .about-item {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    padding: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 16px;
+    padding: 12px 8px;
     text-align: center;
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    transition: all 0.2s;
+}
+
+.about-item:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    background: rgba(212, 175, 55, 0.03);
 }
 
 .about-label {
-    font-size: 10px;
-    color: #888;
-    margin-bottom: 4px;
+    font-size: 9px;
+    color: #8a7a4a;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
 }
 
 .about-value {
     font-size: 13px;
     font-weight: 600;
-    color: #fff;
+    color: #e8d5a8;
 }
 
 /* Ссылка на DexScreener */
 .dexscreener-link {
     text-align: center;
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 215, 0, 0.15);
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .dexscreener-link a {
-    color: #ffd700;
+    color: #d4af37;
     text-decoration: none;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: all 0.2s;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    background: rgba(212, 175, 55, 0.08);
+    padding: 8px 18px;
+    border-radius: 40px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
 }
 
 .dexscreener-link a:hover {
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-    transform: translateX(3px);
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+    transform: translateY(-2px);
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
 }
 
-/* Адаптация под маленькие экраны */
+/* Адаптация под телефоны */
 @media (max-width: 480px) {
+    .info-section {
+        padding: 16px 12px;
+    }
+    
     .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        gap: 10px;
     }
     
     .stat-value {
-        font-size: 13px;
+        font-size: 14px;
     }
     
-    .about-grid {
-        gap: 8px;
+    .stat-label {
+        font-size: 9px;
+        letter-spacing: 1px;
     }
     
     .about-value {
         font-size: 11px;
+    }
+    
+    .about-label {
+        font-size: 8px;
+    }
+    
+    .about-section h3 {
+        font-size: 11px;
+        letter-spacing: 2px;
+    }
+    
+    .about-section h3::before,
+    .about-section h3::after {
+        font-size: 8px;
     }
 }
