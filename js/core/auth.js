@@ -144,7 +144,7 @@ const MORI_AUTH = {
     localStorage.setItem('mori_game_balance', user.game_balance || 0);
 
     // Синхронизируем game_balance с mori_users
-    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    users = JSON.parse(localStorage.getItem('mori_users') || '[]');
     const userIndex = users.findIndex(u => u.id === user.id);
     if (userIndex !== -1) {
         const savedGameBalance = localStorage.getItem('mori_game_balance');
