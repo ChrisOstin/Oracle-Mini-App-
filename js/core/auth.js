@@ -138,6 +138,22 @@ const MORI_AUTH = {
     MORI_APP.currentUser = user;
     MORI_APP.accessLevel = accessLevel;
 
+
+    // Сохраняем балансы для отображения в профиле
+    localStorage.setItem('mori_real_balance', user.real_balance);
+    localStorage.setItem('mori_game_balance', user.game_balance || 0);
+
+    // Синхронизируем game_balance с mori_users
+    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    const userIndex = users.findIndex(u => u.id === user.id);
+    if (userIndex !== -1) {
+        const savedGameBalance = localStorage.getItem('mori_game_balance');
+        if (savedGameBalance !== null && parseFloat(savedGameBalance) !== users[userIndex].game_balance) {
+            users[userIndex].game_balance = parseFloat(savedGameBalance);
+            localStorage.setItem('mori_users', JSON.stringify(users));
+        }
+    }
+
     // Разблокируем все темы для админа
     if (MORI_APP.accessLevel === 'admin' && window.MORI_THEMES) {
         MORI_THEMES.list.forEach(theme => {
@@ -148,10 +164,6 @@ const MORI_AUTH = {
         MORI_THEMES.save();
         console.log('👑 Админ: все темы разблокированы');
     }
-
-    // Сохраняем балансы для отображения в профиле
-    localStorage.setItem('mori_real_balance', user.real_balance);
-    localStorage.setItem('mori_game_balance', user.game_balance || 0);
 
     // Запускаем таймер обновления токена
     this.startTokenRefresh();
