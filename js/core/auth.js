@@ -471,7 +471,7 @@ setUserSession: function(user) {
         return false;
     }
 
-    const users = JSON.parse(localStorage.getItem('mori_users') || '[]');
+    users = JSON.parse(localStorage.getItem('mori_users') || '[]');
     const existingUser = users.find(u => u.nickname === nickname);
 
     if (existingUser) {
