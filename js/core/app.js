@@ -225,6 +225,28 @@ pulse: function(element, duration = 1000) {
             this.transition(this.states.ERROR);
             this.handleError('Инициализация', error);
         }
+    
+    // Обработчик кнопки "Назад" на телефоне
+window.addEventListener('popstate', (e) => {
+    e.preventDefault();
+    if (window.MORI_ROUTER && MORI_ROUTER.goBack) {
+        MORI_ROUTER.goBack();
+    } else if (window.MORI_ROUTER && MORI_ROUTER.navigate) {
+        // Если нет goBack, возвращаемся на предыдущий экран
+        const prevScreen = localStorage.getItem('last_screen') || 'dashboard';
+        MORI_ROUTER.navigate(prevScreen);
+    }
+});
+
+// Сохраняем текущий экран перед переходом
+const originalNavigate = MORI_ROUTER?.navigate;
+if (originalNavigate) {
+    MORI_ROUTER.navigate = function(screenId, options) {
+        localStorage.setItem('last_screen', this.currentScreen || 'dashboard');
+        return originalNavigate.call(this, screenId, options);
+    };
+}
+
     },
 
     showDetailedLoading: function() {
