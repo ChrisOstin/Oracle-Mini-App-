@@ -17,7 +17,8 @@ const MORI_ROUTER = {
             title: 'Главная',
             module: 'MORI_DASHBOARD',
             guard: 'user',
-            icon: '🏠'
+            icon: '🏠',
+            id: 'dashboard'
         },
         portfolio: {
             module: 'MORI_PORTFOLIO',
