@@ -1052,3 +1052,11 @@ mark.search-highlight {
     cursor: pointer;
     color: #d4af37;
 }
+
+.library-filters {
+    overflow: visible;
+}
+
+.filter-group {
+    overflow: visible;
+}
