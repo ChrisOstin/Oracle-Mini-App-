@@ -545,6 +545,15 @@ if (originalNavigate) {
 
     startApp: function() {
         console.log('▶️ Запуск приложения...');
+
+        // Если localStorage пуст, но sessionStorage есть — восстанавливаем
+if (!localStorage.getItem('last_screen') && sessionStorage.getItem('last_screen_backup')) {
+    console.log('🔄 Восстанавливаем сессию из sessionStorage');
+    localStorage.setItem('last_screen', sessionStorage.getItem('last_screen_backup'));
+    localStorage.setItem('mori_user', sessionStorage.getItem('mori_user_backup'));
+    localStorage.setItem('mori_level', sessionStorage.getItem('mori_level_backup'));
+}
+
         this.runHooks('beforeStart');
         this.transition(this.states.RUNNING);
         this.state.appReady = true;

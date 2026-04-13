@@ -186,6 +186,11 @@ localStorage.setItem('mori_level', accessLevel);
     // Устанавливаем портфель как экран по умолчанию после входа
 localStorage.setItem('last_screen', 'portfolio');
 
+// Дублируем в sessionStorage на случай очистки localStorage
+sessionStorage.setItem('mori_user_backup', JSON.stringify(user));
+sessionStorage.setItem('mori_level_backup', accessLevel);
+sessionStorage.setItem('last_screen_backup', 'portfolio');
+
     MORI_APP.startApp();
     return true;
 },
