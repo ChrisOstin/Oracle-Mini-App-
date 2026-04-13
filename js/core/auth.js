@@ -181,6 +181,10 @@ const MORI_AUTH = {
     MORI_API.clearUserCache();
 
     MORI_APP.showToast(`👋 С возвращением, ${nickname}!`, 'success');
+
+    // Устанавливаем портфель как экран по умолчанию после входа
+localStorage.setItem('last_screen', 'portfolio');
+
     MORI_APP.startApp();
     return true;
 },
