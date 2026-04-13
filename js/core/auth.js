@@ -556,12 +556,15 @@ localStorage.removeItem('mori_level');
     }
 
     this.setUserSession(newUser);
-    MORI_APP.showToast(`✅ Добро пожаловать, ${nickname}!`, 'success');
-    
-    // Принудительно сохраняем game_balance в localStorage
-    localStorage.setItem('mori_game_balance', newUser.game_balance);
+MORI_APP.showToast(`✅ Добро пожаловать, ${nickname}!`, 'success');
 
-    MORI_APP.startApp();
+// Принудительно сохраняем game_balance в localStorage
+localStorage.setItem('mori_game_balance', newUser.game_balance);
+
+// Устанавливаем портфель как экран по умолчанию после регистрации
+localStorage.setItem('last_screen', 'portfolio');
+
+MORI_APP.startApp();
   
     // Напоминание о бонусе после регистрации
     setTimeout(() => {
