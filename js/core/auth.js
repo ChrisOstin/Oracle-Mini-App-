@@ -514,8 +514,9 @@ localStorage.removeItem('mori_level');
     };
 
     let bonusGiven = false;
+    let inviter = null;
     if (refCode) {
-        const inviter = users.find(u => u.referral_code === refCode);
+        inviter = users.find(u => u.referral_code === refCode);
         if (inviter && inviter.nickname !== nickname) {
             const today = new Date().toDateString();
             if (inviter.referral_last_date !== today) {
