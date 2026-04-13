@@ -96,7 +96,9 @@
 }
 
 .filter-group {
-    margin-bottom: 12px;
+    margin-bottom: 6px;
+    overflow: visible;
+    max-height: none;
 }
 
 .filter-group:last-child {
@@ -117,8 +119,7 @@
     flex-wrap: wrap;
     gap: 6px;
     max-height: none;
-    overflow-y: visible;
-    overflow-x: visible;
+    overflow: visible;
 }
 
 .filter-btn {
