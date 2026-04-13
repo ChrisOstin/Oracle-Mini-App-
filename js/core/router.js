@@ -339,6 +339,10 @@ setupPopstateHandler: function() {
         localStorage.setItem('nav_history', JSON.stringify(this.history));
     }
 
+        // Сохраняем текущий экран
+this.currentScreen = screenId;
+localStorage.setItem('last_screen', screenId);
+
         const icon = document.querySelector('.theme-icon');
         if (icon) {
             icon.style.visibility = 'hidden';
