@@ -584,13 +584,15 @@
 }
 
 .filter-group-content {
-    max-height: 200px;
+    max-height: 500px;
     overflow: hidden;
     transition: max-height 0.3s ease;
 }
 
 .filter-group-content.collapsed {
-    max-height: 0;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* Адаптация для мобильных */
