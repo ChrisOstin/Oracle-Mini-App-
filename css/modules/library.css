@@ -118,8 +118,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    max-height: none;
-    overflow: visible;
+    overflow-x: visible;
+    overflow-y: visible;
 }
 
 .filter-btn {
@@ -477,25 +477,25 @@
 @media (max-width: 480px) {
     .books-grid {
         grid-template-columns: 1fr;
-    }
+}
     
-    .filter-buttons {
-        max-height: 80px;
-        overflow-y: auto;
-    }
+.filter-buttons {
+    max-height: none;
+    overflow-y: visible;
+}
     
-    .book-actions {
-        flex-direction: column;
-    }
+.book-actions {
+    flex-direction: column;
+}
     
-    .books-list .book-card {
-        flex-wrap: wrap;
-    }
+.books-list .book-card {
+    flex-wrap: wrap;
+}
     
-    .books-list .book-actions {
-        width: 100%;
-        margin-top: 8px;
-    }
+.books-list .book-actions {
+    width: 100%;
+    margin-top: 8px;
+    
 }
 
 /* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ===== */
@@ -1068,4 +1068,13 @@ mark.search-highlight {
     overflow-y: visible !important;
     overflow-x: visible !important;
     max-height: none !important;
+}
+
+.filter-buttons {
+    flex-wrap: wrap !important;
+    white-space: normal !important;
+}
+
+.filter-btn {
+    white-space: nowrap;
 }
