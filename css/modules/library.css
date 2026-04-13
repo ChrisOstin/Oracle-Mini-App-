@@ -1061,3 +1061,11 @@ mark.search-highlight {
 .filter-group {
     overflow: visible;
 }
+
+.filter-buttons,
+.filter-group-content,
+.library-filters {
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+    max-height: none !important;
+}
