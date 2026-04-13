@@ -169,7 +169,16 @@ const MORI_PROFILE = {
         
         MORI_APP.showToast(`🎁 Получено ${totalBonus} MORI Coin! Серия: ${streak} дней`, 'success');
         this.render();
+       
+        // Блокируем кнопку после получения
+const bonusBtn = document.getElementById('daily-bonus-btn');
+if (bonusBtn) {
+    bonusBtn.disabled = true;
+    bonusBtn.classList.add('claimed');
+}
+
         return true;
+
     },
 
     addReferral: function() {
@@ -378,7 +387,7 @@ const MORI_PROFILE = {
                         <span>🎁 Дневной бонус</span>
                         <span class="streak-badge">🔥 Серия: ${this.state.streak} дней</span>
                     </div>
-                    <button class="daily-bonus-btn" id="daily-bonus-btn">Забрать бонус</button>
+                    <button class="daily-bonus-btn" id="daily-bonus-btn" ${this.isBonusAvailable() ? '' : 'disabled'}>${this.isBonusAvailable() ? 'Забрать бонус' : 'Бонус получен'}</button>
                 </div>
                 ${(MORI_APP?.accessLevel === 'admin' || this.state.user.access_level === 'admin') ? `
 <div class="admin-panel">
@@ -1058,6 +1067,7 @@ document.querySelectorAll('.theme-option').forEach(btn => {
     });
 });
 
+
 // Кнопка выхода (с задержкой)
 setTimeout(() => {
     const logoutBtn = document.getElementById('logout-btn');
@@ -1165,6 +1175,12 @@ document.querySelectorAll('.delete-whale').forEach(btn => {
         this.stopLeaderboardAutoUpdate();
         console.log('👤 MORI_PROFILE уничтожен');
     },
+
+isBonusAvailable: function() {
+    const lastClaim = localStorage.getItem('daily_last');
+    const today = new Date().toDateString();
+    return lastClaim !== today;
+},
 
     // Автообновление лидерборда
 startLeaderboardAutoUpdate: function() {

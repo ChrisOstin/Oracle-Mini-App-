@@ -1698,3 +1698,11 @@ input:checked + .slider:before {
         padding: 2px 8px;
     }
 }
+
+.daily-bonus-btn.claimed,
+.daily-bonus-btn:disabled {
+    background: #555 !important;
+    color: #aaa !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
