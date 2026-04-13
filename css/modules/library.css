@@ -593,13 +593,14 @@
     max-height: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
+    visibility: hidden;
 }
 
 /* Адаптация для мобильных */
 @media (max-width: 480px) {
     .filter-group-content {
-        max-height: 300px;
-        overflow-y: auto;
+        max-height: 500px;
+        overflow: hidden;
     }
 }
 
