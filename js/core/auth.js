@@ -63,9 +63,9 @@ const MORI_AUTH = {
                 MORI_APP.currentUser = response.user;
                 MORI_APP.accessLevel = response.user.access_level;
                 
-                // Сохраняем в sessionStorage для восстановления
-                sessionStorage.setItem('mori_user', JSON.stringify(response.user));
-                sessionStorage.setItem('mori_level', response.user.access_level);
+// Стало
+localStorage.setItem('mori_user_session', JSON.stringify(response.user));
+localStorage.setItem('mori_level', response.user.access_level);
                 
                 console.log('✅ Сессия активна:', MORI_APP.accessLevel);
                 
@@ -84,9 +84,9 @@ const MORI_AUTH = {
         } catch (error) {
             console.error('❌ Ошибка проверки сессии:', error);
             
-            // Если ошибка соединения, пробуем восстановить из sessionStorage
-            const savedUser = sessionStorage.getItem('mori_user');
-            const savedLevel = sessionStorage.getItem('mori_level');
+// Стало
+const savedUser = localStorage.getItem('mori_user_session');
+const savedLevel = localStorage.getItem('mori_level');
             
             if (savedUser && savedLevel) {
                 MORI_APP.currentUser = JSON.parse(savedUser);
@@ -133,8 +133,9 @@ const MORI_AUTH = {
     this.session = { user: user };
     localStorage.setItem('mori_token', 'token_' + user.id);
     localStorage.setItem('mori_user', JSON.stringify(user));
-    sessionStorage.setItem('mori_user', JSON.stringify(user));
-    sessionStorage.setItem('mori_level', accessLevel);
+// Стало
+localStorage.setItem('mori_user_session', JSON.stringify(user));
+localStorage.setItem('mori_level', accessLevel);
     MORI_APP.currentUser = user;
     MORI_APP.accessLevel = accessLevel;
 
@@ -193,8 +194,8 @@ setUserSession: function(user) {
     this.session = { user: user };
     localStorage.setItem('mori_token', 'token_' + user.id);
     localStorage.setItem('mori_user', JSON.stringify(user));
-    sessionStorage.setItem('mori_user', JSON.stringify(user));
-    sessionStorage.setItem('mori_level', user.access_level);
+    localStorage.setItem('mori_user_session', JSON.stringify(user));
+    localStorage.setItem('mori_level', user.access_level);
     MORI_APP.currentUser = user;
     MORI_APP.accessLevel = user.access_level;
 
@@ -352,15 +353,12 @@ setUserSession: function(user) {
     }
 
     // Очищаем localStorage
-    localStorage.removeItem('mori_token');
-    localStorage.removeItem('last_screen');
-    localStorage.removeItem('mori_user');
-    localStorage.removeItem('mori_real_balance');
-    localStorage.removeItem('mori_game_balance');
-
-    // Очищаем sessionStorage
-    sessionStorage.removeItem('mori_user');
-    sessionStorage.removeItem('mori_level');
+localStorage.removeItem('mori_token');
+localStorage.removeItem('last_screen');
+localStorage.removeItem('mori_user');
+localStorage.removeItem('mori_user_session');
+localStorage.removeItem('mori_level');
+// Балансы НЕ удаляем
 
     // Сбрасываем состояние
     this.session = null;
