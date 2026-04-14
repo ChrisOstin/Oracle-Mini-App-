@@ -163,6 +163,47 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* Анимация кнопок входа и регистрации — финальный вариант */
+.auth-btn {
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+    animation: gentleGlow 2s ease-in-out infinite !important;
+    background: linear-gradient(135deg, #d4af37, #b8960c) !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 30px !important;
+    cursor: pointer !important;
+}
+
+.auth-btn::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), rgba(255, 215, 0, 0.6), rgba(255, 255, 255, 0.4), transparent) !important;
+    animation: shimmer 3s infinite !important;
+    pointer-events: none !important;
+}
+
+@keyframes gentleGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(212, 175, 55, 0.3), 0 0 10px rgba(212, 175, 55, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.6), 0 0 25px rgba(212, 175, 55, 0.3);
+    }
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
     </style>
 </head>
 <body>
