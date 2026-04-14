@@ -792,34 +792,29 @@
 
 /* Ссылка на DexScreener */
 .dexscreener-link {
-    text-align: center;
     margin-top: 20px;
     padding-top: 16px;
     border-top: 1px solid rgba(212, 175, 55, 0.2);
+    text-align: center;
 }
 
 .dexscreener-link a {
     color: #d4af37;
     text-decoration: none;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    background: rgba(212, 175, 55, 0.08);
-    padding: 8px 18px;
-    border-radius: 40px;
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    font-weight: 600;
+    font-size: 12px;
+    display: block;
+    width: 100%;
+    background: rgba(212, 175, 55, 0.1);
+    padding: 10px 0;
+    border-radius: 30px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.2s;
 }
 
 .dexscreener-link a:hover {
     background: rgba(212, 175, 55, 0.2);
-    border-color: #d4af37;
     transform: translateY(-2px);
-    text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
 }
 
 /* Адаптация под телефоны */
