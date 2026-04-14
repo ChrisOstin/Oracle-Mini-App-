@@ -178,7 +178,6 @@ const MORI_PORTFOLIO = {
         <div class="about-label">САЙТ</div>
         <div class="about-value">
             <a href="https://morico.in" target="_blank" style="color:#ffd700; text-decoration:none;">morico.in ↗</a>
-                morico.in ↗
         </div>
     </div>
 
@@ -187,9 +186,8 @@ const MORI_PORTFOLIO = {
                            target="_blank" 
                            rel="noopener noreferrer"
                            class="mori-link">
-                            🔍 Наблюдать за графиком в DexScreener
+                            ⚔️ Следи за захватом мира
                         </a>
-                        <div class="stat-sub">(Следи за захватом мира)</div>
                     </div>
                 </div>
             </div>
