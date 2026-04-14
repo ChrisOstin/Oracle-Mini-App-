@@ -672,3 +672,52 @@ input, textarea, [contenteditable="true"] {
     -webkit-user-select: text;
     user-select: text;
 }
+
+/* Анимация для кнопок входа и регистрации */
+.auth-btn {
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+/* Свечение при наведении */
+.auth-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6), 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+/* Сдвиг при нажатии */
+.auth-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+}
+
+/* Дополнительно — фокус для клавиатуры */
+.auth-btn:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+/* Плавное появление кнопок */
+.auth-btn {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.auth-btn:first-of-type {
+    animation-delay: 0.1s;
+}
+
+.auth-btn:last-of-type {
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
