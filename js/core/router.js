@@ -507,7 +507,7 @@ localStorage.setItem('last_screen', screenId);
             <div class="auth-wrapper">
                 <div class="auth-container">
                     <div class="auth-logo">🎭</div>
-                    <h1 class="auth-title">MORI Oracle</h1>
+                    <div class="auth-title">MORI Oracle</div>
                     <p class="auth-subtitle">Введите данные</p>
 
                     <div class="auth-form">
@@ -594,7 +594,7 @@ localStorage.setItem('last_screen', screenId);
             <div class="auth-wrapper">
                 <div class="auth-container">
                     <div class="auth-logo">🎭</div>
-                    <h1 class="auth-title">MORI Oracle</h1>
+                    <div class="auth-title">MORI Oracle</div>
                     <p class="auth-subtitle">Зарегистрируйтесь</p>
 
                     <div class="auth-form">
