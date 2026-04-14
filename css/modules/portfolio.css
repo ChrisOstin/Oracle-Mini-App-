@@ -854,3 +854,8 @@
         font-size: 8px;
     }
 }
+
+/* Скрываем панель, которая находится внутри whales-section */
+.whales-section .bottom-nav {
+    display: none !important;
+}
