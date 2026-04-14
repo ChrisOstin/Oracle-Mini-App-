@@ -524,7 +524,7 @@ localStorage.setItem('last_screen', screenId);
                             <span>🚀 Войти</span>
                         </button>
                         <div class="auth-footer">
-                            <span class="auth-register-link" id="auth-register-link">🔹 Нет аккаунта? Создать</span>
+                            <span class="auth-register-link" id="auth-register-link">➕ Нет аккаунта? Создать</span>
                         </div>
                     </div>
                 </div>
@@ -610,7 +610,7 @@ localStorage.setItem('last_screen', screenId);
 
                         <div class="auth-input-group">
                             <input type="number" id="reg-real-balance" placeholder="Баланс $MORI" step="any">
-                            <span class="auth-input-icon">💰</span>
+                            <span class="auth-input-icon">🪙</span>
                         </div>
 
                         <div class="auth-input-group">
@@ -622,7 +622,7 @@ localStorage.setItem('last_screen', screenId);
                             <span>📝 Зарегистрироваться</span>
                         </button>
                         <div class="auth-footer">
-                            <span class="auth-login-link" id="auth-login-link">🔹 Уже есть аккаунт? Войти</span>
+                            <span class="auth-login-link" id="auth-login-link">🪪 Уже есть аккаунт? Войти</span>
                         </div>
                     </div>
                 </div>
