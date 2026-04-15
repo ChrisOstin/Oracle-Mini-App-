@@ -862,13 +862,16 @@
 }
 
 
-.dexscreener-link {
+.about-section .dexscreener-link {
     width: 100% !important;
     display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.dexscreener-link a {
+.about-section .dexscreener-link a {
     width: 100% !important;
     display: block !important;
     box-sizing: border-box !important;
+    text-align: center !important;
 }
