@@ -860,3 +860,15 @@
 .whales-section .bottom-nav {
     display: none !important;
 }
+
+
+.dexscreener-link {
+    width: 100% !important;
+    display: block !important;
+}
+
+.dexscreener-link a {
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+}
