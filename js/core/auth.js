@@ -192,6 +192,9 @@ sessionStorage.setItem('mori_level_backup', accessLevel);
 sessionStorage.setItem('last_screen_backup', 'portfolio');
 
     MORI_APP.startApp();
+    setTimeout(() => {
+        MORI_APP.showNavigation();
+    }, 300);
     return true;
 },
 
@@ -570,7 +573,10 @@ localStorage.setItem('mori_game_balance', newUser.game_balance);
 localStorage.setItem('last_screen', 'portfolio');
 
 MORI_APP.startApp();
-  
+setTimeout(() => {
+    MORI_APP.showNavigation();
+}, 300);
+
     // Напоминание о бонусе после регистрации
     setTimeout(() => {
         if (window.MORI_NOTIFICATIONS) {

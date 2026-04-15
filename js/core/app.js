@@ -857,7 +857,23 @@ if (!alreadyLogged) {
     },
 
 showNavigation: function() {
-    document.body.classList.add('user-authenticated');
+    // Ждём, пока DOM загрузится и элементы появятся
+    const waitForElements = () => {
+        const nav = document.getElementById('main-bottom-nav');
+        const leftBtn = document.querySelector('.floating-buttons-left');
+        const rightBtn = document.querySelector('.floating-buttons-right');
+        
+        if (nav && leftBtn && rightBtn) {
+            nav.style.display = 'flex';
+            leftBtn.style.display = 'block';
+            rightBtn.style.display = 'block';
+        } else {
+            // Если элементы не найдены, пробуем снова через 100мс
+            setTimeout(waitForElements, 100);
+        }
+    };
+    
+    waitForElements();
 },
 
     exportData: function() {
