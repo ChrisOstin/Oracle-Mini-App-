@@ -180,7 +180,7 @@ const MORI_PORTFOLIO = {
             <a href="https://morico.in" target="_blank" style="color:#ffd700; text-decoration:none;">morico.in ↗</a>
         </div>
     </div>
-
+</div>  <!-- Закрыли about-grid -->
                     <div class="dexscreener-link">
                         <a href="https://dexscreener.com/solana/8ZHE4ow1a2jjxuoMfyExuNamQNALv5ekZhsBn5nMDf5e" 
                            target="_blank" 
