@@ -199,9 +199,6 @@ const MORI_PORTFOLIO = {
                 </div>
             </div>
 
-            <div class="floating-buttons">
-                ${this.renderFloatingButtons()}
-            </div>
         `;
     },
 
@@ -253,15 +250,7 @@ const MORI_PORTFOLIO = {
         `).join('');
     },
 
-    renderFloatingButtons: function() {
-        const level = MORI_APP.accessLevel;
-        let buttons = '';
-        buttons += `<button class="floating-btn apps-btn" data-module="all-apps">📱</button>`;
-        if (level === 'family' || level === 'admin') {
-            buttons += `<button class="floating-btn house-btn" data-module="house">🏠</button>`;
-        }
-        return buttons;
-    },
+
 
     isModuleUnlocked: function(moduleId) {
         if (MORI_APP.accessLevel === 'admin') return true;
