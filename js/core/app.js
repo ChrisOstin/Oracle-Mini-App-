@@ -565,6 +565,10 @@ if (!localStorage.getItem('last_screen') && sessionStorage.getItem('last_screen_
             if (window.MORI_ROUTER) MORI_ROUTER.navigate(lastScreen);
         }
 
+        if (this.accessLevel !== 'guest') {
+            this.showNavigation();
+        }
+
         // Записываем активность пользователя при запуске
 const today = new Date().toDateString();
 let activityLog = JSON.parse(localStorage.getItem('user_activity') || '[]');
@@ -852,6 +856,15 @@ if (!alreadyLogged) {
         this.reload();
     },
 
+    showNavigation: function() {
+    const nav = document.getElementById('main-bottom-nav');
+    const leftBtn = document.querySelector('.floating-buttons-left');
+    const rightBtn = document.querySelector('.floating-buttons-right');
+    if (nav) nav.style.display = 'flex';
+    if (leftBtn) leftBtn.style.display = 'block';
+    if (rightBtn) rightBtn.style.display = 'block';
+},
+
     exportData: function() {
         const data = {
             version: this.version,
@@ -1003,6 +1016,7 @@ MORI_APP.customConfirm = function(options) {
         modal.querySelector('.cancel').onclick = () => { modal.remove(); resolve(false); };
         modal.onclick = (e) => { if (e.target === modal) { modal.remove(); resolve(false); } };
     });
+
 };
 
 // ========== ЗАПУСК ==========
