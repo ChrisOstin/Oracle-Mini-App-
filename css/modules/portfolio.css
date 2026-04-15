@@ -886,15 +886,6 @@
     border-top: none !important;
 }
 
-/* Декоративный конец секции */
-.section-end {
-    margin-top: 24px;
-}
-
-.end-line {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), rgba(212, 175, 55, 0.8), rgba(212, 175, 55, 0.5), transparent);
-}
 
 /* Отступ снизу, чтобы контент не перекрывался панелью навигации и плавающими кнопками */
 .portfolio-container,

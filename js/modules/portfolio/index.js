@@ -190,10 +190,6 @@ const MORI_PORTFOLIO = {
                         </a>
                     </div>
                 </div>
-            <!-- Декоративный конец секции -->
-<div class="section-end">
-    <div class="end-line"></div>
-</div>
             </div>
 
             <div class="whales-section">
