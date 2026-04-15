@@ -895,3 +895,17 @@
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), rgba(212, 175, 55, 0.8), rgba(212, 175, 55, 0.5), transparent);
 }
+
+/* Отступ снизу, чтобы контент не перекрывался панелью навигации и плавающими кнопками */
+.portfolio-container,
+#portfolio-content {
+    padding-bottom: 80px !important;
+}
+
+/* Для мобильных — чуть больше */
+@media (max-width: 480px) {
+    .portfolio-container,
+    #portfolio-content {
+        padding-bottom: 100px !important;
+    }
+}
