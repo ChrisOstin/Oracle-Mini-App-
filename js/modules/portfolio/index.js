@@ -497,6 +497,7 @@ if (expandBtn) {
             };
             this.setState(newData);
             MORI_STORAGE?.set(cacheKey, { data: newData, timestamp: Date.now() });
+            this.render();
         }
         await this.loadChartData(this.state.timeframe);
     } catch (error) {
