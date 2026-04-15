@@ -213,38 +213,6 @@
     white-space: nowrap !important;
 }
 
-/* Принудительно скрываем навигацию до авторизации */
-#main-bottom-nav,
-.floating-buttons-left,
-.floating-buttons-right {
-    display: none !important;
-}
-
-/* Класс для показа после авторизации */
-body.user-authenticated #main-bottom-nav,
-body.user-authenticated .floating-buttons-left,
-body.user-authenticated .floating-buttons-right {
-    display: flex !important;
-}
-
-body.user-authenticated .floating-buttons-left,
-body.user-authenticated .floating-buttons-right {
-    display: block !important;
-}
-
-#main-bottom-nav {
-    height: 60px !important;
-    min-height: 60px !important;
-}
-
-#main-bottom-nav .nav-btn {
-    height: 50px !important;
-    min-height: 50px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
 
     </style>
 </head>
@@ -270,9 +238,8 @@ body.user-authenticated .floating-buttons-right {
 <div class="module-title" id="mori-story-title" style="display: none;">MORI Story</div>
     <div id="app"></div>
 
-<!-- ПАНЕЛЬ НАВИГАЦИИ — ОРИГИНАЛЬНЫЙ СТИЛЬ -->
-<div id="force-bottom-nav" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.95); border-top: 2px solid #ffd700; box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.9); border-radius: 20px 20px 0 0; padding: 10px 0; z-index: 99999; display: flex; justify-content: space-around; align-items: center;">
-
+<!-- НОВАЯ ПАНЕЛЬ НАВИГАЦИИ -->
+<div id="new-bottom-nav" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #0a0a0a; border-top: 2px solid #ffd700; padding: 8px 0; z-index: 99999; justify-content: space-around; align-items: center;">
     <button class="nav-btn" data-module="portfolio" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #ffd700; font-size: 11px; cursor: pointer; padding: 4px 8px;">
         <span style="font-size: 20px; margin-bottom: 2px;">💼</span>
         <span>Портфель</span>
@@ -295,48 +262,13 @@ body.user-authenticated .floating-buttons-right {
     </button>
 </div>
 
-<!-- ПЛАВАЮЩИЕ КНОПКИ -->
-<div id="force-floating-left" style="display: none; position: fixed; bottom: 80px; left: 16px; z-index: 999999;">
-    <button class="floating-btn house-btn" data-module="house" style="width: 50px; height: 50px; border-radius: 50%; background: #ffd700; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">🏠</button>
+<!-- НОВЫЕ ПЛАВАЮЩИЕ КНОПКИ -->
+<div id="new-floating-left" style="display: none; position: fixed; bottom: 80px; left: 16px; z-index: 99999;">
+    <button class="floating-btn" data-module="house" style="width: 50px; height: 50px; border-radius: 50%; background: #ffd700; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">🏠</button>
 </div>
-<div id="force-floating-right" style="display: none; position: fixed; bottom: 80px; right: 16px; z-index: 999999;">
-    <button class="floating-btn apps-btn" data-module="all-apps" style="width: 50px; height: 50px; border-radius: 50%; background: #ffd700; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">📱</button>
+<div id="new-floating-right" style="display: none; position: fixed; bottom: 80px; right: 16px; z-index: 99999;">
+    <button class="floating-btn" data-module="all-apps" style="width: 50px; height: 50px; border-radius: 50%; background: #ffd700; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">📱</button>
 </div>
-
-<script>
-// Обработчик для панели навигации
-const forceNav = document.getElementById('force-bottom-nav');
-if (forceNav) {
-    forceNav.addEventListener('click', (e) => {
-        const btn = e.target.closest('.nav-btn');
-        if (btn && window.MORI_ROUTER) {
-            MORI_ROUTER.navigate(btn.dataset.module);
-        }
-    });
-}
-
-// Обработчик для плавающих кнопок
-const leftBtn = document.getElementById('force-floating-left');
-const rightBtn = document.getElementById('force-floating-right');
-
-if (leftBtn) {
-    leftBtn.addEventListener('click', (e) => {
-        const btn = e.target.closest('.floating-btn');
-        if (btn && window.MORI_ROUTER) {
-            MORI_ROUTER.navigate(btn.dataset.module);
-        }
-    });
-}
-
-if (rightBtn) {
-    rightBtn.addEventListener('click', (e) => {
-        const btn = e.target.closest('.floating-btn');
-        if (btn && window.MORI_ROUTER) {
-            MORI_ROUTER.navigate(btn.dataset.module);
-        }
-    });
-}
-</script>
 
 <!-- Контейнеры для всех модулей -->
 <div id="portfolio-content" class="module-container" style="display: none;"></div>
@@ -511,69 +443,41 @@ if (window.MORI_ROUTER) {
 </script>
 
 <script>
-// Обработчик для плавающих кнопок
-document.addEventListener('click', function(e) {
-    const btn = e.target.closest('.floating-btn');
-    if (btn) {
-        const module = btn.dataset.module;
-        if (window.MORI_ROUTER) {
-            MORI_ROUTER.navigate(module);
-        }
-    }
+// Показ панели после авторизации
+function showNewNavigation() {
+    const nav = document.getElementById('new-bottom-nav');
+    const leftBtn = document.getElementById('new-floating-left');
+    const rightBtn = document.getElementById('new-floating-right');
+    if (nav) nav.style.display = 'flex';
+    if (leftBtn) leftBtn.style.display = 'block';
+    if (rightBtn) rightBtn.style.display = 'block';
+}
+
+// Обработчики кликов
+document.getElementById('new-bottom-nav')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.nav-btn');
+    if (btn && window.MORI_ROUTER) MORI_ROUTER.navigate(btn.dataset.module);
 });
-</script>
+document.getElementById('new-floating-left')?.addEventListener('click', () => {
+    if (window.MORI_ROUTER) MORI_ROUTER.navigate('house');
+});
+document.getElementById('new-floating-right')?.addEventListener('click', () => {
+    if (window.MORI_ROUTER) MORI_ROUTER.navigate('all-apps');
+});
 
-
-<script>
-// Обработчик для плавающих кнопок
-const leftBtn = document.getElementById('force-floating-left');
-const rightBtn = document.getElementById('force-floating-right');
-
-if (leftBtn) {
-    leftBtn.addEventListener('click', (e) => {
-        const btn = e.target.closest('.floating-btn');
-        if (btn && window.MORI_ROUTER) {
-            MORI_ROUTER.navigate(btn.dataset.module);
-        }
+// Подсветка активной кнопки
+function updateActiveButton() {
+    const current = window.MORI_ROUTER?.currentScreen || 'portfolio';
+    document.querySelectorAll('#new-bottom-nav .nav-btn').forEach(btn => {
+        btn.style.color = btn.dataset.module === current ? '#ffd700' : '#888';
     });
 }
-
-if (rightBtn) {
-    rightBtn.addEventListener('click', (e) => {
-        const btn = e.target.closest('.floating-btn');
-        if (btn && window.MORI_ROUTER) {
-            MORI_ROUTER.navigate(btn.dataset.module);
-        }
-    });
-}
-
-
-</script>
-
-<script>
-// Функция обновления активной кнопки в панели
-function updateActiveNavButton() {
-    const currentScreen = window.MORI_ROUTER ? window.MORI_ROUTER.currentScreen : 'portfolio';
-    const buttons = document.querySelectorAll('#force-bottom-nav .nav-btn');
-    buttons.forEach(btn => {
-        const module = btn.dataset.module;
-        if (module === currentScreen) {
-            btn.style.color = '#ffd700';
-        } else {
-            btn.style.color = '#888';
-        }
-    });
-}
-
-// Обновляем при загрузке
-setTimeout(updateActiveNavButton, 500);
-
-// Обновляем при каждой навигации
+setTimeout(updateActiveButton, 500);
 if (window.MORI_ROUTER) {
-    const originalNavigate = MORI_ROUTER.navigate;
-    MORI_ROUTER.navigate = function(screenId, options) {
-        originalNavigate.call(this, screenId, options);
-        setTimeout(updateActiveNavButton, 100);
+    const orig = MORI_ROUTER.navigate;
+    MORI_ROUTER.navigate = function(screenId, opts) {
+        orig.call(this, screenId, opts);
+        setTimeout(updateActiveButton, 100);
     };
 }
 </script>

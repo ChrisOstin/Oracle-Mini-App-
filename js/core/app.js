@@ -857,24 +857,13 @@ if (!alreadyLogged) {
     },
 
 showNavigation: function() {
-    console.log('🟡 showNavigation вызвана');
-    
-    const waitForElements = () => {
-        const nav = document.getElementById('force-bottom-nav');
-        const leftBtn = document.getElementById('force-floating-left');
-        const rightBtn = document.getElementById('force-floating-right');
-
-        if (nav && leftBtn && rightBtn) {
-            nav.style.display = 'flex';
-            leftBtn.style.display = 'block';
-            rightBtn.style.display = 'block';
-            console.log('✅ Навигация и плавающие кнопки показаны');
-        } else {
-            setTimeout(waitForElements, 100);
-        }
-    };
-
-    waitForElements();
+    document.body.classList.add('user-authenticated');
+    const nav = document.getElementById('new-bottom-nav');
+    const left = document.getElementById('new-floating-left');
+    const right = document.getElementById('new-floating-right');
+    if (nav) nav.style.display = 'flex';
+    if (left) left.style.display = 'block';
+    if (right) right.style.display = 'block';
 },
 
     exportData: function() {
