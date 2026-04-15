@@ -863,10 +863,10 @@ fetchTokenRank: async function() {
         const data = await response.json();
         if (data.pairs && data.pairs[0]) {
             const rank = data.pairs[0].rank || Math.floor(Math.random() * 300) + 50;
-            document.getElementById('mori-rank').textContent = `#${rank} по объёму`;
+            document.getElementById('mori-rank-value').textContent = `#${rank} по объёму`;
         }
     } catch (error) {
-        document.getElementById('mori-rank').textContent = '#??? (тайна)';
+        document.getElementById('mori-rank-value').textContent = '#??? (тайна)';
     }
 
   }
