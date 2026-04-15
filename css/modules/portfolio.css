@@ -875,3 +875,13 @@
     box-sizing: border-box !important;
     text-align: center !important;
 }
+
+
+/* Убираем верхнюю линию у кнопки DexScreener */
+.dexscreener-link {
+    border-top: none !important;
+}
+
+.about-section .dexscreener-link {
+    border-top: none !important;
+}
