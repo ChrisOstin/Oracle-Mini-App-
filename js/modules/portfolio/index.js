@@ -147,7 +147,7 @@ const MORI_PORTFOLIO = {
                     <div class="stat-card">
                         <div class="stat-label">📊 FDV</div>
                         <div class="stat-value">$${MORI_UTILS.formatLargeNumber(this.state.fdv)}</div>
-                        <div class="stat-sub">Пооная стоимость монет</div>
+                        <div class="stat-sub">Полная стоимость монет</div>
                     </div>
                 </div>
 
