@@ -192,7 +192,7 @@ const MORI_PORTFOLIO = {
                 </div>
             </div>
 
-            <div class="whales-section">
+            <div class="whales-section" style="margin-bottom: 80px;">
                 <h3>Крупные держатели</h3>
                 <div id="whales-list" class="whales-list">
                     ${this.renderWhales()}
