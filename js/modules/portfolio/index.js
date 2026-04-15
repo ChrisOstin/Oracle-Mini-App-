@@ -192,11 +192,6 @@ const MORI_PORTFOLIO = {
                 </div>
             </div>
 
-            <!-- ПАНЕЛЬ НАВИГАЦИИ — ВСЕГДА ВНИЗУ -->
-            <div class="bottom-nav">
-                ${this.renderNavButtons()}
-            </div>
-
             <div class="whales-section">
                 <h3>Крупные держатели</h3>
                 <div id="whales-list" class="whales-list">

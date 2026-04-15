@@ -236,6 +236,52 @@
 <div class="module-title" id="retro-phone-title" style="display: none;">Ретро-телефон</div>
 <div class="module-title" id="mori-story-title" style="display: none;">MORI Story</div>
     <div id="app"></div>
+
+<!-- НОВАЯ ПОСТОЯННАЯ ПАНЕЛЬ НАВИГАЦИИ -->
+<div class="bottom-nav" id="main-bottom-nav">
+    <button class="nav-btn" data-module="portfolio">
+        <span class="nav-icon">💼</span>
+        <span class="nav-label">Портфель</span>
+    </button>
+    <button class="nav-btn" data-module="calculator">
+        <span class="nav-icon">🧮</span>
+        <span class="nav-label">Калькулятор</span>
+    </button>
+    <button class="nav-btn" data-module="library">
+        <span class="nav-icon">📚</span>
+        <span class="nav-label">Библиотека</span>
+    </button>
+    <button class="nav-btn" data-module="ai-chat">
+        <span class="nav-icon">🧠</span>
+        <span class="nav-label">AI</span>
+    </button>
+    <button class="nav-btn" data-module="profile">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Профиль</span>
+    </button>
+    <button class="nav-btn" data-module="house">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Дом</span>
+    </button>
+    <button class="nav-btn" data-module="all-apps">
+        <span class="nav-icon">📱</span>
+        <span class="nav-label">Все приложения</span>
+    </button>
+</div>
+
+<script>
+// Обработчик для новой панели навигации
+document.addEventListener('click', function(e) {
+    const btn = e.target.closest('#main-bottom-nav .nav-btn');
+    if (btn) {
+        const module = btn.dataset.module;
+        if (window.MORI_ROUTER) {
+            MORI_ROUTER.navigate(module);
+        }
+    }
+});
+</script>
+
 <!-- Контейнеры для всех модулей -->
 <div id="portfolio-content" class="module-container" style="display: none;"></div>
 <div id="calculator-content" class="module-container" style="display: none;"></div>
@@ -258,7 +304,7 @@
 <div id="mori-story-content" class="module-container" style="display: none;"></div>
 
 <!-- Глобальная панель навигации (скрыта до загрузки) -->
-<div class="bottom-nav" id="global-bottom-nav" style="display: flex;"></div>
+
 
 <script>
 function moveNavigationToGlobal() {
