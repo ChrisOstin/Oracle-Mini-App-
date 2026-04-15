@@ -279,28 +279,104 @@ body.user-authenticated .floating-buttons-right {
 </div>
 
 <!-- НОВАЯ ПОСТОЯННАЯ ПАНЕЛЬ НАВИГАЦИИ -->
-<div class="bottom-nav" id="main-bottom-nav" style="display: none;">
-    <button class="nav-btn" data-module="portfolio">
-        <span class="nav-icon">💼</span>
-        <span class="nav-label">Портфель</span>
+<!-- ТОЧНАЯ КОПИЯ ТВОЕЙ ПАНЕЛИ -->
+<div id="force-bottom-nav" style="
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    border-top: 2px solid #ffd700;
+    box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.9);
+    border-radius: 20px 20px 0 0;
+    padding: 10px 0;
+    z-index: 99999;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+">
+    <button class="nav-btn" data-module="portfolio" style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: transparent;
+        border: none;
+        color: #ffd700;
+        font-size: 11px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        transition: all 0.2s;
+    ">
+        <span style="font-size: 20px; margin-bottom: 2px;">💼</span>
+        <span>Портфель</span>
     </button>
-    <button class="nav-btn" data-module="calculator">
-        <span class="nav-icon">🧮</span>
-        <span class="nav-label">Калькулятор</span>
+    <button class="nav-btn" data-module="calculator" style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: transparent;
+        border: none;
+        color: #888;
+        font-size: 11px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        transition: all 0.2s;
+    ">
+        <span style="font-size: 20px; margin-bottom: 2px;">🧮</span>
+        <span>Калькулятор</span>
     </button>
-    <button class="nav-btn" data-module="library">
-        <span class="nav-icon">📚</span>
-        <span class="nav-label">Библиотека</span>
+    <button class="nav-btn" data-module="library" style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: transparent;
+        border: none;
+        color: #888;
+        font-size: 11px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        transition: all 0.2s;
+    ">
+        <span style="font-size: 20px; margin-bottom: 2px;">📚</span>
+        <span>Библиотека</span>
     </button>
-    <button class="nav-btn" data-module="ai-chat">
-        <span class="nav-icon">🧠</span>
-        <span class="nav-label">AI</span>
+    <button class="nav-btn" data-module="ai-chat" style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: transparent;
+        border: none;
+        color: #888;
+        font-size: 11px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        transition: all 0.2s;
+    ">
+        <span style="font-size: 20px; margin-bottom: 2px;">🧠</span>
+        <span>AI</span>
     </button>
-    <button class="nav-btn" data-module="profile">
-        <span class="nav-icon">👤</span>
-        <span class="nav-label">Профиль</span>
+    <button class="nav-btn" data-module="profile" style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: transparent;
+        border: none;
+        color: #888;
+        font-size: 11px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        transition: all 0.2s;
+    ">
+        <span style="font-size: 20px; margin-bottom: 2px;">👤</span>
+        <span>Профиль</span>
     </button>
 </div>
+
 
 <script>
 // Обработчик для новой панели навигации
