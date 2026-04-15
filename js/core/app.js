@@ -858,24 +858,22 @@ if (!alreadyLogged) {
 
 showNavigation: function() {
     console.log('🟡 showNavigation вызвана');
-    // Ждём, пока DOM загрузится и элементы появятся
+    
     const waitForElements = () => {
-        const nav = document.getElementById('main-bottom-nav');
-        console.log('Найдена панель:', nav);
-        const leftBtn = document.querySelector('.floating-buttons-left');
-        const rightBtn = document.querySelector('.floating-buttons-right');
-        
+        const nav = document.getElementById('force-bottom-nav');
+        const leftBtn = document.getElementById('force-floating-left');
+        const rightBtn = document.getElementById('force-floating-right');
+
         if (nav && leftBtn && rightBtn) {
             nav.style.display = 'flex';
-            console.log('display установлен в flex');
             leftBtn.style.display = 'block';
             rightBtn.style.display = 'block';
+            console.log('✅ Навигация и плавающие кнопки показаны');
         } else {
-            // Если элементы не найдены, пробуем снова через 100мс
             setTimeout(waitForElements, 100);
         }
     };
-    
+
     waitForElements();
 },
 
