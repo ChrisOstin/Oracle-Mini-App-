@@ -857,14 +857,17 @@ if (!alreadyLogged) {
     },
 
 showNavigation: function() {
+    console.log('🟡 showNavigation вызвана');
     // Ждём, пока DOM загрузится и элементы появятся
     const waitForElements = () => {
         const nav = document.getElementById('main-bottom-nav');
+        console.log('Найдена панель:', nav);
         const leftBtn = document.querySelector('.floating-buttons-left');
         const rightBtn = document.querySelector('.floating-buttons-right');
         
         if (nav && leftBtn && rightBtn) {
             nav.style.display = 'flex';
+            console.log('display установлен в flex');
             leftBtn.style.display = 'block';
             rightBtn.style.display = 'block';
         } else {

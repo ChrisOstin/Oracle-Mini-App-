@@ -193,7 +193,8 @@ sessionStorage.setItem('last_screen_backup', 'portfolio');
 
     MORI_APP.startApp();
     setTimeout(() => {
-        MORI_APP.showNavigation();
+    console.log('🟢 Вызов showNavigation после входа');
+    MORI_APP.showNavigation();
     }, 300);
     return true;
 },
