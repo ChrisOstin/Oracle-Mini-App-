@@ -182,13 +182,14 @@ const MORI_PORTFOLIO = {
     </div>
 </div>  <!-- Закрыли about-grid -->
                     <div class="dexscreener-link">
-                        <a href="https://dexscreener.com/solana/8ZHE4ow1a2jjxuoMfyExuNamQNALv5ekZhsBn5nMDf5e" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="mori-link">
-                            ⚔️ Следи за захватом мира
-                        </a>
-                    </div>
+    <a href="https://dexscreener.com/solana/8ZHE4ow1a2jjxuoMfyExuNamQNALv5ekZhsBn5nMDf5e"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="mori-link">
+        ⚔️ Следи за захватом мира
+        <span class="down-arrows"></span>
+    </a>
+</div>
                 </div>
             </div>
 
