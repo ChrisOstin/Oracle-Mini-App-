@@ -132,22 +132,22 @@ const MORI_PORTFOLIO = {
                     <div class="stat-card">
                         <div class="stat-label">🔍 Объём 24ч</div>
                         <div class="stat-value">$${MORI_UTILS.formatLargeNumber(this.state.volume24h)}</div>
-                        <div class="stat-sub">ликвидность рынка</div>
+                        <div class="stat-sub">Ликвидность рынка</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">💧 Ликвидность</div>
                         <div class="stat-value">$${MORI_UTILS.formatLargeNumber(this.state.liquidity)}</div>
-                        <div class="stat-sub">глубина стакана</div>
+                        <div class="stat-sub">Глубина стакана</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">🏦 Рыночная капа</div>
                         <div class="stat-value">$${MORI_UTILS.formatLargeNumber(this.state.marketCap)}</div>
-                        <div class="stat-sub">всего в обращении</div>
+                        <div class="stat-sub">Всего в обращении</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">📊 FDV</div>
                         <div class="stat-value">$${MORI_UTILS.formatLargeNumber(this.state.fdv)}</div>
-                        <div class="stat-sub">полная разводка</div>
+                        <div class="stat-sub">Пооная стоимость монет</div>
                     </div>
                 </div>
 

@@ -189,7 +189,7 @@
 .whales-section {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 16px;
+    padding: 0px;
     margin-bottom: 80px;
     max-height: 350px;
     overflow-y: auto;
