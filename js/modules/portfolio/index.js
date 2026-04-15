@@ -187,7 +187,6 @@ const MORI_PORTFOLIO = {
        rel="noopener noreferrer"
        class="mori-link">
         ⚔️ Следи за захватом мира
-        <span class="down-arrows"></span>
     </a>
 </div>
                 </div>
