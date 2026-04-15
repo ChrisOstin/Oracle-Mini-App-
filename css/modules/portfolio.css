@@ -805,6 +805,7 @@
     font-size: 12px;
     display: block;
     width: 100%;
+    text-align: center;
     background: rgba(212, 175, 55, 0.1);
     padding: 10px 0;
     border-radius: 30px;
