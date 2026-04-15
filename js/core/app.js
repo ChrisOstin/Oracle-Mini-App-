@@ -591,8 +591,8 @@ if (!alreadyLogged) {
 
         this.runHooks('afterStart');
         
-        // Напоминание о ежедневном бонусе (только после входа)
-        if (MORI_NOTIFICATIONS && this.accessLevel !== 'guest') {
+        // Напоминание о ежедневном бонусе (только для авторизованных)
+        if (MORI_NOTIFICATIONS && this.accessLevel !== 'guest' && this.currentUser) {
             setTimeout(() => {
                 MORI_NOTIFICATIONS.remindDailyBonus();
             }, 5000);
