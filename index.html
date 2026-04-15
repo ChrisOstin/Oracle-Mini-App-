@@ -238,13 +238,15 @@
     <div id="app"></div>
 
 <!-- ПЛАВАЮЩИЕ КНОПКИ -->
-<div class="floating-buttons">
-    <button class="floating-btn apps-btn" data-module="all-apps">📱</button>
+<div class="floating-buttons-left" style="display: none;">
     <button class="floating-btn house-btn" data-module="house">🏠</button>
+</div>
+<div class="floating-buttons-right" style="display: none;">
+    <button class="floating-btn apps-btn" data-module="all-apps">📱</button>
 </div>
 
 <!-- НОВАЯ ПОСТОЯННАЯ ПАНЕЛЬ НАВИГАЦИИ -->
-<div class="bottom-nav" id="main-bottom-nav">
+<div class="bottom-nav" id="main-bottom-nav" style="display: none;">
     <button class="nav-btn" data-module="portfolio">
         <span class="nav-icon">💼</span>
         <span class="nav-label">Портфель</span>
@@ -304,7 +306,7 @@ document.addEventListener('click', function(e) {
 <!-- Глобальная панель навигации (скрыта до загрузки) -->
 
 
-<script>
+<!--<script>
 function moveNavigationToGlobal() {
     // Функция отключена, чтобы не создавать дубликат
     const globalNav = document.getElementById('global-bottom-nav');
@@ -315,7 +317,7 @@ function moveNavigationToGlobal() {
 
 // Запускаем перенос
 setTimeout(moveNavigationToGlobal, 1000);
-</script>
+</script>-->
 
 <script>
 // Скрываем иконку темы в модулях, кроме портфеля
