@@ -270,16 +270,7 @@ body.user-authenticated .floating-buttons-right {
 <div class="module-title" id="mori-story-title" style="display: none;">MORI Story</div>
     <div id="app"></div>
 
-<!-- ПЛАВАЮЩИЕ КНОПКИ -->
-<div class="floating-buttons-left" style="display: none;">
-    <button class="floating-btn house-btn" data-module="house">🏠</button>
-</div>
-<div class="floating-buttons-right" style="display: none;">
-    <button class="floating-btn apps-btn" data-module="all-apps">📱</button>
-</div>
-
-<!-- НОВАЯ ПОСТОЯННАЯ ПАНЕЛЬ НАВИГАЦИИ -->
-<!-- ТОЧНАЯ КОПИЯ ТВОЕЙ ПАНЕЛИ -->
+<!-- ПАНЕЛЬ НАВИГАЦИИ — ОРИГИНАЛЬНЫЙ СТИЛЬ -->
 <div id="force-bottom-nav" style="
     position: fixed;
     bottom: 0;
@@ -295,100 +286,69 @@ body.user-authenticated .floating-buttons-right {
     justify-content: space-around;
     align-items: center;
 ">
-    <button class="nav-btn" data-module="portfolio" style="
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: transparent;
-        border: none;
-        color: #ffd700;
-        font-size: 11px;
-        cursor: pointer;
-        padding: 4px 8px;
-        border-radius: 8px;
-        transition: all 0.2s;
-    ">
+    <button class="nav-btn" data-module="portfolio" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #ffd700; font-size: 11px; cursor: pointer; padding: 4px 8px;">
         <span style="font-size: 20px; margin-bottom: 2px;">💼</span>
         <span>Портфель</span>
     </button>
-    <button class="nav-btn" data-module="calculator" style="
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: transparent;
-        border: none;
-        color: #888;
-        font-size: 11px;
-        cursor: pointer;
-        padding: 4px 8px;
-        border-radius: 8px;
-        transition: all 0.2s;
-    ">
+    <button class="nav-btn" data-module="calculator" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
         <span style="font-size: 20px; margin-bottom: 2px;">🧮</span>
         <span>Калькулятор</span>
     </button>
-    <button class="nav-btn" data-module="library" style="
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: transparent;
-        border: none;
-        color: #888;
-        font-size: 11px;
-        cursor: pointer;
-        padding: 4px 8px;
-        border-radius: 8px;
-        transition: all 0.2s;
-    ">
+    <button class="nav-btn" data-module="library" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
         <span style="font-size: 20px; margin-bottom: 2px;">📚</span>
         <span>Библиотека</span>
     </button>
-    <button class="nav-btn" data-module="ai-chat" style="
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: transparent;
-        border: none;
-        color: #888;
-        font-size: 11px;
-        cursor: pointer;
-        padding: 4px 8px;
-        border-radius: 8px;
-        transition: all 0.2s;
-    ">
+    <button class="nav-btn" data-module="ai-chat" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
         <span style="font-size: 20px; margin-bottom: 2px;">🧠</span>
         <span>AI</span>
     </button>
-    <button class="nav-btn" data-module="profile" style="
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: transparent;
-        border: none;
-        color: #888;
-        font-size: 11px;
-        cursor: pointer;
-        padding: 4px 8px;
-        border-radius: 8px;
-        transition: all 0.2s;
-    ">
+    <button class="nav-btn" data-module="profile" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
         <span style="font-size: 20px; margin-bottom: 2px;">👤</span>
         <span>Профиль</span>
     </button>
 </div>
 
+<!-- ПЛАВАЮЩИЕ КНОПКИ -->
+<div id="force-floating-left" style="position: fixed; bottom: 80px; left: 16px; z-index: 999999;">
+    <button class="floating-btn house-btn" data-module="house" style="width: 50px; height: 50px; border-radius: 50%; background: #ffd700; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">🏠</button>
+</div>
+<div id="force-floating-right" style="position: fixed; bottom: 80px; right: 16px; z-index: 999999;">
+    <button class="floating-btn apps-btn" data-module="all-apps" style="width: 50px; height: 50px; border-radius: 50%; background: #ffd700; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">📱</button>
+</div>
 
 <script>
-// Обработчик для новой панели навигации
-document.addEventListener('click', function(e) {
-    const btn = e.target.closest('#main-bottom-nav .nav-btn');
-    if (btn) {
-        const module = btn.dataset.module;
-        if (window.MORI_ROUTER) {
-            MORI_ROUTER.navigate(module);
+// Обработчик для панели навигации
+const forceNav = document.getElementById('force-bottom-nav');
+if (forceNav) {
+    forceNav.addEventListener('click', (e) => {
+        const btn = e.target.closest('.nav-btn');
+        if (btn && window.MORI_ROUTER) {
+            MORI_ROUTER.navigate(btn.dataset.module);
         }
-    }
-});
+    });
+}
+
+// Обработчик для плавающих кнопок
+const leftBtn = document.getElementById('force-floating-left');
+const rightBtn = document.getElementById('force-floating-right');
+
+if (leftBtn) {
+    leftBtn.addEventListener('click', (e) => {
+        const btn = e.target.closest('.floating-btn');
+        if (btn && window.MORI_ROUTER) {
+            MORI_ROUTER.navigate(btn.dataset.module);
+        }
+    });
+}
+
+if (rightBtn) {
+    rightBtn.addEventListener('click', (e) => {
+        const btn = e.target.closest('.floating-btn');
+        if (btn && window.MORI_ROUTER) {
+            MORI_ROUTER.navigate(btn.dataset.module);
+        }
+    });
+}
 </script>
 
 <!-- Контейнеры для всех модулей -->
