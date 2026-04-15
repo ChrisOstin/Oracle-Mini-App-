@@ -856,13 +856,8 @@ if (!alreadyLogged) {
         this.reload();
     },
 
-    showNavigation: function() {
-    const nav = document.getElementById('main-bottom-nav');
-    const leftBtn = document.querySelector('.floating-buttons-left');
-    const rightBtn = document.querySelector('.floating-buttons-right');
-    if (nav) nav.style.display = 'flex';
-    if (leftBtn) leftBtn.style.display = 'block';
-    if (rightBtn) rightBtn.style.display = 'block';
+showNavigation: function() {
+    document.body.classList.add('user-authenticated');
 },
 
     exportData: function() {

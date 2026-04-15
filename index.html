@@ -213,6 +213,25 @@
     white-space: nowrap !important;
 }
 
+/* Принудительно скрываем навигацию до авторизации */
+#main-bottom-nav,
+.floating-buttons-left,
+.floating-buttons-right {
+    display: none !important;
+}
+
+/* Класс для показа после авторизации */
+body.user-authenticated #main-bottom-nav,
+body.user-authenticated .floating-buttons-left,
+body.user-authenticated .floating-buttons-right {
+    display: flex !important;
+}
+
+body.user-authenticated .floating-buttons-left,
+body.user-authenticated .floating-buttons-right {
+    display: block !important;
+}
+
     </style>
 </head>
 <body>
