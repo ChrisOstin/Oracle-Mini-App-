@@ -128,7 +128,7 @@ const MORI_LIBRARY_BOOKS = {
             { id: 'book_7', title: 'Книга чая', author: 'Лу Юй', category: 'philosophy', cover: '🍵', pages: 176, description: 'Древний трактат о чае.', unlocked: true, taskId: null, file: null },
             { id: 'book_8', title: 'Над пропастью во ржи', author: 'Джером Сэлинджер', category: 'fiction', cover: '🌾', pages: 288, description: 'Культовый роман.', unlocked: false, taskId: 'unlock_book_8', file: null },
             { id: 'book_9', title: 'Я есть То', author: 'Нисаргадатта Махарадж', category: 'philosophy', cover: '🕉️', pages: 512, description: 'Беседы о недвойственности.', unlocked: true, taskId: null, file: null },
-            { id: 'book_10', title: 'Чайка по имени Джонатан Левингстон', author: 'Генри Стэнли', category: 'biography', cover: '🌍', pages: 384, description: 'История исследователя Африки.', unlocked: true, taskId: null, file: null }
+            { id: 'book_10', title: 'Жизнь чайки по имени Джонатан Левингстон', author: 'Генри Стэнли', category: 'biography', cover: '🌍', pages: 384, description: 'История исследователя Африки.', unlocked: true, taskId: null, file: null }
         ];
     },
 
