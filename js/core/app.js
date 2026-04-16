@@ -893,10 +893,22 @@ renderBottomNav: function() {
 
 showNavigation: function() {
     document.body.classList.add('user-authenticated');
-    this.renderBottomNav(); // рендерим панель с учётом уровня доступа
+    if (window.MORI_APP && window.MORI_APP.accessLevel === 'admin') {
+        document.body.classList.add('admin');
+    }
     
-    const container = document.getElementById('dynamic-bottom-nav');
-    if (container) container.style.display = 'flex';
+    // Рендерим панель навигации
+    this.renderBottomNav();
+    
+    // Показываем панель
+    const nav = document.getElementById('dynamic-bottom-nav');
+    if (nav) nav.style.display = 'flex';
+    
+    // Показываем плавающие кнопки
+    const left = document.getElementById('new-floating-left');
+    const right = document.getElementById('new-floating-right');
+    if (left) left.style.display = 'block';
+    if (right) right.style.display = 'block';
 },
 
     exportData: function() {
