@@ -470,14 +470,11 @@ document.getElementById('new-floating-right')?.addEventListener('click', () => {
 
 function updateActiveButton() {
     const current = window.MORI_ROUTER?.currentScreen || 'portfolio';
-    console.log('updateActiveButton вызвана, currentScreen:', current);
     document.querySelectorAll('#new-bottom-nav .nav-btn').forEach(btn => {
+        btn.classList.remove('active'); // сначала удаляем у всех
         const moduleName = btn.getAttribute('data-module');
-        console.log('Кнопка:', moduleName, 'текущий экран:', current);
         if (moduleName === current) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
+            btn.classList.add('active'); // добавляем только текущей
         }
     });
 }
