@@ -908,15 +908,17 @@ showNavigation: function() {
     
     const nav = document.getElementById('dynamic-bottom-nav');
     
-    // Рендерим панель (она скрыта через CSS)
+    // Рендерим панель (скрыта)
     this.renderBottomNav();
     
-    // Ждём один кадр анимации, чтобы браузер отрисовал DOM
-    requestAnimationFrame(() => {
+    // Ждём полной отрисовки (два кадра + небольшая задержка)
+    setTimeout(() => {
         requestAnimationFrame(() => {
-            if (nav) nav.style.display = 'flex';
+            requestAnimationFrame(() => {
+                if (nav) nav.style.display = 'flex';
+            });
         });
-    });
+    }, 20);
     
     // Плавающие кнопки
     const left = document.getElementById('new-floating-left');
