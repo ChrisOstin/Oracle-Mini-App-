@@ -384,6 +384,12 @@ localStorage.setItem('last_screen', screenId);
         }
 
         setTimeout(() => this.updateNavigation(), 100);
+
+        // Подсветка активной кнопки в панели
+        if (typeof updateActiveButton === 'function') {
+            setTimeout(updateActiveButton, 150);
+        }
+
     },
 
     // ========== ПРОВЕРКА ДОСТУПА ==========
