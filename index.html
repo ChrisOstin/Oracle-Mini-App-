@@ -238,6 +238,25 @@ body.admin #new-bottom-nav .nav-btn[data-module="chat"] {
     display: none !important;
 }
 
+/* Компактный режим для 6 кнопок */
+#new-bottom-nav.has-chat {
+    justify-content: space-evenly;
+    gap: 2px;
+}
+
+#new-bottom-nav.has-chat .nav-btn {
+    padding: 4px 4px !important;
+    min-width: 45px !important;
+}
+
+#new-bottom-nav.has-chat .nav-label {
+    font-size: 9px !important;
+}
+
+#new-bottom-nav.has-chat .nav-icon {
+    font-size: 18px !important;
+}
+
     </style>
 </head>
 <body>
@@ -521,26 +540,28 @@ if (window.MORI_ROUTER) {
 
 function updateChatButton() {
     const chatBtn = document.querySelector('#new-bottom-nav .nav-btn[data-module="chat"]');
-    
+    const bottomNav = document.getElementById('new-bottom-nav');
+
     // Для админа — чат не показываем
     if (window.MORI_APP && MORI_APP.accessLevel === 'admin') {
         if (chatBtn) chatBtn.style.display = 'none';
+        if (bottomNav) bottomNav.classList.remove('has-chat');
         return;
     }
-    
+
     const completedTasks = window.MORI_TASKS ? MORI_TASKS.getCompletedCount() : 0;
     const calculatorUnlocked = completedTasks >= 5;
     const libraryUnlocked = completedTasks >= 11;
     const aiUnlocked = completedTasks >= 18;
     const allUnlocked = calculatorUnlocked && libraryUnlocked && aiUnlocked;
     const allAppsBtn = document.querySelector('#new-floating-right .floating-btn');
-    
+
     if (chatBtn && allUnlocked) {
         if (chatBtn.style.display !== 'none') {
             // Получаем координаты кнопок
             const chatRect = chatBtn.getBoundingClientRect();
             const appsRect = allAppsBtn.getBoundingClientRect();
-            
+
             // Создаём клон иконки
             const clone = document.createElement('div');
             clone.innerHTML = '💬';
@@ -548,7 +569,7 @@ function updateChatButton() {
             clone.style.left = chatRect.left + (chatRect.width / 2) - 12 + 'px';
             clone.style.top = chatRect.top + (chatRect.height / 2) - 12 + 'px';
             document.body.appendChild(clone);
-            
+
             // Запускаем анимацию
             setTimeout(() => {
                 clone.style.left = appsRect.left + (appsRect.width / 2) - 12 + 'px';
@@ -556,13 +577,14 @@ function updateChatButton() {
                 clone.style.transform = 'scale(0.5)';
                 clone.style.opacity = '0.5';
             }, 50);
-            
+
             // Удаляем клон и скрываем кнопку после анимации
             setTimeout(() => {
                 clone.remove();
                 chatBtn.style.display = 'none';
+                if (bottomNav) bottomNav.classList.remove('has-chat');
                 MORI_APP.showToast('💬 Чат перемещён во "Все приложения"', 'info', 3000);
-                
+
                 // Добавляем бейдж на кнопку "Все приложения"
                 if (allAppsBtn && !allAppsBtn.querySelector('.chat-badge')) {
                     const badge = document.createElement('span');
@@ -577,6 +599,7 @@ function updateChatButton() {
         }
     } else if (chatBtn && !allUnlocked) {
         chatBtn.style.display = 'flex';
+        if (bottomNav) bottomNav.classList.add('has-chat');
         chatBtn.classList.remove('chat-fade-out');
     }
 }
