@@ -908,16 +908,15 @@ showNavigation: function() {
     
     const nav = document.getElementById('dynamic-bottom-nav');
     
-    // Скрываем панель на момент рендера
-    if (nav) nav.style.display = 'none';
-    
-    // Рендерим панель
+    // Рендерим панель (она скрыта через CSS)
     this.renderBottomNav();
     
-    // Показываем панель с микрозадержкой (чтобы браузер успел отрисовать)
-    setTimeout(() => {
-        if (nav) nav.style.display = 'flex';
-    }, 10);
+    // Ждём один кадр анимации, чтобы браузер отрисовал DOM
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            if (nav) nav.style.display = 'flex';
+        });
+    });
     
     // Плавающие кнопки
     const left = document.getElementById('new-floating-left');
