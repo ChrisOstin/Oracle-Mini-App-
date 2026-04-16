@@ -1083,8 +1083,8 @@ mark.search-highlight {
     white-space: nowrap;
 }
 
-/* Читалка в стиле профессора Мориарти */
-.reader-mori {
+/* ===== ЧИТАЛКА ПРОФЕССОРА МОРИАРТИ ===== */
+.mori-reader {
     position: fixed;
     top: 0;
     left: 0;
@@ -1094,133 +1094,237 @@ mark.search-highlight {
     background: #000;
 }
 
-.reader-mori-container {
+.mori-reader-container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.reader-mori-header {
+.mori-reader-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
-    background: rgba(0,0,0,0.5);
+    padding: 16px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
     flex-shrink: 0;
 }
 
-.reader-mori-back, .reader-mori-settings {
-    background: none;
-    border: none;
-    color: #d4af37;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.reader-mori-title {
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-    flex: 1;
-}
-
-.reader-mori-progress {
-    height: 3px;
-    background: rgba(255,255,255,0.1);
-}
-
-.reader-mori-progress-bar {
-    height: 100%;
-    transition: width 0.3s;
-}
-
-.reader-mori-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    font-size: 18px;
-    line-height: 1.6;
-}
-
-.reader-mori-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    flex-shrink: 0;
-}
-
-.reader-mori-nav {
-    background: rgba(212, 175, 55, 0.2);
+.mori-reader-back, .mori-reader-settings {
+    background: rgba(212, 175, 55, 0.15);
     border: 1px solid #d4af37;
     border-radius: 30px;
     padding: 8px 16px;
     color: #d4af37;
+    font-size: 14px;
     cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.reader-mori-nav:disabled {
+.mori-reader-back:hover, .mori-reader-settings:hover {
+    background: rgba(212, 175, 55, 0.3);
+    transform: translateY(-1px);
+}
+
+.mori-reader-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #d4af37;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+    text-align: center;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 12px;
+}
+
+.mori-reader-progress {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mori-reader-progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 5px currentColor;
+}
+
+.mori-reader-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+.mori-reader-content p {
+    margin-bottom: 1.2em;
+    text-align: justify;
+}
+
+.mori-reader-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+}
+
+.mori-reader-nav {
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid #d4af37;
+    border-radius: 30px;
+    padding: 8px 20px;
+    color: #d4af37;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mori-reader-nav:hover:not(:disabled) {
+    background: rgba(212, 175, 55, 0.3);
+    transform: scale(1.02);
+}
+
+.mori-reader-nav:disabled {
     opacity: 0.3;
+    cursor: not-allowed;
 }
 
-.reader-mori-page {
-    font-size: 12px;
+.mori-reader-page {
+    font-size: 13px;
     color: #9a8c5c;
+    font-family: monospace;
+    letter-spacing: 1px;
 }
 
-.reader-mori-settings-panel {
-    padding: 16px;
-    border-top: 1px solid;
+.mori-reader-settings-panel {
+    position: absolute;
+    bottom: 70px;
+    left: 16px;
+    right: 16px;
+    background: #1a1a1a;
+    border: 1px solid #d4af37;
+    border-radius: 20px;
+    padding: 20px;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 20001;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
 }
 
-.setting-group {
-    margin-bottom: 16px;
-}
-
-.setting-group label {
-    display: block;
+.mori-reader-settings-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #d4af37;
     margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.mori-reader-setting {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mori-reader-setting label {
     font-size: 12px;
     color: #d4af37;
+    letter-spacing: 1px;
 }
 
-.setting-group select, .setting-group input {
+.mori-reader-setting select,
+.mori-reader-setting input {
     width: 100%;
-    padding: 8px;
-    background: rgba(0,0,0,0.5);
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
     border: 1px solid #d4af37;
-    border-radius: 8px;
-    color: #fff;
+    border-radius: 12px;
+    color: #e8d5a8;
+    font-size: 14px;
 }
 
-.theme-buttons {
+.mori-reader-themes {
     display: flex;
     gap: 8px;
 }
 
-.theme-btn {
+.mori-reader-theme {
     flex: 1;
     padding: 8px;
-    background: rgba(212, 175, 55, 0.2);
+    background: rgba(212, 175, 55, 0.15);
     border: 1px solid #d4af37;
-    border-radius: 20px;
+    border-radius: 30px;
     color: #d4af37;
+    font-size: 12px;
     cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
 }
 
-.theme-btn.active {
+.mori-reader-theme.active {
     background: #d4af37;
     color: #000;
+    box-shadow: 0 0 10px #d4af37;
 }
 
-.settings-close {
+.mori-reader-settings-close {
     width: 100%;
     padding: 10px;
     background: #d4af37;
     border: none;
     border-radius: 30px;
     color: #000;
+    font-weight: bold;
     cursor: pointer;
-    margin-top: 16px;
+    margin-top: 8px;
+    transition: all 0.2s;
+}
+
+.mori-reader-settings-close:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px #d4af37;
+}
+
+/* Адаптация для телефонов */
+@media (max-width: 480px) {
+    .mori-reader-header {
+        padding: 12px 12px;
+    }
+    
+    .mori-reader-back, .mori-reader-settings {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .mori-reader-title {
+        font-size: 13px;
+    }
+    
+    .mori-reader-content {
+        padding: 16px;
+        font-size: 16px;
+    }
+    
+    .mori-reader-nav {
+        padding: 6px 16px;
+        font-size: 12px;
+    }
+    
+    .mori-reader-settings-panel {
+        bottom: 60px;
+        left: 12px;
+        right: 12px;
+        padding: 16px;
+    }
 }

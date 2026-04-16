@@ -24,13 +24,12 @@ const MORI_LIBRARY_READER = {
     },
 
     // Доступные шрифты
-    fonts: [
-        { name: 'Inter', value: 'Inter, sans-serif' },
-        { name: 'Roboto', value: 'Roboto, sans-serif' },
-        { name: 'Arial', value: 'Arial, sans-serif' },
-        { name: 'Georgia', value: 'Georgia, serif' },
-        { name: 'Courier New', value: 'Courier New, monospace' }
-    ],
+   fonts: [
+    { name: 'Georgia', value: 'Georgia, serif' },
+    { name: 'Inter', value: 'Inter, sans-serif' },
+    { name: 'Roboto', value: 'Roboto, sans-serif' },
+    { name: 'Courier New', value: 'Courier New, monospace' }
+],
 
     // Темы оформления
     themes: {
@@ -38,19 +37,22 @@ const MORI_LIBRARY_READER = {
             background: '#0a0a0a',
             text: '#e5e5e5',
             accent: '#ffd700',
-            border: '#333'
+            border: '#333',
+            cardBg: '#1a1a1a'   // для dark
         },
         light: {
             background: '#ffffff',
             text: '#000000',
             accent: '#d4af37',
-            border: '#e5e5e5'
+            border: '#e5e5e5',
+            cardBg: '#fff'      // для light
         },
         sepia: {
             background: '#fbf0d9',
             text: '#5b4636',
             accent: '#b85e00',
-            border: '#d9c8b2'
+            border: '#d9c8b2',
+            cardBg: '#f5e6d3'   // для sepia
         }
     },
 
@@ -273,47 +275,48 @@ renderReader: function() {
     const progressPercent = (this.state.currentPage / this.state.totalPages) * 100;
 
     appDiv.innerHTML = `
-        <div class="reader-mori">
-            <div class="reader-mori-container" style="background: ${theme.background}; color: ${theme.text};">
-                <div class="reader-mori-header" style="border-bottom: 1px solid ${theme.border};">
-                    <button class="reader-mori-back" id="reader-close">← Назад</button>
-                    <div class="reader-mori-title">${this.state.currentBook.title}</div>
-                    <button class="reader-mori-settings" id="reader-settings">⚙️</button>
+        <div class="mori-reader">
+            <div class="mori-reader-container" style="background: ${theme.background};">
+                <div class="mori-reader-header" style="border-bottom: 1px solid ${theme.border};">
+                    <button class="mori-reader-back" id="reader-close">📖 ← Назад</button>
+                    <div class="mori-reader-title">📚 ${this.state.currentBook.title}</div>
+                    <button class="mori-reader-settings" id="reader-settings">⚙️ 🔧</button>
                 </div>
-                <div class="reader-mori-progress">
-                    <div class="reader-mori-progress-bar" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
+                <div class="mori-reader-progress">
+                    <div class="mori-reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
                 </div>
-                <div class="reader-mori-content" id="reader-content" 
-                     style="font-family: ${this.state.fontFamily}; font-size: ${this.state.fontSize}px; line-height: ${this.state.lineHeight};">
+                <div class="mori-reader-content" id="reader-content"
+                     style="font-family: ${this.state.fontFamily}; font-size: ${this.state.fontSize}px; line-height: ${this.state.lineHeight}; color: ${theme.text};">
                     ${currentContent}
                 </div>
-                <div class="reader-mori-footer" style="border-top: 1px solid ${theme.border};">
-                    <button class="reader-mori-nav" id="reader-prev" ${this.state.currentPage === 1 ? 'disabled' : ''}>◀ Пред.</button>
-                    <span class="reader-mori-page">${this.state.currentPage} / ${this.state.totalPages}</span>
-                    <button class="reader-mori-nav" id="reader-next" ${this.state.currentPage === this.state.totalPages ? 'disabled' : ''}>След. ▶</button>
+                <div class="mori-reader-footer" style="border-top: 1px solid ${theme.border};">
+                    <button class="mori-reader-nav" id="reader-prev" ${this.state.currentPage === 1 ? 'disabled' : ''}>◀ 📖 Пред.</button>
+                    <span class="mori-reader-page">📄 ${this.state.currentPage} / ${this.state.totalPages}</span>
+                    <button class="mori-reader-nav" id="reader-next" ${this.state.currentPage === this.state.totalPages ? 'disabled' : ''}>След. 📖 ▶</button>
                 </div>
-                <div class="reader-mori-settings-panel" id="settings-panel" style="display: none; background: ${theme.background}; border-top: 1px solid ${theme.border};">
-                    <div class="setting-group">
-                        <label>Шрифт</label>
+                <div class="mori-reader-settings-panel" id="settings-panel" style="display: none; background: ${theme.cardBg}; border-top: 1px solid ${theme.border};">
+                    <div class="mori-reader-settings-title">🔮 Настройки чтения</div>
+                    <div class="mori-reader-setting">
+                        <label>📝 Шрифт</label>
                         <select id="reader-font">${this.fonts.map(f => `<option value="${f.value}" ${this.state.fontFamily === f.value ? 'selected' : ''}>${f.name}</option>`).join('')}</select>
                     </div>
-                    <div class="setting-group">
-                        <label>Размер: ${this.state.fontSize}px</label>
+                    <div class="mori-reader-setting">
+                        <label>📏 Размер: ${this.state.fontSize}px</label>
                         <input type="range" id="reader-font-size" min="12" max="32" value="${this.state.fontSize}" step="1">
                     </div>
-                    <div class="setting-group">
-                        <label>Интервал: ${this.state.lineHeight}</label>
+                    <div class="mori-reader-setting">
+                        <label>📐 Интервал: ${this.state.lineHeight}</label>
                         <input type="range" id="reader-line-height" min="1" max="2.5" value="${this.state.lineHeight}" step="0.1">
                     </div>
-                    <div class="setting-group">
-                        <label>Тема</label>
-                        <div class="theme-buttons">
-                            <button class="theme-btn ${this.state.theme === 'dark' ? 'active' : ''}" data-theme="dark">🌙 Тёмная</button>
-                            <button class="theme-btn ${this.state.theme === 'light' ? 'active' : ''}" data-theme="light">☀️ Светлая</button>
-                            <button class="theme-btn ${this.state.theme === 'sepia' ? 'active' : ''}" data-theme="sepia">📜 Сепия</button>
+                    <div class="mori-reader-setting">
+                        <label>🎨 Тема</label>
+                        <div class="mori-reader-themes">
+                            <button class="mori-reader-theme ${this.state.theme === 'dark' ? 'active' : ''}" data-theme="dark">🌙 Тёмная</button>
+                            <button class="mori-reader-theme ${this.state.theme === 'light' ? 'active' : ''}" data-theme="light">☀️ Светлая</button>
+                            <button class="mori-reader-theme ${this.state.theme === 'sepia' ? 'active' : ''}" data-theme="sepia">📜 Сепия</button>
                         </div>
                     </div>
-                    <button class="settings-close">Закрыть</button>
+                    <button class="mori-reader-settings-close">🗝️ Закрыть</button>
                 </div>
             </div>
         </div>
@@ -390,7 +393,7 @@ renderReader: function() {
             };
         }
 
-        const settingsClose = document.querySelector('.settings-close');
+        const settingsClose = document.querySelector('.mori-reader-settings-close');
         if (settingsClose && settingsPanel) {
             settingsClose.onclick = () => {
                 settingsPanel.style.display = 'none';
@@ -457,10 +460,9 @@ renderReader: function() {
         if (fontSizeInput) {
             fontSizeInput.oninput = (e) => {
                 this.state.fontSize = parseInt(e.target.value);
-                const contentEl = document.querySelector('.reader-mori-content');
+                const contentEl = document.querySelector('.mori-reader-content');
                 if (contentEl) contentEl.style.fontSize = this.state.fontSize + 'px';
-        };
-     
+            };
         }
 
         const fontDecr = document.getElementById('font-decr');
@@ -477,10 +479,9 @@ renderReader: function() {
         if (lineHeightInput) {
             lineHeightInput.oninput = (e) => {
                 this.state.lineHeight = parseFloat(e.target.value);
-                const contentEl = document.querySelector('.reader-mori-content');
+                const contentEl = document.querySelector('.mori-reader-content');
                 if (contentEl) contentEl.style.lineHeight = this.state.lineHeight;
-        };
-       
+            };
         }
 
         const lineDecr = document.getElementById('line-decr');
@@ -493,12 +494,12 @@ renderReader: function() {
             lineIncr.onclick = () => this.setState({ lineHeight: Math.min(2.5, this.state.lineHeight + 0.1) });
         }
 
-        document.querySelectorAll('.theme-btn').forEach(btn => {
-            btn.onclick = () => {
-                const theme = btn.dataset.theme;
-                this.setState({ theme });
-            };
-        });
+       document.querySelectorAll('.mori-reader-theme').forEach(btn => {
+    btn.onclick = () => {
+        this.state.theme = btn.dataset.theme;
+        this.renderReader();
+    };
+});
 
         const bookmarkBtn = document.getElementById('reader-bookmark');
         if (bookmarkBtn) {
@@ -556,46 +557,46 @@ renderReader: function() {
         }
     },
 
-    /**
-     * Запуск таймера чтения страницы (50 секунд)
-     */
-    startReadingTimer: function() {
-        this.stopReadingTimer();
-        this.state.pageReadFlag = false;
-        this.state.timerStart = Date.now();
+/**
+ * Запуск таймера чтения страницы (50 секунд)
+ */
+startReadingTimer: function() {
+    this.stopReadingTimer();
+    this.state.pageReadFlag = false;
+    this.state.timerStart = Date.now();
 
-        this.state.readingTimer = setTimeout(() => {
-            if (!this.state.pageReadFlag && this.state.currentBook) {
-                this.state.pageReadFlag = true;
-                this.markPageAsRead();
-            }
-        }, 50000);
-    },
-
-    /**
-     * Остановка таймера
-     */
-    stopReadingTimer: function() {
-        if (this.state.readingTimer) {
-            clearTimeout(this.state.readingTimer);
-            this.state.readingTimer = null;
+    this.state.readingTimer = setTimeout(() => {
+        if (!this.state.pageReadFlag && this.state.currentBook) {
+            this.state.pageReadFlag = true;
+            this.markPageAsRead();
         }
-    },
+    }, 50000);
+},
 
-    /**
-     * Отметить страницу как прочитанную
-     */
-    markPageAsRead: function() {
-        if (!this.state.currentBook) return;
+/**
+ * Остановка таймера
+ */
+stopReadingTimer: function() {
+    if (this.state.readingTimer) {
+        clearTimeout(this.state.readingTimer);
+        this.state.readingTimer = null;
+    }
+},
 
-        this.saveProgress();
+/**
+ * Отметить страницу как прочитанную
+ */
+markPageAsRead: function() {
+    if (!this.state.currentBook) return;
 
-        if (window.MORI_USER) {
-            MORI_USER.updateStats('pagesRead', 1);
-        }
+    this.saveProgress();
 
-        console.log(`✅ Страница ${this.state.currentPage} книги "${this.state.currentBook.title}" прочитана`);
-    },
+    if (window.MORI_USER) {
+        MORI_USER.updateStats('pagesRead', 1);
+    }
+
+    MORI_APP.showToast(`📖 Страница ${this.state.currentPage} прочитана`, 'success', 2000);
+},
 
     /**
      * Сохранение прогресса
@@ -681,6 +682,7 @@ renderReader: function() {
             };
         }
     },
+
 
     /**
      * Очистка при выходе
