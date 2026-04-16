@@ -390,6 +390,11 @@ localStorage.setItem('last_screen', screenId);
             setTimeout(updateActiveButton, 150);
         }
 
+        // Показать/скрыть чат MORIGRAM
+        if (typeof updateChatButton === 'function') {
+            setTimeout(updateChatButton, 150);
+        }
+
     },
 
     // ========== ПРОВЕРКА ДОСТУПА ==========
