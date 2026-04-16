@@ -105,9 +105,13 @@ if (book.content && book.content.length) {
         if (rightBtn) rightBtn.style.display = 'block';
         if (themeIcon) themeIcon.style.display = 'flex';
 
-        if (window.MORI_LIBRARY) {
+        // Возвращаемся в библиотеку
+        if (window.MORI_ROUTER) {
+            MORI_ROUTER.navigate('library');
+        } else if (window.MORI_LIBRARY) {
             MORI_LIBRARY.render();
         }
+
     },
 
     /**
