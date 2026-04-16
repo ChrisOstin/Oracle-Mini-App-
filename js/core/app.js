@@ -856,11 +856,15 @@ if (!alreadyLogged) {
         this.reload();
     },
 
-renderBottomNav: function() {
+    renderBottomNav: function() {
     const container = document.getElementById('dynamic-bottom-nav');
     if (!container) return;
     
-    const isAdmin = this.accessLevel === 'admin';
+    const level = this.accessLevel;
+    const isAdmin = level === 'admin';
+    const isFamily = level === 'family';
+    
+    // Базовые кнопки для всех
     const buttons = [
         { module: 'portfolio', icon: '💼', label: 'Портфель' },
         { module: 'calculator', icon: '🧮', label: 'Калькулятор' },
@@ -868,7 +872,7 @@ renderBottomNav: function() {
         { module: 'ai-chat', icon: '🧠', label: 'AI' },
     ];
     
-    // Для не-админов добавляем чат
+    // Чат показываем только для не-админов (семья и обычные пользователи)
     if (!isAdmin) {
         buttons.push({ module: 'chat', icon: '💬', label: 'MORIGRAM' });
     }
@@ -881,11 +885,12 @@ renderBottomNav: function() {
             <span>${btn.label}</span>
         </button>
     `).join('');
-
-    // Подсвечиваем активную кнопку сразу после рендера
+    
+    // Подсвечиваем активную кнопку
     if (typeof updateActiveButton === 'function') {
         updateActiveButton();
     }
+},
 
     // Добавляем обработчики
     container.querySelectorAll('.nav-btn').forEach(btn => {
@@ -909,10 +914,20 @@ showNavigation: function() {
     const nav = document.getElementById('dynamic-bottom-nav');
     if (nav) nav.style.display = 'flex';
     
-    // Показываем плавающие кнопки
+    // Показываем плавающие кнопки с учётом уровня
     const left = document.getElementById('new-floating-left');
     const right = document.getElementById('new-floating-right');
-    if (left) left.style.display = 'block';
+    
+    // Кнопка "Дом" только для семьи и админа
+    if (left) {
+        if (MORI_APP.accessLevel === 'admin' || MORI_APP.accessLevel === 'family') {
+            left.style.display = 'block';
+        } else {
+            left.style.display = 'none';
+        }
+    }
+    
+    // Кнопка "Все приложения" для всех
     if (right) right.style.display = 'block';
 },
 
