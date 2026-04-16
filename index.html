@@ -465,22 +465,30 @@ document.getElementById('new-floating-right')?.addEventListener('click', () => {
     if (window.MORI_ROUTER) MORI_ROUTER.navigate('all-apps');
 });
 
+// Подсветка активной кнопки
 function updateActiveButton() {
-    const current = window.MORI_ROUTER?.currentScreen || 'portfolio';
-    document.querySelectorAll('#new-bottom-nav .nav-btn').forEach(btn => {
-        const moduleName = btn.getAttribute('data-module');
-        btn.style.color = moduleName === current ? '#ffd700' : '#888';
-    });
+    setTimeout(() => {
+        const current = window.MORI_ROUTER?.currentScreen || 'portfolio';
+        console.log('updateActiveButton, current:', current);
+        document.querySelectorAll('#new-bottom-nav .nav-btn').forEach(btn => {
+            const moduleName = btn.getAttribute('data-module');
+            btn.style.color = moduleName === current ? '#ffd700' : '#888';
+        });
+    }, 50);
 }
 
+// Запускаем при загрузке
 setTimeout(updateActiveButton, 500);
+
+// Перехватываем навигацию
 if (window.MORI_ROUTER) {
     const orig = MORI_ROUTER.navigate;
     MORI_ROUTER.navigate = function(screenId, opts) {
         orig.call(this, screenId, opts);
-        setTimeout(updateActiveButton, 100);
+        updateActiveButton();
     };
 }
+
 </script>
 
     <script src="js/core/utils.js"></script>
