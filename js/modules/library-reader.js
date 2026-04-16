@@ -93,6 +93,18 @@ if (book.content && book.content.length) {
         this.stopReadingTimer();
         this.saveProgress();
         this.state.isOpen = false;
+    
+        // Восстанавливаем панель навигации и кнопки
+        const nav = document.getElementById('new-bottom-nav');
+        const leftBtn = document.getElementById('new-floating-left');
+        const rightBtn = document.getElementById('new-floating-right');
+        const themeIcon = document.querySelector('.theme-icon');
+
+        if (nav) nav.style.display = 'flex';
+        if (leftBtn) leftBtn.style.display = 'block';
+        if (rightBtn) rightBtn.style.display = 'block';
+        if (themeIcon) themeIcon.style.display = 'flex';
+
         if (window.MORI_LIBRARY) {
             MORI_LIBRARY.render();
         }
@@ -270,6 +282,17 @@ renderReader: function() {
     const appDiv = document.getElementById('app');
     if (!appDiv) return;
 
+    // Скрываем панель навигации и плавающие кнопки
+    const nav = document.getElementById('new-bottom-nav');
+    const leftBtn = document.getElementById('new-floating-left');
+    const rightBtn = document.getElementById('new-floating-right');
+    const themeIcon = document.querySelector('.theme-icon');
+
+    if (nav) nav.style.display = 'none';
+    if (leftBtn) leftBtn.style.display = 'none';
+    if (rightBtn) rightBtn.style.display = 'none';
+    if (themeIcon) themeIcon.style.display = 'none';
+
     const theme = this.themes[this.state.theme];
     const currentContent = this.state.content[this.state.currentPage - 1] || '<p>Страница не найдена</p>';
     const progressPercent = (this.state.currentPage / this.state.totalPages) * 100;
@@ -280,7 +303,7 @@ renderReader: function() {
                 <div class="mori-reader-header" style="border-bottom: 1px solid ${theme.border};">
                     <button class="mori-reader-back" id="reader-close">📖 ← Назад</button>
                     <div class="mori-reader-title">📚 ${this.state.currentBook.title}</div>
-                    <button class="mori-reader-settings" id="reader-settings">⚙️ 🔧</button>
+                    <button class="mori-reader-settings" id="reader-settings">🔧</button>
                 </div>
                 <div class="mori-reader-progress">
                     <div class="mori-reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
