@@ -906,18 +906,23 @@ showNavigation: function() {
         document.body.classList.add('admin');
     }
     
-    // Рендерим панель навигации
+    const nav = document.getElementById('dynamic-bottom-nav');
+    
+    // Скрываем панель на момент рендера
+    if (nav) nav.style.display = 'none';
+    
+    // Рендерим панель
     this.renderBottomNav();
     
-    // Показываем панель
-    const nav = document.getElementById('dynamic-bottom-nav');
-    if (nav) nav.style.display = 'flex';
+    // Показываем панель с микрозадержкой (чтобы браузер успел отрисовать)
+    setTimeout(() => {
+        if (nav) nav.style.display = 'flex';
+    }, 10);
     
-    // Показываем плавающие кнопки с учётом уровня
+    // Плавающие кнопки
     const left = document.getElementById('new-floating-left');
     const right = document.getElementById('new-floating-right');
     
-    // Кнопка "Дом" только для семьи и админа
     if (left) {
         if (MORI_APP.accessLevel === 'admin' || MORI_APP.accessLevel === 'family') {
             left.style.display = 'block';
@@ -925,8 +930,6 @@ showNavigation: function() {
             left.style.display = 'none';
         }
     }
-    
-    // Кнопка "Все приложения" для всех
     if (right) right.style.display = 'block';
 },
 
