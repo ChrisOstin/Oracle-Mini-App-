@@ -515,15 +515,22 @@ if (window.MORI_ROUTER) {
 }
 
 function updateChatButton() {
+    const chatBtn = document.querySelector('#new-bottom-nav .nav-btn[data-module="chat"]');
+    
+    // Для админа — чат не показываем
+    if (window.MORI_APP && MORI_APP.accessLevel === 'admin') {
+        if (chatBtn) chatBtn.style.display = 'none';
+        return;
+    }
+    
     const completedTasks = window.MORI_TASKS ? MORI_TASKS.getCompletedCount() : 0;
     const calculatorUnlocked = completedTasks >= 5;
     const libraryUnlocked = completedTasks >= 11;
     const aiUnlocked = completedTasks >= 18;
     const allUnlocked = calculatorUnlocked && libraryUnlocked && aiUnlocked;
-    const chatBtn = document.querySelector('#new-bottom-nav .nav-btn[data-module="chat"]');
     const allAppsBtn = document.querySelector('#new-floating-right .floating-btn');
     
-    if (chatBtn && allUnlocked && MORI_APP.accessLevel !== 'admin') {
+    if (chatBtn && allUnlocked) {
         if (chatBtn.style.display !== 'none') {
             // Получаем координаты кнопок
             const chatRect = chatBtn.getBoundingClientRect();
@@ -537,7 +544,7 @@ function updateChatButton() {
             clone.style.top = chatRect.top + (chatRect.height / 2) - 12 + 'px';
             document.body.appendChild(clone);
             
-            // Запускаем анимацию через 50мс (чтобы DOM обновился)
+            // Запускаем анимацию
             setTimeout(() => {
                 clone.style.left = appsRect.left + (appsRect.width / 2) - 12 + 'px';
                 clone.style.top = appsRect.top + (appsRect.height / 2) - 12 + 'px';
