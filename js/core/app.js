@@ -862,7 +862,6 @@ showNavigation: function() {
     if (window.MORI_APP && MORI_APP.accessLevel === 'admin') {
         document.body.classList.add('admin');
     }
-    
     // Потом показываем панель
     const nav = document.getElementById('new-bottom-nav');
     const left = document.getElementById('new-floating-left');
