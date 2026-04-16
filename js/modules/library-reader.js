@@ -61,13 +61,21 @@ const MORI_LIBRARY_READER = {
         this.state.currentBook = book;
         this.state.totalPages = book.pages || 1;
 
-        const savedContent = MORI_LIBRARY_BOOKS.loadContent(book.id);
-        if (savedContent && savedContent.pages) {
-            this.state.content = savedContent.pages;
-            this.state.totalPages = savedContent.pages.length;
-        } else {
-            this.state.content = ['<p>Контент книги не загружен</p>'];
-        }
+
+        // Сначала проверяем, есть ли встроенный контент в самой книге
+if (book.content && book.content.length) {
+    this.state.content = book.content;
+    this.state.totalPages = book.content.length;
+} else {
+    const savedContent = MORI_LIBRARY_BOOKS.loadContent(book.id);
+    if (savedContent && savedContent.pages) {
+        this.state.content = savedContent.pages;
+        this.state.totalPages = savedContent.pages.length;
+    } else {
+        this.state.content = ['<p>Контент книги не загружен</p>'];
+    }
+}
+
 
         const progress = MORI_LIBRARY_BOOKS.getProgress(book.id);
         this.state.currentPage = progress.page || 1;
