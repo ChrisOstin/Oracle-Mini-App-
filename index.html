@@ -213,6 +213,9 @@
     white-space: nowrap !important;
 }
 
+#new-bottom-nav .nav-btn.active {
+    color: #ffd700 !important;
+}
 
     </style>
 </head>
@@ -465,16 +468,16 @@ document.getElementById('new-floating-right')?.addEventListener('click', () => {
     if (window.MORI_ROUTER) MORI_ROUTER.navigate('all-apps');
 });
 
-// Подсветка активной кнопки
 function updateActiveButton() {
-    setTimeout(() => {
-        const current = window.MORI_ROUTER?.currentScreen || 'portfolio';
-        console.log('updateActiveButton, current:', current);
-        document.querySelectorAll('#new-bottom-nav .nav-btn').forEach(btn => {
-            const moduleName = btn.getAttribute('data-module');
-            btn.style.color = moduleName === current ? '#ffd700' : '#888';
-        });
-    }, 50);
+    const current = window.MORI_ROUTER?.currentScreen || 'portfolio';
+    document.querySelectorAll('#new-bottom-nav .nav-btn').forEach(btn => {
+        const moduleName = btn.getAttribute('data-module');
+        if (moduleName === current) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 }
 
 // Запускаем при загрузке
