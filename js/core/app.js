@@ -856,14 +856,14 @@ if (!alreadyLogged) {
         this.reload();
     },
 
-    renderBottomNav: function() {
+renderBottomNav: function() {
     const container = document.getElementById('dynamic-bottom-nav');
     if (!container) return;
-    
+
     const level = this.accessLevel;
     const isAdmin = level === 'admin';
     const isFamily = level === 'family';
-    
+
     // Базовые кнопки для всех
     const buttons = [
         { module: 'portfolio', icon: '💼', label: 'Портфель' },
@@ -871,34 +871,33 @@ if (!alreadyLogged) {
         { module: 'library', icon: '📚', label: 'Библиотека' },
         { module: 'ai-chat', icon: '🧠', label: 'AI' },
     ];
-    
-    // Чат показываем только для не-админов (семья и обычные пользователи)
+
+    // Чат показываем только для не-админов
     if (!isAdmin) {
         buttons.push({ module: 'chat', icon: '💬', label: 'MORIGRAM' });
     }
-    
+
     buttons.push({ module: 'profile', icon: '👤', label: 'Профиль' });
-    
+
     container.innerHTML = buttons.map(btn => `
         <button class="nav-btn" data-module="${btn.module}" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
             <span style="font-size: 20px; margin-bottom: 2px;">${btn.icon}</span>
             <span>${btn.label}</span>
         </button>
     `).join('');
-    
-    // Подсвечиваем активную кнопку
-    if (typeof updateActiveButton === 'function') {
-        updateActiveButton();
-    }
-},
 
-    // Добавляем обработчики
+    // Добавляем обработчики (ПЕРЕМЕСТИ СЮДА)
     container.querySelectorAll('.nav-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const module = btn.dataset.module;
             if (window.MORI_ROUTER) MORI_ROUTER.navigate(module);
         });
     });
+
+    // Подсвечиваем активную кнопку
+    if (typeof updateActiveButton === 'function') {
+        updateActiveButton();
+    }
 },
 
 showNavigation: function() {
