@@ -882,12 +882,10 @@ renderBottomNav: function() {
         </button>
     `).join('');
 
-    // Подсвечиваем активную кнопку после рендера
-    setTimeout(() => {
-        if (typeof updateActiveButton === 'function') {
-            updateActiveButton();
-        }
-    },   50);
+    // Подсвечиваем активную кнопку сразу после рендера
+    if (typeof updateActiveButton === 'function') {
+        updateActiveButton();
+    }
 
     // Добавляем обработчики
     container.querySelectorAll('.nav-btn').forEach(btn => {
