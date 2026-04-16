@@ -262,6 +262,19 @@ body.admin #dynamic-bottom-nav .nav-btn[data-module="chat"] {
     display: none !important;
 }
 
+/* Фиксируем ширину кнопок, чтобы панель не дёргалась */
+#dynamic-bottom-nav .nav-btn {
+    flex: 1;
+    min-width: 65px;
+    max-width: 80px;
+    text-align: center;
+}
+
+#dynamic-bottom-nav {
+    justify-content: space-around;
+    padding: 8px 4px;
+}
+
     </style>
 </head>
 <body>
