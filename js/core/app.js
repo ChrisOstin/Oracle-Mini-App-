@@ -864,6 +864,9 @@ showNavigation: function() {
     if (nav) nav.style.display = 'flex';
     if (left) left.style.display = 'block';
     if (right) right.style.display = 'block';
+    if (MORI_APP.accessLevel === 'admin') {
+        document.body.classList.add('admin');
+    }
 },
 
     exportData: function() {
