@@ -470,8 +470,10 @@ document.getElementById('new-floating-right')?.addEventListener('click', () => {
 
 function updateActiveButton() {
     const current = window.MORI_ROUTER?.currentScreen || 'portfolio';
+    console.log('updateActiveButton вызвана, currentScreen:', current);
     document.querySelectorAll('#new-bottom-nav .nav-btn').forEach(btn => {
         const moduleName = btn.getAttribute('data-module');
+        console.log('Кнопка:', moduleName, 'текущий экран:', current);
         if (moduleName === current) {
             btn.classList.add('active');
         } else {
