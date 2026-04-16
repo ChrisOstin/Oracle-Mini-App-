@@ -264,83 +264,64 @@ if (book.content && book.content.length) {
     /**
      * Рендер читалки
      */
-    renderReader: function() {
-        const appDiv = document.getElementById('app');
-        if (!appDiv) return;
+renderReader: function() {
+    const appDiv = document.getElementById('app');
+    if (!appDiv) return;
 
-        const theme = this.themes[this.state.theme];
-        const currentContent = this.state.content[this.state.currentPage - 1] || '<p>Страница не найдена</p>';
-        const progressPercent = (this.state.currentPage / this.state.totalPages) * 100;
+    const theme = this.themes[this.state.theme];
+    const currentContent = this.state.content[this.state.currentPage - 1] || '<p>Страница не найдена</p>';
+    const progressPercent = (this.state.currentPage / this.state.totalPages) * 100;
 
-        appDiv.innerHTML = `
-            <div class="reader-overlay">
-                <div class="reader-container" style="background: ${theme.background}; color: ${theme.text};">
-                    <!-- Шапка -->
-                    <div class="reader-header" style="border-bottom: 1px solid ${theme.border};">
-                        <button class="reader-back" id="reader-close">← Назад</button>
-                        <div class="reader-title">
-                            <span>${this.state.currentBook.title}</span>
-                            <span style="font-size: 12px; opacity: 0.7;">${this.state.currentPage}/${this.state.totalPages}</span>
+    appDiv.innerHTML = `
+        <div class="reader-mori">
+            <div class="reader-mori-container" style="background: ${theme.background}; color: ${theme.text};">
+                <div class="reader-mori-header" style="border-bottom: 1px solid ${theme.border};">
+                    <button class="reader-mori-back" id="reader-close">← Назад</button>
+                    <div class="reader-mori-title">${this.state.currentBook.title}</div>
+                    <button class="reader-mori-settings" id="reader-settings">⚙️</button>
+                </div>
+                <div class="reader-mori-progress">
+                    <div class="reader-mori-progress-bar" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
+                </div>
+                <div class="reader-mori-content" id="reader-content" 
+                     style="font-family: ${this.state.fontFamily}; font-size: ${this.state.fontSize}px; line-height: ${this.state.lineHeight};">
+                    ${currentContent}
+                </div>
+                <div class="reader-mori-footer" style="border-top: 1px solid ${theme.border};">
+                    <button class="reader-mori-nav" id="reader-prev" ${this.state.currentPage === 1 ? 'disabled' : ''}>◀ Пред.</button>
+                    <span class="reader-mori-page">${this.state.currentPage} / ${this.state.totalPages}</span>
+                    <button class="reader-mori-nav" id="reader-next" ${this.state.currentPage === this.state.totalPages ? 'disabled' : ''}>След. ▶</button>
+                </div>
+                <div class="reader-mori-settings-panel" id="settings-panel" style="display: none; background: ${theme.background}; border-top: 1px solid ${theme.border};">
+                    <div class="setting-group">
+                        <label>Шрифт</label>
+                        <select id="reader-font">${this.fonts.map(f => `<option value="${f.value}" ${this.state.fontFamily === f.value ? 'selected' : ''}>${f.name}</option>`).join('')}</select>
+                    </div>
+                    <div class="setting-group">
+                        <label>Размер: ${this.state.fontSize}px</label>
+                        <input type="range" id="reader-font-size" min="12" max="32" value="${this.state.fontSize}" step="1">
+                    </div>
+                    <div class="setting-group">
+                        <label>Интервал: ${this.state.lineHeight}</label>
+                        <input type="range" id="reader-line-height" min="1" max="2.5" value="${this.state.lineHeight}" step="0.1">
+                    </div>
+                    <div class="setting-group">
+                        <label>Тема</label>
+                        <div class="theme-buttons">
+                            <button class="theme-btn ${this.state.theme === 'dark' ? 'active' : ''}" data-theme="dark">🌙 Тёмная</button>
+                            <button class="theme-btn ${this.state.theme === 'light' ? 'active' : ''}" data-theme="light">☀️ Светлая</button>
+                            <button class="theme-btn ${this.state.theme === 'sepia' ? 'active' : ''}" data-theme="sepia">📜 Сепия</button>
                         </div>
-                        <div style="display: flex; gap: 8px;">
-                            <button class="reader-search-btn" id="reader-search-btn">🔍</button>
-                            <button class="reader-note-btn" id="reader-note">📝</button>
-                            <button class="reader-bookmark-btn" id="reader-bookmark">🔖</button>
-                            <button class="reader-settings-btn" id="reader-settings-btn">⚙️</button>
-                        </div>
                     </div>
-
-                    <!-- Панель поиска -->
-                    <div class="reader-search-bar" id="reader-search-bar" style="display: none;">
-                        <div class="reader-search-input-wrapper">
-                            <span class="search-icon">🔍</span>
-                            <input type="text" id="reader-search-input" class="reader-search-input" placeholder="Поиск по книге...">
-                            <button id="reader-search-close" class="reader-search-close">✕</button>
-                        </div>
-                        <div class="reader-search-results" id="reader-search-results"></div>
-                        <div class="reader-search-nav" id="reader-search-nav" style="display: none;">
-                            <button id="search-prev" class="search-nav-btn">◀ Пред.</button>
-                            <span id="search-counter">0/0</span>
-                            <button id="search-next" class="search-nav-btn">След. ▶</button>
-                        </div>
-                    </div>
-
-                    <!-- Контент -->
-                    <div class="reader-content" id="reader-content"
-                         style="font-family: ${this.state.fontFamily};
-                                font-size: ${this.state.fontSize}px;
-                                line-height: ${this.state.lineHeight};
-                                color: ${theme.text};">
-                        ${currentContent}
-                    </div>
-
-                    <!-- Прогресс-бар -->
-                    <div class="reader-progress-bar">
-                        <div class="reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
-                    </div>
-
-                    <!-- Навигация -->
-                    <div class="reader-footer" style="border-top: 1px solid ${theme.border};">
-                        <button class="reader-nav" id="reader-prev" ${this.state.currentPage === 1 ? 'disabled' : ''}>
-                            ◀ Пред.
-                        </button>
-                        <span class="reader-page-num">${this.state.currentPage} / ${this.state.totalPages}</span>
-                        <button class="reader-nav" id="reader-next" ${this.state.currentPage === this.state.totalPages ? 'disabled' : ''}>
-                            След. ▶
-                        </button>
-                    </div>
-
-                    <!-- Панель настроек (скрыта) -->
-                    <div class="reader-settings-panel" id="reader-settings-panel" style="display: none; background: ${theme.background}; border-top: 1px solid ${theme.border};">
-                        ${this.renderSettings()}
-                    </div>
+                    <button class="settings-close">Закрыть</button>
                 </div>
             </div>
-        `;
+        </div>
+    `;
 
-        this.attachReaderEvents();
-        this.startReadingTimer();
-    },
+    this.attachReaderEvents();
+    this.startReadingTimer();
+},
 
     /**
      * Рендер панели настроек
@@ -400,8 +381,8 @@ if (book.content && book.content.length) {
         const nextBtn = document.getElementById('reader-next');
         if (nextBtn) nextBtn.onclick = () => this.nextPage();
 
-        const settingsBtn = document.getElementById('reader-settings-btn');
-        const settingsPanel = document.getElementById('reader-settings-panel');
+        const settingsBtn = document.getElementById('reader-settings');
+        const settingsPanel = document.getElementById('settings-panel');
         if (settingsBtn && settingsPanel) {
             settingsBtn.onclick = () => {
                 const isVisible = settingsPanel.style.display !== 'none';
@@ -409,7 +390,7 @@ if (book.content && book.content.length) {
             };
         }
 
-        const settingsClose = document.getElementById('settings-close');
+        const settingsClose = document.querySelector('.settings-close');
         if (settingsClose && settingsPanel) {
             settingsClose.onclick = () => {
                 settingsPanel.style.display = 'none';
@@ -472,9 +453,14 @@ if (book.content && book.content.length) {
             fontSelect.onchange = (e) => this.setState({ fontFamily: e.target.value });
         }
 
-        const fontSizeInput = document.getElementById('font-size');
+        const fontSizeInput = document.getElementById('reader-font-size');
         if (fontSizeInput) {
-            fontSizeInput.oninput = (e) => this.setState({ fontSize: parseInt(e.target.value) });
+            fontSizeInput.oninput = (e) => {
+                this.state.fontSize = parseInt(e.target.value);
+                const contentEl = document.querySelector('.reader-mori-content');
+                if (contentEl) contentEl.style.fontSize = this.state.fontSize + 'px';
+        };
+     
         }
 
         const fontDecr = document.getElementById('font-decr');
@@ -487,9 +473,14 @@ if (book.content && book.content.length) {
             fontIncr.onclick = () => this.setState({ fontSize: Math.min(32, this.state.fontSize + 1) });
         }
 
-        const lineHeightInput = document.getElementById('line-height');
+        const lineHeightInput = document.getElementById('reader-line-height');
         if (lineHeightInput) {
-            lineHeightInput.oninput = (e) => this.setState({ lineHeight: parseFloat(e.target.value) });
+            lineHeightInput.oninput = (e) => {
+                this.state.lineHeight = parseFloat(e.target.value);
+                const contentEl = document.querySelector('.reader-mori-content');
+                if (contentEl) contentEl.style.lineHeight = this.state.lineHeight;
+        };
+       
         }
 
         const lineDecr = document.getElementById('line-decr');
