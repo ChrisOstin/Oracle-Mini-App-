@@ -856,19 +856,47 @@ if (!alreadyLogged) {
         this.reload();
     },
 
-showNavigation: function() {
-    // Сначала добавляем классы
-    document.body.classList.add('user-authenticated');
-    if (window.MORI_APP && MORI_APP.accessLevel === 'admin') {
-        document.body.classList.add('admin');
+renderBottomNav: function() {
+    const container = document.getElementById('dynamic-bottom-nav');
+    if (!container) return;
+    
+    const isAdmin = this.accessLevel === 'admin';
+    const buttons = [
+        { module: 'portfolio', icon: '💼', label: 'Портфель' },
+        { module: 'calculator', icon: '🧮', label: 'Калькулятор' },
+        { module: 'library', icon: '📚', label: 'Библиотека' },
+        { module: 'ai-chat', icon: '🧠', label: 'AI' },
+    ];
+    
+    // Для не-админов добавляем чат
+    if (!isAdmin) {
+        buttons.push({ module: 'chat', icon: '💬', label: 'MORIGRAM' });
     }
-    // Потом показываем панель
-    const nav = document.getElementById('new-bottom-nav');
-    const left = document.getElementById('new-floating-left');
-    const right = document.getElementById('new-floating-right');
-    if (nav) nav.style.display = 'flex';
-    if (left) left.style.display = 'block';
-    if (right) right.style.display = 'block';
+    
+    buttons.push({ module: 'profile', icon: '👤', label: 'Профиль' });
+    
+    container.innerHTML = buttons.map(btn => `
+        <button class="nav-btn" data-module="${btn.module}" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
+            <span style="font-size: 20px; margin-bottom: 2px;">${btn.icon}</span>
+            <span>${btn.label}</span>
+        </button>
+    `).join('');
+    
+    // Добавляем обработчики
+    container.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const module = btn.dataset.module;
+            if (window.MORI_ROUTER) MORI_ROUTER.navigate(module);
+        });
+    });
+},
+
+showNavigation: function() {
+    document.body.classList.add('user-authenticated');
+    this.renderBottomNav(); // рендерим панель с учётом уровня доступа
+    
+    const container = document.getElementById('dynamic-bottom-nav');
+    if (container) container.style.display = 'flex';
 },
 
     exportData: function() {

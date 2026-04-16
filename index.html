@@ -213,7 +213,7 @@
     white-space: nowrap !important;
 }
 
-#new-bottom-nav .nav-btn.active {
+#dynamic-bottom-nav .nav-btn.active {
     color: #ffd700 !important;
 }
 
@@ -234,31 +234,31 @@
 }
 
 /* Скрываем чат для админа сразу */
-body.admin #new-bottom-nav .nav-btn[data-module="chat"] {
+body.admin #dynamic-bottom-nav .nav-btn[data-module="chat"] {
     display: none !important;
 }
 
 /* Компактный режим для 6 кнопок */
-#new-bottom-nav.has-chat {
+#dynamic-bottom-nav.has-chat {
     justify-content: space-evenly;
     gap: 2px;
 }
 
-#new-bottom-nav.has-chat .nav-btn {
+#dynamic-bottom-nav.has-chat .nav-btn {
     padding: 4px 4px !important;
     min-width: 45px !important;
 }
 
-#new-bottom-nav.has-chat .nav-label {
+#dynamic-bottom-nav.has-chat .nav-label {
     font-size: 9px !important;
 }
 
-#new-bottom-nav.has-chat .nav-icon {
+#dynamic-bottom-nav.has-chat .nav-icon {
     font-size: 18px !important;
 }
 
 /* Скрываем чат для админа сразу, без мигания */
-body.admin #new-bottom-nav .nav-btn[data-module="chat"] {
+body.admin #dynamic-bottom-nav .nav-btn[data-module="chat"] {
     display: none !important;
 }
 
@@ -286,32 +286,8 @@ body.admin #new-bottom-nav .nav-btn[data-module="chat"] {
 <div class="module-title" id="mori-story-title" style="display: none;">MORI Story</div>
     <div id="app"></div>
 
-<!-- НОВАЯ ПАНЕЛЬ НАВИГАЦИИ (с твоим стилем) -->
-<div id="new-bottom-nav" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.95); border-top: 2px solid #ffd700; box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.9); border-radius: 20px 20px 0 0; padding: 10px 0; z-index: 99999; justify-content: space-around; align-items: center;">
-    <button class="nav-btn" data-module="portfolio" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
-        <span style="font-size: 20px; margin-bottom: 2px;">💼</span>
-        <span>Портфель</span>
-    </button>
-    <button class="nav-btn" data-module="calculator" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
-        <span style="font-size: 20px; margin-bottom: 2px;">🧮</span>
-        <span>Калькулятор</span>
-    </button>
-    <button class="nav-btn" data-module="library" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
-        <span style="font-size: 20px; margin-bottom: 2px;">📚</span>
-        <span>Библиотека</span>
-    </button>
-    <button class="nav-btn" data-module="ai-chat" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
-        <span style="font-size: 20px; margin-bottom: 2px;">🧠</span>
-        <span>AI</span>
-    </button>
-    <button class="nav-btn" data-module="chat" style="display: none; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
-        <span style="font-size: 20px; margin-bottom: 2px;">💬</span>
-        <span>MORIGRAM</span>
-    </button>
-    <button class="nav-btn" data-module="profile" style="display: flex; flex-direction: column; align-items: center; background: transparent; border: none; color: #888; font-size: 11px; cursor: pointer; padding: 4px 8px;">
-        <span style="font-size: 20px; margin-bottom: 2px;">👤</span>
-        <span>Профиль</span>
-    </button>
+<!-- ДИНАМИЧЕСКАЯ ПАНЕЛЬ НАВИГАЦИИ -->
+<div id="dynamic-bottom-nav" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.95); border-top: 2px solid #ffd700; box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.9); border-radius: 20px 20px 0 0; padding: 10px 0; z-index: 99999; justify-content: space-around; align-items: center;">
 </div>
 
 <!-- НОВЫЕ ПЛАВАЮЩИЕ КНОПКИ -->
@@ -497,7 +473,7 @@ if (window.MORI_ROUTER) {
 <script>
 // Показ панели после авторизации
 function showNewNavigation() {
-    const nav = document.getElementById('new-bottom-nav');
+    const nav = document.getElementById('dynamic-bottom-nav');
     const leftBtn = document.getElementById('new-floating-left');
     const rightBtn = document.getElementById('new-floating-right');
     if (nav) nav.style.display = 'flex';
@@ -506,7 +482,7 @@ function showNewNavigation() {
 }
 
 // Обработчики кликов
-document.getElementById('new-bottom-nav')?.addEventListener('click', (e) => {
+document.getElementById('dynamic-bottom-nav')?.addEventListener('click', (e) => {
     const btn = e.target.closest('.nav-btn');
     if (btn && window.MORI_ROUTER) MORI_ROUTER.navigate(btn.dataset.module);
 });
@@ -519,7 +495,7 @@ document.getElementById('new-floating-right')?.addEventListener('click', () => {
 
 function updateActiveButton() {
     const current = window.MORI_ROUTER?.currentScreen || 'portfolio';
-    document.querySelectorAll('#new-bottom-nav .nav-btn').forEach(btn => {
+    document.querySelectorAll('#dynamic-bottom-nav .nav-btn').forEach(btn => {
         btn.classList.remove('active'); // сначала удаляем у всех
         const moduleName = btn.getAttribute('data-module');
         if (moduleName === current) {
@@ -544,8 +520,8 @@ if (window.MORI_ROUTER) {
 }
 
 function updateChatButton() {
-    const chatBtn = document.querySelector('#new-bottom-nav .nav-btn[data-module="chat"]');
-    const bottomNav = document.getElementById('new-bottom-nav');
+    const chatBtn = document.querySelector('#dynamic-bottom-nav .nav-btn[data-module="chat"]');
+    const bottomNav = document.getElementById('dynamic-bottom-nav');
 
     // Для админа — чат не показываем
     if (window.MORI_APP && MORI_APP.accessLevel === 'admin') {
