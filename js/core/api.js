@@ -339,7 +339,8 @@ if (options.skipCache) {
             method: 'POST', 
             body: { token }, 
             skipCache: true,
-            offline: false
+            offline: false,
+            timeout: 30000
         });
     },
 
