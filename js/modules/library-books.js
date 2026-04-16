@@ -36,21 +36,32 @@ const MORI_LIBRARY_BOOKS = {
     /**
      * Загрузка книг из localStorage
      */
-    load: function() {
-        try {
-            const saved = localStorage.getItem('library_books');
-            if (saved) {
-                this.books = JSON.parse(saved);
-            } else {
-                this.books = this.getDefaultBooks();
+load: function() {
+    try {
+        const saved = localStorage.getItem('library_books');
+        if (saved) {
+            this.books = JSON.parse(saved);
+        } else {
+            this.books = this.getDefaultBooks();
+            this.save();
+        }
+        
+        // Принудительно добавляем контент для первой книги
+        const book1 = this.books.find(b => b.id === 'book_1');
+        if (book1 && !book1.content) {
+            const defaultBooks = this.getDefaultBooks();
+            const defaultBook1 = defaultBooks.find(b => b.id === 'book_1');
+            if (defaultBook1 && defaultBook1.content) {
+                book1.content = defaultBook1.content;
                 this.save();
             }
-        } catch (error) {
-            console.error('Ошибка загрузки книг:', error);
-            this.books = this.getDefaultBooks();
         }
-        return this.books;
-    },
+    } catch (error) {
+        console.error('Ошибка загрузки книг:', error);
+        this.books = this.getDefaultBooks();
+    }
+    return this.books;
+},
 
     /**
      * Сохранение книг в localStorage
