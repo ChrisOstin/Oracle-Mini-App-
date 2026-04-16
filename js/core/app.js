@@ -857,16 +857,19 @@ if (!alreadyLogged) {
     },
 
 showNavigation: function() {
+    // Сначала добавляем классы
     document.body.classList.add('user-authenticated');
+    if (window.MORI_APP && MORI_APP.accessLevel === 'admin') {
+        document.body.classList.add('admin');
+    }
+    
+    // Потом показываем панель
     const nav = document.getElementById('new-bottom-nav');
     const left = document.getElementById('new-floating-left');
     const right = document.getElementById('new-floating-right');
     if (nav) nav.style.display = 'flex';
     if (left) left.style.display = 'block';
     if (right) right.style.display = 'block';
-    if (MORI_APP.accessLevel === 'admin') {
-        document.body.classList.add('admin');
-    }
 },
 
     exportData: function() {
