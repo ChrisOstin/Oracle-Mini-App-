@@ -85,6 +85,8 @@ if (cachedBurn) {
                 }
             }, 1000);
         }
+
+        this.startFloatingSparks();
     
     },
 
@@ -255,6 +257,39 @@ if (cachedBurn) {
         this.state.burnStats.lastUpdate = new Date().toLocaleString();
         this.state.burnStats.cooldown = true;
            
+
+startFloatingSparks: function() {
+    // Очищаем старые искры, если есть
+    const oldSparks = document.querySelectorAll('.floating-spark');
+    oldSparks.forEach(spark => spark.remove());
+    
+    const banner = document.querySelector('.burn-widget-banner');
+    if (!banner) {
+        setTimeout(() => this.startFloatingSparks(), 500);
+        return;
+    }
+    
+    for (let i = 0; i < 10; i++) {
+        this.createFloatingSpark(banner);
+    }
+},
+
+createFloatingSpark: function(container) {
+    const spark = document.createElement('div');
+    spark.className = 'floating-spark';
+    
+    spark.style.left = Math.random() * 100 + '%';
+    spark.style.top = 20 + Math.random() * 60 + '%';
+    spark.style.animationDelay = Math.random() * 5 + 's';
+    spark.style.animationDuration = 3 + Math.random() * 3 + 's';
+    
+    container.appendChild(spark);
+    
+    spark.addEventListener('animationiteration', () => {
+        spark.style.left = Math.random() * 100 + '%';
+        spark.style.top = 20 + Math.random() * 60 + '%';
+    });
+},
 
             // Дым
 const smokeDiv = document.createElement('div');
