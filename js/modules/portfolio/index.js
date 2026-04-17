@@ -235,10 +235,6 @@ if (cachedBurn) {
     this.state.burnStats.isLoading = true;
     this.renderBurnWidget();
     
-    // Анимация кнопки
-        btn.classList.add('loading');
-    }
-    
     try {
         const response = await fetch('https://v1api.mori.game/api/v1/mori-burn-stats');
         const data = await response.json();
@@ -304,8 +300,7 @@ if (cachedBurn) {
         }
     } finally {
         this.state.burnStats.isLoading = false;
-            btn.classList.remove('loading');
-        }
+
     }
     return false;
 },
