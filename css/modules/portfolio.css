@@ -1248,33 +1248,6 @@
 
 /* ===== ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ ===== */
 
-/* 1. Бегущая огненная рамка */
-.burn-widget-banner {
-    position: relative;
-    overflow: hidden;
-}
-
-.burn-widget-banner::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #ff6600, #ff9900, #ffcc00, #ff9900, #ff6600);
-    background-size: 400% 400%;
-    animation: fireBorder 3s linear infinite;
-    z-index: 0;
-    border-radius: 28px;
-    opacity: 0.6;
-}
-
-@keyframes fireBorder {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 /* 3. Дым */
 .burn-widget-smoke {
     position: absolute;
@@ -1323,17 +1296,6 @@
     100% { transform: translateY(-30px) scale(0); opacity: 0; }
 }
 
-/* 8. Голограмма (3D-эффект цифр) */
-.burn-widget-number, .burn-widget-usd {
-    text-shadow: 0 0 5px #ff6600, 0 0 10px #ff9900, 0 0 15px #ffcc00;
-    animation: hologramGlow 2s ease-in-out infinite;
-}
-
-@keyframes hologramGlow {
-    0% { text-shadow: 0 0 2px #ff6600, 0 0 4px #ff9900; }
-    50% { text-shadow: 0 0 8px #ff9900, 0 0 12px #ffcc00, 0 0 16px #ffd700; }
-    100% { text-shadow: 0 0 2px #ff6600, 0 0 4px #ff9900; }
-}
 
 /* 2. Трещины на стекле (временный эффект) */
 .burn-widget-crack {
@@ -1351,4 +1313,85 @@
 @keyframes crackFade {
     0% { opacity: 1; }
     100% { opacity: 0; }
+}
+
+/* Тлеющие угольки по углам баннера */
+.burn-widget-banner {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Угольки в каждом углу */
+.burn-widget-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 0% 0%, rgba(255,100,0,0.4) 0%, rgba(255,100,0,0.2) 30%, transparent 70%);
+    animation: cornerGlow1 2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 20px 0 0 0;
+}
+
+.burn-widget-banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 100% 0%, rgba(255,100,0,0.4) 0%, rgba(255,100,0,0.2) 30%, transparent 70%);
+    animation: cornerGlow2 2.3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 0 20px 0 0;
+}
+
+/* Дополнительные псевдоэлементы для нижних углов (нужны отдельные элементы) */
+.burn-widget-banner .corner-bottom-left,
+.burn-widget-banner .corner-bottom-right {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.burn-widget-banner .corner-bottom-left {
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(circle at 0% 100%, rgba(255,100,0,0.4) 0%, rgba(255,100,0,0.2) 30%, transparent 70%);
+    animation: cornerGlow3 2.5s ease-in-out infinite;
+    border-radius: 0 0 0 20px;
+}
+
+.burn-widget-banner .corner-bottom-right {
+    bottom: 0;
+    right: 0;
+    background: radial-gradient(circle at 100% 100%, rgba(255,100,0,0.4) 0%, rgba(255,100,0,0.2) 30%, transparent 70%);
+    animation: cornerGlow4 2.1s ease-in-out infinite;
+    border-radius: 0 0 20px 0;
+}
+
+@keyframes cornerGlow1 {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+@keyframes cornerGlow2 {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes cornerGlow3 {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.1); }
+}
+
+@keyframes cornerGlow4 {
+    0%, 100% { opacity: 0.25; transform: scale(1); }
+    50% { opacity: 0.75; transform: scale(1.1); }
 }

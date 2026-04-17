@@ -356,6 +356,8 @@ spawnSparks: function(count = 20) {
         <div class="burn-widget">
             <div class="burn-widget-quote">⚜️  «Истинная ценность познаётся в огне» ⚜️ </div>
             <div class="burn-widget-banner">
+                <div class="corner-bottom-left"></div>
+                <div class="corner-bottom-right"></div>
                 <div class="burn-widget-glow"></div>
                 <div class="burn-widget-coals"></div>
                 <div class="burn-widget-ashes" id="burn-ashes"></div>
