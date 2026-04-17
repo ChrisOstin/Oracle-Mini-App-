@@ -225,6 +225,39 @@ if (cachedBurn) {
         `;
     },
 
+    startFloatingSparks: function() {
+    // Очищаем старые искры, если есть
+    const oldSparks = document.querySelectorAll('.floating-spark');
+    oldSparks.forEach(spark => spark.remove());
+    
+    const banner = document.querySelector('.burn-widget-banner');
+    if (!banner) {
+        setTimeout(() => this.startFloatingSparks(), 500);
+        return;
+    }
+    
+    for (let i = 0; i < 10; i++) {
+        this.createFloatingSpark(banner);
+    }
+},
+
+createFloatingSpark: function(container) {
+    const spark = document.createElement('div');
+    spark.className = 'floating-spark';
+    
+    spark.style.left = Math.random() * 100 + '%';
+    spark.style.top = 20 + Math.random() * 60 + '%';
+    spark.style.animationDelay = Math.random() * 5 + 's';
+    spark.style.animationDuration = 3 + Math.random() * 3 + 's';
+    
+    container.appendChild(spark);
+    
+    spark.addEventListener('animationiteration', () => {
+        spark.style.left = Math.random() * 100 + '%';
+        spark.style.top = 20 + Math.random() * 60 + '%';
+    });
+},
+
     loadBurnStats: async function(force = false) {
     // Проверка кулдауна
     if (this.state.burnStats.cooldown && !force) {
@@ -257,39 +290,6 @@ if (cachedBurn) {
         this.state.burnStats.lastUpdate = new Date().toLocaleString();
         this.state.burnStats.cooldown = true;
            
-
-startFloatingSparks: function() {
-    // Очищаем старые искры, если есть
-    const oldSparks = document.querySelectorAll('.floating-spark');
-    oldSparks.forEach(spark => spark.remove());
-    
-    const banner = document.querySelector('.burn-widget-banner');
-    if (!banner) {
-        setTimeout(() => this.startFloatingSparks(), 500);
-        return;
-    }
-    
-    for (let i = 0; i < 10; i++) {
-        this.createFloatingSpark(banner);
-    }
-},
-
-createFloatingSpark: function(container) {
-    const spark = document.createElement('div');
-    spark.className = 'floating-spark';
-    
-    spark.style.left = Math.random() * 100 + '%';
-    spark.style.top = 20 + Math.random() * 60 + '%';
-    spark.style.animationDelay = Math.random() * 5 + 's';
-    spark.style.animationDuration = 3 + Math.random() * 3 + 's';
-    
-    container.appendChild(spark);
-    
-    spark.addEventListener('animationiteration', () => {
-        spark.style.left = Math.random() * 100 + '%';
-        spark.style.top = 20 + Math.random() * 60 + '%';
-    });
-},
 
             // Дым
 const smokeDiv = document.createElement('div');
@@ -970,7 +970,7 @@ renderWhalesList: function() {
     setTimeout(() => this.drawPriceLevels(), 100);
 },
 
-animateNumber: function(element, start, end, duration = 1000) {
+animateNumber: function(element, start, end, duration = 10000) {
     if (!element) return;
     const range = end - start;
     const startTime = performance.now();
