@@ -283,7 +283,7 @@ if (cachedBurn) {
                 }
             }, 60000);
             
-            MORI_APP.showToast(`🔥 Сожжено ${MORI_UTILS.formatLargeNumber(newTotal)} MORI`, 'success');
+            MORI_APP.showToast(`🔥 Сожжено ${MORI_UTILS.formatLargeNumber(newTotal)} MORI 🔥`, 'success');
             return true;
         }
     } catch (error) {
@@ -329,7 +329,7 @@ spawnSparks: function() {
     renderBurnWidget: function() {
     return `
         <div class="burn-widget">
-            <div class="burn-widget-quote">🔥 «Истинная ценность познаётся в огне.» 🔥 </div>
+            <div class="burn-widget-quote">⚜️ --- «Истинная ценность познаётся в огне. ---⚜️ »</div>
             <div class="burn-widget-banner">
                 <div class="burn-widget-glow"></div>
                 <div class="burn-widget-coals"></div>
@@ -337,7 +337,7 @@ spawnSparks: function() {
                 <div class="burn-widget-content">
                     <div class="burn-widget-header">
                         <div class="burn-widget-icon" id="burn-icon">🔥</div>
-                        <div class="burn-widget-title">Сожжено $MORI</div>
+                        <div class="burn-widget-title">СОЖЖЕНО $MORI</div>
                     </div>
                     <div class="burn-widget-stats">
                         <div class="burn-widget-number" id="burn-total">${MORI_UTILS.formatLargeNumber(this.state.burnStats.totalBurned)} MORI</div>
@@ -346,7 +346,7 @@ spawnSparks: function() {
                     <div class="burn-widget-footer">
                         <div class="burn-widget-date" id="burn-date">${this.state.burnStats.lastUpdate ? 'Обновлено: ' + this.state.burnStats.lastUpdate : 'Данные не загружены'}</div>
                         <button class="burn-widget-btn" id="burn-refresh-btn" ${this.state.burnStats.cooldown ? 'disabled' : ''}>
-                            <span>🔄</span> Обновить
+                            <span></span> Обновить
                         </button>
                     </div>
                 </div>
