@@ -273,11 +273,6 @@ if (cachedBurn) {
             // Разблокируем кнопку через минуту
             setTimeout(() => {
                 this.state.burnStats.cooldown = false;
-                const btn = document.getElementById('burn-refresh-btn');
-                if (btn) {
-                    btn.disabled = false;
-                    btn.classList.remove('loading');
-                }
             }, 60000);
             
             MORI_APP.showToast(`🔥 Сожжено ${MORI_UTILS.formatLargeNumber(newTotal)} MORI 🔥`, 'success');
@@ -324,7 +319,7 @@ startIdleSparks: function() {
     setInterval(() => {
         const btn = document.getElementById('burn-refresh-btn');
         if (btn && !btn.disabled && document.querySelector('.burn-widget-banner')) {
-            this.spawnIdleSpark(5);
+            this.spawnIdleSparks(5);
         }
     }, 8000); // каждые 8 секунд
 },
