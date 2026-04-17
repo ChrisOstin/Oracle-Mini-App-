@@ -966,3 +966,249 @@
 #main-bottom-nav .nav-label {
     font-size: 10px !important;
 }
+
+/* ===== ВИДЖЕТ СЖИГАНИЯ — МАГИЧЕСКИЙ СТИЛЬ ===== */
+
+.burn-widget {
+    margin: 24px 0 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.burn-widget-quote {
+    text-align: center;
+    font-size: 11px;
+    color: #9a8c5c;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.burn-widget-banner {
+    position: relative;
+    background: linear-gradient(145deg, #0a0a0a 0%, #1a0a0a 100%);
+    border-radius: 28px;
+    padding: 20px 16px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.1), inset 0 0 30px rgba(0,0,0,0.5);
+}
+
+/* Опалённые края */
+.burn-widget-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 30% 40%, transparent 60%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.burn-widget-banner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(45deg, rgba(212,175,55,0.03) 0px, rgba(212,175,55,0.03) 2px, transparent 2px, transparent 8px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Тлеющие угольки */
+.burn-widget-coals {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 20% 40%, rgba(255,100,0,0.15) 1px, transparent 1px),
+                      radial-gradient(circle at 80% 70%, rgba(255,150,0,0.1) 1px, transparent 1px),
+                      radial-gradient(circle at 50% 20%, rgba(255,200,0,0.08) 1px, transparent 1px);
+    background-size: 40px 40px, 60px 60px, 80px 80px;
+    background-repeat: repeat;
+    animation: coalsGlow 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes coalsGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Золотой пепел */
+.burn-widget-ashes {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.burn-widget-ashes::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: radial-gradient(ellipse at center, rgba(212,175,55,0.3) 0%, transparent 70%);
+    animation: ashesFall 4s linear infinite;
+}
+
+@keyframes ashesFall {
+    0% { transform: translateY(-20px); opacity: 0; }
+    20% { opacity: 0.6; }
+    80% { opacity: 0.6; }
+    100% { transform: translateY(200px); opacity: 0; }
+}
+
+/* Контент баннера */
+.burn-widget-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.burn-widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.burn-widget-icon {
+    font-size: 28px;
+    animation: flamePulse 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 5px #ff6600);
+}
+
+@keyframes flamePulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 2px #ff6600; }
+    50% { transform: scale(1.1); text-shadow: 0 0 15px #ff9900; }
+}
+
+.burn-widget-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #d4af37;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px rgba(212,175,55,0.3);
+}
+
+/* Отражение пламени (мерцающая надпись) */
+.burn-widget-number,
+.burn-widget-usd {
+    animation: flameReflection 2s ease-in-out infinite;
+}
+
+@keyframes flameReflection {
+    0%, 100% { text-shadow: 0 0 2px #ff6600, 0 0 4px rgba(255,100,0,0.3); }
+    50% { text-shadow: 0 0 8px #ff9900, 0 0 12px rgba(255,150,0,0.5); }
+}
+
+.burn-widget-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffd700;
+    margin-bottom: 4px;
+}
+
+.burn-widget-usd {
+    font-size: 14px;
+    color: #e8a020;
+}
+
+.burn-widget-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(212,175,55,0.2);
+}
+
+.burn-widget-date {
+    font-size: 9px;
+    color: #6a5a3a;
+}
+
+.burn-widget-btn {
+    background: rgba(212,175,55,0.15);
+    border: 1px solid #d4af37;
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-size: 11px;
+    color: #d4af37;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.burn-widget-btn:hover:not(:disabled) {
+    background: rgba(212,175,55,0.3);
+    transform: scale(1.02);
+}
+
+.burn-widget-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.burn-widget-btn.loading span {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Вспышка при обновлении */
+.burn-flash {
+    animation: burnFlash 0.5s ease-out;
+}
+
+@keyframes burnFlash {
+    0% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+    30% { box-shadow: 0 0 30px 10px rgba(212,175,55,0.6); }
+    100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+}
+
+/* Искры */
+.burn-spark {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #ffd700;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 20;
+    animation: sparkFly 1s ease-out forwards;
+    box-shadow: 0 0 4px #ffaa00;
+}
+
+@keyframes sparkFly {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-50px) scale(0);
+        opacity: 0;
+    }
+}

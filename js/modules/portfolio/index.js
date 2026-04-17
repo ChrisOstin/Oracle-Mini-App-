@@ -17,7 +17,15 @@ const MORI_PORTFOLIO = {
         lastUpdate: null,
         isExpanded: false,
         solanaPrice: 0,
-        solanaChange24h: 0
+        solanaChange24h: 0,
+        burnStats: {
+            totalBurned: 0,
+            totalBurnedUsd: 0,
+            lastUpdate: null,
+            isLoading: false,
+            cooldown: false
+        }
+
     },
 
     chart: null,
@@ -49,6 +57,16 @@ const MORI_PORTFOLIO = {
 
     init: function() {
         console.log('MORI_PORTFOLIO инициализация...');
+
+        // Загружаем кэш сжигания
+const cachedBurn = localStorage.getItem('burn_stats_cache');
+if (cachedBurn) {
+    const data = JSON.parse(cachedBurn);
+    this.state.burnStats.totalBurned = data.totalBurned;
+    this.state.burnStats.totalBurnedUsd = data.totalBurnedUsd;
+    this.state.burnStats.lastUpdate = data.lastUpdate;
+}
+
         this.loadData();
         this.loadWhales();
         this.loadSolanaData();
@@ -163,7 +181,7 @@ const MORI_PORTFOLIO = {
         <div class="about-value">Solana</div>
     </div>
     <div class="about-item">
-        <div class="about-label">ЦИРКУЛИРУЮЩЕЕ</div>
+        <div class="about-label">ЦИРКУЛИРУЮЩЕЕ ПРЕДЛОЖЕНИЕ</div>
         <div class="about-value">${MORI_UTILS.formatLargeNumber(this.state.circulatingSupply)} MORI</div>
     </div>
     <div class="about-item">
@@ -199,8 +217,143 @@ const MORI_PORTFOLIO = {
                 </div>
             </div>
 
+                    ${this.renderBurnWidget()}
+
         `;
     },
+
+    loadBurnStats: async function(force = false) {
+    // Проверка кулдауна
+    if (this.state.burnStats.cooldown && !force) {
+        MORI_APP.showToast('⏳ Подождите минуту перед следующим обновлением', 'warning');
+        return false;
+    }
+    
+    this.state.burnStats.isLoading = true;
+    this.renderBurnWidget();
+    
+    // Анимация кнопки
+    const btn = document.getElementById('burn-refresh-btn');
+    if (btn) {
+        btn.classList.add('loading');
+    }
+    
+    try {
+        const response = await fetch('https://v1api.mori.game/api/v1/mori-burn-stats');
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+            const oldTotal = this.state.burnStats.totalBurned;
+            const newTotal = data.data.total_burned;
+            
+            this.state.burnStats.totalBurned = newTotal;
+            this.state.burnStats.totalBurnedUsd = data.data.total_burned_usd;
+            this.state.burnStats.lastUpdate = new Date().toLocaleString();
+            this.state.burnStats.cooldown = true;
+            
+            // Сохраняем в кэш
+            localStorage.setItem('burn_stats_cache', JSON.stringify({
+                totalBurned: newTotal,
+                totalBurnedUsd: data.data.total_burned_usd,
+                lastUpdate: this.state.burnStats.lastUpdate,
+                timestamp: Date.now()
+            }));
+            
+            this.renderBurnWidget();
+            
+            // Анимация вспышки
+            const banner = document.querySelector('.burn-widget-banner');
+            if (banner) {
+                banner.classList.add('burn-flash');
+                setTimeout(() => banner.classList.remove('burn-flash'), 500);
+            }
+            
+            // Эффект искр при увеличении цифры
+            if (newTotal > oldTotal) {
+                this.spawnSparks();
+            }
+            
+            // Разблокируем кнопку через минуту
+            setTimeout(() => {
+                this.state.burnStats.cooldown = false;
+                const btn = document.getElementById('burn-refresh-btn');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.classList.remove('loading');
+                }
+            }, 60000);
+            
+            MORI_APP.showToast(`🔥 Сожжено ${MORI_UTILS.formatLargeNumber(newTotal)} MORI`, 'success');
+            return true;
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки статистики сжигания:', error);
+        
+        // Загружаем из кэша
+        const cached = localStorage.getItem('burn_stats_cache');
+        if (cached) {
+            const data = JSON.parse(cached);
+            this.state.burnStats.totalBurned = data.totalBurned;
+            this.state.burnStats.totalBurnedUsd = data.totalBurnedUsd;
+            this.state.burnStats.lastUpdate = data.lastUpdate + ' (кэш)';
+            this.renderBurnWidget();
+            MORI_APP.showToast('📡 Данные из кэша (ошибка соединения)', 'warning');
+        } else {
+            MORI_APP.showToast('❌ Не удалось загрузить данные сжигания', 'error');
+        }
+    } finally {
+        this.state.burnStats.isLoading = false;
+        const btn = document.getElementById('burn-refresh-btn');
+        if (btn) {
+            btn.classList.remove('loading');
+        }
+    }
+    return false;
+},
+
+spawnSparks: function() {
+    const container = document.querySelector('.burn-widget-banner');
+    if (!container) return;
+    
+    for (let i = 0; i < 20; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'burn-spark';
+        spark.style.left = Math.random() * 100 + '%';
+        spark.style.top = Math.random() * 100 + '%';
+        spark.style.animationDelay = Math.random() * 0.5 + 's';
+        container.appendChild(spark);
+        setTimeout(() => spark.remove(), 1000);
+    }
+},
+
+    renderBurnWidget: function() {
+    return `
+        <div class="burn-widget">
+            <div class="burn-widget-quote">🔥 «Истинная ценность познаётся в огне.» 🔥 </div>
+            <div class="burn-widget-banner">
+                <div class="burn-widget-glow"></div>
+                <div class="burn-widget-coals"></div>
+                <div class="burn-widget-ashes" id="burn-ashes"></div>
+                <div class="burn-widget-content">
+                    <div class="burn-widget-header">
+                        <div class="burn-widget-icon" id="burn-icon">🔥</div>
+                        <div class="burn-widget-title">Сожжено $MORI</div>
+                    </div>
+                    <div class="burn-widget-stats">
+                        <div class="burn-widget-number" id="burn-total">${MORI_UTILS.formatLargeNumber(this.state.burnStats.totalBurned)} MORI</div>
+                        <div class="burn-widget-usd" id="burn-usd">$${MORI_UTILS.formatLargeNumber(this.state.burnStats.totalBurnedUsd)}</div>
+                    </div>
+                    <div class="burn-widget-footer">
+                        <div class="burn-widget-date" id="burn-date">${this.state.burnStats.lastUpdate ? 'Обновлено: ' + this.state.burnStats.lastUpdate : 'Данные не загружены'}</div>
+                        <button class="burn-widget-btn" id="burn-refresh-btn" ${this.state.burnStats.cooldown ? 'disabled' : ''}>
+                            <span>🔄</span> Обновить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+},
 
     renderWhales: function() {
     if (!this.whales || !this.whales.length) {
@@ -274,6 +427,14 @@ const MORI_PORTFOLIO = {
                 this.loadChartData(timeframe);
             });
         });
+
+        // Кнопка обновления статистики сжигания
+const refreshBurnBtn = document.getElementById('burn-refresh-btn');
+if (refreshBurnBtn) {
+    refreshBurnBtn.addEventListener('click', () => {
+        this.loadBurnStats();
+    });
+}
 
         // Навигация
         document.querySelectorAll('.nav-btn').forEach(btn => {
