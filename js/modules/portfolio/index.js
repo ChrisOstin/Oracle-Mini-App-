@@ -242,6 +242,12 @@ if (cachedBurn) {
             const newTotal = data.data.total_burned;
             
             this.state.burnStats.totalBurned = newTotal;
+ 
+            const numberEl = document.getElementById('burn-total');
+            if (numberEl) {
+                this.animateNumber(numberEl, oldTotal, newTotal, 800);
+            }
+
             this.state.burnStats.totalBurnedUsd = data.data.total_burned_usd;
             this.state.burnStats.lastUpdate = new Date().toLocaleString();
             this.state.burnStats.cooldown = true;
@@ -859,6 +865,27 @@ renderWhalesList: function() {
     }
 
     setTimeout(() => this.drawPriceLevels(), 100);
+},
+
+    animateNumber: function(element, start, end, duration = 1000) {
+    if (!element) return;
+    const range = end - start;
+    const startTime = performance.now();
+    
+    const update = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = start + (range * easeOut);
+        element.textContent = MORI_UTILS.formatLargeNumber(Math.floor(current));
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.textContent = MORI_UTILS.formatLargeNumber(end);
+        }
+    };
+    
+    requestAnimationFrame(update);
 },
 
     updateChart: function() {

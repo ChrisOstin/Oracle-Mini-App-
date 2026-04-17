@@ -988,7 +988,7 @@
 
 .burn-widget-banner {
     position: relative;
-    background: linear-gradient(145deg, #0a0a0a 0%, #1a0a0a 100%);
+    background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%);
     border-radius: 28px;
     padding: 20px 16px;
     overflow: hidden;
@@ -1005,18 +1005,6 @@
     right: 0;
     bottom: 0;
     background: radial-gradient(ellipse at 30% 40%, transparent 60%, rgba(0,0,0,0.8) 100%);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.burn-widget-banner::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(45deg, rgba(212,175,55,0.03) 0px, rgba(212,175,55,0.03) 2px, transparent 2px, transparent 8px);
     pointer-events: none;
     z-index: 1;
 }
@@ -1084,7 +1072,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 16px;
     margin-bottom: 12px;
 }
 
@@ -1105,18 +1093,6 @@
     color: #d4af37;
     letter-spacing: 2px;
     text-transform: uppercase;
-    text-shadow: 0 0 5px rgba(212,175,55,0.3);
-}
-
-/* Отражение пламени (мерцающая надпись) */
-.burn-widget-number,
-.burn-widget-usd {
-    animation: flameReflection 2s ease-in-out infinite;
-}
-
-@keyframes flameReflection {
-    0%, 100% { text-shadow: 0 0 2px #ff6600, 0 0 4px rgba(255,100,0,0.3); }
-    50% { text-shadow: 0 0 8px #ff9900, 0 0 12px rgba(255,150,0,0.5); }
 }
 
 .burn-widget-number {
@@ -1124,11 +1100,18 @@
     font-weight: 700;
     color: #ffd700;
     margin-bottom: 4px;
+    animation: flameReflection 2s ease-in-out infinite;
 }
 
 .burn-widget-usd {
     font-size: 14px;
     color: #e8a020;
+    animation: flameReflection 2s ease-in-out infinite;
+}
+
+@keyframes flameReflection {
+    0%, 100% { text-shadow: 0 0 2px #ff6600, 0 0 4px rgba(255,100,0,0.3); }
+    50% { text-shadow: 0 0 8px #ff9900, 0 0 12px rgba(255,150,0,0.5); }
 }
 
 .burn-widget-footer {
@@ -1174,15 +1157,6 @@
     cursor: not-allowed;
 }
 
-.burn-widget-btn.loading span {
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
 /* Вспышка при обновлении */
 .burn-flash {
     animation: burnFlash 0.5s ease-out;
@@ -1194,7 +1168,7 @@
     100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
 }
 
-/* Искры */
+/* Искры при нажатии */
 .burn-spark {
     position: absolute;
     width: 3px;
@@ -1215,5 +1189,59 @@
     100% {
         transform: translateY(-50px) scale(0);
         opacity: 0;
+    }
+}
+
+/* Адаптив под телефоны */
+@media (max-width: 480px) {
+    .burn-widget {
+        margin: 16px 0 12px;
+    }
+    
+    .burn-widget-quote {
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+    
+    .burn-widget-banner {
+        padding: 16px 12px;
+    }
+    
+    .burn-widget-header {
+        gap: 10px;
+    }
+    
+    #burn-icon-left, #burn-icon-right {
+        font-size: 22px;
+    }
+    
+    .burn-widget-title {
+        font-size: 12px;
+    }
+    
+    .burn-widget-number {
+        font-size: 22px;
+    }
+    
+    .burn-widget-usd {
+        font-size: 12px;
+    }
+    
+    .burn-widget-footer {
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+    }
+    
+    .burn-widget-date {
+        text-align: center;
+        max-width: none;
+        white-space: normal;
+        font-size: 8px;
+    }
+    
+    .burn-widget-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
