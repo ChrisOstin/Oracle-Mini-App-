@@ -225,20 +225,45 @@ if (cachedBurn) {
         `;
     },
 
-    startFloatingSparks: function() {
-    // Очищаем старые искры, если есть
-    const oldSparks = document.querySelectorAll('.floating-spark');
-    oldSparks.forEach(spark => spark.remove());
-    
-    const banner = document.querySelector('.burn-widget-banner');
-    if (!banner) {
-        setTimeout(() => this.startFloatingSparks(), 500);
-        return;
-    }
-    
-    for (let i = 0; i < 10; i++) {
-        this.createFloatingSpark(banner);
-    }
+startFloatingSparks: function() {
+    const checkBanner = () => {
+        const banner = document.querySelector('.burn-widget-banner');
+        if (banner) {
+            // Очищаем старые элементы
+            const oldSparks = document.querySelectorAll('.floating-spark');
+            oldSparks.forEach(spark => spark.remove());
+            const oldSmoke = document.querySelector('.burn-widget-smoke');
+            if (oldSmoke) oldSmoke.remove();
+            const oldGlitters = document.querySelectorAll('.glitter-spark');
+            oldGlitters.forEach(glitter => glitter.remove());
+            
+            // Создаём 10 летающих искр
+            for (let i = 0; i < 10; i++) {
+                this.createFloatingSpark(banner);
+            }
+            
+            // Создаём дым (постоянный)
+            const smokeDiv = document.createElement('div');
+            smokeDiv.className = 'burn-widget-smoke';
+            banner.appendChild(smokeDiv);
+            
+            // Создаём золотую пыльцу (10 блёсток)
+            for (let i = 0; i < 10; i++) {
+                const glitter = document.createElement('div');
+                glitter.className = 'glitter-spark';
+                glitter.style.left = Math.random() * 100 + '%';
+                glitter.style.top = Math.random() * 100 + '%';
+                glitter.style.animationDelay = Math.random() * 2 + 's';
+                banner.appendChild(glitter);
+            }
+            
+            console.log('✅ Floating sparks, smoke, and glitter created');
+        } else {
+            console.log('⏳ Ждём баннер...');
+            setTimeout(checkBanner, 200);
+        }
+    };
+    checkBanner();
 },
 
 createFloatingSpark: function(container) {
