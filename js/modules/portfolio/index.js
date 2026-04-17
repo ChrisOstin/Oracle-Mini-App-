@@ -238,20 +238,51 @@ if (cachedBurn) {
         const data = await response.json();
         
         if (data.success && data.data) {
-            const oldTotal = this.state.burnStats.totalBurned;
-            const newTotal = data.data.total_burned;
-            
-            this.state.burnStats.totalBurned = newTotal;
- 
-            const numberEl = document.getElementById('burn-total');
-            if (numberEl) {
-                this.animateNumber(numberEl, oldTotal, newTotal, 800);
-            }
+        const oldTotal = this.state.burnStats.totalBurned;
+        const oldUsd = this.state.burnStats.totalBurnedUsd;
+        const newTotal = data.data.total_burned;
+        const newUsd = data.data.total_burned_usd;
 
-            this.state.burnStats.totalBurnedUsd = data.data.total_burned_usd;
-            this.state.burnStats.lastUpdate = new Date().toLocaleString();
-            this.state.burnStats.cooldown = true;
-            
+        this.state.burnStats.totalBurned = newTotal;
+        this.state.burnStats.totalBurnedUsd = newUsd;
+
+        // Анимация чисел
+        const numberEl = document.getElementById('burn-total');
+        const usdEl = document.getElementById('burn-usd');
+        if (numberEl) this.animateNumber(numberEl, oldTotal, newTotal, 800)
+        if (usdEl) this.animateNumber(usdEl, oldUsd, newUsd, 800);
+
+        this.state.burnStats.lastUpdate = new Date().toLocaleString();
+        this.state.burnStats.cooldown = true;
+           
+
+            // Дым
+const smokeDiv = document.createElement('div');
+smokeDiv.className = 'burn-widget-smoke';
+document.querySelector('.burn-widget-banner').appendChild(smokeDiv);
+setTimeout(() => smokeDiv.remove(), 3000);
+
+// Золотая пыльца
+const statsContainer = document.querySelector('.burn-widget-stats');
+for (let i = 0; i < 15; i++) {
+    const glitter = document.createElement('div');
+    glitter.className = 'glitter-spark';
+    glitter.style.left = Math.random() * 100 + '%';
+    glitter.style.top = Math.random() * 100 + '%';
+    glitter.style.animationDelay = Math.random() * 2 + 's';
+    statsContainer.appendChild(glitter);
+    setTimeout(() => glitter.remove(), 3000);
+}
+
+// Трещины при большом сжигании (больше 100k)
+if (newTotal - oldTotal > 100000) {
+    const banner = document.querySelector('.burn-widget-banner');
+    const crackDiv = document.createElement('div');
+    crackDiv.className = 'burn-widget-crack';
+    banner.appendChild(crackDiv);
+    setTimeout(() => crackDiv.remove(), 1000);
+}
+
             // Сохраняем в кэш
             localStorage.setItem('burn_stats_cache', JSON.stringify({
                 totalBurned: newTotal,
@@ -304,11 +335,11 @@ if (cachedBurn) {
     return false;
 },
 
-spawnSparks: function() {
+spawnSparks: function(count = 20) {
     const container = document.querySelector('.burn-widget-banner');
     if (!container) return;
-    
-    for (let i = 0; i < 20; i++) {
+
+    for (let i = 0; i < count; i++) {
         const spark = document.createElement('div');
         spark.className = 'burn-spark';
         spark.style.left = Math.random() * 100 + '%';
@@ -422,6 +453,41 @@ spawnSparks: function() {
                 this.loadChartData(timeframe);
             });
         });
+
+let clickCount = 0;
+let clickTimer;
+const numberEl = document.getElementById('burn-total');
+if (numberEl) {
+    numberEl.addEventListener('click', () => {
+        clickCount++;
+        if (clickTimer) clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => { clickCount = 0; }, 1000);
+        
+        if (clickCount === 3) {
+            const exactValue = this.state.burnStats.totalBurned;
+            MORI_APP.showToast(`🔍 Точное значение: ${exactValue} MORI`, 'info', 3000);
+            clickCount = 0;
+        }
+    });
+}
+
+// Клик по левому огоньку
+const leftFlame = document.getElementById('burn-icon-left');
+if (leftFlame) {
+    leftFlame.addEventListener('click', () => {
+        this.spawnSparks(5);
+        MORI_APP.showToast('🔥 Пепел прошлого...', 'info', 1000);
+    });
+}
+
+// Клик по правому огоньку
+const rightFlame = document.getElementById('burn-icon-right');
+if (rightFlame) {
+    rightFlame.addEventListener('click', () => {
+        this.spawnSparks(5);
+        MORI_APP.showToast('🔥 ...золото рождается в огне', 'info', 1000);
+    });
+}
 
         // Кнопка обновления статистики сжигания
 const refreshBurnBtn = document.getElementById('burn-refresh-btn');
@@ -867,7 +933,7 @@ renderWhalesList: function() {
     setTimeout(() => this.drawPriceLevels(), 100);
 },
 
-    animateNumber: function(element, start, end, duration = 1000) {
+animateNumber: function(element, start, end, duration = 1000) {
     if (!element) return;
     const range = end - start;
     const startTime = performance.now();
