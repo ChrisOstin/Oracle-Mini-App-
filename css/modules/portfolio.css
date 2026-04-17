@@ -1088,7 +1088,7 @@
     margin-bottom: 12px;
 }
 
-.burn-widget-icon {
+#burn-icon-left, #burn-icon-right {
     font-size: 28px;
     animation: flamePulse 1.5s ease-in-out infinite;
     filter: drop-shadow(0 0 5px #ff6600);
@@ -1141,8 +1141,12 @@
 }
 
 .burn-widget-date {
-    font-size: 9px;
+    font-size: 7px;
     color: #6a5a3a;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .burn-widget-btn {
@@ -1153,8 +1157,9 @@
     font-size: 11px;
     color: #d4af37;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     transition: all 0.2s;
 }

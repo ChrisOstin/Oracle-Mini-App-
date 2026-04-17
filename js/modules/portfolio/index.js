@@ -329,15 +329,16 @@ spawnSparks: function() {
     renderBurnWidget: function() {
     return `
         <div class="burn-widget">
-            <div class="burn-widget-quote">⚜️   «Истинная ценность познаётся в огне.  ⚜️ »</div>
+            <div class="burn-widget-quote">⚜️   «Истинная ценность познаётся в огне. »  ⚜️ </div>
             <div class="burn-widget-banner">
                 <div class="burn-widget-glow"></div>
                 <div class="burn-widget-coals"></div>
                 <div class="burn-widget-ashes" id="burn-ashes"></div>
                 <div class="burn-widget-content">
                     <div class="burn-widget-header">
-                        <div class="burn-widget-icon" id="burn-icon">🔥🔥</div>
-                        <div class="burn-widget-title">СОЖЖЕНО $MORI</div>
+                        <div class="burn-widget-icon" id="burn-icon-left">🔥</div>
+                        <div class="burn-widget-title">Сожжено</div>
+                        <div class="burn-widget-icon" id="burn-icon-right">🔥</div>
                     </div>
                     <div class="burn-widget-stats">
                         <div class="burn-widget-number" id="burn-total">${MORI_UTILS.formatLargeNumber(this.state.burnStats.totalBurned)} MORI</div>
@@ -346,7 +347,7 @@ spawnSparks: function() {
                     <div class="burn-widget-footer">
                         <div class="burn-widget-date" id="burn-date">${this.state.burnStats.lastUpdate ? 'Обновлено: ' + this.state.burnStats.lastUpdate : 'Данные не загружены'}</div>
                         <button class="burn-widget-btn" id="burn-refresh-btn" ${this.state.burnStats.cooldown ? 'disabled' : ''}>
-                            <span></span> Взглянуть на пепел
+                              Взглянуть на пепел
                         </button>
                     </div>
                 </div>
