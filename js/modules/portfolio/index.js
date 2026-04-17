@@ -86,8 +86,6 @@ if (cachedBurn) {
             }, 1000);
         }
     
-        this.startIdleSparks();
-
     },
 
     render: function() {
@@ -315,31 +313,6 @@ spawnSparks: function() {
     }
 },
 
-startIdleSparks: function() {
-    setInterval(() => {
-        const btn = document.getElementById('burn-refresh-btn');
-        if (btn && !btn.disabled && document.querySelector('.burn-widget-banner')) {
-            this.spawnIdleSparks(5);
-        }
-    }, 8000); // каждые 8 секунд
-},
-
-spawnIdleSparks: function(count = 5) {
-    const btn = document.getElementById('burn-refresh-btn');
-    if (!btn) return;
-    
-    for (let i = 0; i < count; i++) {
-        setTimeout(() => {
-            const spark = document.createElement('div');
-            spark.className = 'burn-idle-spark';
-            spark.style.left = Math.random() * 100 + '%';
-            spark.style.top = Math.random() * 100 + '%';
-            btn.style.position = 'relative';
-            btn.appendChild(spark);
-            setTimeout(() => spark.remove(), 1500);
-        }, i * 100);
-    }
-},
 
     renderBurnWidget: function() {
     return `
