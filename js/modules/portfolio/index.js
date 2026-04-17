@@ -85,6 +85,9 @@ if (cachedBurn) {
                 }
             }, 1000);
         }
+    
+        this.startIdleSparks();
+
     },
 
     render: function() {
@@ -233,8 +236,6 @@ if (cachedBurn) {
     this.renderBurnWidget();
     
     // Анимация кнопки
-    const btn = document.getElementById('burn-refresh-btn');
-    if (btn) {
         btn.classList.add('loading');
     }
     
@@ -303,8 +304,6 @@ if (cachedBurn) {
         }
     } finally {
         this.state.burnStats.isLoading = false;
-        const btn = document.getElementById('burn-refresh-btn');
-        if (btn) {
             btn.classList.remove('loading');
         }
     }
@@ -326,10 +325,36 @@ spawnSparks: function() {
     }
 },
 
+startIdleSparks: function() {
+    setInterval(() => {
+        const btn = document.getElementById('burn-refresh-btn');
+        if (btn && !btn.disabled && document.querySelector('.burn-widget-banner')) {
+            this.spawnIdleSpark(5);
+        }
+    }, 8000); // каждые 8 секунд
+},
+
+spawnIdleSparks: function(count = 5) {
+    const btn = document.getElementById('burn-refresh-btn');
+    if (!btn) return;
+    
+    for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+            const spark = document.createElement('div');
+            spark.className = 'burn-idle-spark';
+            spark.style.left = Math.random() * 100 + '%';
+            spark.style.top = Math.random() * 100 + '%';
+            btn.style.position = 'relative';
+            btn.appendChild(spark);
+            setTimeout(() => spark.remove(), 1500);
+        }, i * 100);
+    }
+},
+
     renderBurnWidget: function() {
     return `
         <div class="burn-widget">
-            <div class="burn-widget-quote">⚜️   «Истинная ценность познаётся в огне. »  ⚜️ </div>
+            <div class="burn-widget-quote">⚜️  «Истинная ценность познаётся в огне» ⚜️ </div>
             <div class="burn-widget-banner">
                 <div class="burn-widget-glow"></div>
                 <div class="burn-widget-coals"></div>
