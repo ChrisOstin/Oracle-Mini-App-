@@ -915,7 +915,7 @@ showNavigation: function() {
     setTimeout(() => {
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                if (nav) nav.style.display = 'flex';
+                if (nav) nav.style.setProperty('display', 'flex', 'important');
             });
         });
     }, 20);
