@@ -95,15 +95,17 @@ if (book.content && book.content.length) {
         this.state.isOpen = false;
     
         // Восстанавливаем панель навигации и кнопки
-        const nav = document.getElementById('dynamic-bottom-nav');
-        const leftBtn = document.getElementById('new-floating-left');
-        const rightBtn = document.getElementById('new-floating-right');
-        const themeIcon = document.querySelector('.theme-icon');
+const nav = document.getElementById('dynamic-bottom-nav');
+const leftBtn = document.getElementById('new-floating-left');
+const rightBtn = document.getElementById('new-floating-right');
+const themeIcon = document.querySelector('.theme-icon');
 
-        if (nav) nav.style.display = 'flex';
-        if (leftBtn) leftBtn.style.display = 'block';
-        if (rightBtn) rightBtn.style.display = 'block';
-        if (themeIcon) themeIcon.style.display = 'flex';
+if (nav) {
+    nav.style.setProperty('display', 'flex', 'important');
+}
+if (leftBtn) leftBtn.style.display = 'block';
+if (rightBtn) rightBtn.style.display = 'block';
+if (themeIcon) themeIcon.style.display = 'flex';
 
         // Возвращаемся в библиотеку
         if (window.MORI_ROUTER) {
