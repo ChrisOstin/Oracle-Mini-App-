@@ -95,7 +95,7 @@ if (book.content && book.content.length) {
         this.state.isOpen = false;
     
         // Восстанавливаем панель навигации и кнопки
-        const nav = document.getElementById('new-bottom-nav');
+        const nav = document.getElementById('dynamic-bottom-nav');
         const leftBtn = document.getElementById('new-floating-left');
         const rightBtn = document.getElementById('new-floating-right');
         const themeIcon = document.querySelector('.theme-icon');
@@ -287,7 +287,7 @@ renderReader: function() {
     if (!appDiv) return;
 
     // Скрываем панель навигации и плавающие кнопки
-    const nav = document.getElementById('new-bottom-nav');
+    const nav = document.getElementById('dynamic-bottom-nav');
     const leftBtn = document.getElementById('new-floating-left');
     const rightBtn = document.getElementById('new-floating-right');
     const themeIcon = document.querySelector('.theme-icon');
