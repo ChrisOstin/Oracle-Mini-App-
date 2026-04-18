@@ -1328,3 +1328,15 @@ mark.search-highlight {
         padding: 16px;
     }
 }
+
+/* Отступ снизу, чтобы панель навигации не перекрывала контент */
+.library-container {
+    padding-bottom: 80px;
+}
+
+/* Для мобильных — чуть больше */
+@media (max-width: 480px) {
+    .library-container {
+        padding-bottom: 100px;
+    }
+}
