@@ -303,55 +303,57 @@ renderReader: function() {
     const currentContent = this.state.content[this.state.currentPage - 1] || '<p>Страница не найдена</p>';
     const progressPercent = (this.state.currentPage / this.state.totalPages) * 100;
 
-    appDiv.innerHTML = `
-<div class="mori-reader-header" style="border-bottom: 1px solid ${theme.border};">
-    <button class="mori-reader-back" id="reader-close">📖 ← Назад</button>
-    <div class="mori-reader-title">📚 ${this.state.currentBook.title}</div>
-    <div style="display: flex; gap: 8px;">
-        <button class="reader-bookmark-btn" id="reader-bookmark" title="Добавить закладку">🔖</button>
-        <button class="reader-note-btn" id="reader-note" title="Добавить заметку">📝</button>
-        <button class="mori-reader-settings" id="reader-settings">🔧</button>
-    </div>
-</div>
-                <div class="mori-reader-progress">
-                    <div class="mori-reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
-                </div>
-                <div class="mori-reader-content" id="reader-content"
-                     style="font-family: ${this.state.fontFamily}; font-size: ${this.state.fontSize}px; line-height: ${this.state.lineHeight}; color: ${theme.text};">
-                    ${currentContent}
-                </div>
-                <div class="mori-reader-footer" style="border-top: 1px solid ${theme.border};">
-                    <button class="mori-reader-nav" id="reader-prev" ${this.state.currentPage === 1 ? 'disabled' : ''}>◀ 📖 Пред.</button>
-                    <span class="mori-reader-page">📄 ${this.state.currentPage} / ${this.state.totalPages}</span>
-                    <button class="mori-reader-nav" id="reader-next" ${this.state.currentPage === this.state.totalPages ? 'disabled' : ''}>След. 📖 ▶</button>
-                </div>
-                <div class="mori-reader-settings-panel" id="settings-panel" style="display: none; background: ${theme.cardBg}; border-top: 1px solid ${theme.border};">
-                    <div class="mori-reader-settings-title">🔮 Настройки чтения</div>
-                    <div class="mori-reader-setting">
-                        <label>📝 Шрифт</label>
-                        <select id="reader-font">${this.fonts.map(f => `<option value="${f.value}" ${this.state.fontFamily === f.value ? 'selected' : ''}>${f.name}</option>`).join('')}</select>
-                    </div>
-                    <div class="mori-reader-setting">
-                        <label>📏 Размер: ${this.state.fontSize}px</label>
-                        <input type="range" id="reader-font-size" min="12" max="32" value="${this.state.fontSize}" step="1">
-                    </div>
-                    <div class="mori-reader-setting">
-                        <label>📐 Интервал: ${this.state.lineHeight}</label>
-                        <input type="range" id="reader-line-height" min="1" max="2.5" value="${this.state.lineHeight}" step="0.1">
-                    </div>
-                    <div class="mori-reader-setting">
-                        <label>🎨 Тема</label>
-                        <div class="mori-reader-themes">
-                            <button class="mori-reader-theme ${this.state.theme === 'dark' ? 'active' : ''}" data-theme="dark">🌙 Тёмная</button>
-                            <button class="mori-reader-theme ${this.state.theme === 'light' ? 'active' : ''}" data-theme="light">☀️ Светлая</button>
-                            <button class="mori-reader-theme ${this.state.theme === 'sepia' ? 'active' : ''}" data-theme="sepia">📜 Сепия</button>
-                        </div>
-                    </div>
-                    <button class="mori-reader-settings-close">🗝️ Закрыть</button>
-                </div>
+appDiv.innerHTML = `
+<div class="mori-reader">
+    <div class="mori-reader-container">
+        <div class="mori-reader-header" style="border-bottom: 1px solid ${theme.border};">
+            <button class="mori-reader-back" id="reader-close">📖 ← Назад</button>
+            <div class="mori-reader-title">📚 ${this.state.currentBook.title}</div>
+            <div style="display: flex; gap: 8px;">
+                <button class="reader-bookmark-btn" id="reader-bookmark" title="Добавить закладку">🔖</button>
+                <button class="reader-note-btn" id="reader-note" title="Добавить заметку">📝</button>
+                <button class="mori-reader-settings" id="reader-settings">🔧</button>
             </div>
         </div>
-    `;
+        <div class="mori-reader-progress">
+            <div class="mori-reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
+        </div>
+        <div class="mori-reader-content" id="reader-content"
+             style="font-family: ${this.state.fontFamily}; font-size: ${this.state.fontSize}px; line-height: ${this.state.lineHeight}; color: ${theme.text};">
+            ${currentContent}
+        </div>
+        <div class="mori-reader-footer" style="border-top: 1px solid ${theme.border};">
+            <button class="mori-reader-nav" id="reader-prev" ${this.state.currentPage === 1 ? 'disabled' : ''}>◀ 📖 Пред.</button>
+            <span class="mori-reader-page">📄 ${this.state.currentPage} / ${this.state.totalPages}</span>
+            <button class="mori-reader-nav" id="reader-next" ${this.state.currentPage === this.state.totalPages ? 'disabled' : ''}>След. 📖 ▶</button>
+        </div>
+        <div class="mori-reader-settings-panel" id="settings-panel" style="display: none; background: ${theme.cardBg}; border-top: 1px solid ${theme.border};">
+            <div class="mori-reader-settings-title">🔮 Настройки чтения</div>
+            <div class="mori-reader-setting">
+                <label>📝 Шрифт</label>
+                <select id="reader-font">${this.fonts.map(f => `<option value="${f.value}" ${this.state.fontFamily === f.value ? 'selected' : ''}>${f.name}</option>`).join('')}</select>
+            </div>
+            <div class="mori-reader-setting">
+                <label>📏 Размер: ${this.state.fontSize}px</label>
+                <input type="range" id="reader-font-size" min="12" max="32" value="${this.state.fontSize}" step="1">
+            </div>
+            <div class="mori-reader-setting">
+                <label>📐 Интервал: ${this.state.lineHeight}</label>
+                <input type="range" id="reader-line-height" min="1" max="2.5" value="${this.state.lineHeight}" step="0.1">
+            </div>
+            <div class="mori-reader-setting">
+                <label>🎨 Тема</label>
+                <div class="mori-reader-themes">
+                    <button class="mori-reader-theme ${this.state.theme === 'dark' ? 'active' : ''}" data-theme="dark">🌙 Тёмная</button>
+                    <button class="mori-reader-theme ${this.state.theme === 'light' ? 'active' : ''}" data-theme="light">☀️ Светлая</button>
+                    <button class="mori-reader-theme ${this.state.theme === 'sepia' ? 'active' : ''}" data-theme="sepia">📜 Сепия</button>
+                </div>
+            </div>
+            <button class="mori-reader-settings-close">🗝️ Закрыть</button>
+        </div>
+    </div>
+</div>
+`;
 
     this.attachReaderEvents();
     this.startReadingTimer();
