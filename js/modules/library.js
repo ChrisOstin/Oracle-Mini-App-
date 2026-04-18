@@ -10,6 +10,10 @@ const MORI_LIBRARY = {
     filterCategory: 'all',
     filterStatus: 'all',
     searchQuery: '',
+    searchMode: 'title',
+    searchResults: [],
+    searchPage: 1,
+    searchTotalPages: 0,
     wishlist: [],
     tags: {},
     isLoading: true,
@@ -82,17 +86,21 @@ init: function() {
                 </div>
 
                 <!-- Поиск -->
-                <div class="library-search">
-                    <div class="search-wrapper">
-                        <span class="search-icon">🔍</span>
-                        <input type="text"
-                               class="search-input"
-                               placeholder="Поиск по названию или автору..."
-                               value="${this.state.searchQuery}"
-                               id="library-search-input">
-                        ${this.state.searchQuery ? '<button class="search-clear" id="library-search-clear">✕</button>' : ''}
-                    </div>
-                </div>
+<div class="library-search">
+    <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text"
+               class="search-input"
+               placeholder="Поиск по названию или автору..."
+               value="${this.state.searchQuery}"
+               id="library-search-input">
+        <div class="search-mode-toggle" id="search-mode-toggle">
+            <button class="mode-btn ${this.state.searchMode === 'title' ? 'active' : ''}" data-mode="title" title="Поиск по названию/автору">📖</button>
+            <button class="mode-btn ${this.state.searchMode === 'text' ? 'active' : ''}" data-mode="text" title="Поиск по тексту книг">🔍</button>
+        </div>
+        ${this.state.searchQuery ? '<button class="search-clear" id="library-search-clear">✕</button>' : ''}
+    </div>
+</div>
 
                 <!-- Фильтры (сворачиваемые) -->
 <div class="library-filters">
@@ -148,12 +156,17 @@ init: function() {
      * Рендер книг
      */
     renderBooks: function(books) {
-        if (books.length === 0) {
-            return '<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-text">Книги не найдены</div></div>';
-        }
+    // Если режим поиска по тексту и есть запрос — показываем результаты
+    if (this.state.searchMode === 'text' && this.state.searchQuery.length >= 2) {
+        return this.renderTextSearchResults();
+    }
+    
+    if (books.length === 0) {
+        return '<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-text">Книги не найдены</div></div>';
+    }
 
-        return books.map(book => this.renderBookCard(book)).join('');
-    },
+    return books.map(book => this.renderBookCard(book)).join('');
+},
 
 /**
  * Обновление только списка книг (без перерисовки всего модуля)
@@ -325,31 +338,111 @@ renderBookmarks: function() {
      * Получение отфильтрованных книг
      */
     getFilteredBooks: function() {
-        let books = [...MORI_LIBRARY_BOOKS.books];
+    // Если режим поиска по тексту — возвращаем пустой массив (результаты отдельно)
+    if (this.state.searchMode === 'text' && this.state.searchQuery.length >= 2) {
+        return [];
+    }
+    
+    let books = [...MORI_LIBRARY_BOOKS.books];
 
-        // Фильтр по категории
-        if (this.state.filterCategory !== 'all') {
-            books = books.filter(book => book.category === this.state.filterCategory);
+    if (this.state.filterCategory !== 'all') {
+        books = books.filter(book => book.category === this.state.filterCategory);
+    }
+
+    if (this.state.filterStatus === 'available') {
+        books = books.filter(book => book.unlocked === true);
+    } else if (this.state.filterStatus === 'locked') {
+        books = books.filter(book => book.unlocked !== true);
+    }
+
+    if (this.state.searchQuery && this.state.searchMode === 'title') {
+        const query = this.state.searchQuery.toLowerCase();
+        books = books.filter(book =>
+            book.title.toLowerCase().includes(query) ||
+            book.author.toLowerCase().includes(query)
+        );
+    }
+
+    return books;
+},
+
+/**
+ * Поиск по тексту книг с пагинацией
+ */
+searchByText: function(query, page = 1) {
+    if (!query || query.length < 2) {
+        this.state.searchResults = [];
+        this.state.searchTotalPages = 0;
+        this.render();
+        return;
+    }
+    
+    const allResults = MORI_LIBRARY_BOOKS.searchInBooks(query);
+    const perPage = 50;
+    const totalPages = Math.ceil(allResults.length / perPage);
+    const start = (page - 1) * perPage;
+    const pageResults = allResults.slice(start, start + perPage);
+    
+    this.state.searchResults = pageResults;
+    this.state.searchPage = page;
+    this.state.searchTotalPages = totalPages;
+    this.render();
+},
+
+/**
+ * Рендер результатов поиска по тексту
+ */
+renderTextSearchResults: function() {
+    if (this.state.searchResults.length === 0) {
+        return '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Ничего не найдено</div></div>';
+    }
+    
+    let html = `<div class="text-search-results">`;
+    html += `<div class="search-results-header">📄 Найдено ${this.state.searchResults.length} результатов (страница ${this.state.searchPage} из ${this.state.searchTotalPages})</div>`;
+    html += `<div class="search-results-list">`;
+    
+    this.state.searchResults.forEach(result => {
+        html += `
+            <div class="search-result-card" data-book-id="${result.bookId}" data-page="${result.page}" data-query="${this.state.searchQuery}">
+                <div class="search-result-cover">${result.bookCover}</div>
+                <div class="search-result-info">
+                    <div class="search-result-title">📖 ${result.bookTitle}</div>
+                    <div class="search-result-page">Страница ${result.page}</div>
+                    <div class="search-result-context">${result.context}</div>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += `</div>`;
+    
+    // Пагинация
+    if (this.state.searchTotalPages > 1) {
+        html += `<div class="search-pagination">`;
+        if (this.state.searchPage > 1) {
+            html += `<button class="pagination-btn" data-page="${this.state.searchPage - 1}">◀ Пред.</button>`;
         }
-
-        // Фильтр по статусу
-        if (this.state.filterStatus === 'available') {
-            books = books.filter(book => book.unlocked === true);
-        } else if (this.state.filterStatus === 'locked') {
-            books = books.filter(book => book.unlocked !== true);
+        html += `<span class="pagination-info">${this.state.searchPage} / ${this.state.searchTotalPages}</span>`;
+        if (this.state.searchPage < this.state.searchTotalPages) {
+            html += `<button class="pagination-btn" data-page="${this.state.searchPage + 1}">След. ▶</button>`;
         }
+        html += `</div>`;
+    }
+    
+    html += `</div>`;
+    return html;
+},
 
-        // Поиск
-        if (this.state.searchQuery) {
-            const query = this.state.searchQuery.toLowerCase();
-            books = books.filter(book =>
-                book.title.toLowerCase().includes(query) ||
-                book.author.toLowerCase().includes(query)
-            );
-        }
-
-        return books;
-    },
+/**
+ * Переход на страницу из результатов поиска
+ */
+goToSearchResult: function(bookId, page, query) {
+    const book = MORI_LIBRARY_BOOKS.getById(bookId);
+    if (book && book.unlocked) {
+        // Сохраняем поисковый запрос для подсветки
+        MORI_LIBRARY_READER.open(book, page, query);
+    }
+},
 
     /**
      * Статистика
@@ -381,6 +474,36 @@ document.querySelectorAll('.filter-group-header').forEach(header => {
     };
 });
    
+// Переключатель режима поиска
+document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.onclick = (e) => {
+        const mode = btn.dataset.mode;
+        this.state.searchMode = mode;
+        this.state.searchQuery = '';
+        this.state.searchResults = [];
+        document.getElementById('library-search-input').value = '';
+        this.render();
+    };
+});
+
+// Обработка кликов по результатам поиска
+document.querySelectorAll('.search-result-card').forEach(card => {
+    card.onclick = (e) => {
+        const bookId = card.dataset.bookId;
+        const page = parseInt(card.dataset.page);
+        const query = card.dataset.query;
+        this.goToSearchResult(bookId, page, query);
+    };
+});
+
+// Пагинация
+document.querySelectorAll('.pagination-btn').forEach(btn => {
+    btn.onclick = (e) => {
+        const page = parseInt(btn.dataset.page);
+        this.searchByText(this.state.searchQuery, page);
+    };
+});
+
        // Фильтры по категории
         document.querySelectorAll('[data-filter-category]').forEach(btn => {
             btn.onclick = () => {
@@ -398,24 +521,34 @@ document.querySelectorAll('.filter-group-header').forEach(header => {
         });
 
         // Поиск
-        const searchInput = document.getElementById('library-search-input');
+   const searchInput = document.getElementById('library-search-input');
 if (searchInput) {
     searchInput.oninput = (e) => {
-        this.state.searchQuery = e.target.value;
-        // Обновляем ТОЛЬКО список книг
-        this.updateBooksList();
+        const query = e.target.value;
+        this.state.searchQuery = query;
+        
+        if (this.state.searchMode === 'title') {
+            this.updateBooksList();
+        } else if (this.state.searchMode === 'text' && query.length >= 2) {
+            this.searchByText(query, 1);
+        } else if (this.state.searchMode === 'text' && query.length < 2) {
+            this.state.searchResults = [];
+            this.render();
+        }
         
         // Управление кнопкой очистки
         const searchWrapper = document.querySelector('.search-wrapper');
         let clearBtn = document.querySelector('.search-clear');
         
-        if (this.state.searchQuery) {
+        if (query) {
             if (!clearBtn) {
                 clearBtn = document.createElement('button');
                 clearBtn.className = 'search-clear';
                 clearBtn.textContent = '✕';
                 clearBtn.onclick = () => {
                     this.state.searchQuery = '';
+                    this.state.searchResults = [];
+                    document.getElementById('library-search-input').value = '';
                     this.render();
                 };
                 searchWrapper.appendChild(clearBtn);
