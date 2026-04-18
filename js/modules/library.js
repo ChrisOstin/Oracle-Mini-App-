@@ -151,6 +151,46 @@ const MORI_LIBRARY = {
         return books.map(book => this.renderBookCard(book)).join('');
     },
 
+/**
+ * Обновление только списка книг (без перерисовки всего модуля)
+ */
+updateBooksList: function() {
+    const booksContainer = document.querySelector('.library-books');
+    if (!booksContainer) return;
+    
+    const filteredBooks = this.getFilteredBooks();
+    booksContainer.innerHTML = this.renderBooks(filteredBooks);
+    
+    // Переподключаем обработчики для кнопок в новых карточках
+    this.attachBookEvents();
+},
+
+/**
+ * Подключение событий к кнопкам книг
+ */
+attachBookEvents: function() {
+    // Кнопки "Читать"
+    document.querySelectorAll('.book-read-btn').forEach(btn => {
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            const bookId = btn.dataset.bookId;
+            const book = MORI_LIBRARY_BOOKS.getById(bookId);
+            if (book && book.unlocked) {
+                MORI_LIBRARY_READER.open(book);
+            }
+        };
+    });
+    
+    // Кнопки вишлиста
+    document.querySelectorAll('.book-wishlist-btn').forEach(btn => {
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            const bookId = btn.dataset.bookId;
+            this.toggleWishlist(bookId);
+        };
+    });
+},
+
     /**
      * Рендер карточки книги
      */
@@ -355,12 +395,32 @@ document.querySelectorAll('.filter-group-header').forEach(header => {
 
         // Поиск
         const searchInput = document.getElementById('library-search-input');
-        if (searchInput) {
-            searchInput.oninput = (e) => {
-                this.state.searchQuery = e.target.value;
-                this.render();
-            };
+if (searchInput) {
+    searchInput.oninput = (e) => {
+        this.state.searchQuery = e.target.value;
+        // Обновляем ТОЛЬКО список книг
+        this.updateBooksList();
+        
+        // Управление кнопкой очистки
+        const searchWrapper = document.querySelector('.search-wrapper');
+        let clearBtn = document.querySelector('.search-clear');
+        
+        if (this.state.searchQuery) {
+            if (!clearBtn) {
+                clearBtn = document.createElement('button');
+                clearBtn.className = 'search-clear';
+                clearBtn.textContent = '✕';
+                clearBtn.onclick = () => {
+                    this.state.searchQuery = '';
+                    this.render();
+                };
+                searchWrapper.appendChild(clearBtn);
+            }
+        } else if (clearBtn) {
+            clearBtn.remove();
         }
+    };
+}
 
         const searchClear = document.getElementById('library-search-clear');
         if (searchClear) {
@@ -379,25 +439,8 @@ document.querySelectorAll('.filter-group-header').forEach(header => {
         });
 
         // Кнопки чтения
-        document.querySelectorAll('.book-read-btn').forEach(btn => {
-            btn.onclick = (e) => {
-                e.stopPropagation();
-                const bookId = btn.dataset.bookId;
-                const book = MORI_LIBRARY_BOOKS.getById(bookId);
-                if (book && book.unlocked) {
-                    MORI_LIBRARY_READER.open(book);
-                }
-            };
-        });
-
-        // Кнопки вишлиста
-        document.querySelectorAll('.book-wishlist-btn').forEach(btn => {
-            btn.onclick = (e) => {
-                e.stopPropagation();
-                const bookId = btn.dataset.bookId;
-                this.toggleWishlist(bookId);
-            };
-        });
+        // Подключаем события для кнопок книг
+this.attachBookEvents();
 
         // Закладки — открытие книги на нужной странице
 document.querySelectorAll('.bookmark-item').forEach(item => {
