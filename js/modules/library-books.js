@@ -56,6 +56,10 @@ load: function() {
                 this.save();
             }
         }
+
+
+        // Загружаем поисковый индекс
+        this.loadSearchIndex();
     } catch (error) {
         console.error('Ошибка загрузки книг:', error);
         this.books = this.getDefaultBooks();
@@ -202,6 +206,162 @@ load: function() {
         }
         return false;
     },
+
+// ========== ПОИСК ПО ТЕКСТУ КНИГ ==========
+searchIndex: null,
+
+/**
+ * Построение поискового индекса (вызывается при загрузке)
+ */
+buildSearchIndex: function() {
+    console.log('🔍 Построение поискового индекса...');
+    this.searchIndex = [];
+    
+    this.books.forEach(book => {
+        if (!book.unlocked) return; // пропускаем заблокированные книги
+        
+        // Получаем содержимое книги
+        let content = null;
+        
+        // Сначала проверяем встроенный контент
+        if (book.content && book.content.length) {
+            content = book.content;
+        } else {
+            // Пытаемся загрузить из localStorage
+            const saved = localStorage.getItem(`book_content_${book.id}`);
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    content = parsed.pages || parsed.content;
+                } catch(e) {}
+            }
+        }
+        
+        if (!content || !content.length) return;
+        
+        // Индексируем каждую страницу
+        content.forEach((pageHtml, idx) => {
+            // Удаляем HTML-теги
+            const plainText = pageHtml.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            if (!plainText.length) return;
+            
+            // Разбиваем на предложения/фрагменты для контекста
+            const pageNum = idx + 1;
+            
+            this.searchIndex.push({
+                bookId: book.id,
+                bookTitle: book.title,
+                page: pageNum,
+                text: plainText,
+                bookCover: book.cover || '📖'
+            });
+        });
+    });
+    
+    console.log(`✅ Индекс построен: ${this.searchIndex.length} страниц индексировано`);
+    localStorage.setItem('library_search_index', JSON.stringify({
+        index: this.searchIndex,
+        timestamp: Date.now(),
+        bookCount: this.books.length
+    }));
+},
+
+/**
+ * Поиск по тексту книг
+ * @param {string} query - поисковый запрос
+ * @returns {Array} массив результатов
+ */
+searchInBooks: function(query) {
+    if (!query || query.length < 2) return [];
+    if (!this.searchIndex) {
+        this.buildSearchIndex();
+    }
+    
+    const lowerQuery = query.toLowerCase();
+    const results = [];
+    
+    this.searchIndex.forEach(item => {
+        // Ищем вхождение подстроки (полное совпадение слова или части)
+        if (item.text.toLowerCase().includes(lowerQuery)) {
+            // Находим контекст (50 символов до и после)
+            const text = item.text;
+            const pos = text.toLowerCase().indexOf(lowerQuery);
+            let context = '';
+            
+            if (pos !== -1) {
+                let start = Math.max(0, pos - 50);
+                let end = Math.min(text.length, pos + query.length + 50);
+                context = (start > 0 ? '...' : '') + 
+                          text.substring(start, end) + 
+                          (end < text.length ? '...' : '');
+            } else {
+                context = text.substring(0, 100) + '...';
+            }
+            
+            results.push({
+                bookId: item.bookId,
+                bookTitle: item.bookTitle,
+                page: item.page,
+                context: context,
+                bookCover: item.bookCover
+            });
+        }
+    });
+    
+    // Сортируем по книге и странице
+    results.sort((a, b) => {
+        if (a.bookTitle !== b.bookTitle) return a.bookTitle.localeCompare(b.bookTitle);
+        return a.page - b.page;
+    });
+    
+    return results;
+},
+
+/**
+ * Получить контент книги для отображения
+ */
+getBookContent: function(bookId, pageNum) {
+    const book = this.getById(bookId);
+    if (!book || !book.unlocked) return null;
+    
+    let content = null;
+    if (book.content && book.content.length) {
+        content = book.content;
+    } else {
+        const saved = localStorage.getItem(`book_content_${bookId}`);
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                content = parsed.pages || parsed.content;
+            } catch(e) {}
+        }
+    }
+    
+    if (content && pageNum) {
+        return content[pageNum - 1] || null;
+    }
+    return content;
+},
+
+/**
+ * Загрузить индекс из кэша или построить заново
+ */
+loadSearchIndex: function() {
+    const cached = localStorage.getItem('library_search_index');
+    if (cached) {
+        try {
+            const data = JSON.parse(cached);
+            // Проверяем актуальность кэша (если книги не изменились)
+            if (data.bookCount === this.books.length && (Date.now() - data.timestamp) < 86400000) {
+                this.searchIndex = data.index;
+                console.log(`📦 Индекс загружен из кэша: ${this.searchIndex.length} страниц`);
+                return;
+            }
+        } catch(e) {}
+    }
+    this.buildSearchIndex();
+},
+
 
     /**
      * Разбивка текста на страницы
