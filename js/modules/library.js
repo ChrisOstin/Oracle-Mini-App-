@@ -22,12 +22,16 @@ const MORI_LIBRARY = {
     /**
      * Инициализация
      */
-    init: function() {
-        console.log('📚 MORI_LIBRARY инициализация...');
-        this.loadWishlist();
-        this.loadTags();
-        this.render();
-    },
+init: function() {
+    console.log('📚 MORI_LIBRARY инициализация...');
+    this.loadWishlist();
+    this.loadTags();
+    // Загружаем прогресс, заметки и закладки из library-books
+    if (window.MORI_LIBRARY_BOOKS) {
+        MORI_LIBRARY_BOOKS.load();
+    }
+    this.render();
+},
 
     /**
      * Рендер модуля
