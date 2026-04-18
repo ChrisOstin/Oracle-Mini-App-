@@ -1331,12 +1331,12 @@ mark.search-highlight {
 
 /* Отступ снизу, чтобы панель навигации не перекрывала контент */
 .library-container {
-    padding-bottom: 80px;
+    padding-bottom: 100px;
 }
 
 /* Для мобильных — чуть больше */
 @media (max-width: 480px) {
     .library-container {
-        padding-bottom: 100px;
+        padding-bottom: 120px;
     }
 }
