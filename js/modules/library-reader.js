@@ -304,13 +304,15 @@ renderReader: function() {
     const progressPercent = (this.state.currentPage / this.state.totalPages) * 100;
 
     appDiv.innerHTML = `
-        <div class="mori-reader">
-            <div class="mori-reader-container" style="background: ${theme.background};">
-                <div class="mori-reader-header" style="border-bottom: 1px solid ${theme.border};">
-                    <button class="mori-reader-back" id="reader-close">📖 ← Назад</button>
-                    <div class="mori-reader-title">📚 ${this.state.currentBook.title}</div>
-                    <button class="mori-reader-settings" id="reader-settings">🔧</button>
-                </div>
+<div class="mori-reader-header" style="border-bottom: 1px solid ${theme.border};">
+    <button class="mori-reader-back" id="reader-close">📖 ← Назад</button>
+    <div class="mori-reader-title">📚 ${this.state.currentBook.title}</div>
+    <div style="display: flex; gap: 8px;">
+        <button class="reader-bookmark-btn" id="reader-bookmark" title="Добавить закладку">🔖</button>
+        <button class="reader-note-btn" id="reader-note" title="Добавить заметку">📝</button>
+        <button class="mori-reader-settings" id="reader-settings">🔧</button>
+    </div>
+</div>
                 <div class="mori-reader-progress">
                     <div class="mori-reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
                 </div>
