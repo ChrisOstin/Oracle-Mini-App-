@@ -24,7 +24,9 @@ const MORI_LIBRARY_READER = {
         showThumb: false,
         thumbTimeout: null,
         isDragging: false,
-        lastTap: 0
+        lastTap: 0,
+        brightness: 100,
+        isBrightnessDragging: false
     },
 
     // Доступные шрифты
@@ -86,6 +88,11 @@ if (book.content && book.content.length) {
         const progress = MORI_LIBRARY_BOOKS.getProgress(book.id);
         this.state.currentPage = progress.page || 1;
 
+        // Загружаем сохранённую яркость
+        this.loadBrightness();
+        // Инициализируем свайп для яркости
+        this.initBrightnessSwipe();
+
         this.state.isOpen = true;
         this.renderReader();
     },
@@ -137,6 +144,109 @@ showProgressThumb: function() {
     this.state.thumbTimeout = setTimeout(function() {
         self.hideProgressThumb();
     }, 3000);
+},
+
+/**
+ * Применить яркость к читалке
+ */
+applyBrightness: function(value) {
+    var readerContainer = document.querySelector('.mori-reader-container');
+    if (readerContainer) {
+        readerContainer.style.filter = 'brightness(' + (value / 100) + ')';
+    }
+},
+
+/**
+ * Показать индикатор яркости
+ */
+showBrightnessIndicator: function(value) {
+    var indicator = document.getElementById('brightness-indicator');
+    if (!indicator) {
+        indicator = document.createElement('div');
+        indicator.id = 'brightness-indicator';
+        indicator.className = 'brightness-indicator';
+        document.body.appendChild(indicator);
+    }
+    
+    indicator.innerHTML = '☀️ Яркость: ' + Math.round(value) + '%';
+    indicator.style.display = 'block';
+    indicator.style.opacity = '1';
+    
+    if (this.brightnessTimeout) clearTimeout(this.brightnessTimeout);
+    this.brightnessTimeout = setTimeout(function() {
+        var ind = document.getElementById('brightness-indicator');
+        if (ind) {
+            ind.style.opacity = '0';
+            setTimeout(function() { if (ind) ind.style.display = 'none'; }, 300);
+        }
+    }, 800);
+},
+
+/**
+ * Инициализация свайпа по левому краю для яркости
+ */
+initBrightnessSwipe: function() {
+    var self = this;
+    var startY = 0;
+    var startBrightness = 100;
+    var touchStarted = false;
+    var isLeftEdge = false;
+    
+    var onTouchStart = function(e) {
+        var touchX = e.touches[0].clientX;
+        // Проверяем, что свайп по левому краю (первые 50px)
+        if (touchX < 50) {
+            isLeftEdge = true;
+            startY = e.touches[0].clientY;
+            startBrightness = self.state.brightness;
+            touchStarted = true;
+        } else {
+            isLeftEdge = false;
+        }
+    };
+    
+    var onTouchMove = function(e) {
+        if (!isLeftEdge || !touchStarted) return;
+        
+        var currentY = e.touches[0].clientY;
+        var deltaY = startY - currentY; // положительно — вверх, отрицательно — вниз
+        
+        // Изменяем яркость: движение вверх = увеличение, вниз = уменьшение
+        var newBrightness = startBrightness + (deltaY / 3);
+        newBrightness = Math.max(10, Math.min(200, newBrightness));
+        
+        if (newBrightness !== self.state.brightness) {
+            self.state.brightness = newBrightness;
+            self.applyBrightness(newBrightness);
+            self.showBrightnessIndicator(newBrightness);
+        }
+        
+        e.preventDefault();
+    };
+    
+    var onTouchEnd = function(e) {
+        if (!isLeftEdge || !touchStarted) return;
+        touchStarted = false;
+        isLeftEdge = false;
+        
+        // Сохраняем настройку яркости
+        localStorage.setItem('reader_brightness', self.state.brightness);
+    };
+    
+    document.addEventListener('touchstart', onTouchStart);
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
+    document.addEventListener('touchend', onTouchEnd);
+},
+
+/**
+ * Загрузить сохранённую яркость
+ */
+loadBrightness: function() {
+    var saved = localStorage.getItem('reader_brightness');
+    if (saved !== null) {
+        this.state.brightness = parseFloat(saved);
+        this.applyBrightness(this.state.brightness);
+    }
 },
 
 /**

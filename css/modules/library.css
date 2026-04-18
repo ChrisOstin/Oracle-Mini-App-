@@ -1423,3 +1423,34 @@ mark.search-highlight {
 .bookmark-corner-icon:hover {
     transform: scale(1.1);
 }
+
+
+/* ===== ИНДИКАТОР ЯРКОСТИ ===== */
+.brightness-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    color: #ffd700;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ffd700;
+    z-index: 20020;
+    white-space: nowrap;
+    font-family: monospace;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* Адаптация для телефонов */
+@media (max-width: 480px) {
+    .brightness-indicator {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
