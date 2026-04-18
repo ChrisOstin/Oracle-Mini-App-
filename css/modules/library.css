@@ -1407,3 +1407,19 @@ mark.search-highlight {
     box-shadow: 0 0 5px var(--reader-accent, #ffd700);
     pointer-events: none;
 }
+
+/* ===== ИКОНКА ЗАКЛАДКИ В УГЛУ ===== */
+.bookmark-corner-icon {
+    position: fixed;
+    bottom: 80px;
+    right: 16px;
+    font-size: 28px;
+    z-index: 20005;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.5));
+}
+
+.bookmark-corner-icon:hover {
+    transform: scale(1.1);
+}

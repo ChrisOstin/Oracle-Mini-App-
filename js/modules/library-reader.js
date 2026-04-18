@@ -23,7 +23,8 @@ const MORI_LIBRARY_READER = {
         searchCurrentIndex: -1,
         showThumb: false,
         thumbTimeout: null,
-        isDragging: false
+        isDragging: false,
+        lastTap: 0
     },
 
     // Доступные шрифты
@@ -185,6 +186,113 @@ goToPageByPercent: function(percent) {
         this.renderReader();
     }
     return page;
+},
+
+/**
+ * Проверка, есть ли закладка на текущей странице
+ */
+hasBookmark: function() {
+    var bookmarks = MORI_LIBRARY_BOOKS.getBookmarks(this.state.currentBook.id);
+    return bookmarks.some(function(b) { return b.page === this.state.currentPage; }.bind(this));
+},
+
+/**
+ * Добавить или удалить закладку на текущей странице
+ */
+toggleBookmark: function(selectedText) {
+    var bookmarks = MORI_LIBRARY_BOOKS.getBookmarks(this.state.currentBook.id);
+    var existing = bookmarks.find(function(b) { return b.page === this.state.currentPage; }.bind(this));
+    
+    if (existing) {
+        // Удаляем закладку
+        MORI_LIBRARY_BOOKS.removeBookmark(existing.id);
+        MORI_APP.showToast('🔖 Закладка удалена со страницы ' + this.state.currentPage, 'info');
+        this.updateBookmarkIcon();
+        return false;
+    } else {
+        // Добавляем закладку
+        MORI_LIBRARY_BOOKS.addBookmark(
+            this.state.currentBook.id,
+            this.state.currentPage,
+            this.state.currentBook.title
+        );
+        
+        // Если есть выделенный текст — добавляем заметку
+        if (selectedText && selectedText.length > 0) {
+            MORI_LIBRARY_BOOKS.addNote(
+                this.state.currentBook.id,
+                this.state.currentPage,
+                selectedText,
+                this.state.currentBook.title
+            );
+            MORI_APP.showToast('📝 Закладка и заметка добавлены на страницу ' + this.state.currentPage, 'success');
+        } else {
+            MORI_APP.showToast('🔖 Закладка добавлена на страницу ' + this.state.currentPage, 'success');
+        }
+        
+        this.updateBookmarkIcon();
+        return true;
+    }
+},
+
+/**
+ * Обновить иконку закладки в углу
+ */
+updateBookmarkIcon: function() {
+    var icon = document.getElementById('bookmark-corner-icon');
+    if (!icon) {
+        // Создаём иконку, если её нет
+        var readerDiv = document.querySelector('.mori-reader');
+        if (readerDiv && !document.getElementById('bookmark-corner-icon')) {
+            var bookmarkIcon = document.createElement('div');
+            bookmarkIcon.id = 'bookmark-corner-icon';
+            bookmarkIcon.className = 'bookmark-corner-icon';
+            bookmarkIcon.innerHTML = '🔖';
+            bookmarkIcon.style.cssText = 'position: fixed; bottom: 80px; right: 16px; font-size: 24px; opacity: 0.7; z-index: 20005; cursor: pointer;';
+            bookmarkIcon.onclick = function() {
+                MORI_APP.showToast('🔖 Страница ' + this.state.currentPage + ' в закладках', 'info');
+            }.bind(this);
+            readerDiv.appendChild(bookmarkIcon);
+        }
+        icon = document.getElementById('bookmark-corner-icon');
+    }
+    
+    if (icon) {
+        if (this.hasBookmark()) {
+            icon.style.opacity = '1';
+            icon.style.textShadow = '0 0 5px #ffd700';
+        } else {
+            icon.style.opacity = '0.3';
+            icon.style.textShadow = 'none';
+        }
+    }
+},
+
+/**
+ * Обработчик двойного тапа
+ */
+onDoubleTap: function(e) {
+    var now = Date.now();
+    var diff = now - this.state.lastTap;
+    
+    if (diff < 300 && diff > 0) {
+        // Двойной тап
+        e.preventDefault();
+        
+        // Получаем выделенный текст
+        var selection = window.getSelection();
+        var selectedText = selection.toString().trim();
+        
+        // Снимаем выделение
+        if (selectedText) {
+            selection.removeAllRanges();
+        }
+        
+        // Добавляем/удаляем закладку
+        this.toggleBookmark(selectedText);
+    }
+    
+    this.state.lastTap = now;
 },
 
 /**
@@ -590,6 +698,18 @@ if (readerDiv) {
             };
         }
 
+// Двойной тап по контенту
+var contentArea = document.getElementById('reader-content');
+if (contentArea) {
+    contentArea.addEventListener('touchstart', this.onDoubleTap.bind(this));
+    contentArea.addEventListener('click', this.onDoubleTap.bind(this));
+}
+
+// Обновляем иконку закладки после рендера
+setTimeout(function() {
+    this.updateBookmarkIcon();
+}.bind(this), 100);
+
 // Прогресс-бар и ползунок
 var progressContainer = document.getElementById('progress-bar-container');
 var thumb = document.getElementById('progress-thumb');
@@ -726,13 +846,14 @@ if (progressContainer) {
     /**
      * Предыдущая страница
      */
-    prevPage: function() {
+   prevPage: function() {
     if (this.state.currentPage > 1) {
         this.stopReadingTimer();
         this.state.currentPage--;
         this.startReadingTimer();
         this.renderReader();
         this.showProgressThumb();
+        setTimeout(function() { this.updateBookmarkIcon(); }.bind(this), 100);
     }
 },
 
@@ -746,6 +867,7 @@ if (progressContainer) {
         this.startReadingTimer();
         this.renderReader();
         this.showProgressThumb();
+        setTimeout(function() { this.updateBookmarkIcon(); }.bind(this), 100);
     }
 },
 
