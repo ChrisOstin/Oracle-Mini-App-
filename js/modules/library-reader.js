@@ -20,7 +20,10 @@ const MORI_LIBRARY_READER = {
         pageReadFlag: false,
         searchQuery: '',
         searchResults: [],
-        searchCurrentIndex: -1
+        searchCurrentIndex: -1,
+        showThumb: false,
+        thumbTimeout: null,
+        isDragging: false
     },
 
     // Доступные шрифты
@@ -115,6 +118,97 @@ if (themeIcon) themeIcon.style.display = 'flex';
         }
 
     },
+
+/**
+ * Показать ползунок
+ */
+showProgressThumb: function() {
+    var self = this;
+    
+    if (this.state.thumbTimeout) {
+        clearTimeout(this.state.thumbTimeout);
+        this.state.thumbTimeout = null;
+    }
+    
+    this.state.showThumb = true;
+    this.updateThumbVisibility();
+    
+    this.state.thumbTimeout = setTimeout(function() {
+        self.hideProgressThumb();
+    }, 3000);
+},
+
+/**
+ * Скрыть ползунок плавно
+ */
+hideProgressThumb: function() {
+    this.state.showThumb = false;
+    this.updateThumbVisibility();
+},
+
+/**
+ * Обновить видимость ползунка в DOM
+ */
+updateThumbVisibility: function() {
+    var thumb = document.getElementById('progress-thumb');
+    if (thumb) {
+        thumb.style.display = this.state.showThumb ? 'block' : 'none';
+    }
+},
+
+/**
+ * Обновить прогресс-бар (позиция ползунка)
+ */
+updateProgressBar: function() {
+    var fill = document.querySelector('.mori-reader-progress-fill');
+    var thumb = document.getElementById('progress-thumb');
+    
+    if (!fill) return;
+    
+    var percent = (this.state.currentPage / this.state.totalPages) * 100;
+    fill.style.width = percent + '%';
+    
+    if (thumb) {
+        thumb.style.left = 'calc(' + percent + '% - 8px)';
+    }
+},
+
+/**
+ * Переход на страницу по проценту
+ */
+goToPageByPercent: function(percent) {
+    var page = Math.max(1, Math.min(this.state.totalPages, Math.floor((percent / 100) * this.state.totalPages) + 1));
+    if (page !== this.state.currentPage) {
+        this.stopReadingTimer();
+        this.state.currentPage = page;
+        this.startReadingTimer();
+        this.renderReader();
+    }
+    return page;
+},
+
+/**
+ * Показать подсказку с номером страницы
+ */
+showPageTooltip: function(page, x, y) {
+    var tooltip = document.getElementById('page-tooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'page-tooltip';
+        tooltip.className = 'page-tooltip';
+        document.body.appendChild(tooltip);
+    }
+    
+    tooltip.innerHTML = '📄 ' + page + ' / ' + this.state.totalPages;
+    tooltip.style.left = (x - 30) + 'px';
+    tooltip.style.top = (y - 50) + 'px';
+    tooltip.style.display = 'block';
+    
+    if (this.tooltipTimeout) clearTimeout(this.tooltipTimeout);
+    this.tooltipTimeout = setTimeout(function() {
+        if (tooltip) tooltip.style.display = 'none';
+    }, 800);
+},
 
     /**
      * Поиск по тексту книги
@@ -315,9 +409,12 @@ appDiv.innerHTML = `
                 <button class="mori-reader-settings" id="reader-settings">🔧</button>
             </div>
         </div>
-        <div class="mori-reader-progress">
-            <div class="mori-reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
-        </div>
+        <div class="mori-reader-progress" id="progress-bar-container">
+    <div class="mori-reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
+    <div class="progress-thumb ${this.state.showThumb ? 'visible' : ''}" id="progress-thumb" style="left: calc(${progressPercent}% - 8px); display: ${this.state.showThumb ? 'block' : 'none'};">
+        <div class="thumb-circle"></div>
+    </div>
+</div>
         <div class="mori-reader-content" id="reader-content"
              style="font-family: ${this.state.fontFamily}; font-size: ${this.state.fontSize}px; line-height: ${this.state.lineHeight}; color: ${theme.text};">
             ${currentContent}
@@ -354,6 +451,16 @@ appDiv.innerHTML = `
     </div>
 </div>
 `;
+
+// Применяем тему через CSS переменные
+const readerDiv = document.querySelector('.mori-reader');
+if (readerDiv) {
+    readerDiv.style.setProperty('--reader-bg', theme.background);
+    readerDiv.style.setProperty('--reader-text', theme.text);
+    readerDiv.style.setProperty('--reader-accent', theme.accent);
+    readerDiv.style.setProperty('--reader-border', theme.border);
+    readerDiv.style.setProperty('--reader-card-bg', theme.cardBg);
+}
 
     this.attachReaderEvents();
     this.startReadingTimer();
@@ -483,6 +590,56 @@ appDiv.innerHTML = `
             };
         }
 
+// Прогресс-бар и ползунок
+var progressContainer = document.getElementById('progress-bar-container');
+var thumb = document.getElementById('progress-thumb');
+
+if (progressContainer) {
+    // Клик по прогресс-бару
+    progressContainer.onclick = (function(self) {
+        return function(e) {
+            e.stopPropagation();
+            var rect = progressContainer.getBoundingClientRect();
+            var clickX = e.clientX - rect.left;
+            var percent = (clickX / rect.width) * 100;
+            percent = Math.max(0, Math.min(100, percent));
+            self.goToPageByPercent(percent);
+            self.showProgressThumb();
+        };
+    })(this);
+    
+    // Перетаскивание ползунка
+    var onDrag = function(e) {
+        var rect = progressContainer.getBoundingClientRect();
+        var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        var percent = ((clientX - rect.left) / rect.width) * 100;
+        percent = Math.max(0, Math.min(100, percent));
+        var page = self.goToPageByPercent(percent);
+        self.showPageTooltip(page, clientX, rect.top);
+        self.showProgressThumb();
+    };
+    
+    var startDrag = function(e) {
+        e.preventDefault();
+        self.state.isDragging = true;
+        onDrag(e);
+    };
+    
+    var endDrag = function() {
+        self.state.isDragging = false;
+        self.showProgressThumb();
+    };
+    
+    if (thumb) {
+        thumb.addEventListener('mousedown', startDrag);
+        thumb.addEventListener('touchstart', startDrag);
+        window.addEventListener('mousemove', onDrag);
+        window.addEventListener('touchmove', onDrag);
+        window.addEventListener('mouseup', endDrag);
+        window.addEventListener('touchend', endDrag);
+    }
+}
+
         // Шрифты
         const fontSelect = document.getElementById('reader-font');
         if (fontSelect) {
@@ -570,25 +727,27 @@ appDiv.innerHTML = `
      * Предыдущая страница
      */
     prevPage: function() {
-        if (this.state.currentPage > 1) {
-            this.stopReadingTimer();
-            this.state.currentPage--;
-            this.startReadingTimer();
-            this.renderReader();
-        }
-    },
+    if (this.state.currentPage > 1) {
+        this.stopReadingTimer();
+        this.state.currentPage--;
+        this.startReadingTimer();
+        this.renderReader();
+        this.showProgressThumb();
+    }
+},
 
     /**
      * Следующая страница
      */
-    nextPage: function() {
-        if (this.state.currentPage < this.state.totalPages) {
-            this.stopReadingTimer();
-            this.state.currentPage++;
-            this.startReadingTimer();
-            this.renderReader();
-        }
-    },
+  nextPage: function() {
+    if (this.state.currentPage < this.state.totalPages) {
+        this.stopReadingTimer();
+        this.state.currentPage++;
+        this.startReadingTimer();
+        this.renderReader();
+        this.showProgressThumb();
+    }
+},
 
 /**
  * Запуск таймера чтения страницы (50 секунд)

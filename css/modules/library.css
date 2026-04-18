@@ -1340,3 +1340,70 @@ mark.search-highlight {
         padding-bottom: 140px;
     }
 }
+
+/* ===== ПОЛЗУНОК ПРОГРЕСС-БАРА ===== */
+.progress-thumb {
+    position: absolute;
+    top: -6px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.thumb-circle {
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #ffd700, #d4af37);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 4px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.thumb-circle:hover {
+    transform: scale(1.2);
+}
+
+.progress-thumb.visible {
+    display: block;
+}
+
+/* Подсказка с номером страницы */
+.page-tooltip {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    color: #ffd700;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid #ffd700;
+    pointer-events: none;
+    z-index: 20010;
+    white-space: nowrap;
+    font-family: monospace;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Контейнер прогресс-бара для ползунка */
+.mori-reader-progress {
+    position: relative;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.mori-reader-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--reader-accent, #ffd700);
+    transition: width 0.2s ease;
+    box-shadow: 0 0 5px var(--reader-accent, #ffd700);
+    pointer-events: none;
+}
