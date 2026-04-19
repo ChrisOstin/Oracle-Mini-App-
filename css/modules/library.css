@@ -1525,3 +1525,17 @@ mark.search-highlight {
     color: #000 !important;
     box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
 }
+
+/* Золотое свечение для активного режима */
+.mode-btn.active {
+    background: transparent !important;
+    color: #d4af37 !important;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+    box-shadow: none;
+    border-color: #d4af37;
+}
+
+/* Отступы между кнопками переключателя */
+.search-mode-toggle {
+    gap: 12px;
+}
