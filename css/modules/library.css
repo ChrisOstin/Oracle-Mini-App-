@@ -1513,3 +1513,15 @@ mark.search-highlight {
     position: relative !important;
     left: -100px !important;
 }
+
+/* Отступы между кнопками переключателя */
+.search-mode-toggle {
+    gap: 12px;
+}
+
+/* Активный режим — золотой */
+.mode-btn.active {
+    background: #d4af37 !important;
+    color: #000 !important;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
