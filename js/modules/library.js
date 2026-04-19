@@ -509,8 +509,25 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
         this.state.searchMode = mode;
         this.state.searchQuery = '';
         this.state.searchResults = [];
-        document.getElementById('library-search-input').value = '';
-        this.render();
+        const input = document.getElementById('library-search-input');
+        if (input) input.value = '';
+        
+        // Обновляем только список книг, не перерисовывая весь модуль
+        this.updateBooksList();
+        
+        // Обновляем активный класс на кнопках
+        document.querySelectorAll('.mode-btn').forEach(b => {
+            if (b.dataset.mode === mode) {
+                b.classList.add('active');
+            } else {
+                b.classList.remove('active');
+            }
+        });
+        
+        // Возвращаем фокус в поле ввода
+        if (input) {
+            input.focus();
+        }
     };
 });
 
