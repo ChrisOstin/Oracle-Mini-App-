@@ -90,7 +90,7 @@ init: function() {
     <div class="search-wrapper">
         <input type="text"
                class="search-input"
-               placeholder="Поиск по названию или автору/слову"
+               placeholder="Поиск по названию и автору/слову"
                value="${this.state.searchQuery}"
                id="library-search-input">
         <div class="search-mode-toggle" id="search-mode-toggle">
