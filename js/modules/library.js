@@ -174,11 +174,40 @@ updateBooksList: function() {
     const booksContainer = document.querySelector('.library-books');
     if (!booksContainer) return;
     
-    const filteredBooks = this.getFilteredBooks();
-    booksContainer.innerHTML = this.renderBooks(filteredBooks);
+    let html = '';
     
-    // Переподключаем обработчики для кнопок в новых карточках
+    if (this.state.searchMode === 'text' && this.state.searchQuery.length >= 2) {
+        html = this.renderTextSearchResults();
+    } else {
+        const filteredBooks = this.getFilteredBooks();
+        html = this.renderBooks(filteredBooks);
+    }
+    
+    booksContainer.innerHTML = html;
     this.attachBookEvents();
+    
+    // Переподключаем события для пагинации и кликов по результатам
+    this.attachSearchEvents();
+},
+
+attachSearchEvents: function() {
+    // Клики по результатам поиска
+    document.querySelectorAll('.search-result-card').forEach(card => {
+        card.onclick = (e) => {
+            const bookId = card.dataset.bookId;
+            const page = parseInt(card.dataset.page);
+            const query = card.dataset.query;
+            this.goToSearchResult(bookId, page, query);
+        };
+    });
+    
+    // Пагинация
+    document.querySelectorAll('.pagination-btn').forEach(btn => {
+        btn.onclick = (e) => {
+            const page = parseInt(btn.dataset.page);
+            this.searchByText(this.state.searchQuery, page);
+        };
+    });
 },
 
 /**
@@ -368,24 +397,24 @@ renderBookmarks: function() {
 /**
  * Поиск по тексту книг с пагинацией
  */
-searchByText: function(query, page = 1) {
+searchByText: function(query, page) {
     if (!query || query.length < 2) {
         this.state.searchResults = [];
         this.state.searchTotalPages = 0;
-        this.render();
+        this.updateBooksList();  // ← вместо this.render()
         return;
     }
     
-    const allResults = MORI_LIBRARY_BOOKS.searchInBooks(query);
-    const perPage = 50;
-    const totalPages = Math.ceil(allResults.length / perPage);
-    const start = (page - 1) * perPage;
-    const pageResults = allResults.slice(start, start + perPage);
+    var allResults = MORI_LIBRARY_BOOKS.searchInBooks(query);
+    var perPage = 50;
+    var totalPages = Math.ceil(allResults.length / perPage);
+    var start = (page - 1) * perPage;
+    var pageResults = allResults.slice(start, start + perPage);
     
     this.state.searchResults = pageResults;
     this.state.searchPage = page;
     this.state.searchTotalPages = totalPages;
-    this.render();
+    this.updateBooksList();  // ← вместо this.render()
 },
 
 /**
