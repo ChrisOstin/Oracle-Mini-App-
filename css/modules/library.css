@@ -1146,14 +1146,26 @@ mark.search-highlight {
 }
 
 .mori-reader-progress {
-    height: 3px;
+    position: relative;
+    height: 5px;
     background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    border-radius: 3px;
+    box-shadow: 0 0 4px rgba(212, 175, 55, 0.5), inset 0 0 2px rgba(212, 175, 55, 0.3);
+    border: 0.5px solid rgba(212, 175, 55, 0.6);
 }
 
 .mori-reader-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    transition: width 0.3s ease;
-    box-shadow: 0 0 5px currentColor;
+    background: linear-gradient(90deg, #d4af37, #ffd700, #f9d976, #d4af37);
+    background-size: 200% 100%;
+    transition: width 0.2s ease;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.8), inset 0 0 2px rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    border-radius: 3px;
 }
 
 .mori-reader-content {
