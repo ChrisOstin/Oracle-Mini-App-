@@ -82,9 +82,11 @@
     align-items: center;
     gap: 8px;
     margin-left: auto;
+    flex-shrink: 0;
 }
 
 /* Кнопка очистки — смещена влево */
+/* Кнопка очистки */
 .search-clear {
     background: none;
     border: none;
@@ -94,7 +96,10 @@
     padding: 4px 8px;
     border-radius: 50%;
     transition: all 0.2s;
-    order: 1;  /* Будет первым в группе */
+    display: inline-block !important;
+    width: auto !important;
+    height: auto !important;
+    margin-left: 4px;
 }
 
 .search-clear:hover {
@@ -102,11 +107,11 @@
     background: rgba(212, 175, 55, 0.15);
 }
 
-/* Переключатель режимов — остаётся справа */
+/* Переключатель режимов */
 .search-mode-toggle {
     display: flex;
     gap: 4px;
-    order: 2;  /* Будет вторым в группе */
+    flex-shrink: 0;
 }
 
 /* Фильтры */
