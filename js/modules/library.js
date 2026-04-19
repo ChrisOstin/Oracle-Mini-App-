@@ -88,10 +88,9 @@ init: function() {
                 <!-- Поиск -->
 <div class="library-search">
     <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
         <input type="text"
                class="search-input"
-               placeholder="Поиск по названию или автору..."
+               placeholder="Поиск по названию или автору/слову"
                value="${this.state.searchQuery}"
                id="library-search-input">
         <div class="search-mode-toggle" id="search-mode-toggle">
