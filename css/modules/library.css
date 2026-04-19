@@ -99,7 +99,7 @@
     display: inline-block !important;
     width: auto !important;
     height: auto !important;
-    margin-left: 20px;
+    margin-left: 20px !important;
 }
 
 .search-clear:hover {
