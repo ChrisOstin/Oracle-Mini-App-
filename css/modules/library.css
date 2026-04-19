@@ -45,6 +45,12 @@
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
+    gap: 8px;
+    flex-wrap: nowrap;
+    background: #0a0a0a;
+    border-radius: 30px;
+    padding: 4px 8px;
 }
 
 .search-icon {
