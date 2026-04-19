@@ -48,7 +48,7 @@
     width: 100%;
     gap: 8px;
     flex-wrap: nowrap;
-    background: #0a0a0a;
+    background: #0a0a0a !important;
     border-radius: 30px;
     padding: 4px 8px;
 }
@@ -1509,7 +1509,7 @@ mark.search-highlight {
 }
 
 /* Принудительное смещение кнопки очистки */
-.search-wrapper .search-clear {
+.search-clear {
     position: relative !important;
     left: -100px !important;
 }
