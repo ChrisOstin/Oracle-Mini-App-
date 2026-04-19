@@ -1505,5 +1505,5 @@ mark.search-highlight {
 /* Принудительное смещение кнопки очистки */
 .search-wrapper .search-clear {
     position: relative !important;
-    left: -30px !important;
+    left: -50px !important;
 }
