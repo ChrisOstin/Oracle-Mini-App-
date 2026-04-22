@@ -839,35 +839,27 @@ if (progressContainer) {
     })(this);
     
     // Перетаскивание ползунка
-    var onDrag = (function(self) {
-        return function(e) {
-            if (!self.state) return;
-            var rect = progressContainer.getBoundingClientRect();
-            var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-            var percent = ((clientX - rect.left) / rect.width) * 100;
-            percent = Math.max(0, Math.min(100, percent));
-            var page = self.goToPageByPercent(percent);
-            self.showPageTooltip(page, clientX, rect.top);
-            self.showProgressThumb();
-        };
-    })(this);
+    var onDrag = function(e) {
+        if (!this || !this.state) return;
+        var rect = progressContainer.getBoundingClientRect();
+        var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        var percent = ((clientX - rect.left) / rect.width) * 100;
+        percent = Math.max(0, Math.min(100, percent));
+        var page = this.goToPageByPercent(percent);
+        this.showPageTooltip(page, clientX, rect.top);
+        this.showProgressThumb();
+    }.bind(this);
     
-    var startDrag = (function(self) {
-        return function(e) {
-            e.preventDefault();
-            if (!self.state) return;
-            self.state.isDragging = true;
-            onDrag(e);
-        };
-    })(this);
+    var startDrag = function(e) {
+        e.preventDefault();
+        this.state.isDragging = true;
+        onDrag(e);
+    }.bind(this);
     
-    var endDrag = (function(self) {
-        return function() {
-            if (!self.state) return;
-            self.state.isDragging = false;
-            self.showProgressThumb();
-        };
-    })(this);
+    var endDrag = function() {
+        this.state.isDragging = false;
+        this.showProgressThumb();
+    }.bind(this);
     
     if (thumb) {
         thumb.addEventListener('mousedown', startDrag);
