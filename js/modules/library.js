@@ -578,7 +578,7 @@ if (searchInput) {
             this.searchByText(query, 1);
         } else if (this.state.searchMode === 'text' && query.length < 2) {
             this.state.searchResults = [];
-            this.render();
+            this.updateBooksList();
         }
         
         // Управление кнопкой очистки
