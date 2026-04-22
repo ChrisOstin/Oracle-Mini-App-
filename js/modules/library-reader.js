@@ -824,60 +824,91 @@ setTimeout(function() {
 var progressContainer = document.getElementById('progress-bar-container');
 var thumb = document.getElementById('progress-thumb');
 var self = this;
+var isDragging = false;
 
 if (progressContainer) {
-    // Клик по прогресс-бару
+    // Функция обновления позиции по координатам
+    function updateFromClientX(clientX) {
+        var rect = progressContainer.getBoundingClientRect();
+        var percent = (clientX - rect.left) / rect.width;
+        percent = Math.max(0, Math.min(1, percent));
+        var page = Math.floor(percent * self.state.totalPages) + 1;
+        page = Math.max(1, Math.min(self.state.totalPages, page));
+        
+        if (page !== self.state.currentPage) {
+            self.stopReadingTimer();
+            self.state.currentPage = page;
+            self.startReadingTimer();
+            self.renderReader();
+        }
+        self.showPageTooltip(page, clientX, rect.top);
+    }
+    
+    // Клик по прогресс-бару (показывает ползунок и переходит)
     progressContainer.onclick = function(e) {
         e.stopPropagation();
         var rect = progressContainer.getBoundingClientRect();
-        var clickX = e.clientX - rect.left;
-        var percent = (clickX / rect.width) * 100;
-        percent = Math.max(0, Math.min(100, percent));
-        self.goToPageByPercent(percent);
+        var clientX = e.clientX;
+        updateFromClientX(clientX);
         self.showProgressThumb();
     };
     
-    // Функция обновления позиции
-    function updatePosition(clientX) {
-        var rect = progressContainer.getBoundingClientRect();
-        var percent = ((clientX - rect.left) / rect.width) * 100;
-        percent = Math.max(0, Math.min(100, percent));
-        var page = self.goToPageByPercent(percent);
-        self.showPageTooltip(page, clientX, rect.top);
+    // Начало перетаскивания (только на ползунке)
+    if (thumb) {
+        thumb.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            isDragging = true;
+            self.state.isDragging = true;
+            var rect = progressContainer.getBoundingClientRect();
+            var clientX = e.clientX;
+            updateFromClientX(clientX);
+        });
+        
+        thumb.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            isDragging = true;
+            self.state.isDragging = true;
+            var rect = progressContainer.getBoundingClientRect();
+            var touch = e.touches[0];
+            updateFromClientX(touch.clientX);
+        });
+    }
+    
+    // Движение мыши/пальца
+    window.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        var clientX = e.clientX;
+        updateFromClientX(clientX);
         self.showProgressThumb();
-    }
+    });
     
-    // Обработчик движения
-    function onMove(e) {
-        if (!self.state.isDragging) return;
+    window.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
         e.preventDefault();
-        var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-        updatePosition(clientX);
-    }
-    
-    // Начало перетаскивания
-    function onStart(e) {
-        e.preventDefault();
-        self.state.isDragging = true;
-        var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-        updatePosition(clientX);
-    }
+        var touch = e.touches[0];
+        updateFromClientX(touch.clientX);
+        self.showProgressThumb();
+    });
     
     // Конец перетаскивания
-    function onEnd() {
-        self.state.isDragging = false;
-        self.showProgressThumb();
-    }
+    window.addEventListener('mouseup', function() {
+        if (isDragging) {
+            isDragging = false;
+            self.state.isDragging = false;
+            self.showProgressThumb();
+        }
+    });
     
-    if (thumb) {
-        thumb.addEventListener('mousedown', onStart);
-        thumb.addEventListener('touchstart', onStart);
-    }
-    
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('touchmove', onMove);
-    window.addEventListener('mouseup', onEnd);
-    window.addEventListener('touchend', onEnd);
+    window.addEventListener('touchend', function() {
+        if (isDragging) {
+            isDragging = false;
+            self.state.isDragging = false;
+            self.showProgressThumb();
+        }
+    });
 }
 
         // Шрифты
