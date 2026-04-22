@@ -823,52 +823,61 @@ setTimeout(function() {
 // Прогресс-бар и ползунок
 var progressContainer = document.getElementById('progress-bar-container');
 var thumb = document.getElementById('progress-thumb');
+var self = this;
 
 if (progressContainer) {
     // Клик по прогресс-бару
-    progressContainer.onclick = (function(self) {
-        return function(e) {
-            e.stopPropagation();
-            var rect = progressContainer.getBoundingClientRect();
-            var clickX = e.clientX - rect.left;
-            var percent = (clickX / rect.width) * 100;
-            percent = Math.max(0, Math.min(100, percent));
-            self.goToPageByPercent(percent);
-            self.showProgressThumb();
-        };
-    })(this);
-    
-    // Перетаскивание ползунка
-    var onDrag = function(e) {
-        if (!this || !this.state) return;
+    progressContainer.onclick = function(e) {
+        e.stopPropagation();
         var rect = progressContainer.getBoundingClientRect();
-        var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        var clickX = e.clientX - rect.left;
+        var percent = (clickX / rect.width) * 100;
+        percent = Math.max(0, Math.min(100, percent));
+        self.goToPageByPercent(percent);
+        self.showProgressThumb();
+    };
+    
+    // Функция обновления позиции
+    function updatePosition(clientX) {
+        var rect = progressContainer.getBoundingClientRect();
         var percent = ((clientX - rect.left) / rect.width) * 100;
         percent = Math.max(0, Math.min(100, percent));
-        var page = this.goToPageByPercent(percent);
-        this.showPageTooltip(page, clientX, rect.top);
-        this.showProgressThumb();
-    }.bind(this);
+        var page = self.goToPageByPercent(percent);
+        self.showPageTooltip(page, clientX, rect.top);
+        self.showProgressThumb();
+    }
     
-    var startDrag = function(e) {
+    // Обработчик движения
+    function onMove(e) {
+        if (!self.state.isDragging) return;
         e.preventDefault();
-        this.state.isDragging = true;
-        onDrag(e);
-    }.bind(this);
+        var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        updatePosition(clientX);
+    }
     
-    var endDrag = function() {
-        this.state.isDragging = false;
-        this.showProgressThumb();
-    }.bind(this);
+    // Начало перетаскивания
+    function onStart(e) {
+        e.preventDefault();
+        self.state.isDragging = true;
+        var clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        updatePosition(clientX);
+    }
+    
+    // Конец перетаскивания
+    function onEnd() {
+        self.state.isDragging = false;
+        self.showProgressThumb();
+    }
     
     if (thumb) {
-        thumb.addEventListener('mousedown', startDrag);
-        thumb.addEventListener('touchstart', startDrag);
-        window.addEventListener('mousemove', onDrag);
-        window.addEventListener('touchmove', onDrag);
-        window.addEventListener('mouseup', endDrag);
-        window.addEventListener('touchend', endDrag);
+        thumb.addEventListener('mousedown', onStart);
+        thumb.addEventListener('touchstart', onStart);
     }
+    
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('touchmove', onMove);
+    window.addEventListener('mouseup', onEnd);
+    window.addEventListener('touchend', onEnd);
 }
 
         // Шрифты
