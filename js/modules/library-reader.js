@@ -622,10 +622,11 @@ appDiv.innerHTML = `
             <button class="mori-reader-back" id="reader-close">📖 ← Назад</button>
             <div class="mori-reader-title">📚 ${this.state.currentBook.title}</div>
             <div style="display: flex; gap: 8px;">
-                <button class="reader-bookmark-btn" id="reader-bookmark" title="Добавить закладку">🔖</button>
-                <button class="reader-note-btn" id="reader-note" title="Добавить заметку">📝</button>
-                <button class="mori-reader-settings" id="reader-settings">🔧</button>
-            </div>
+    <button class="reader-search-btn" id="reader-search-btn" title="Поиск по книге">🔍</button>
+    <button class="reader-bookmark-btn" id="reader-bookmark" title="Добавить закладку">🔖</button>
+    <button class="reader-note-btn" id="reader-note" title="Добавить заметку">📝</button>
+    <button class="mori-reader-settings" id="reader-settings">🔧</button>
+</div>
         </div>
         <div class="mori-reader-progress" id="progress-bar-container">
     <div class="mori-reader-progress-fill" style="width: ${progressPercent}%; background: ${theme.accent};"></div>
