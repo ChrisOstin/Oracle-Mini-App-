@@ -828,21 +828,43 @@ var isDragging = false;
 
 if (progressContainer) {
     // Функция обновления позиции по координатам
-    function updateFromClientX(clientX) {
-        var rect = progressContainer.getBoundingClientRect();
-        var percent = (clientX - rect.left) / rect.width;
-        percent = Math.max(0, Math.min(1, percent));
-        var page = Math.floor(percent * self.state.totalPages) + 1;
-        page = Math.max(1, Math.min(self.state.totalPages, page));
-        
-        if (page !== self.state.currentPage) {
-            self.stopReadingTimer();
-            self.state.currentPage = page;
-            self.startReadingTimer();
-            self.renderReader();
+function updateFromClientX(clientX) {
+    var rect = progressContainer.getBoundingClientRect();
+    var percent = (clientX - rect.left) / rect.width;
+    percent = Math.max(0, Math.min(1, percent));
+    var newPage = Math.floor(percent * self.state.totalPages) + 1;
+    newPage = Math.max(1, Math.min(self.state.totalPages, newPage));
+    
+    if (newPage !== self.state.currentPage) {
+        self.state.currentPage = newPage;
+        // Обновляем содержимое страницы без полного перерендера
+        var contentEl = document.getElementById('reader-content');
+        if (contentEl) {
+            var newContent = self.state.content[newPage - 1] || '<p>Страница не найдена</p>';
+            contentEl.innerHTML = newContent;
         }
-        self.showPageTooltip(page, clientX, rect.top);
+        // Обновляем прогресс-бар
+        var fill = document.querySelector('.mori-reader-progress-fill');
+        if (fill) {
+            var newPercent = (newPage / self.state.totalPages) * 100;
+            fill.style.width = newPercent + '%';
+        }
+        // Обновляем позицию ползунка
+        var thumbEl = document.getElementById('progress-thumb');
+        if (thumbEl) {
+            var newLeft = ((newPage / self.state.totalPages) * 100) - 8;
+            thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
+        }
+        // Обновляем номер страницы в футере
+        var pageSpan = document.querySelector('.mori-reader-page');
+        if (pageSpan) {
+            pageSpan.textContent = newPage + ' / ' + self.state.totalPages;
+        }
+        // Обновляем прогресс в localStorage
+        self.saveProgress();
     }
+    self.showPageTooltip(newPage, clientX, rect.top);
+}
     
     // Клик по прогресс-бару (показывает ползунок и переходит)
     progressContainer.onclick = function(e) {
