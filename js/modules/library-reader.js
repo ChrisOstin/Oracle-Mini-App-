@@ -586,6 +586,9 @@ updateSearchResults: function() {
     
     // Плавное исчезновение подсветки через 5 секунд
     setTimeout(() => this.clearHighlight(), 5000);
+    
+    // ЗАКРЫВАЕМ ОКНО ПОИСКА, чтобы видеть текст
+    this.closeSearch();
 },
 
 clearHighlight: function() {
@@ -707,18 +710,23 @@ clearHighlight: function() {
     this.state.searchQuery = '';
     this.state.searchResults = [];
     this.state.searchCurrentIndex = -1;
-    // Очищаем панель результатов
+    
     const searchResultsDiv = document.getElementById('reader-search-results');
     if (searchResultsDiv) {
         searchResultsDiv.innerHTML = '';
     }
-    // Скрываем панель навигации
     const searchNav = document.getElementById('reader-search-nav');
     if (searchNav) {
         searchNav.style.display = 'none';
     }
-    // Снимаем подсветку
-    this.highlightSearchTerm();
+    const searchBar = document.getElementById('reader-search-bar');
+    if (searchBar) {
+        searchBar.style.display = 'none';
+    }
+    const searchInput = document.getElementById('reader-search-input');
+    if (searchInput) {
+        searchInput.value = '';
+    }
 },
 
     /**
