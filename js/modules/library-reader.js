@@ -435,7 +435,7 @@ searchInBook: function(query) {
     if (!query || query.trim() === '') {
         this.state.searchResults = [];
         this.state.searchCurrentIndex = -1;
-        this.updateSearchResults();  // ← ВМЕСТО renderReader
+        this.updateSearchResults();
         return;
     }
 
@@ -445,13 +445,11 @@ searchInBook: function(query) {
     for (let i = 0; i < this.state.content.length; i++) {
         const page = this.state.content[i];
         const text = page.replace(/<[^>]*>/g, ' ');
-
         if (text.toLowerCase().includes(searchTerm)) {
             const index = text.toLowerCase().indexOf(searchTerm);
             let preview = text.substring(Math.max(0, index - 40), Math.min(text.length, index + searchTerm.length + 40));
             if (index > 40) preview = '...' + preview;
             if (index + searchTerm.length + 40 < text.length) preview = preview + '...';
-
             results.push({
                 page: i + 1,
                 preview: preview
@@ -462,17 +460,8 @@ searchInBook: function(query) {
     this.state.searchQuery = query;
     this.state.searchResults = results;
     this.state.searchCurrentIndex = results.length > 0 ? 0 : -1;
-    
-    this.updateSearchResults();  // ← ВМЕСТО renderReader
 
-    if (results.length === 0) {
-        MORI_APP.showToast('🔍 Ничего не найдено', 'info');
-    } else {
-        MORI_APP.showToast(`🔍 Найдено ${results.length} страниц`, 'success');
-        if (results.length > 0) {
-            setTimeout(() => this.goToSearchResult(0), 200);
-        }
-    }
+    this.updateSearchResults();
 },
 
 /**
