@@ -431,47 +431,91 @@ showPageTooltip: function(page, x, y) {
     /**
      * Поиск по тексту книги
      */
-    searchInBook: function(query) {
-        if (!query || query.trim() === '') {
-            this.state.searchResults = [];
-            this.state.searchCurrentIndex = -1;
-            this.renderReader();
-            return;
+searchInBook: function(query) {
+    if (!query || query.trim() === '') {
+        this.state.searchResults = [];
+        this.state.searchCurrentIndex = -1;
+        this.updateSearchResults();  // ← ВМЕСТО renderReader
+        return;
+    }
+
+    const searchTerm = query.toLowerCase();
+    const results = [];
+
+    for (let i = 0; i < this.state.content.length; i++) {
+        const page = this.state.content[i];
+        const text = page.replace(/<[^>]*>/g, ' ');
+
+        if (text.toLowerCase().includes(searchTerm)) {
+            const index = text.toLowerCase().indexOf(searchTerm);
+            let preview = text.substring(Math.max(0, index - 40), Math.min(text.length, index + searchTerm.length + 40));
+            if (index > 40) preview = '...' + preview;
+            if (index + searchTerm.length + 40 < text.length) preview = preview + '...';
+
+            results.push({
+                page: i + 1,
+                preview: preview
+            });
         }
+    }
 
-        const searchTerm = query.toLowerCase();
-        const results = [];
+    this.state.searchQuery = query;
+    this.state.searchResults = results;
+    this.state.searchCurrentIndex = results.length > 0 ? 0 : -1;
+    
+    this.updateSearchResults();  // ← ВМЕСТО renderReader
 
-        for (let i = 0; i < this.state.content.length; i++) {
-            const page = this.state.content[i];
-            const text = page.replace(/<[^>]*>/g, ' ');
-
-            if (text.toLowerCase().includes(searchTerm)) {
-                const index = text.toLowerCase().indexOf(searchTerm);
-                let preview = text.substring(Math.max(0, index - 40), Math.min(text.length, index + searchTerm.length + 40));
-                if (index > 40) preview = '...' + preview;
-                if (index + searchTerm.length + 40 < text.length) preview = preview + '...';
-
-                results.push({
-                    page: i + 1,
-                    preview: preview
-                });
-            }
-        }
-
-        this.state.searchQuery = query;
-        this.state.searchResults = results;
-        this.state.searchCurrentIndex = results.length > 0 ? 0 : -1;
-
-        this.renderReader();
-
-        if (results.length === 0) {
-            MORI_APP.showToast('🔍 Ничего не найдено', 'info');
-        } else {
-            MORI_APP.showToast(`🔍 Найдено ${results.length} страниц`, 'success');
+    if (results.length === 0) {
+        MORI_APP.showToast('🔍 Ничего не найдено', 'info');
+    } else {
+        MORI_APP.showToast(`🔍 Найдено ${results.length} страниц`, 'success');
+        if (results.length > 0) {
             setTimeout(() => this.goToSearchResult(0), 200);
         }
-    },
+    }
+},
+
+/**
+ * Обновление результатов поиска без перерисовки всей читалки
+ */
+updateSearchResults: function() {
+    // Обновляем панель навигации поиска
+    this.updateSearchNav();
+    
+    // Если есть результаты и текущая страница изменилась
+    if (this.state.searchCurrentIndex >= 0 && this.state.searchResults.length > 0) {
+        const result = this.state.searchResults[this.state.searchCurrentIndex];
+        if (result && result.page !== this.state.currentPage) {
+            this.state.currentPage = result.page;
+            // Обновляем содержимое страницы
+            const contentEl = document.getElementById('reader-content');
+            if (contentEl) {
+                const newContent = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
+                contentEl.innerHTML = newContent;
+            }
+            // Обновляем прогресс-бар
+            const fill = document.querySelector('.mori-reader-progress-fill');
+            if (fill) {
+                const newPercent = (this.state.currentPage / this.state.totalPages) * 100;
+                fill.style.width = newPercent + '%';
+            }
+            // Обновляем позицию ползунка
+            const thumbEl = document.getElementById('progress-thumb');
+            if (thumbEl) {
+                const newLeft = ((this.state.currentPage / this.state.totalPages) * 100) - 8;
+                thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
+            }
+            // Обновляем номер страницы в футере
+            const pageSpan = document.querySelector('.mori-reader-page');
+            if (pageSpan) {
+                pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
+            }
+        }
+    }
+    
+    // Подсветка найденного слова
+    setTimeout(() => this.highlightSearchTerm(), 100);
+},
 
     /**
      * Перейти к результату поиска
