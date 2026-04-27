@@ -669,6 +669,20 @@ appDiv.innerHTML = `
         </div>
     </div>
 </div>
+            <!-- Панель поиска -->
+<div class="reader-search-bar" id="reader-search-bar" style="display: none;">
+    <div class="reader-search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="reader-search-input" id="reader-search-input" placeholder="Поиск по книге...">
+        <button class="reader-search-close" id="reader-search-close">✕</button>
+    </div>
+    <div class="reader-search-nav" id="reader-search-nav" style="display: none;">
+        <button class="search-nav-btn" id="search-prev">◀ Пред.</button>
+        <span id="search-counter">0/0</span>
+        <button class="search-nav-btn" id="search-next">След. ▶</button>
+    </div>
+    <div id="reader-search-results"></div>
+</div>
 `;
 
 // Применяем тему через CSS переменные
