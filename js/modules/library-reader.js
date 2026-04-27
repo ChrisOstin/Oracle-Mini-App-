@@ -479,10 +479,53 @@ searchInBook: function(query) {
  * Обновление результатов поиска без перерисовки всей читалки
  */
 updateSearchResults: function() {
-    // Обновляем панель навигации поиска
-    this.updateSearchNav();
+    // Находим панель результатов
+    let searchResultsDiv = document.getElementById('reader-search-results');
+    let searchNav = document.getElementById('reader-search-nav');
+    let counter = document.getElementById('search-counter');
     
-    // Если есть результаты и текущая страница изменилась
+    if (!searchResultsDiv) return;
+    
+    // Показываем/скрываем панель навигации
+    if (searchNav) {
+        searchNav.style.display = this.state.searchResults.length > 0 ? 'flex' : 'none';
+    }
+    
+    if (this.state.searchResults.length > 0) {
+        // Обновляем счётчик
+        if (counter) {
+            counter.textContent = `${this.state.searchCurrentIndex + 1}/${this.state.searchResults.length}`;
+        }
+        
+        // Рендерим результаты
+        searchResultsDiv.innerHTML = `
+            <div class="search-results-list">
+                ${this.state.searchResults.map((result, idx) => `
+                    <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}">
+                        <span class="search-result-page">Страница ${result.page}</span>
+                        <span class="search-result-preview">${result.preview}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        // Добавляем обработчики кликов на результаты
+        document.querySelectorAll('.search-result-item').forEach(item => {
+            item.onclick = () => {
+                const page = parseInt(item.dataset.page);
+                const idx = this.state.searchResults.findIndex(r => r.page === page);
+                if (idx !== -1) {
+                    this.goToSearchResult(idx);
+                }
+            };
+        });
+    } else if (this.state.searchQuery && this.state.searchQuery.length > 0) {
+        searchResultsDiv.innerHTML = '<div class="search-no-results">🔍 Ничего не найдено</div>';
+    } else {
+        searchResultsDiv.innerHTML = '';
+    }
+    
+    // Если есть активный результат — переходим на страницу
     if (this.state.searchCurrentIndex >= 0 && this.state.searchResults.length > 0) {
         const result = this.state.searchResults[this.state.searchCurrentIndex];
         if (result && result.page !== this.state.currentPage) {
@@ -513,26 +556,51 @@ updateSearchResults: function() {
         }
     }
     
-    // Подсветка найденного слова
-    setTimeout(() => this.highlightSearchTerm(), 100);
+    // Подсветка найденного слова на странице (если есть результаты)
+    if (this.state.searchQuery && this.state.searchResults.length > 0) {
+        setTimeout(() => this.highlightSearchTerm(), 100);
+    }
 },
 
     /**
      * Перейти к результату поиска
      */
-    goToSearchResult: function(index) {
-        if (this.state.searchResults.length === 0) return;
-        if (index < 0) index = 0;
-        if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
+  goToSearchResult: function(index) {
+    if (this.state.searchResults.length === 0) return;
+    if (index < 0) index = 0;
+    if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
 
-        this.state.searchCurrentIndex = index;
-        const result = this.state.searchResults[index];
-        this.state.currentPage = result.page;
-        this.renderReader();
-
-        this.updateSearchNav();
-        setTimeout(() => this.highlightSearchTerm(), 100);
-    },
+    this.state.searchCurrentIndex = index;
+    const result = this.state.searchResults[index];
+    this.state.currentPage = result.page;
+    
+    // Обновляем содержимое страницы без перерендера
+    const contentEl = document.getElementById('reader-content');
+    if (contentEl) {
+        const newContent = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
+        contentEl.innerHTML = newContent;
+    }
+    // Обновляем прогресс-бар
+    const fill = document.querySelector('.mori-reader-progress-fill');
+    if (fill) {
+        const newPercent = (this.state.currentPage / this.state.totalPages) * 100;
+        fill.style.width = newPercent + '%';
+    }
+    // Обновляем позицию ползунка
+    const thumbEl = document.getElementById('progress-thumb');
+    if (thumbEl) {
+        const newLeft = ((this.state.currentPage / this.state.totalPages) * 100) - 8;
+        thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
+    }
+    // Обновляем номер страницы в футере
+    const pageSpan = document.querySelector('.mori-reader-page');
+    if (pageSpan) {
+        pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
+    }
+    
+    this.updateSearchNav();
+    setTimeout(() => this.highlightSearchTerm(), 100);
+},
 
     /**
      * Обновить панель навигации поиска
@@ -630,12 +698,23 @@ updateSearchResults: function() {
     /**
      * Закрыть поиск
      */
-    closeSearch: function() {
-        this.state.searchQuery = '';
-        this.state.searchResults = [];
-        this.state.searchCurrentIndex = -1;
-        this.renderReader();
-    },
+  closeSearch: function() {
+    this.state.searchQuery = '';
+    this.state.searchResults = [];
+    this.state.searchCurrentIndex = -1;
+    // Очищаем панель результатов
+    const searchResultsDiv = document.getElementById('reader-search-results');
+    if (searchResultsDiv) {
+        searchResultsDiv.innerHTML = '';
+    }
+    // Скрываем панель навигации
+    const searchNav = document.getElementById('reader-search-nav');
+    if (searchNav) {
+        searchNav.style.display = 'none';
+    }
+    // Снимаем подсветку
+    this.highlightSearchTerm();
+},
 
     /**
      * Рендер читалки
