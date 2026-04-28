@@ -26,7 +26,8 @@ const MORI_LIBRARY_READER = {
         isDragging: false,
         lastTap: 0,
         brightness: 100,
-        isBrightnessDragging: false
+        isBrightnessDragging: false,
+        searchNavigationVisible: false
     },
 
     // Доступные шрифты
@@ -296,6 +297,68 @@ goToPageByPercent: function(percent) {
         this.renderReader();
     }
     return page;
+},
+
+renderSearchNav: function() {
+    if (!this.state.searchNavigationVisible) return;
+    
+    const total = this.state.searchResults.length;
+    const current = this.state.searchCurrentIndex + 1;
+    
+    // Создаём или обновляем панель
+    let navPanel = document.getElementById('search-results-nav-panel');
+    if (!navPanel) {
+        navPanel = document.createElement('div');
+        navPanel.id = 'search-results-nav-panel';
+        document.querySelector('.mori-reader').appendChild(navPanel);
+    }
+    
+    navPanel.innerHTML = `
+        <div class="search-nav-compact">
+            <button class="search-nav-prev" id="search-nav-prev" ${current <= 1 ? 'disabled' : ''}>◀</button>
+            <span class="search-nav-counter">${current} / ${total}</span>
+            <button class="search-nav-next" id="search-nav-next" ${current >= total ? 'disabled' : ''}>▶</button>
+            <button class="search-nav-close" id="search-nav-close">✕</button>
+        </div>
+    `;
+    
+    // Обработчики
+    const prevBtn = document.getElementById('search-nav-prev');
+    const nextBtn = document.getElementById('search-nav-next');
+    const closeBtn = document.getElementById('search-nav-close');
+    
+    if (prevBtn) {
+        prevBtn.onclick = () => {
+            if (this.state.searchCurrentIndex > 0) {
+                this.goToSearchResult(this.state.searchCurrentIndex - 1);
+            }
+        };
+    }
+    
+    if (nextBtn) {
+        nextBtn.onclick = () => {
+            if (this.state.searchCurrentIndex < this.state.searchResults.length - 1) {
+                this.goToSearchResult(this.state.searchCurrentIndex + 1);
+            }
+        };
+    }
+    
+    if (closeBtn) {
+        closeBtn.onclick = () => {
+            this.hideSearchNav();
+        };
+    }
+},
+
+hideSearchNav: function() {
+    this.state.searchNavigationVisible = false;
+    const panel = document.getElementById('search-results-nav-panel');
+    if (panel) panel.remove();
+},
+
+showSearchNav: function() {
+    this.state.searchNavigationVisible = true;
+    this.renderSearchNav();
 },
 
 /**
@@ -597,6 +660,10 @@ updateSearchResults: function() {
             self.clearHighlight();
         }, 5000);
     }, 200, this);
+
+// Показываем панель навигации по результатам
+this.showSearchNav();
+
 },
 
 clearHighlight: function() {
@@ -738,6 +805,10 @@ clearHighlight: function() {
     if (searchInput) {
         searchInput.value = '';
     }
+
+// Скрываем панель навигации
+this.hideSearchNav();
+
 },
 
     /**
