@@ -546,6 +546,9 @@ updateSearchResults: function() {
     if (index < 0) index = 0;
     if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
 
+    // Сохраняем поисковый запрос перед закрытием
+    var savedQuery = this.state.searchQuery;
+    
     this.state.searchCurrentIndex = index;
     const result = this.state.searchResults[index];
     this.state.currentPage = result.page;
@@ -580,18 +583,20 @@ updateSearchResults: function() {
     // Обновляем панель навигации поиска
     this.updateSearchNav();
     
-    // ПОДСВЕТКА — с задержкой, чтобы DOM успел обновиться
-    setTimeout(() => {
-        this.highlightSearchTerm();
-    }, 150);
-    
-    // Плавное исчезновение подсветки через 5 секунд
-    setTimeout(() => {
-        this.clearHighlight();
-    }, 5000);
-    
     // Закрываем окно поиска
     this.closeSearch();
+    
+    // Восстанавливаем поисковый запрос для подсветки
+    this.state.searchQuery = savedQuery;
+    
+    // Подсветка — с задержкой, чтобы DOM успел обновиться
+    setTimeout(function(self) {
+        self.highlightSearchTerm();
+        // Убираем подсветку через 5 секунд
+        setTimeout(function() {
+            self.clearHighlight();
+        }, 5000);
+    }, 200, this);
 },
 
 clearHighlight: function() {
