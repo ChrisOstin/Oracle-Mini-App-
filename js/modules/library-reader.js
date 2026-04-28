@@ -936,21 +936,50 @@ if (readerDiv) {
         }
 
         if (searchClose) {
-            searchClose.onclick = () => {
-                searchBar.style.display = 'none';
-                this.closeSearch();
-            };
-        }
-
+    searchClose.onclick = () => {
+        // Очищаем поле ввода без вызова поиска
         if (searchInput) {
-            let timeout;
-            searchInput.oninput = (e) => {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    this.searchInBook(e.target.value);
-                }, 500);
-            };
+            searchInput.value = '';
         }
+        // Очищаем состояние поиска
+        this.state.searchQuery = '';
+        this.state.searchResults = [];
+        this.state.searchCurrentIndex = -1;
+        // Очищаем панель результатов
+        const searchResultsDiv = document.getElementById('reader-search-results');
+        if (searchResultsDiv) {
+            searchResultsDiv.innerHTML = '';
+        }
+        // Скрываем панель навигации
+        const searchNav = document.getElementById('reader-search-nav');
+        if (searchNav) {
+            searchNav.style.display = 'none';
+        }
+        // Скрываем панель поиска
+        searchBar.style.display = 'none';
+        // Снимаем подсветку
+        this.clearHighlight();
+    };
+}
+
+if (searchInput) {
+    let timeout;
+    searchInput.oninput = (e) => {
+        const value = e.target.value;
+        // Если поле пустое — просто очищаем результаты
+        if (value.trim() === '') {
+            this.state.searchQuery = '';
+            this.state.searchResults = [];
+            this.state.searchCurrentIndex = -1;
+            this.updateSearchResults();
+            return;
+        }
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            this.searchInBook(value);
+        }, 500);
+    };
+}
 
         if (searchPrev) {
             searchPrev.onclick = () => {
