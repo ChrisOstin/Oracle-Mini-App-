@@ -494,7 +494,6 @@ updateSearchResults: function() {
             </div>
         `;
         
-        // ОБРАБОТЧИК КЛИКА ПО РЕЗУЛЬТАТАМ
         document.querySelectorAll('.search-result-item').forEach(item => {
             item.onclick = () => {
                 const page = parseInt(item.dataset.page);
@@ -526,7 +525,7 @@ updateSearchResults: function() {
             }
             const thumbEl = document.getElementById('progress-thumb');
             if (thumbEl) {
-                const newLeft = ((this.state.currentPage / self.state.totalPages) * 100) - 8;
+                const newLeft = ((this.state.currentPage / this.state.totalPages) * 100) - 8;
                 thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
             }
             const pageSpan = document.querySelector('.mori-reader-page');
@@ -551,43 +550,32 @@ updateSearchResults: function() {
     const result = this.state.searchResults[index];
     this.state.currentPage = result.page;
     
-    // Обновляем содержимое страницы
     const contentEl = document.getElementById('reader-content');
     if (contentEl) {
         const newContent = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
         contentEl.innerHTML = newContent;
     }
     
-    // Обновляем прогресс-бар
     const fill = document.querySelector('.mori-reader-progress-fill');
     if (fill) {
         const newPercent = (this.state.currentPage / this.state.totalPages) * 100;
         fill.style.width = newPercent + '%';
     }
     
-    // Обновляем позицию ползунка
     const thumbEl = document.getElementById('progress-thumb');
     if (thumbEl) {
         const newLeft = ((this.state.currentPage / this.state.totalPages) * 100) - 8;
         thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
     }
     
-    // Обновляем номер страницы в футере
     const pageSpan = document.querySelector('.mori-reader-page');
     if (pageSpan) {
         pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
     }
     
-    // Обновляем панель навигации поиска
     this.updateSearchNav();
-    
-    // Подсветка найденного слова
     setTimeout(() => this.highlightSearchTerm(), 100);
-    
-    // Плавное исчезновение подсветки через 5 секунд
     setTimeout(() => this.clearHighlight(), 5000);
-    
-    // ЗАКРЫВАЕМ ОКНО ПОИСКА, чтобы видеть текст
     this.closeSearch();
 },
 
