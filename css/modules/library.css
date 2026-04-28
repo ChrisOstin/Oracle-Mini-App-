@@ -1764,7 +1764,8 @@ mark.search-highlight {
     content: none !important;
 }
 
-mark.search-highlight.fade-out {
-    background: transparent;
-    color: inherit;
+
+/* Плавное исчезновение подсветки */
+mark.search-highlight {
+    transition: background 0.5s ease, color 0.4s ease;
 }

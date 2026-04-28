@@ -605,15 +605,20 @@ clearHighlight: function() {
     
     // Добавляем класс для плавного исчезновения
     marks.forEach(mark => {
-        mark.classList.add('fade-out');
+        mark.style.transition = 'background 0.5s ease, color 0.5s ease';
+        mark.style.backgroundColor = 'transparent';
+        mark.style.color = 'inherit';
     });
     
-    // Удаляем класс подсветки после анимации
+    // Удаляем элементы после анимации
     setTimeout(() => {
         marks.forEach(mark => {
-            mark.classList.remove('search-highlight', 'fade-out');
+            if (mark.parentNode) {
+                const text = document.createTextNode(mark.textContent);
+                mark.parentNode.replaceChild(text, mark);
+            }
         });
-    }, 300);
+    }, 500);
 },
 
     /**
