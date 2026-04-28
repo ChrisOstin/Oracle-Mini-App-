@@ -1077,12 +1077,15 @@
     font-size: 12px;
 }
 
-/* Подсветка поиска */
+/* Подсветка поиска — без пробелов и отступов */
 mark.search-highlight {
     background: #d4af37;
     color: #000;
-    padding: 0 2px;
-    border-radius: 4px;
+    padding: 0;
+    margin: 0;
+    display: inline;
+    border-radius: 2px;
+    font-weight: 500;
 }
 
 .reader-search-btn {
@@ -1747,4 +1750,16 @@ mark.search-highlight {
 #reader-search-results::-webkit-scrollbar-thumb {
     background: #d4af37;
     border-radius: 4px;
+}
+
+/* Убираем лишние пробелы при подсветке */
+.mori-reader-content mark.search-highlight {
+    display: inline !important;
+    white-space: normal !important;
+}
+
+.search-highlight::before,
+.search-highlight::after {
+    display: none !important;
+    content: none !important;
 }
