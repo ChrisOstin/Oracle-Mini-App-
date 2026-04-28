@@ -603,19 +603,17 @@ clearHighlight: function() {
     const marks = document.querySelectorAll('mark.search-highlight');
     if (marks.length === 0) return;
     
+    // Добавляем класс для плавного исчезновения
     marks.forEach(mark => {
-        mark.style.transition = 'background 0.5s ease, opacity 0.5s ease';
-        mark.style.background = 'transparent';
-        mark.style.opacity = '0';
-        setTimeout(() => {
-            const parent = mark.parentNode;
-            if (parent) {
-                const text = document.createTextNode(mark.textContent);
-                parent.replaceChild(text, mark);
-                parent.normalize();
-            }
-        }, 500);
+        mark.classList.add('fade-out');
     });
+    
+    // Удаляем класс подсветки после анимации
+    setTimeout(() => {
+        marks.forEach(mark => {
+            mark.classList.remove('search-highlight', 'fade-out');
+        });
+    }, 300);
 },
 
     /**
