@@ -1216,6 +1216,7 @@ mark.search-highlight {
     line-height: 1.6;
     scroll-behavior: smooth;
     color: var(--reader-text, #e5e5e5);
+    margin-bottom: 200px;
 }
 
 .mori-reader-content p {
