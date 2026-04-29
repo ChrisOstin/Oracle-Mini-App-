@@ -538,7 +538,8 @@ searchInBook: function(query) {
                 preview: preview,
                 searchTerm: query,
                 searchTermLower: searchTermLower,
-                originalWord: originalWord
+                originalWord: originalWord,
+                matchIndex: results.length  // ← номер вхождения по порядку
             });
             startIndex = position + query.length;
         }
@@ -684,10 +685,7 @@ updateSearchResults: function() {
 
 scrollToSearchResult: function(result) {
     const contentEl = document.getElementById('reader-content');
-    if (!contentEl) {
-        console.log('reader-content не найден');
-        return;
-    }
+    if (!contentEl) return;
     
     // Очищаем старую подсветку
     const oldMarks = document.querySelectorAll('mark.search-highlight');
@@ -697,55 +695,50 @@ scrollToSearchResult: function(result) {
     });
     
     let searchTerm = result.searchTerm;
-    if (!searchTerm) {
-        console.log('searchTerm не найден в result', result);
-        return;
-    }
+    if (!searchTerm) return;
     
-    console.log('Ищем слово:', searchTerm);
-    
-    // Приводим к нижнему регистру для поиска (регистронезависимо)
     const searchTermLower = searchTerm.toLowerCase();
     
-    // Рекурсивно ищем текстовые узлы
-    function findTextNodes(node) {
-        let nodes = [];
+    // Ищем ВСЕ текстовые узлы и находим нужное вхождение по счётчику
+    let textNodes = [];
+    function collectTextNodes(node) {
         if (node.nodeType === Node.TEXT_NODE) {
-            nodes.push(node);
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            textNodes.push(node);
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'MARK') {
             for (let child of node.childNodes) {
-                nodes = nodes.concat(findTextNodes(child));
+                collectTextNodes(child);
             }
         }
-        return nodes;
     }
+    collectTextNodes(contentEl);
     
-    const textNodes = findTextNodes(contentEl);
+    // Проходим по всем текстовым узлам и считаем вхождения
+    let currentMatchIndex = 0;
     let targetNode = null;
     let targetOffset = -1;
-    let foundWord = null;
     
     for (const node of textNodes) {
         const nodeText = node.textContent;
         const nodeTextLower = nodeText.toLowerCase();
-        const index = nodeTextLower.indexOf(searchTermLower);
-        if (index !== -1) {
-            targetNode = node;
-            targetOffset = index;
-            // Берём оригинальное слово из текста (с правильным регистром)
-            foundWord = nodeText.substring(index, index + searchTerm.length);
-            console.log('Найдено в узле:', foundWord);
-            break;
+        let index = 0;
+        
+        while ((index = nodeTextLower.indexOf(searchTermLower, index)) !== -1) {
+            if (currentMatchIndex === result.matchIndex) {
+                targetNode = node;
+                targetOffset = index;
+                break;
+            }
+            currentMatchIndex++;
+            index += searchTerm.length;
         }
+        if (targetNode) break;
     }
     
     if (targetNode && targetOffset !== -1) {
-        // Создаём диапазон
         const range = document.createRange();
         range.setStart(targetNode, targetOffset);
         range.setEnd(targetNode, targetOffset + searchTerm.length);
         
-        // Прокручиваем к элементу
         const rect = range.getBoundingClientRect();
         if (rect) {
             contentEl.scrollTo({
@@ -754,14 +747,11 @@ scrollToSearchResult: function(result) {
             });
         }
         
-        // Подсвечиваем
         try {
             const span = document.createElement('mark');
             span.className = 'search-highlight';
             range.surroundContents(span);
-            console.log('Подсветка добавлена');
             
-            // Убираем подсветку через 5 секунд
             setTimeout(() => {
                 if (span.parentNode) {
                     span.style.transition = 'background 0.5s ease';
@@ -775,11 +765,8 @@ scrollToSearchResult: function(result) {
                 }
             }, 5000);
         } catch (e) {
-            console.error('Ошибка подсветки:', e);
+            console.warn('Ошибка подсветки:', e);
         }
-    } else {
-        console.log('Слово "' + searchTerm + '" не найдено в тексте');
-        console.log('Первые 500 символов текста:', contentEl.textContent.substring(0, 500));
     }
 },
 
