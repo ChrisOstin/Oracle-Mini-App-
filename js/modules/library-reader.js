@@ -515,17 +515,26 @@ searchInBook: function(query) {
     const results = [];
 
     for (let i = 0; i < this.state.content.length; i++) {
-        const page = this.state.content[i];
-        const text = page.replace(/<[^>]*>/g, ' ');
-        if (text.toLowerCase().includes(searchTerm)) {
-            const index = text.toLowerCase().indexOf(searchTerm);
-            let preview = text.substring(Math.max(0, index - 40), Math.min(text.length, index + searchTerm.length + 40));
-            if (index > 40) preview = '...' + preview;
-            if (index + searchTerm.length + 40 < text.length) preview = preview + '...';
+        const pageHtml = this.state.content[i];
+        const text = pageHtml.replace(/<[^>]*>/g, ' ');
+        const lowerText = text.toLowerCase();
+        
+        // Ищем все вхождения на странице
+        let startIndex = 0;
+        let position;
+        while ((position = lowerText.indexOf(searchTerm, startIndex)) !== -1) {
+            // Находим контекст (50 символов до и после)
+            let preview = text.substring(Math.max(0, position - 50), Math.min(text.length, position + searchTerm.length + 50));
+            if (position > 50) preview = '...' + preview;
+            if (position + searchTerm.length + 50 < text.length) preview = preview + '...';
+            
             results.push({
                 page: i + 1,
-                preview: preview
+                position: position,  // ← ТОЧНАЯ ПОЗИЦИЯ СЛОВА
+                preview: preview,
+                searchTerm: searchTerm
             });
+            startIndex = position + searchTerm.length;
         }
     }
 
@@ -649,26 +658,89 @@ updateSearchResults: function() {
         pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
     }
     
-    // Обновляем панель навигации поиска (для счётчика)
+    // Прокручиваем к нужному слову на странице
+    setTimeout(() => {
+        this.scrollToSearchResult(result);
+    }, 100);
+    
+    // Обновляем панель навигации поиска
     this.updateSearchNav();
     
-    // Подсветка
-    setTimeout(() => {
-        this.highlightSearchTerm();
-    }, 150);
+    // Показываем нижнюю панель
+    this.showSearchNav();
     
-    setTimeout(() => {
-        this.clearHighlight();
-    }, 5000);
-    
-    // ЗАКРЫВАЕМ ВЕРХНЮЮ ПАНЕЛЬ ПОИСКА
+    // Закрываем верхнюю панель поиска
     const searchBar = document.getElementById('reader-search-bar');
     if (searchBar) {
         searchBar.style.display = 'none';
     }
+},
+
+scrollToSearchResult: function(result) {
+    const contentEl = document.getElementById('reader-content');
+    if (!contentEl) return;
     
-    // ПОКАЗЫВАЕМ НИЖНЮЮ ПАНЕЛЬ НАВИГАЦИИ
-    this.showSearchNav();
+    // Ищем текст на странице
+    const textNodes = [];
+    const walker = document.createTreeWalker(
+        contentEl,
+        NodeFilter.SHOW_TEXT,
+        {
+            acceptNode: function(node) {
+                if (node.parentElement?.tagName === 'MARK') {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }
+    );
+    
+    while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+    }
+    
+    // Ищем нужную позицию
+    let accumulatedLength = 0;
+    let targetNode = null;
+    let targetOffset = 0;
+    
+    for (const node of textNodes) {
+        const nodeText = node.textContent;
+        const nodeLength = nodeText.length;
+        
+        if (accumulatedLength + nodeLength > result.position) {
+            targetNode = node;
+            targetOffset = result.position - accumulatedLength;
+            break;
+        }
+        accumulatedLength += nodeLength;
+    }
+    
+    if (targetNode) {
+        // Создаём диапазон и выделяем
+        const range = document.createRange();
+        range.setStart(targetNode, targetOffset);
+        range.setEnd(targetNode, targetOffset + result.searchTerm.length);
+        
+        // Прокручиваем к элементу
+        const rect = range.getBoundingClientRect();
+        if (rect) {
+            contentEl.scrollTo({
+                top: rect.top + contentEl.scrollTop - 100,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Подсвечиваем
+        const span = document.createElement('span');
+        span.className = 'search-highlight';
+        range.surroundContents(span);
+        
+        // Убираем подсветку через 5 секунд
+        setTimeout(() => {
+            span.outerHTML = span.innerHTML;
+        }, 5000);
+    }
 },
 
 clearHighlight: function() {
