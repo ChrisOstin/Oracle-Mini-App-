@@ -66,37 +66,48 @@ const MORI_LIBRARY_READER = {
     /**
      * Открыть книгу
      */
-    open: async function(book) {
-        this.state.currentBook = book;
-        this.state.totalPages = book.pages || 1;
+open: async function(book, pageNum, searchQuery) {
+    this.state.currentBook = book;
+    this.state.totalPages = book.pages || 1;
 
-
-        // Сначала проверяем, есть ли встроенный контент в самой книге
-if (book.content && book.content.length) {
-    this.state.content = book.content;
-    this.state.totalPages = book.content.length;
-} else {
-    const savedContent = MORI_LIBRARY_BOOKS.loadContent(book.id);
-    if (savedContent && savedContent.pages) {
-        this.state.content = savedContent.pages;
-        this.state.totalPages = savedContent.pages.length;
+    // Сначала проверяем, есть ли встроенный контент в самой книге
+    if (book.content && book.content.length) {
+        this.state.content = book.content;
+        this.state.totalPages = book.content.length;
     } else {
-        this.state.content = ['<p>Контент книги не загружен</p>'];
+        const savedContent = MORI_LIBRARY_BOOKS.loadContent(book.id);
+        if (savedContent && savedContent.pages) {
+            this.state.content = savedContent.pages;
+            this.state.totalPages = savedContent.pages.length;
+        } else {
+            this.state.content = ['<p>Контент книги не загружен</p>'];
+        }
     }
-}
 
-
-        const progress = MORI_LIBRARY_BOOKS.getProgress(book.id);
+    const progress = MORI_LIBRARY_BOOKS.getProgress(book.id);
+    
+    // Если передан номер страницы из поиска — используем его
+    if (pageNum && pageNum > 0) {
+        this.state.currentPage = pageNum;
+    } else {
         this.state.currentPage = progress.page || 1;
+    }
+    
+    // Если передан поисковый запрос — сохраняем его для подсветки
+    if (searchQuery) {
+        this.state.searchQuery = searchQuery;
+        // Ищем результаты в этой книге
+        this.searchInBook(searchQuery);
+    }
 
-        // Загружаем сохранённую яркость
-        this.loadBrightness();
-        // Инициализируем свайп для яркости
-        this.initBrightnessSwipe();
+    // Загружаем сохранённую яркость
+    this.loadBrightness();
+    // Инициализируем свайп для яркости
+    this.initBrightnessSwipe();
 
-        this.state.isOpen = true;
-        this.renderReader();
-    },
+    this.state.isOpen = true;
+    this.renderReader();
+},
 
     /**
      * Закрыть читалку
@@ -609,12 +620,12 @@ updateSearchResults: function() {
     if (index < 0) index = 0;
     if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
 
-    // Сохраняем поисковый запрос перед закрытием
-    var savedQuery = this.state.searchQuery;
-    
     this.state.searchCurrentIndex = index;
     const result = this.state.searchResults[index];
     this.state.currentPage = result.page;
+    
+    // Сохраняем поисковый запрос для подсветки
+    const savedQuery = this.state.searchQuery;
     
     // Обновляем содержимое страницы
     const contentEl = document.getElementById('reader-content');
@@ -646,24 +657,18 @@ updateSearchResults: function() {
     // Обновляем панель навигации поиска
     this.updateSearchNav();
     
-    // Закрываем окно поиска
-    this.closeSearch();
+    // Подсветка — с задержкой
+    setTimeout(() => {
+        this.highlightSearchTerm();
+    }, 150);
     
-    // Восстанавливаем поисковый запрос для подсветки
-    this.state.searchQuery = savedQuery;
+    // Плавное исчезновение подсветки через 5 секунд
+    setTimeout(() => {
+        this.clearHighlight();
+    }, 5000);
     
-    // Подсветка — с задержкой, чтобы DOM успел обновиться
-    setTimeout(function(self) {
-        self.highlightSearchTerm();
-        // Убираем подсветку через 5 секунд
-        setTimeout(function() {
-            self.clearHighlight();
-        }, 5000);
-    }, 200, this);
-
-// Показываем панель навигации по результатам
-this.showSearchNav();
-
+    // Показываем панель навигации по результатам
+    this.showSearchNav();
 },
 
 clearHighlight: function() {
@@ -785,7 +790,8 @@ clearHighlight: function() {
      * Закрыть поиск
      */
   closeSearch: function() {
-    this.state.searchQuery = '';
+    // Не очищаем searchQuery, чтобы подсветка работала
+    // this.state.searchQuery = '';
     this.state.searchResults = [];
     this.state.searchCurrentIndex = -1;
     
@@ -805,10 +811,9 @@ clearHighlight: function() {
     if (searchInput) {
         searchInput.value = '';
     }
-
-// Скрываем панель навигации
-this.hideSearchNav();
-
+    
+    // Скрываем панель навигации
+    this.hideSearchNav();
 },
 
     /**
