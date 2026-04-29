@@ -316,7 +316,6 @@ renderSearchNav: function() {
     const total = this.state.searchResults.length;
     const current = this.state.searchCurrentIndex + 1;
     
-    // Создаём или обновляем панель
     let navPanel = document.getElementById('search-results-nav-panel');
     if (!navPanel) {
         navPanel = document.createElement('div');
@@ -333,7 +332,6 @@ renderSearchNav: function() {
         </div>
     `;
     
-    // Обработчики
     const prevBtn = document.getElementById('search-nav-prev');
     const nextBtn = document.getElementById('search-nav-next');
     const closeBtn = document.getElementById('search-nav-close');
