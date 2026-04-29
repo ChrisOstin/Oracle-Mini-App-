@@ -511,32 +511,36 @@ searchInBook: function(query) {
         return;
     }
 
-    const searchTerm = query.toLowerCase();
+    const searchTermLower = query.toLowerCase();
     const results = [];
 
     for (let i = 0; i < this.state.content.length; i++) {
         const pageHtml = this.state.content[i];
-        // Удаляем HTML-теги для поиска, но сохраняем оригинал для позиции
+        // Удаляем HTML-теги для поиска, но сохраняем оригинал
         const text = pageHtml.replace(/<[^>]*>/g, ' ');
         const lowerText = text.toLowerCase();
         
         // Ищем все вхождения на странице
         let startIndex = 0;
         let position;
-        while ((position = lowerText.indexOf(searchTerm, startIndex)) !== -1) {
+        while ((position = lowerText.indexOf(searchTermLower, startIndex)) !== -1) {
+            // Получаем оригинальное слово с правильным регистром
+            const originalWord = text.substring(position, position + query.length);
+            
             // Находим контекст (50 символов до и после)
-            let preview = text.substring(Math.max(0, position - 50), Math.min(text.length, position + searchTerm.length + 50));
+            let preview = text.substring(Math.max(0, position - 50), Math.min(text.length, position + query.length + 50));
             if (position > 50) preview = '...' + preview;
-            if (position + searchTerm.length + 50 < text.length) preview = preview + '...';
+            if (position + query.length + 50 < text.length) preview = preview + '...';
             
             results.push({
                 page: i + 1,
-                position: position,  // ← ТОЧНАЯ ПОЗИЦИЯ ПЕРВОЙ БУКВЫ
+                position: position,
                 preview: preview,
-                searchTerm: searchTerm,
-                fullSearchTerm: query
+                searchTerm: query,
+                searchTermLower: searchTermLower,
+                originalWord: originalWord
             });
-            startIndex = position + searchTerm.length;
+            startIndex = position + query.length;
         }
     }
 
@@ -689,18 +693,13 @@ scrollToSearchResult: function(result) {
         mark.parentNode.replaceChild(text, mark);
     });
     
-    // Получаем чистый текст страницы (без HTML)
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = this.state.content[result.page - 1];
-    const plainText = tempDiv.textContent || tempDiv.innerText;
-    
-    // Находим позицию слова
-    const searchTerm = result.searchTerm || this.state.searchQuery.toLowerCase();
+    // Получаем позицию и длину слова
     const position = result.position;
+    const wordLength = result.searchTerm.length;
     
     if (position === undefined || position === -1) return;
     
-    // Создаём диапазон в DOM
+    // Ищем текстовый узел, содержащий нужную позицию
     const textNodes = [];
     const walker = document.createTreeWalker(
         contentEl,
@@ -712,7 +711,6 @@ scrollToSearchResult: function(result) {
         textNodes.push(walker.currentNode);
     }
     
-    // Ищем узел, содержащий нужную позицию
     let accumulatedLength = 0;
     let targetNode = null;
     let targetOffset = 0;
@@ -729,11 +727,11 @@ scrollToSearchResult: function(result) {
         accumulatedLength += nodeLength;
     }
     
-    if (targetNode && targetOffset >= 0) {
+    if (targetNode && targetOffset >= 0 && targetOffset + wordLength <= targetNode.textContent.length) {
         // Создаём диапазон
         const range = document.createRange();
         range.setStart(targetNode, targetOffset);
-        range.setEnd(targetNode, targetOffset + searchTerm.length);
+        range.setEnd(targetNode, targetOffset + wordLength);
         
         // Прокручиваем к элементу
         const rect = range.getBoundingClientRect();
@@ -750,11 +748,17 @@ scrollToSearchResult: function(result) {
             span.className = 'search-highlight';
             range.surroundContents(span);
             
-            // Убираем подсветку через 5 секунд
+            // Плавное исчезновение подсветки через 5 секунд
             setTimeout(() => {
                 if (span.parentNode) {
-                    const text = document.createTextNode(span.textContent);
-                    span.parentNode.replaceChild(text, span);
+                    span.style.transition = 'background 0.5s ease';
+                    span.style.background = 'transparent';
+                    setTimeout(() => {
+                        if (span.parentNode) {
+                            const text = document.createTextNode(span.textContent);
+                            span.parentNode.replaceChild(text, span);
+                        }
+                    }, 500);
                 }
             }, 5000);
         } catch (e) {
