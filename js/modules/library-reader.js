@@ -624,9 +624,6 @@ updateSearchResults: function() {
     const result = this.state.searchResults[index];
     this.state.currentPage = result.page;
     
-    // Сохраняем поисковый запрос для подсветки
-    const savedQuery = this.state.searchQuery;
-    
     // Обновляем содержимое страницы
     const contentEl = document.getElementById('reader-content');
     if (contentEl) {
@@ -654,20 +651,25 @@ updateSearchResults: function() {
         pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
     }
     
-    // Обновляем панель навигации поиска
+    // Обновляем панель навигации поиска (для счётчика)
     this.updateSearchNav();
     
-    // Подсветка — с задержкой
+    // Подсветка
     setTimeout(() => {
         this.highlightSearchTerm();
     }, 150);
     
-    // Плавное исчезновение подсветки через 5 секунд
     setTimeout(() => {
         this.clearHighlight();
     }, 5000);
     
-    // Показываем панель навигации по результатам
+    // ЗАКРЫВАЕМ ВЕРХНЮЮ ПАНЕЛЬ ПОИСКА
+    const searchBar = document.getElementById('reader-search-bar');
+    if (searchBar) {
+        searchBar.style.display = 'none';
+    }
+    
+    // ПОКАЗЫВАЕМ НИЖНЮЮ ПАНЕЛЬ НАВИГАЦИИ
     this.showSearchNav();
 },
 
