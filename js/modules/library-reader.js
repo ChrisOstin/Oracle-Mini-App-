@@ -516,6 +516,7 @@ searchInBook: function(query) {
 
     for (let i = 0; i < this.state.content.length; i++) {
         const pageHtml = this.state.content[i];
+        // Удаляем HTML-теги для поиска, но сохраняем оригинал для позиции
         const text = pageHtml.replace(/<[^>]*>/g, ' ');
         const lowerText = text.toLowerCase();
         
@@ -530,9 +531,10 @@ searchInBook: function(query) {
             
             results.push({
                 page: i + 1,
-                position: position,  // ← ТОЧНАЯ ПОЗИЦИЯ СЛОВА
+                position: position,  // ← ТОЧНАЯ ПОЗИЦИЯ ПЕРВОЙ БУКВЫ
                 preview: preview,
-                searchTerm: searchTerm
+                searchTerm: searchTerm,
+                fullSearchTerm: query
             });
             startIndex = position + searchTerm.length;
         }
@@ -687,48 +689,51 @@ scrollToSearchResult: function(result) {
         mark.parentNode.replaceChild(text, mark);
     });
     
-    // Ищем текст на странице
+    // Получаем чистый текст страницы (без HTML)
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = this.state.content[result.page - 1];
+    const plainText = tempDiv.textContent || tempDiv.innerText;
+    
+    // Находим позицию слова
+    const searchTerm = result.searchTerm || this.state.searchQuery.toLowerCase();
+    const position = result.position;
+    
+    if (position === undefined || position === -1) return;
+    
+    // Создаём диапазон в DOM
     const textNodes = [];
     const walker = document.createTreeWalker(
         contentEl,
         NodeFilter.SHOW_TEXT,
-        {
-            acceptNode: function(node) {
-                if (node.parentElement?.tagName === 'MARK') {
-                    return NodeFilter.FILTER_REJECT;
-                }
-                return NodeFilter.FILTER_ACCEPT;
-            }
-        }
+        null
     );
     
     while (walker.nextNode()) {
         textNodes.push(walker.currentNode);
     }
     
-    // Ищем нужную позицию
+    // Ищем узел, содержащий нужную позицию
     let accumulatedLength = 0;
     let targetNode = null;
     let targetOffset = 0;
-    const searchTerm = result.searchTerm || this.state.searchQuery;
     
     for (const node of textNodes) {
         const nodeText = node.textContent;
         const nodeLength = nodeText.length;
         
-        if (accumulatedLength + nodeLength > result.position) {
+        if (accumulatedLength + nodeLength > position) {
             targetNode = node;
-            targetOffset = result.position - accumulatedLength;
+            targetOffset = position - accumulatedLength;
             break;
         }
         accumulatedLength += nodeLength;
     }
     
-    if (targetNode) {
-        // Создаём диапазон и выделяем
+    if (targetNode && targetOffset >= 0) {
+        // Создаём диапазон
         const range = document.createRange();
         range.setStart(targetNode, targetOffset);
-        range.setEnd(targetNode, targetOffset + (searchTerm ? searchTerm.length : 1));
+        range.setEnd(targetNode, targetOffset + searchTerm.length);
         
         // Прокручиваем к элементу
         const rect = range.getBoundingClientRect();
@@ -740,17 +745,21 @@ scrollToSearchResult: function(result) {
         }
         
         // Подсвечиваем
-        const span = document.createElement('mark');
-        span.className = 'search-highlight';
-        range.surroundContents(span);
-        
-        // Убираем подсветку через 5 секунд
-        setTimeout(() => {
-            if (span.parentNode) {
-                const text = document.createTextNode(span.textContent);
-                span.parentNode.replaceChild(text, span);
-            }
-        }, 5000);
+        try {
+            const span = document.createElement('mark');
+            span.className = 'search-highlight';
+            range.surroundContents(span);
+            
+            // Убираем подсветку через 5 секунд
+            setTimeout(() => {
+                if (span.parentNode) {
+                    const text = document.createTextNode(span.textContent);
+                    span.parentNode.replaceChild(text, span);
+                }
+            }, 5000);
+        } catch (e) {
+            console.warn('Ошибка подсветки:', e);
+        }
     }
 },
 
