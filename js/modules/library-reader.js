@@ -680,6 +680,13 @@ scrollToSearchResult: function(result) {
     const contentEl = document.getElementById('reader-content');
     if (!contentEl) return;
     
+    // Очищаем старую подсветку
+    const oldMarks = document.querySelectorAll('mark.search-highlight');
+    oldMarks.forEach(mark => {
+        const text = document.createTextNode(mark.textContent);
+        mark.parentNode.replaceChild(text, mark);
+    });
+    
     // Ищем текст на странице
     const textNodes = [];
     const walker = document.createTreeWalker(
@@ -703,6 +710,7 @@ scrollToSearchResult: function(result) {
     let accumulatedLength = 0;
     let targetNode = null;
     let targetOffset = 0;
+    const searchTerm = result.searchTerm || this.state.searchQuery;
     
     for (const node of textNodes) {
         const nodeText = node.textContent;
@@ -720,7 +728,7 @@ scrollToSearchResult: function(result) {
         // Создаём диапазон и выделяем
         const range = document.createRange();
         range.setStart(targetNode, targetOffset);
-        range.setEnd(targetNode, targetOffset + result.searchTerm.length);
+        range.setEnd(targetNode, targetOffset + (searchTerm ? searchTerm.length : 1));
         
         // Прокручиваем к элементу
         const rect = range.getBoundingClientRect();
@@ -732,13 +740,16 @@ scrollToSearchResult: function(result) {
         }
         
         // Подсвечиваем
-        const span = document.createElement('span');
+        const span = document.createElement('mark');
         span.className = 'search-highlight';
         range.surroundContents(span);
         
         // Убираем подсветку через 5 секунд
         setTimeout(() => {
-            span.outerHTML = span.innerHTML;
+            if (span.parentNode) {
+                const text = document.createTextNode(span.textContent);
+                span.parentNode.replaceChild(text, span);
+            }
         }, 5000);
     }
 },
