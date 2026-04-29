@@ -684,7 +684,10 @@ updateSearchResults: function() {
 
 scrollToSearchResult: function(result) {
     const contentEl = document.getElementById('reader-content');
-    if (!contentEl) return;
+    if (!contentEl) {
+        console.log('reader-content не найден');
+        return;
+    }
     
     // Очищаем старую подсветку
     const oldMarks = document.querySelectorAll('mark.search-highlight');
@@ -694,23 +697,29 @@ scrollToSearchResult: function(result) {
     });
     
     const searchTerm = result.searchTerm;
-    if (!searchTerm) return;
-    
-    // Ищем текст в DOM
-    const walker = document.createTreeWalker(
-        contentEl,
-        NodeFilter.SHOW_TEXT,
-        null
-    );
-    
-    let textNodes = [];
-    while (walker.nextNode()) {
-        textNodes.push(walker.currentNode);
+    if (!searchTerm) {
+        console.log('searchTerm не найден в result', result);
+        return;
     }
     
-    // Ищем узел, содержащий искомое слово
+    console.log('Ищем слово:', searchTerm);
+    
+    // Рекурсивно ищем текстовые узлы
+    function findTextNodes(node) {
+        let nodes = [];
+        if (node.nodeType === Node.TEXT_NODE) {
+            nodes.push(node);
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            for (let child of node.childNodes) {
+                nodes = nodes.concat(findTextNodes(child));
+            }
+        }
+        return nodes;
+    }
+    
+    const textNodes = findTextNodes(contentEl);
     let targetNode = null;
-    let targetOffset = 0;
+    let targetOffset = -1;
     
     for (const node of textNodes) {
         const nodeText = node.textContent;
@@ -718,11 +727,12 @@ scrollToSearchResult: function(result) {
         if (index !== -1) {
             targetNode = node;
             targetOffset = index;
+            console.log('Найдено в узле:', nodeText.substring(index, index + searchTerm.length));
             break;
         }
     }
     
-    if (targetNode) {
+    if (targetNode && targetOffset !== -1) {
         // Создаём диапазон
         const range = document.createRange();
         range.setStart(targetNode, targetOffset);
@@ -742,8 +752,9 @@ scrollToSearchResult: function(result) {
             const span = document.createElement('mark');
             span.className = 'search-highlight';
             range.surroundContents(span);
+            console.log('Подсветка добавлена');
             
-            // Плавное исчезновение подсветки через 5 секунд
+            // Убираем подсветку через 5 секунд
             setTimeout(() => {
                 if (span.parentNode) {
                     span.style.transition = 'background 0.5s ease';
@@ -757,8 +768,10 @@ scrollToSearchResult: function(result) {
                 }
             }, 5000);
         } catch (e) {
-            console.warn('Ошибка подсветки:', e);
+            console.error('Ошибка подсветки:', e);
         }
+    } else {
+        console.log('Слово "' + searchTerm + '" не найдено в тексте');
     }
 },
 
