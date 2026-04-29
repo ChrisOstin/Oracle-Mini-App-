@@ -693,45 +693,40 @@ scrollToSearchResult: function(result) {
         mark.parentNode.replaceChild(text, mark);
     });
     
-    // Получаем позицию и длину слова
-    const position = result.position;
-    const wordLength = result.searchTerm.length;
+    const searchTerm = result.searchTerm;
+    if (!searchTerm) return;
     
-    if (position === undefined || position === -1) return;
-    
-    // Ищем текстовый узел, содержащий нужную позицию
-    const textNodes = [];
+    // Ищем текст в DOM
     const walker = document.createTreeWalker(
         contentEl,
         NodeFilter.SHOW_TEXT,
         null
     );
     
+    let textNodes = [];
     while (walker.nextNode()) {
         textNodes.push(walker.currentNode);
     }
     
-    let accumulatedLength = 0;
+    // Ищем узел, содержащий искомое слово
     let targetNode = null;
     let targetOffset = 0;
     
     for (const node of textNodes) {
         const nodeText = node.textContent;
-        const nodeLength = nodeText.length;
-        
-        if (accumulatedLength + nodeLength > position) {
+        const index = nodeText.indexOf(searchTerm);
+        if (index !== -1) {
             targetNode = node;
-            targetOffset = position - accumulatedLength;
+            targetOffset = index;
             break;
         }
-        accumulatedLength += nodeLength;
     }
     
-    if (targetNode && targetOffset >= 0 && targetOffset + wordLength <= targetNode.textContent.length) {
+    if (targetNode) {
         // Создаём диапазон
         const range = document.createRange();
         range.setStart(targetNode, targetOffset);
-        range.setEnd(targetNode, targetOffset + wordLength);
+        range.setEnd(targetNode, targetOffset + searchTerm.length);
         
         // Прокручиваем к элементу
         const rect = range.getBoundingClientRect();
