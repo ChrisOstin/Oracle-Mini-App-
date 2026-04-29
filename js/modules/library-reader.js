@@ -696,13 +696,16 @@ scrollToSearchResult: function(result) {
         mark.parentNode.replaceChild(text, mark);
     });
     
-    const searchTerm = result.searchTerm;
+    let searchTerm = result.searchTerm;
     if (!searchTerm) {
         console.log('searchTerm не найден в result', result);
         return;
     }
     
     console.log('Ищем слово:', searchTerm);
+    
+    // Приводим к нижнему регистру для поиска (регистронезависимо)
+    const searchTermLower = searchTerm.toLowerCase();
     
     // Рекурсивно ищем текстовые узлы
     function findTextNodes(node) {
@@ -720,14 +723,18 @@ scrollToSearchResult: function(result) {
     const textNodes = findTextNodes(contentEl);
     let targetNode = null;
     let targetOffset = -1;
+    let foundWord = null;
     
     for (const node of textNodes) {
         const nodeText = node.textContent;
-        const index = nodeText.indexOf(searchTerm);
+        const nodeTextLower = nodeText.toLowerCase();
+        const index = nodeTextLower.indexOf(searchTermLower);
         if (index !== -1) {
             targetNode = node;
             targetOffset = index;
-            console.log('Найдено в узле:', nodeText.substring(index, index + searchTerm.length));
+            // Берём оригинальное слово из текста (с правильным регистром)
+            foundWord = nodeText.substring(index, index + searchTerm.length);
+            console.log('Найдено в узле:', foundWord);
             break;
         }
     }
@@ -772,6 +779,7 @@ scrollToSearchResult: function(result) {
         }
     } else {
         console.log('Слово "' + searchTerm + '" не найдено в тексте');
+        console.log('Первые 500 символов текста:', contentEl.textContent.substring(0, 500));
     }
 },
 
