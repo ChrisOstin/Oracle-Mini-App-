@@ -519,17 +519,12 @@ searchInBook: function(query) {
         const text = pageHtml.replace(/<[^>]*>/g, ' ');
         const lowerText = text.toLowerCase();
 
-        let localMatchIndex = 0;
         let startIndex = 0;
         let position;
 
         while ((position = lowerText.indexOf(searchTermLower, startIndex)) !== -1) {
             const originalWord = text.substring(position, position + query.length);
-
-            let preview = text.substring(
-                Math.max(0, position - 50),
-                Math.min(text.length, position + query.length + 50)
-            );
+            let preview = text.substring(Math.max(0, position - 50), Math.min(text.length, position + query.length + 50));
             if (position > 50) preview = '...' + preview;
             if (position + query.length + 50 < text.length) preview = preview + '...';
 
@@ -540,11 +535,8 @@ searchInBook: function(query) {
                 searchTerm: query,
                 searchTermLower: searchTermLower,
                 originalWord: originalWord,
-                matchIndex: results.length,
-                matchIndexOnPage: localMatchIndex
+                globalIndex: results.length
             });
-
-            localMatchIndex++;
             startIndex = position + query.length;
         }
     }
@@ -552,7 +544,6 @@ searchInBook: function(query) {
     this.state.searchQuery = query;
     this.state.searchResults = results;
     this.state.searchCurrentIndex = results.length > 0 ? 0 : -1;
-
     this.updateSearchResults();
 },
 
@@ -641,7 +632,7 @@ updateSearchResults: function() {
     this.state.searchCurrentIndex = index;
     let result = this.state.searchResults[index];
 
-    // Убиваем старую подсветку
+    // Убираем старые маркеры
     const allMarks = document.querySelectorAll('mark.search-highlight');
     allMarks.forEach(mark => {
         const parent = mark.parentNode;
@@ -651,14 +642,14 @@ updateSearchResults: function() {
         if (parent.normalize) parent.normalize();
     });
 
-    // Если страница поменялась — обновляем контент
-    if (result.page !== this.state.currentPage) {
+    const needPageChange = result.page !== this.state.currentPage;
+
+    if (needPageChange) {
         this.state.currentPage = result.page;
 
         const contentEl = document.getElementById('reader-content');
         if (contentEl) {
-            const newContent = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
-            contentEl.innerHTML = newContent;
+            contentEl.innerHTML = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
         }
 
         const fill = document.querySelector('.mori-reader-progress-fill');
@@ -669,22 +660,24 @@ updateSearchResults: function() {
 
         const pageSpan = document.querySelector('.mori-reader-page');
         if (pageSpan) pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
-
-        // ⭐⭐⭐ КЛЮЧЕВОЙ МОМЕНТ ⭐⭐⭐
-        // Пересчитываем matchIndex для текущей страницы
-        const searchTermLower = result.searchTerm.toLowerCase();
-        const pageText = this.state.content[result.page - 1].replace(/<[^>]*>/g, ' ').toLowerCase();
-        let matchCountBefore = 0;
-        let idx = 0;
-        while ((idx = pageText.indexOf(searchTermLower, idx)) !== -1) {
-            if (matchCountBefore === result.matchIndexOnPage) break;
-            matchCountBefore++;
-            idx += result.searchTerm.length;
-        }
-        result.matchIndexOnPage = matchCountBefore;
     }
 
-    // Теперь подсветка пойдёт туда, куда надо
+    // --- ПЕРЕСЧЁТ локального индекса ДЛЯ ЭТОЙ СТРАНИЦЫ ---
+    const pageText = this.state.content[result.page - 1].replace(/<[^>]*>/g, ' ').toLowerCase();
+    const searchTermLower = result.searchTerm.toLowerCase();
+    const targetPosition = result.position;
+
+    let localIndexOnPage = 0;
+    let pos = 0;
+    while ((pos = pageText.indexOf(searchTermLower, pos)) !== -1) {
+        if (pos === targetPosition) {
+            result.localIndex = localIndexOnPage;
+            break;
+        }
+        localIndexOnPage++;
+        pos += result.searchTerm.length;
+    }
+
     setTimeout(() => {
         this.scrollToSearchResult(result);
     }, 80);
@@ -703,36 +696,22 @@ scrollToSearchResult: function(result) {
     const searchTerm = result.searchTerm;
     if (!searchTerm) return;
 
-    const searchTermLower = searchTerm.toLowerCase();
+    let nodes = [];
+    const walker = document.createTreeWalker(contentEl, NodeFilter.SHOW_TEXT, null);
+    while (walker.nextNode()) nodes.push(walker.currentNode);
 
-    let textNodes = [];
-    function collectTextNodes(node) {
-        if (node.nodeType === Node.TEXT_NODE) {
-            textNodes.push(node);
-        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'MARK') {
-            for (let child of node.childNodes) collectTextNodes(child);
-        }
-    }
-    collectTextNodes(contentEl);
-
-    let currentMatchIndex = 0;
+    let accumulated = 0;
     let targetNode = null;
     let targetOffset = -1;
 
-    for (const node of textNodes) {
-        const nodeText = node.textContent;
-        const nodeTextLower = nodeText.toLowerCase();
-        let idx = 0;
-        while ((idx = nodeTextLower.indexOf(searchTermLower, idx)) !== -1) {
-            if (currentMatchIndex === result.matchIndex) {
-                targetNode = node;
-                targetOffset = idx;
-                break;
-            }
-            currentMatchIndex++;
-            idx += searchTerm.length;
+    for (const node of nodes) {
+        const nodeLen = node.textContent.length;
+        if (accumulated + nodeLen > result.position) {
+            targetNode = node;
+            targetOffset = result.position - accumulated;
+            break;
         }
-        if (targetNode) break;
+        accumulated += nodeLen;
     }
 
     if (targetNode && targetOffset !== -1) {
@@ -742,17 +721,13 @@ scrollToSearchResult: function(result) {
 
         const rect = range.getBoundingClientRect();
         if (rect) {
-            contentEl.scrollTo({
-                top: rect.top + contentEl.scrollTop - 100,
-                behavior: 'smooth'
-            });
+            contentEl.scrollTo({ top: rect.top + contentEl.scrollTop - 100, behavior: 'smooth' });
         }
 
         try {
             const mark = document.createElement('mark');
             mark.className = 'search-highlight';
             range.surroundContents(mark);
-
             setTimeout(() => {
                 if (mark.parentNode) {
                     mark.style.transition = 'background 0.3s ease';
@@ -761,14 +736,11 @@ scrollToSearchResult: function(result) {
                         if (mark.parentNode) {
                             const txt = document.createTextNode(mark.textContent);
                             mark.parentNode.replaceChild(txt, mark);
-                            if (contentEl) contentEl.normalize();
                         }
                     }, 300);
                 }
             }, 5000);
-        } catch (err) {
-            console.warn('Ошибка подсветки конкретного вхождения', err);
-        }
+        } catch (err) {}
     }
 },
 
