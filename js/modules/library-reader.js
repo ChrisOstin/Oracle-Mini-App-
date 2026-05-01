@@ -516,22 +516,23 @@ searchInBook: function(query) {
 
     for (let i = 0; i < this.state.content.length; i++) {
         const pageHtml = this.state.content[i];
-        // Удаляем HTML-теги для поиска, но сохраняем оригинал
         const text = pageHtml.replace(/<[^>]*>/g, ' ');
         const lowerText = text.toLowerCase();
-        
-        // Ищем все вхождения на странице
+
+        let localMatchIndex = 0;
         let startIndex = 0;
         let position;
+
         while ((position = lowerText.indexOf(searchTermLower, startIndex)) !== -1) {
-            // Получаем оригинальное слово с правильным регистром
             const originalWord = text.substring(position, position + query.length);
-            
-            // Находим контекст (50 символов до и после)
-            let preview = text.substring(Math.max(0, position - 50), Math.min(text.length, position + query.length + 50));
+
+            let preview = text.substring(
+                Math.max(0, position - 50),
+                Math.min(text.length, position + query.length + 50)
+            );
             if (position > 50) preview = '...' + preview;
             if (position + query.length + 50 < text.length) preview = preview + '...';
-            
+
             results.push({
                 page: i + 1,
                 position: position,
@@ -539,8 +540,11 @@ searchInBook: function(query) {
                 searchTerm: query,
                 searchTermLower: searchTermLower,
                 originalWord: originalWord,
-                matchIndex: results.length  // ← номер вхождения по порядку
+                matchIndex: results.length,
+                matchIndexOnPage: localMatchIndex
             });
+
+            localMatchIndex++;
             startIndex = position + query.length;
         }
     }
@@ -635,9 +639,9 @@ updateSearchResults: function() {
     if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
 
     this.state.searchCurrentIndex = index;
-    const result = this.state.searchResults[index];
+    let result = this.state.searchResults[index];
 
-    // ⚡ ПЕРВОЕ ДЕЛО: убиваем всю старую подсветку во всём DOM
+    // Убиваем старую подсветку
     const allMarks = document.querySelectorAll('mark.search-highlight');
     allMarks.forEach(mark => {
         const parent = mark.parentNode;
@@ -647,7 +651,7 @@ updateSearchResults: function() {
         if (parent.normalize) parent.normalize();
     });
 
-    // Если страница изменилась — переключаем контент
+    // Если страница поменялась — обновляем контент
     if (result.page !== this.state.currentPage) {
         this.state.currentPage = result.page;
 
@@ -658,24 +662,29 @@ updateSearchResults: function() {
         }
 
         const fill = document.querySelector('.mori-reader-progress-fill');
-        if (fill) {
-            const newPercent = (this.state.currentPage / this.state.totalPages) * 100;
-            fill.style.width = newPercent + '%';
-        }
+        if (fill) fill.style.width = ((this.state.currentPage / this.state.totalPages) * 100) + '%';
 
         const thumbEl = document.getElementById('progress-thumb');
-        if (thumbEl) {
-            const newLeft = ((this.state.currentPage / this.state.totalPages) * 100) - 8;
-            thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
-        }
+        if (thumbEl) thumbEl.style.left = 'calc(' + ((this.state.currentPage / this.state.totalPages) * 100) + '% - 8px)';
 
         const pageSpan = document.querySelector('.mori-reader-page');
-        if (pageSpan) {
-            pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
+        if (pageSpan) pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
+
+        // ⭐⭐⭐ КЛЮЧЕВОЙ МОМЕНТ ⭐⭐⭐
+        // Пересчитываем matchIndex для текущей страницы
+        const searchTermLower = result.searchTerm.toLowerCase();
+        const pageText = this.state.content[result.page - 1].replace(/<[^>]*>/g, ' ').toLowerCase();
+        let matchCountBefore = 0;
+        let idx = 0;
+        while ((idx = pageText.indexOf(searchTermLower, idx)) !== -1) {
+            if (matchCountBefore === result.matchIndexOnPage) break;
+            matchCountBefore++;
+            idx += result.searchTerm.length;
         }
+        result.matchIndexOnPage = matchCountBefore;
     }
 
-    // Теперь — подсветка конкретного вхождения (БЕЗ лишних маркеров)
+    // Теперь подсветка пойдёт туда, куда надо
     setTimeout(() => {
         this.scrollToSearchResult(result);
     }, 80);
