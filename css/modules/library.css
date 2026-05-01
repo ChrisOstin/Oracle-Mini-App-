@@ -1802,10 +1802,8 @@ mark.search-highlight {
     color: #d4af37;
     font-size: 14px;
     transition: all 0.2s;
-    line-height: 1;           /* ← добавить */
-    text-align: center;       /* ← добавить */
-    padding: 0;               /* ← добавить */
-    margin: 0;                /* ← добавить */
+    line-height: 0;           /* ← добавить */
+    padding-bottom: 3px;      /* ← меняй 2 на 3,4,5 — подберёшь центр */
 }
 
 .search-nav-prev:hover:not(:disabled),
