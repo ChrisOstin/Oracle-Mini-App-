@@ -1774,7 +1774,7 @@ mark.search-highlight {
 /* ===== КОМПАКТНАЯ ПАНЕЛЬ НАВИГАЦИИ ПО РЕЗУЛЬТАТАМ ПОИСКА ===== */
 .search-nav-compact {
     position: fixed;
-    bottom: 40px;
+    bottom: auto;
     top: 70%;
     left: 50%;
     transform: translateX(-50%);
