@@ -1802,6 +1802,10 @@ mark.search-highlight {
     color: #d4af37;
     font-size: 14px;
     transition: all 0.2s;
+    line-height: 1;           /* ← добавить */
+    text-align: center;       /* ← добавить */
+    padding: 0;               /* ← добавить */
+    margin: 0;                /* ← добавить */
 }
 
 .search-nav-prev:hover:not(:disabled),
@@ -1855,6 +1859,8 @@ mark.search-highlight {
         width: 24px;
         height: 24px;
         font-size: 12px;
+        line-height: 1;
+        padding-bottom: 1px;
     }
     .search-nav-counter {
         font-size: 10px;
