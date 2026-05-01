@@ -456,24 +456,26 @@ updateBookmarkIcon: function() {
 onDoubleTap: function(e) {
     var now = Date.now();
     var diff = now - this.state.lastTap;
-    
+
     if (diff < 300 && diff > 0) {
-        // Двойной тап
+        // Останавливаем всплытие и стандартное поведение (чтобы не выделялся текст)
+        e.stopPropagation();
         e.preventDefault();
-        
-        // Получаем выделенный текст
+
+        // Получаем выделенный текст (если есть)
         var selection = window.getSelection();
         var selectedText = selection.toString().trim();
-        
+
         // Снимаем выделение
         if (selectedText) {
             selection.removeAllRanges();
         }
-        
-        // Добавляем/удаляем закладку
+
+        // Добавляем или удаляем закладку
         this.toggleBookmark(selectedText);
     }
-    
+
+    // Запоминаем время последнего тапа
     this.state.lastTap = now;
 },
 
@@ -1169,7 +1171,7 @@ if (searchInput) {
 // Двойной тап по контенту
 var contentArea = document.getElementById('reader-content');
 if (contentArea) {
-    contentArea.addEventListener('touchstart', this.onDoubleTap.bind(this));
+    contentArea.addEventListener('touchstart', this.onDoubleTap.bind(this), { passive: false });
     contentArea.addEventListener('click', this.onDoubleTap.bind(this));
 }
 
