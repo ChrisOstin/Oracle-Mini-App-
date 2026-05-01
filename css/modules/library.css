@@ -1,3 +1,4 @@
+
 /* ===== БИБЛИОТЕКА — СТИЛЬ ПРОФЕССОРА МОРИАРТИ ===== */
 
 .library-container {
@@ -1681,7 +1682,7 @@ mark.search-highlight {
 
 /* Результаты поиска */
 #reader-search-results {
-    margin-top: 12px;
+    margin-top: 0px;
     max-height: 200px;
     overflow-y: auto;
     border-radius: 12px;
