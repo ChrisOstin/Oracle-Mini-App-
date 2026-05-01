@@ -657,39 +657,36 @@ updateSearchResults: function() {
 
     setTimeout(() => this.scrollToSearchResult(result), 150);
 
-    // Обновляем нижнюю панель (счётчик остаётся)
+    // Обновляем нижнюю панель (счётчик)
     this.updateSearchNav();
-    
-    // Показываем нижнюю панель навигации (если её ещё нет)
+
+    // Показываем нижнюю панель (если её нет)
     this.showSearchNav();
 
     // Закрываем верхнюю панель поиска
     const searchBar = document.getElementById('reader-search-bar');
     if (searchBar) searchBar.style.display = 'none';
-    
+
     // Очищаем поле ввода поиска
     const searchInput = document.getElementById('reader-search-input');
     if (searchInput) {
         searchInput.value = '';
     }
-    
-    // Очищаем список результатов вверху
-    this.state.searchResults = [];
-    this.state.searchCurrentIndex = -1;
-    this.state.searchQuery = '';
-    
+
+    // Очищаем визуальный список результатов вверху
     const searchResultsDiv = document.getElementById('reader-search-results');
     if (searchResultsDiv) {
         searchResultsDiv.innerHTML = '';
     }
-    
-    // Скрываем панель навигации поиска вверху
+
+    // Скрываем верхнюю панель навигации поиска
     const searchNav = document.getElementById('reader-search-nav');
     if (searchNav) {
         searchNav.style.display = 'none';
     }
-    
-    // НИЖНЮЮ ПАНЕЛЬ НЕ ТРОГАЕМ — она остаётся
+
+    // НЕ ОЧИЩАЕМ this.state.searchResults и this.state.searchCurrentIndex
+    // Они нужны для нижней панели навигации
 },
 
 scrollToSearchResult: function(result) {
