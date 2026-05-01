@@ -636,41 +636,45 @@ updateSearchResults: function() {
 
     this.state.searchCurrentIndex = index;
     const result = this.state.searchResults[index];
-    this.state.currentPage = result.page;
     
-    // Обновляем содержимое страницы
-    const contentEl = document.getElementById('reader-content');
-    if (contentEl) {
-        const newContent = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
-        contentEl.innerHTML = newContent;
+    // Если страница изменилась — перезагружаем контент
+    if (result.page !== this.state.currentPage) {
+        this.state.currentPage = result.page;
+        
+        // Обновляем содержимое страницы
+        const contentEl = document.getElementById('reader-content');
+        if (contentEl) {
+            const newContent = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
+            contentEl.innerHTML = newContent;
+        }
+        
+        // Обновляем прогресс-бар
+        const fill = document.querySelector('.mori-reader-progress-fill');
+        if (fill) {
+            const newPercent = (this.state.currentPage / this.state.totalPages) * 100;
+            fill.style.width = newPercent + '%';
+        }
+        
+        // Обновляем позицию ползунка
+        const thumbEl = document.getElementById('progress-thumb');
+        if (thumbEl) {
+            const newLeft = ((this.state.currentPage / this.state.totalPages) * 100) - 8;
+            thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
+        }
+        
+        // Обновляем номер страницы в футере
+        const pageSpan = document.querySelector('.mori-reader-page');
+        if (pageSpan) {
+            pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
+        }
     }
     
-    // Обновляем прогресс-бар
-    const fill = document.querySelector('.mori-reader-progress-fill');
-    if (fill) {
-        const newPercent = (this.state.currentPage / this.state.totalPages) * 100;
-        fill.style.width = newPercent + '%';
-    }
-    
-    // Обновляем позицию ползунка
-    const thumbEl = document.getElementById('progress-thumb');
-    if (thumbEl) {
-        const newLeft = ((this.state.currentPage / this.state.totalPages) * 100) - 8;
-        thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
-    }
-    
-    // Обновляем номер страницы в футере
-    const pageSpan = document.querySelector('.mori-reader-page');
-    if (pageSpan) {
-        pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
-    }
-    
-    // Прокручиваем к нужному слову на странице
+    // Подсвечиваем конкретное вхождение (не очищая всю страницу)
     setTimeout(() => {
         this.scrollToSearchResult(result);
-    }, 100);
+    }, 150);
     
-    // Обновляем панель навигации поиска
+    // Обновляем панель навигации поиска (обновляем счётчик)
     this.updateSearchNav();
     
     // Показываем нижнюю панель
@@ -687,19 +691,19 @@ scrollToSearchResult: function(result) {
     const contentEl = document.getElementById('reader-content');
     if (!contentEl) return;
     
-    // Очищаем старую подсветку
-    const oldMarks = document.querySelectorAll('mark.search-highlight');
-    oldMarks.forEach(mark => {
-        const text = document.createTextNode(mark.textContent);
-        mark.parentNode.replaceChild(text, mark);
-    });
+    // Удаляем ТОЛЬКО предыдущую подсветку, не все
+    const oldMark = document.querySelector('mark.search-highlight.current');
+    if (oldMark) {
+        const text = document.createTextNode(oldMark.textContent);
+        oldMark.parentNode.replaceChild(text, oldMark);
+    }
     
     let searchTerm = result.searchTerm;
     if (!searchTerm) return;
     
     const searchTermLower = searchTerm.toLowerCase();
     
-    // Ищем ВСЕ текстовые узлы и находим нужное вхождение по счётчику
+    // Ищем текстовые узлы и находим нужное вхождение
     let textNodes = [];
     function collectTextNodes(node) {
         if (node.nodeType === Node.TEXT_NODE) {
@@ -712,7 +716,6 @@ scrollToSearchResult: function(result) {
     }
     collectTextNodes(contentEl);
     
-    // Проходим по всем текстовым узлам и считаем вхождения
     let currentMatchIndex = 0;
     let targetNode = null;
     let targetOffset = -1;
@@ -749,7 +752,7 @@ scrollToSearchResult: function(result) {
         
         try {
             const span = document.createElement('mark');
-            span.className = 'search-highlight';
+            span.className = 'search-highlight current';
             range.surroundContents(span);
             
             setTimeout(() => {
@@ -768,7 +771,7 @@ scrollToSearchResult: function(result) {
             console.warn('Ошибка подсветки:', e);
         }
     }
-},
+},,
 
 clearHighlight: function() {
     const marks = document.querySelectorAll('mark.search-highlight');
