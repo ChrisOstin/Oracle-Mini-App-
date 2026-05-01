@@ -1775,6 +1775,7 @@ mark.search-highlight {
 .search-nav-compact {
     position: fixed;
     bottom: 40px;
+    top: 70%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
