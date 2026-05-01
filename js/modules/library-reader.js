@@ -662,6 +662,13 @@ updateSearchResults: function() {
 
     const searchBar = document.getElementById('reader-search-bar');
     if (searchBar) searchBar.style.display = 'none';
+
+    // Очищаем поле ввода поиска
+    const searchInput = document.getElementById('reader-search-input');
+    if (searchInput) {
+        searchInput.value = '';
+    }
+
 },
 
 scrollToSearchResult: function(result) {
