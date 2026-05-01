@@ -177,9 +177,12 @@ showProgressThumb: function() {
  * Применить яркость к читалке
  */
 applyBrightness: function(value) {
-    var readerContainer = document.querySelector('.mori-reader-container');
+    var readerContainer = document.querySelector('.mori-reader');
     if (readerContainer) {
         readerContainer.style.filter = 'brightness(' + (value / 100) + ')';
+        console.log('Яркость применена:', value + '%');
+    } else {
+        console.log('Контейнер .mori-reader не найден');
     }
 },
 
@@ -218,10 +221,9 @@ initBrightnessSwipe: function() {
     var startBrightness = 100;
     var touchStarted = false;
     var isLeftEdge = false;
-    
+
     var onTouchStart = function(e) {
         var touchX = e.touches[0].clientX;
-        // Проверяем, что свайп по левому краю (первые 50px)
         if (touchX < 50) {
             isLeftEdge = true;
             startY = e.touches[0].clientY;
@@ -231,34 +233,34 @@ initBrightnessSwipe: function() {
             isLeftEdge = false;
         }
     };
-    
+
     var onTouchMove = function(e) {
         if (!isLeftEdge || !touchStarted) return;
-        
+
         var currentY = e.touches[0].clientY;
-        var deltaY = startY - currentY; // положительно — вверх, отрицательно — вниз
-        
-        // Изменяем яркость: движение вверх = увеличение, вниз = уменьшение
-        var newBrightness = startBrightness + (deltaY / 3);
+        var deltaY = startY - currentY;
+        var newBrightness = startBrightness + (deltaY / 2);
         newBrightness = Math.max(10, Math.min(200, newBrightness));
-        
+
         if (newBrightness !== self.state.brightness) {
             self.state.brightness = newBrightness;
             self.applyBrightness(newBrightness);
             self.showBrightnessIndicator(newBrightness);
         }
-        
+
         e.preventDefault();
     };
-    
+
     var onTouchEnd = function(e) {
         if (!isLeftEdge || !touchStarted) return;
         touchStarted = false;
         isLeftEdge = false;
-        
-        // Сохраняем настройку яркости
         localStorage.setItem('reader_brightness', self.state.brightness);
     };
+
+    document.removeEventListener('touchstart', onTouchStart);
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchend', onTouchEnd);
     
     document.addEventListener('touchstart', onTouchStart);
     document.addEventListener('touchmove', onTouchMove, { passive: false });
