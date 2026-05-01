@@ -1389,6 +1389,28 @@ function updateFromClientX(clientX) {
                 }
             };
         }
+    
+// Свайп по всей читалке для листания страниц
+const readerContainer = document.querySelector('.mori-reader');
+if (readerContainer) {
+    let touchStartX = 0;
+    
+    readerContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+    
+    readerContainer.addEventListener('touchend', (e) => {
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(diffX) > 50) {
+            if (diffX > 0) {
+                this.prevPage();  // свайп вправо ← предыдущая страница
+            } else {
+                this.nextPage();  // свайп влево → следующая страница
+            }
+        }
+    });
+}
+
     },
 
     /**
