@@ -422,30 +422,29 @@ toggleBookmark: function(selectedText) {
  */
 updateBookmarkIcon: function() {
     var icon = document.getElementById('bookmark-corner-icon');
-    if (!icon) {
-        // Создаём иконку, если её нет
-        var readerDiv = document.querySelector('.mori-reader');
-        if (readerDiv && !document.getElementById('bookmark-corner-icon')) {
-            var bookmarkIcon = document.createElement('div');
-            bookmarkIcon.id = 'bookmark-corner-icon';
-            bookmarkIcon.className = 'bookmark-corner-icon';
-            bookmarkIcon.innerHTML = '🔖';
-            bookmarkIcon.style.cssText = 'position: fixed; bottom: 80px; right: 16px; font-size: 24px; opacity: 0.7; z-index: 20005; cursor: pointer;';
-            bookmarkIcon.onclick = function() {
-                MORI_APP.showToast('🔖 Страница ' + this.state.currentPage + ' в закладках', 'info');
-            }.bind(this);
-            readerDiv.appendChild(bookmarkIcon);
-        }
-        icon = document.getElementById('bookmark-corner-icon');
-    }
     
-    if (icon) {
-        if (this.hasBookmark()) {
-            icon.style.opacity = '1';
-            icon.style.textShadow = '0 0 5px #ffd700';
+    if (this.hasBookmark()) {
+        // Если закладка есть — создаём иконку или показываем
+        if (!icon) {
+            var readerDiv = document.querySelector('.mori-reader');
+            if (readerDiv) {
+                var bookmarkIcon = document.createElement('div');
+                bookmarkIcon.id = 'bookmark-corner-icon';
+                bookmarkIcon.className = 'bookmark-corner-icon';
+                bookmarkIcon.innerHTML = '🔖';
+                bookmarkIcon.onclick = function() {
+                    MORI_APP.showToast('🔖 Страница ' + this.state.currentPage + ' в закладках', 'info');
+                }.bind(this);
+                readerDiv.appendChild(bookmarkIcon);
+            }
         } else {
-            icon.style.opacity = '0.3';
-            icon.style.textShadow = 'none';
+            icon.style.display = 'flex';
+            icon.style.opacity = '1';
+        }
+    } else {
+        // Если закладки нет — удаляем иконку или скрываем
+        if (icon) {
+            icon.style.display = 'none';
         }
     }
 },
