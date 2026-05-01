@@ -521,23 +521,23 @@ searchInBook: function(query) {
 
         let start = 0;
         let pos;
+        let matchIndexOnPage = 0;
         while ((pos = lowerText.indexOf(searchLower, start)) !== -1) {
-            const snippet = textOnly.substring(
-                Math.max(0, pos - 40),
-                Math.min(textOnly.length, pos + query.length + 40)
-            );
-            const preview = (pos > 40 ? '...' : '') + snippet + (pos + query.length + 40 < textOnly.length ? '...' : '');
+            let snippet = textOnly.substring(Math.max(0, pos - 40), Math.min(textOnly.length, pos + query.length + 40));
+            if (pos > 40) snippet = '...' + snippet;
+            if (pos + query.length + 40 < textOnly.length) snippet = snippet + '...';
 
             results.push({
                 page: i + 1,
                 position: pos,
-                preview: preview,
-                searchTerm: query
+                preview: snippet,
+                searchTerm: query,
+                matchIndexOnPage: matchIndexOnPage
             });
+            matchIndexOnPage++;
             start = pos + query.length;
         }
     }
-
     this.state.searchQuery = query;
     this.state.searchResults = results;
     this.state.searchCurrentIndex = results.length > 0 ? 0 : -1;
@@ -640,31 +640,22 @@ updateSearchResults: function() {
 
     if (result.page !== this.state.currentPage) {
         this.state.currentPage = result.page;
-
         const contentEl = document.getElementById('reader-content');
         if (contentEl) {
             contentEl.innerHTML = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
         }
 
         const fill = document.querySelector('.mori-reader-progress-fill');
-        if (fill) {
-            fill.style.width = ((this.state.currentPage / this.state.totalPages) * 100) + '%';
-        }
+        if (fill) fill.style.width = ((this.state.currentPage / this.state.totalPages) * 100) + '%';
 
         const thumbEl = document.getElementById('progress-thumb');
-        if (thumbEl) {
-            thumbEl.style.left = 'calc(' + ((this.state.currentPage / this.state.totalPages) * 100) + '% - 8px)';
-        }
+        if (thumbEl) thumbEl.style.left = 'calc(' + ((this.state.currentPage / this.state.totalPages) * 100) + '% - 8px)';
 
         const pageSpan = document.querySelector('.mori-reader-page');
-        if (pageSpan) {
-            pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
-        }
+        if (pageSpan) pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
     }
 
-    setTimeout(() => {
-        this.scrollToSearchResult(result);
-    }, 100);
+    setTimeout(() => this.scrollToSearchResult(result), 150);
 
     this.updateSearchNav();
     this.showSearchNav();
@@ -677,32 +668,40 @@ scrollToSearchResult: function(result) {
     const contentEl = document.getElementById('reader-content');
     if (!contentEl) return;
 
-    // Удаляем старые подсветки
-    const old = contentEl.querySelectorAll('mark.search-highlight');
-    old.forEach(mark => {
+    const oldMarks = contentEl.querySelectorAll('mark.search-highlight');
+    oldMarks.forEach(mark => {
         const parent = mark.parentNode;
+        if (!parent) return;
         const txt = document.createTextNode(mark.textContent);
         parent.replaceChild(txt, mark);
-        parent.normalize();
+        if (parent.normalize) parent.normalize();
     });
 
     const searchTerm = result.searchTerm;
     if (!searchTerm) return;
 
-    const treeWalker = document.createTreeWalker(contentEl, NodeFilter.SHOW_TEXT, null);
+    const walker = document.createTreeWalker(contentEl, NodeFilter.SHOW_TEXT, null);
     const textNodes = [];
-    while (treeWalker.nextNode()) textNodes.push(treeWalker.currentNode);
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
 
+    let currentMatchGlobal = 0;
     let targetNode = null;
     let targetOffset = -1;
 
     for (const node of textNodes) {
-        const idx = node.textContent.toLowerCase().indexOf(searchTerm.toLowerCase());
-        if (idx !== -1) {
-            targetNode = node;
-            targetOffset = idx;
-            break;
+        const nodeText = node.textContent;
+        const lowerNodeText = nodeText.toLowerCase();
+        let searchPos = 0;
+        while ((searchPos = lowerNodeText.indexOf(searchTerm.toLowerCase(), searchPos)) !== -1) {
+            if (currentMatchGlobal === result.matchIndexOnPage) {
+                targetNode = node;
+                targetOffset = searchPos;
+                break;
+            }
+            currentMatchGlobal++;
+            searchPos += searchTerm.length;
         }
+        if (targetNode) break;
     }
 
     if (targetNode && targetOffset !== -1) {
@@ -712,14 +711,16 @@ scrollToSearchResult: function(result) {
 
         const rect = range.getBoundingClientRect();
         if (rect) {
-            contentEl.scrollTo({ top: rect.top + contentEl.scrollTop - 100, behavior: 'smooth' });
+            contentEl.scrollTo({
+                top: rect.top + contentEl.scrollTop - 100,
+                behavior: 'smooth'
+            });
         }
 
         try {
             const mark = document.createElement('mark');
             mark.className = 'search-highlight';
             range.surroundContents(mark);
-
             setTimeout(() => {
                 if (mark.parentNode) {
                     mark.style.transition = 'background 0.3s';
