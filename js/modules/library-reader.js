@@ -771,7 +771,7 @@ scrollToSearchResult: function(result) {
             console.warn('Ошибка подсветки:', e);
         }
     }
-},,
+},
 
 clearHighlight: function() {
     const marks = document.querySelectorAll('mark.search-highlight');
