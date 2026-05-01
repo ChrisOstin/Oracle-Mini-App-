@@ -698,22 +698,29 @@ if (registerBtn) {
         }
     },
     // ========== ЖЕСТЫ ==========
-    setupGestures: function() {
-        let touchStartX = 0;
-        let touchStartY = 0;
-        document.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        });
-        document.addEventListener('touchend', e => {
-            const diffX = e.changedTouches[0].clientX - touchStartX;
-            const diffY = e.changedTouches[0].clientY - touchStartY;
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 100) {
-                if (diffX > 0) this.goBack();
-                else this.goForward();
-            }
-        });
-    },
+setupGestures: function() {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const self = this;
+    
+    document.addEventListener('touchstart', (e) => {
+        // Если читалка открыта — игнорируем жест
+        if (MORI_LIBRARY_READER && MORI_LIBRARY_READER.state && MORI_LIBRARY_READER.state.isOpen) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    });
+    
+    document.addEventListener('touchend', (e) => {
+        // Если читалка открыта — игнорируем жест
+        if (MORI_LIBRARY_READER && MORI_LIBRARY_READER.state && MORI_LIBRARY_READER.state.isOpen) return;
+        const diffX = e.changedTouches[0].clientX - touchStartX;
+        const diffY = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 100) {
+            if (diffX > 0) self.goBack();
+            else self.goForward();
+        }
+    });
+},
 
     goBack: function() {
         if (this.historyIndex > 0) {
