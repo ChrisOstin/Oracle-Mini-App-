@@ -1169,11 +1169,11 @@ if (searchInput) {
             };
         }
 
-// Двойной тап по контенту
+// Двойной тап по контенту (только touchstart)
 var contentArea = document.getElementById('reader-content');
 if (contentArea) {
     contentArea.addEventListener('touchstart', this.onDoubleTap.bind(this), { passive: false });
-    contentArea.addEventListener('click', this.onDoubleTap.bind(this));
+    // click убираем, чтобы не мешал
 }
 
 // Обновляем иконку закладки после рендера
