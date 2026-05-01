@@ -660,8 +660,8 @@ updateSearchResults: function() {
     // Обновляем нижнюю панель (счётчик остаётся)
     this.updateSearchNav();
     
-    // НЕ ЗАКРЫВАЕМ нижнюю панель — она нужна для навигации
-    // this.showSearchNav(); ← убрали, чтобы не пересоздавать
+    // Показываем нижнюю панель навигации (если её ещё нет)
+    this.showSearchNav();
 
     // Закрываем верхнюю панель поиска
     const searchBar = document.getElementById('reader-search-bar');
