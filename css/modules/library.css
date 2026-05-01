@@ -1804,6 +1804,15 @@ mark.search-highlight {
     transition: all 0.2s;
     line-height: 0;           /* ← добавить */
     padding-bottom: 3px;      /* ← меняй 2 на 3,4,5 — подберёшь центр */
+    position: relative;
+}
+
+.search-nav-prev {
+    left: -2px;
+}
+
+.search-nav-next {
+    left: 2px;
 }
 
 .search-nav-prev:hover:not(:disabled),
