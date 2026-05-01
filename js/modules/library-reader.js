@@ -106,6 +106,15 @@ open: async function(book, pageNum, searchQuery) {
     this.initBrightnessSwipe();
 
     this.state.isOpen = true;
+
+// Блокируем обработку backbutton и popstate в читалке
+if (window.MORI_ROUTER) {
+    this.savedBackButtonHandler = document.onbackbutton;
+    this.savedPopstateHandler = window.onpopstate;
+    document.onbackbutton = function(e) { e.preventDefault(); };
+    window.onpopstate = function(e) { e.preventDefault(); };
+}
+
     this.renderReader();
 },
 
@@ -129,6 +138,12 @@ if (nav) {
 if (leftBtn) leftBtn.style.display = 'block';
 if (rightBtn) rightBtn.style.display = 'block';
 if (themeIcon) themeIcon.style.display = 'flex';
+
+// Восстанавливаем обработку backbutton и popstate
+if (window.MORI_ROUTER) {
+    document.onbackbutton = this.savedBackButtonHandler;
+    window.onpopstate = this.savedPopstateHandler;
+}
 
         // Возвращаемся в библиотеку
         if (window.MORI_ROUTER) {
