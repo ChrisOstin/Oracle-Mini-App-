@@ -240,7 +240,7 @@ initBrightnessSwipe: function() {
         var currentY = e.touches[0].clientY;
         var deltaY = startY - currentY;
         var newBrightness = startBrightness + (deltaY / 2);
-        newBrightness = Math.max(10, Math.min(200, newBrightness));
+        newBrightness = Math.max(10, Math.min(100, newBrightness));
 
         if (newBrightness !== self.state.brightness) {
             self.state.brightness = newBrightness;
@@ -1010,9 +1010,7 @@ appDiv.innerHTML = `
         <button class="reader-search-close" id="reader-search-close">✕</button>
     </div>
     <div class="reader-search-nav" id="reader-search-nav" style="display: none;">
-        <button class="search-nav-btn" id="search-prev">◀ Пред.</button>
         <span id="search-counter">0/0</span>
-        <button class="search-nav-btn" id="search-next">След. ▶</button>
     </div>
     <div id="reader-search-results"></div>
 </div>
