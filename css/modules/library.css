@@ -1808,11 +1808,11 @@ mark.search-highlight {
 }
 
 .search-nav-prev {
-    left: -6px;
+    transform: translateX(-2px) !important;
 }
 
 .search-nav-next {
-    left: 6px;
+    transform: translateX(2px) !important;
 }
 
 .search-nav-prev:hover:not(:disabled),
