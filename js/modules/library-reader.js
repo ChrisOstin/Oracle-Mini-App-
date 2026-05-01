@@ -636,85 +636,72 @@ updateSearchResults: function() {
 
     this.state.searchCurrentIndex = index;
     const result = this.state.searchResults[index];
-    
-    // Если страница изменилась — перезагружаем контент
+
+    // ⚡ ПЕРВОЕ ДЕЛО: убиваем всю старую подсветку во всём DOM
+    const allMarks = document.querySelectorAll('mark.search-highlight');
+    allMarks.forEach(mark => {
+        const parent = mark.parentNode;
+        if (!parent) return;
+        const text = document.createTextNode(mark.textContent);
+        parent.replaceChild(text, mark);
+        if (parent.normalize) parent.normalize();
+    });
+
+    // Если страница изменилась — переключаем контент
     if (result.page !== this.state.currentPage) {
         this.state.currentPage = result.page;
-        
-        // Обновляем содержимое страницы
+
         const contentEl = document.getElementById('reader-content');
         if (contentEl) {
             const newContent = this.state.content[result.page - 1] || '<p>Страница не найдена</p>';
             contentEl.innerHTML = newContent;
         }
-        
-        // Обновляем прогресс-бар
+
         const fill = document.querySelector('.mori-reader-progress-fill');
         if (fill) {
             const newPercent = (this.state.currentPage / this.state.totalPages) * 100;
             fill.style.width = newPercent + '%';
         }
-        
-        // Обновляем позицию ползунка
+
         const thumbEl = document.getElementById('progress-thumb');
         if (thumbEl) {
             const newLeft = ((this.state.currentPage / this.state.totalPages) * 100) - 8;
             thumbEl.style.left = 'calc(' + newLeft + '% - 8px)';
         }
-        
-        // Обновляем номер страницы в футере
+
         const pageSpan = document.querySelector('.mori-reader-page');
         if (pageSpan) {
             pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
         }
     }
-    
-    // Подсвечиваем конкретное вхождение (не очищая всю страницу)
+
+    // Теперь — подсветка конкретного вхождения (БЕЗ лишних маркеров)
     setTimeout(() => {
         this.scrollToSearchResult(result);
-    }, 150);
-    
-    // Обновляем панель навигации поиска (обновляем счётчик)
+    }, 80);
+
     this.updateSearchNav();
-    
-    // Показываем нижнюю панель
     this.showSearchNav();
-    
-    // Закрываем верхнюю панель поиска
+
     const searchBar = document.getElementById('reader-search-bar');
-    if (searchBar) {
-        searchBar.style.display = 'none';
-    }
+    if (searchBar) searchBar.style.display = 'none';
 },
 
 scrollToSearchResult: function(result) {
     const contentEl = document.getElementById('reader-content');
     if (!contentEl) return;
 
-    // Удаляем только предыдущие mark-элементы (чтобы не было "всех подсветок")
-    const oldMarks = contentEl.querySelectorAll('mark.search-highlight');
-    oldMarks.forEach(mark => {
-        const parent = mark.parentNode;
-        if (!parent) return;
-        const text = document.createTextNode(mark.textContent);
-        parent.replaceChild(text, mark);
-        parent.normalize(); // склеиваем текстовые узлы обратно
-    });
-
     const searchTerm = result.searchTerm;
     if (!searchTerm) return;
 
     const searchTermLower = searchTerm.toLowerCase();
 
-    // Собираем ТОЛЬКО текстовые узлы внутри контента
     let textNodes = [];
     function collectTextNodes(node) {
         if (node.nodeType === Node.TEXT_NODE) {
             textNodes.push(node);
         } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'MARK') {
-            for (let child of node.childNodes) {
-                collectTextNodes(child);
-            }
+            for (let child of node.childNodes) collectTextNodes(child);
         }
     }
     collectTextNodes(contentEl);
@@ -723,12 +710,10 @@ scrollToSearchResult: function(result) {
     let targetNode = null;
     let targetOffset = -1;
 
-    // Ищем нужное вхождение по matchIndex
     for (const node of textNodes) {
         const nodeText = node.textContent;
         const nodeTextLower = nodeText.toLowerCase();
         let idx = 0;
-
         while ((idx = nodeTextLower.indexOf(searchTermLower, idx)) !== -1) {
             if (currentMatchIndex === result.matchIndex) {
                 targetNode = node;
@@ -759,22 +744,21 @@ scrollToSearchResult: function(result) {
             mark.className = 'search-highlight';
             range.surroundContents(mark);
 
-            // Автоматическое снятие подсветки через 5 секунд
             setTimeout(() => {
                 if (mark.parentNode) {
                     mark.style.transition = 'background 0.3s ease';
                     mark.style.backgroundColor = 'transparent';
                     setTimeout(() => {
                         if (mark.parentNode) {
-                            const textNode = document.createTextNode(mark.textContent);
-                            mark.parentNode.replaceChild(textNode, mark);
+                            const txt = document.createTextNode(mark.textContent);
+                            mark.parentNode.replaceChild(txt, mark);
                             if (contentEl) contentEl.normalize();
                         }
                     }, 300);
                 }
             }, 5000);
         } catch (err) {
-            console.warn('Ошибка подсветки конкретного вхождения:', err);
+            console.warn('Ошибка подсветки конкретного вхождения', err);
         }
     }
 },
