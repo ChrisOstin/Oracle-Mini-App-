@@ -806,48 +806,47 @@ clearHighlight: function() {
     /**
      * Обновить панель навигации поиска
      */
-    updateSearchNav: function() {
-        const searchNav = document.getElementById('reader-search-nav');
-        const counter = document.getElementById('search-counter');
-        const searchResultsDiv = document.getElementById('reader-search-results');
+/**
+ * Обновить панель навигации поиска
+ */
+updateSearchNav: function() {
+    const searchNav = document.getElementById('reader-search-nav');
+    const searchResultsDiv = document.getElementById('reader-search-results');
 
-        if (!searchNav) return;
+    if (!searchNav) return;
 
-        if (this.state.searchResults.length > 0) {
-            searchNav.style.display = 'flex';
-            if (counter) {
-                counter.textContent = `${this.state.searchCurrentIndex + 1}/${this.state.searchResults.length}`;
-            }
+    if (this.state.searchResults.length > 0) {
+        searchNav.style.display = 'flex';
 
-            if (searchResultsDiv) {
-                searchResultsDiv.innerHTML = `
-                    <div class="search-results-list">
-                        ${this.state.searchResults.map((result, idx) => `
-                            <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}">
-                                <span class="search-result-page">Страница ${result.page}</span>
-                                <span class="search-result-preview">${result.preview}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
+        if (searchResultsDiv) {
+            searchResultsDiv.innerHTML = `
+                <div class="search-results-list">
+                    ${this.state.searchResults.map((result, idx) => `
+                        <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}">
+                            <span class="search-result-page">Страница ${result.page}</span>
+                            <span class="search-result-preview">${result.preview}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
 
-                document.querySelectorAll('.search-result-item').forEach(item => {
-                    item.onclick = () => {
-                        const page = parseInt(item.dataset.page);
-                        const idx = this.state.searchResults.findIndex(r => r.page === page);
-                        if (idx !== -1) {
-                            this.goToSearchResult(idx);
-                        }
-                    };
-                });
-            }
-        } else {
-            searchNav.style.display = 'none';
-            if (searchResultsDiv && this.state.searchQuery) {
-                searchResultsDiv.innerHTML = '<div class="search-no-results">Ничего не найдено</div>';
-            }
+            document.querySelectorAll('.search-result-item').forEach(item => {
+                item.onclick = () => {
+                    const page = parseInt(item.dataset.page);
+                    const idx = this.state.searchResults.findIndex(r => r.page === page);
+                    if (idx !== -1) {
+                        this.goToSearchResult(idx);
+                    }
+                };
+            });
         }
-    },
+    } else {
+        searchNav.style.display = 'none';
+        if (searchResultsDiv && this.state.searchQuery) {
+            searchResultsDiv.innerHTML = '<div class="search-no-results">Ничего не найдено</div>';
+        }
+    }
+},
 
     /**
      * Подсветка найденного слова на странице
@@ -1010,8 +1009,6 @@ appDiv.innerHTML = `
         <button class="reader-search-close" id="reader-search-close">✕</button>
     </div>
     <div class="reader-search-nav" id="reader-search-nav" style="display: none;">
-        <span id="search-counter">0/0</span>
-    </div>
     <div id="reader-search-results"></div>
 </div>
 `;
