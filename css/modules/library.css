@@ -1807,12 +1807,14 @@ mark.search-highlight {
     position: relative;
 }
 
+/* Сдвигаем левый треугольник влево */
 .search-nav-prev {
-    transform: translateX(-2px) !important;
+    text-indent: -2px !important;
 }
 
+/* Сдвигаем правый треугольник вправо */
 .search-nav-next {
-    transform: translateX(2px) !important;
+    text-indent: 2px !important;
 }
 
 .search-nav-prev:hover:not(:disabled),
