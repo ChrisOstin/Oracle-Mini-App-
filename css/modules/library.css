@@ -1809,12 +1809,12 @@ mark.search-highlight {
 
 /* Сдвигаем левый треугольник влево */
 .search-nav-prev {
-    text-indent: -2px !important;
+    text-indent: -3px !important;
 }
 
 /* Сдвигаем правый треугольник вправо */
 .search-nav-next {
-    text-indent: 2px !important;
+    text-indent: 3px !important;
 }
 
 .search-nav-prev:hover:not(:disabled),
