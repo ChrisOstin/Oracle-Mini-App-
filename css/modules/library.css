@@ -1876,3 +1876,12 @@ mark.search-highlight {
         min-width: 35px;
     }
 }
+
+/* Убираем разделитель в верхней панели поиска */
+.reader-search-nav {
+    border-top: none !important;
+}
+
+.search-results-list {
+    border-top: none !important;
+}
