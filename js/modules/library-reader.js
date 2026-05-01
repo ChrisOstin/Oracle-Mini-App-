@@ -454,6 +454,7 @@ updateBookmarkIcon: function() {
  * Обработчик двойного тапа
  */
 onDoubleTap: function(e) {
+    console.log('Двойной тап сработал');
     var now = Date.now();
     var diff = now - this.state.lastTap;
 
