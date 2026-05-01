@@ -1479,7 +1479,8 @@ markPageAsRead: function() {
         MORI_USER.updateStats('pagesRead', 1);
     }
 
-    MORI_APP.showToast(`📖 Страница ${this.state.currentPage} прочитана`, 'success', 2000);
+    // Убираем уведомление о прочтении страницы
+    // MORI_APP.showToast(`📖 Страница ${this.state.currentPage} прочитана`, 'success', 2000);
 },
 
     /**
