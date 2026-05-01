@@ -511,33 +511,30 @@ searchInBook: function(query) {
         return;
     }
 
-    const searchTermLower = query.toLowerCase();
     const results = [];
+    const searchLower = query.toLowerCase();
 
     for (let i = 0; i < this.state.content.length; i++) {
         const pageHtml = this.state.content[i];
-        const text = pageHtml.replace(/<[^>]*>/g, ' ');
-        const lowerText = text.toLowerCase();
+        const textOnly = pageHtml.replace(/<[^>]*>/g, ' ');
+        const lowerText = textOnly.toLowerCase();
 
-        let startIndex = 0;
-        let position;
-
-        while ((position = lowerText.indexOf(searchTermLower, startIndex)) !== -1) {
-            const originalWord = text.substring(position, position + query.length);
-            let preview = text.substring(Math.max(0, position - 50), Math.min(text.length, position + query.length + 50));
-            if (position > 50) preview = '...' + preview;
-            if (position + query.length + 50 < text.length) preview = preview + '...';
+        let start = 0;
+        let pos;
+        while ((pos = lowerText.indexOf(searchLower, start)) !== -1) {
+            const snippet = textOnly.substring(
+                Math.max(0, pos - 40),
+                Math.min(textOnly.length, pos + query.length + 40)
+            );
+            const preview = (pos > 40 ? '...' : '') + snippet + (pos + query.length + 40 < textOnly.length ? '...' : '');
 
             results.push({
                 page: i + 1,
-                position: position,
+                position: pos,
                 preview: preview,
-                searchTerm: query,
-                searchTermLower: searchTermLower,
-                originalWord: originalWord,
-                globalIndex: results.length
+                searchTerm: query
             });
-            startIndex = position + query.length;
+            start = pos + query.length;
         }
     }
 
@@ -630,21 +627,18 @@ updateSearchResults: function() {
     if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
 
     this.state.searchCurrentIndex = index;
-    let result = this.state.searchResults[index];
+    const result = this.state.searchResults[index];
 
-    // Убираем старые маркеры
     const allMarks = document.querySelectorAll('mark.search-highlight');
     allMarks.forEach(mark => {
         const parent = mark.parentNode;
         if (!parent) return;
-        const text = document.createTextNode(mark.textContent);
-        parent.replaceChild(text, mark);
+        const txt = document.createTextNode(mark.textContent);
+        parent.replaceChild(txt, mark);
         if (parent.normalize) parent.normalize();
     });
 
-    const needPageChange = result.page !== this.state.currentPage;
-
-    if (needPageChange) {
+    if (result.page !== this.state.currentPage) {
         this.state.currentPage = result.page;
 
         const contentEl = document.getElementById('reader-content');
@@ -653,34 +647,24 @@ updateSearchResults: function() {
         }
 
         const fill = document.querySelector('.mori-reader-progress-fill');
-        if (fill) fill.style.width = ((this.state.currentPage / this.state.totalPages) * 100) + '%';
+        if (fill) {
+            fill.style.width = ((this.state.currentPage / this.state.totalPages) * 100) + '%';
+        }
 
         const thumbEl = document.getElementById('progress-thumb');
-        if (thumbEl) thumbEl.style.left = 'calc(' + ((this.state.currentPage / this.state.totalPages) * 100) + '% - 8px)';
+        if (thumbEl) {
+            thumbEl.style.left = 'calc(' + ((this.state.currentPage / this.state.totalPages) * 100) + '% - 8px)';
+        }
 
         const pageSpan = document.querySelector('.mori-reader-page');
-        if (pageSpan) pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
-    }
-
-    // --- ПЕРЕСЧЁТ локального индекса ДЛЯ ЭТОЙ СТРАНИЦЫ ---
-    const pageText = this.state.content[result.page - 1].replace(/<[^>]*>/g, ' ').toLowerCase();
-    const searchTermLower = result.searchTerm.toLowerCase();
-    const targetPosition = result.position;
-
-    let localIndexOnPage = 0;
-    let pos = 0;
-    while ((pos = pageText.indexOf(searchTermLower, pos)) !== -1) {
-        if (pos === targetPosition) {
-            result.localIndex = localIndexOnPage;
-            break;
+        if (pageSpan) {
+            pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
         }
-        localIndexOnPage++;
-        pos += result.searchTerm.length;
     }
 
     setTimeout(() => {
         this.scrollToSearchResult(result);
-    }, 80);
+    }, 100);
 
     this.updateSearchNav();
     this.showSearchNav();
@@ -693,25 +677,32 @@ scrollToSearchResult: function(result) {
     const contentEl = document.getElementById('reader-content');
     if (!contentEl) return;
 
+    // Удаляем старые подсветки
+    const old = contentEl.querySelectorAll('mark.search-highlight');
+    old.forEach(mark => {
+        const parent = mark.parentNode;
+        const txt = document.createTextNode(mark.textContent);
+        parent.replaceChild(txt, mark);
+        parent.normalize();
+    });
+
     const searchTerm = result.searchTerm;
     if (!searchTerm) return;
 
-    let nodes = [];
-    const walker = document.createTreeWalker(contentEl, NodeFilter.SHOW_TEXT, null);
-    while (walker.nextNode()) nodes.push(walker.currentNode);
+    const treeWalker = document.createTreeWalker(contentEl, NodeFilter.SHOW_TEXT, null);
+    const textNodes = [];
+    while (treeWalker.nextNode()) textNodes.push(treeWalker.currentNode);
 
-    let accumulated = 0;
     let targetNode = null;
     let targetOffset = -1;
 
-    for (const node of nodes) {
-        const nodeLen = node.textContent.length;
-        if (accumulated + nodeLen > result.position) {
+    for (const node of textNodes) {
+        const idx = node.textContent.toLowerCase().indexOf(searchTerm.toLowerCase());
+        if (idx !== -1) {
             targetNode = node;
-            targetOffset = result.position - accumulated;
+            targetOffset = idx;
             break;
         }
-        accumulated += nodeLen;
     }
 
     if (targetNode && targetOffset !== -1) {
@@ -728,9 +719,10 @@ scrollToSearchResult: function(result) {
             const mark = document.createElement('mark');
             mark.className = 'search-highlight';
             range.surroundContents(mark);
+
             setTimeout(() => {
                 if (mark.parentNode) {
-                    mark.style.transition = 'background 0.3s ease';
+                    mark.style.transition = 'background 0.3s';
                     mark.style.backgroundColor = 'transparent';
                     setTimeout(() => {
                         if (mark.parentNode) {
