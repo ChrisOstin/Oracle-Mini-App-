@@ -690,20 +690,23 @@ updateSearchResults: function() {
 scrollToSearchResult: function(result) {
     const contentEl = document.getElementById('reader-content');
     if (!contentEl) return;
-    
-    // Удаляем ТОЛЬКО предыдущую подсветку, не все
-    const oldMark = document.querySelector('mark.search-highlight.current');
-    if (oldMark) {
-        const text = document.createTextNode(oldMark.textContent);
-        oldMark.parentNode.replaceChild(text, oldMark);
-    }
-    
-    let searchTerm = result.searchTerm;
+
+    // Удаляем только предыдущие mark-элементы (чтобы не было "всех подсветок")
+    const oldMarks = contentEl.querySelectorAll('mark.search-highlight');
+    oldMarks.forEach(mark => {
+        const parent = mark.parentNode;
+        if (!parent) return;
+        const text = document.createTextNode(mark.textContent);
+        parent.replaceChild(text, mark);
+        parent.normalize(); // склеиваем текстовые узлы обратно
+    });
+
+    const searchTerm = result.searchTerm;
     if (!searchTerm) return;
-    
+
     const searchTermLower = searchTerm.toLowerCase();
-    
-    // Ищем текстовые узлы и находим нужное вхождение
+
+    // Собираем ТОЛЬКО текстовые узлы внутри контента
     let textNodes = [];
     function collectTextNodes(node) {
         if (node.nodeType === Node.TEXT_NODE) {
@@ -715,33 +718,34 @@ scrollToSearchResult: function(result) {
         }
     }
     collectTextNodes(contentEl);
-    
+
     let currentMatchIndex = 0;
     let targetNode = null;
     let targetOffset = -1;
-    
+
+    // Ищем нужное вхождение по matchIndex
     for (const node of textNodes) {
         const nodeText = node.textContent;
         const nodeTextLower = nodeText.toLowerCase();
-        let index = 0;
-        
-        while ((index = nodeTextLower.indexOf(searchTermLower, index)) !== -1) {
+        let idx = 0;
+
+        while ((idx = nodeTextLower.indexOf(searchTermLower, idx)) !== -1) {
             if (currentMatchIndex === result.matchIndex) {
                 targetNode = node;
-                targetOffset = index;
+                targetOffset = idx;
                 break;
             }
             currentMatchIndex++;
-            index += searchTerm.length;
+            idx += searchTerm.length;
         }
         if (targetNode) break;
     }
-    
+
     if (targetNode && targetOffset !== -1) {
         const range = document.createRange();
         range.setStart(targetNode, targetOffset);
         range.setEnd(targetNode, targetOffset + searchTerm.length);
-        
+
         const rect = range.getBoundingClientRect();
         if (rect) {
             contentEl.scrollTo({
@@ -749,26 +753,28 @@ scrollToSearchResult: function(result) {
                 behavior: 'smooth'
             });
         }
-        
+
         try {
-            const span = document.createElement('mark');
-            span.className = 'search-highlight current';
-            range.surroundContents(span);
-            
+            const mark = document.createElement('mark');
+            mark.className = 'search-highlight';
+            range.surroundContents(mark);
+
+            // Автоматическое снятие подсветки через 5 секунд
             setTimeout(() => {
-                if (span.parentNode) {
-                    span.style.transition = 'background 0.5s ease';
-                    span.style.background = 'transparent';
+                if (mark.parentNode) {
+                    mark.style.transition = 'background 0.3s ease';
+                    mark.style.backgroundColor = 'transparent';
                     setTimeout(() => {
-                        if (span.parentNode) {
-                            const text = document.createTextNode(span.textContent);
-                            span.parentNode.replaceChild(text, span);
+                        if (mark.parentNode) {
+                            const textNode = document.createTextNode(mark.textContent);
+                            mark.parentNode.replaceChild(textNode, mark);
+                            if (contentEl) contentEl.normalize();
                         }
-                    }, 500);
+                    }, 300);
                 }
             }, 5000);
-        } catch (e) {
-            console.warn('Ошибка подсветки:', e);
+        } catch (err) {
+            console.warn('Ошибка подсветки конкретного вхождения:', err);
         }
     }
 },
