@@ -648,17 +648,18 @@ updateSearchResults: function() {
      * Перейти к результату поиска
      */
 goToSearchResult: function(index) {
-// Просто скрываем панель поиска
-const panel = document.getElementById('reader-search-bar');
-if (panel) panel.style.display = 'none';
+    // Скрываем панель поиска
+    const panel = document.getElementById('reader-search-bar');
+    if (panel) panel.style.display = 'none';
 
     if (this.state.searchResults.length === 0) return;
     if (index < 0) index = 0;
     if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
 
     this.state.searchCurrentIndex = index;
-    const result = this.state.searchResults[index];
+    let result = this.state.searchResults[index];
 
+    // Очищаем старые подсветки
     const allMarks = document.querySelectorAll('mark.search-highlight');
     allMarks.forEach(mark => {
         const parent = mark.parentNode;
@@ -668,6 +669,7 @@ if (panel) panel.style.display = 'none';
         if (parent.normalize) parent.normalize();
     });
 
+    // Если страница изменилась — пересчитываем локальный индекс
     if (result.page !== this.state.currentPage) {
         this.state.currentPage = result.page;
         const contentEl = document.getElementById('reader-content');
@@ -683,6 +685,22 @@ if (panel) panel.style.display = 'none';
 
         const pageSpan = document.querySelector('.mori-reader-page');
         if (pageSpan) pageSpan.textContent = this.state.currentPage + ' / ' + this.state.totalPages;
+
+        // ⭐ ПЕРЕСЧИТЫВАЕМ matchIndexOnPage для новой страницы
+        const pageText = this.state.content[result.page - 1].replace(/<[^>]*>/g, ' ').toLowerCase();
+        const searchTermLower = result.searchTerm.toLowerCase();
+        let localIndex = 0;
+        let pos = 0;
+        let targetPosition = result.position;
+        
+        while ((pos = pageText.indexOf(searchTermLower, pos)) !== -1) {
+            if (pos === targetPosition) {
+                result.matchIndexOnPage = localIndex;
+                break;
+            }
+            localIndex++;
+            pos += result.searchTerm.length;
+        }
     }
 
     setTimeout(() => this.scrollToSearchResult(result), 150);
