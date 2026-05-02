@@ -642,16 +642,31 @@ updateSearchResults: function() {
      * Перейти к результату поиска
      */
 goToSearchResult: function(index) {
-    // Закрываем визуальную часть поиска, не очищая searchResults
-    const searchBar = document.getElementById('reader-search-bar');
-    if (searchBar) searchBar.style.display = 'none';
-    const searchResultsDiv = document.getElementById('reader-search-results');
-    if (searchResultsDiv) searchResultsDiv.innerHTML = '';
-    const searchNav = document.getElementById('reader-search-nav');
-    if (searchNav) searchNav.style.display = 'none';
-    const searchInputField = document.getElementById('reader-search-input');
-    if (searchInputField) searchInputField.value = '';
-
+    // ===== ПРИНУДИТЕЛЬНОЕ ЗАКРЫТИЕ ВЕРХНЕЙ ПАНЕЛИ ПОИСКА =====
+    const panel = document.querySelector('.reader-search-bar');
+    if (panel) {
+        panel.style.display = 'none';
+    }
+    
+    // Очищаем поле ввода
+    const inputField = document.getElementById('reader-search-input');
+    if (inputField) {
+        inputField.value = '';
+    }
+    
+    // Очищаем список результатов
+    const resultsContainer = document.getElementById('reader-search-results');
+    if (resultsContainer) {
+        resultsContainer.innerHTML = '';
+    }
+    
+    // Скрываем навигацию поиска
+    const navContainer = document.getElementById('reader-search-nav');
+    if (navContainer) {
+        navContainer.style.display = 'none';
+    }
+    // ============================================
+    
     if (this.state.searchResults.length === 0) return;
     if (index < 0) index = 0;
     if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
