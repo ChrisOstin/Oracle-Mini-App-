@@ -546,13 +546,14 @@ searchInBook: function(query) {
             if (pos > 40) snippet = '...' + snippet;
             if (pos + query.length + 40 < textOnly.length) snippet = snippet + '...';
 
-            results.push({
-                page: i + 1,
-                position: pos,
-                preview: snippet,
-                searchTerm: query,
-                matchIndexOnPage: matchIndexOnPage
-            });
+results.push({
+    page: i + 1,
+    position: pos,
+    preview: snippet,
+    searchTerm: query,
+    matchIndexOnPage: matchIndexOnPage,
+    matchId: i + 1 + '_' + matchIndexOnPage + '_' + pos  // ← уникальный ID
+});
             matchIndexOnPage++;
             start = pos + query.length;
         }
@@ -593,15 +594,15 @@ updateSearchResults: function() {
             </div>
         `;
         
-        document.querySelectorAll('.search-result-item').forEach(item => {
-            item.onclick = () => {
-                const page = parseInt(item.dataset.page);
-                const idx = this.state.searchResults.findIndex(r => r.page === page);
-                if (idx !== -1) {
-                    this.goToSearchResult(idx);
-                }
-            };
-        });
+   document.querySelectorAll('.search-result-item').forEach(item => {
+    item.onclick = () => {
+        const matchId = item.dataset.matchId;
+        const idx = this.state.searchResults.findIndex(r => r.matchId === matchId);
+        if (idx !== -1) {
+            this.goToSearchResult(idx);
+        }
+    };
+});
     } else if (this.state.searchQuery && this.state.searchQuery.length > 0) {
         searchResultsDiv.innerHTML = '<div class="search-no-results">🔍 Ничего не найдено</div>';
     } else {
@@ -822,7 +823,7 @@ updateSearchNav: function() {
             searchResultsDiv.innerHTML = `
                 <div class="search-results-list">
                     ${this.state.searchResults.map((result, idx) => `
-                        <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}">
+                        <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}" data-match-id="${result.matchId}">
                             <span class="search-result-page">Страница ${result.page}</span>
                             <span class="search-result-preview">${result.preview}</span>
                         </div>
