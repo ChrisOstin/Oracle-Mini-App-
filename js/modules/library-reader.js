@@ -641,15 +641,16 @@ updateSearchResults: function() {
     /**
      * Перейти к результату поиска
      */
-  goToSearchResult: function(index) {
-
-this.closeSearch();
-
-    // Закрываем верхнюю панель поиска сразу
-const searchBar = document.getElementById('reader-search-bar');
-if (searchBar) {
-    searchBar.style.display = 'none';
-}
+goToSearchResult: function(index) {
+    // Закрываем визуальную часть поиска, не очищая searchResults
+    const searchBar = document.getElementById('reader-search-bar');
+    if (searchBar) searchBar.style.display = 'none';
+    const searchResultsDiv = document.getElementById('reader-search-results');
+    if (searchResultsDiv) searchResultsDiv.innerHTML = '';
+    const searchNav = document.getElementById('reader-search-nav');
+    if (searchNav) searchNav.style.display = 'none';
+    const searchInputField = document.getElementById('reader-search-input');
+    if (searchInputField) searchInputField.value = '';
 
     if (this.state.searchResults.length === 0) return;
     if (index < 0) index = 0;
@@ -686,32 +687,8 @@ if (searchBar) {
 
     setTimeout(() => this.scrollToSearchResult(result), 150);
 
-    // Обновляем нижнюю панель (счётчик)
     this.updateSearchNav();
-
-    // Показываем нижнюю панель (если её нет)
     this.showSearchNav();
-
-    // Очищаем поле ввода поиска
-    const searchInput = document.getElementById('reader-search-input');
-    if (searchInput) {
-        searchInput.value = '';
-    }
-
-    // Очищаем визуальный список результатов вверху
-    const searchResultsDiv = document.getElementById('reader-search-results');
-    if (searchResultsDiv) {
-        searchResultsDiv.innerHTML = '';
-    }
-
-    // Скрываем верхнюю панель навигации поиска
-    const searchNav = document.getElementById('reader-search-nav');
-    if (searchNav) {
-        searchNav.style.display = 'none';
-    }
-
-    // НЕ ОЧИЩАЕМ this.state.searchResults и this.state.searchCurrentIndex
-    // Они нужны для нижней панели навигации
 },
 
 scrollToSearchResult: function(result) {
