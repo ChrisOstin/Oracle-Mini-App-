@@ -570,49 +570,51 @@ results.push({
 updateSearchResults: function() {
     let searchResultsDiv = document.getElementById('reader-search-results');
     let searchNav = document.getElementById('reader-search-nav');
-    let counter = document.getElementById('search-counter');
-    
+
     if (!searchResultsDiv) return;
-    
+
     if (searchNav) {
         searchNav.style.display = this.state.searchResults.length > 0 ? 'flex' : 'none';
     }
-    
+
     if (this.state.searchResults.length > 0) {
-        if (counter) {
-            counter.textContent = `${this.state.searchCurrentIndex + 1}/${this.state.searchResults.length}`;
-        }
-        
+        // Подсветка слова в превью
+        const highlightInPreview = (text, query) => {
+            if (!query || !text) return text;
+            const regex = new RegExp(`(${this.escapeRegex(query)})`, 'gi');
+            return text.replace(regex, '<mark class="preview-highlight">$1</mark>');
+        };
+
         searchResultsDiv.innerHTML = `
             <div class="search-results-list">
                 ${this.state.searchResults.map((result, idx) => `
                     <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}">
                         <span class="search-result-page">Страница ${result.page}</span>
-                        <span class="search-result-preview">${result.preview}</span>
+                        <span class="search-result-preview">${highlightInPreview(result.preview, this.state.searchQuery)}</span>
                     </div>
                 `).join('')}
             </div>
         `;
-        
-document.querySelectorAll('.search-result-item').forEach(item => {
-    item.onclick = () => {
-        // ✅ ПРИНУДИТЕЛЬНОЕ ЗАКРЫТИЕ ПЕРЕД ПЕРЕХОДОМ
-        const panel = document.getElementById('reader-search-bar');
-        if (panel) panel.style.display = 'none';
-        
-        const page = parseInt(item.dataset.page);
-        const idx = this.state.searchResults.findIndex(r => r.page === page);
-        if (idx !== -1) {
-            this.goToSearchResult(idx);
-        }
-    };
-});
+
+        document.querySelectorAll('.search-result-item').forEach(item => {
+            item.onclick = () => {
+                // Принудительное закрытие панели поиска
+                const panel = document.getElementById('reader-search-bar');
+                if (panel) panel.style.display = 'none';
+                
+                const page = parseInt(item.dataset.page);
+                const idx = this.state.searchResults.findIndex(r => r.page === page);
+                if (idx !== -1) {
+                    this.goToSearchResult(idx);
+                }
+            };
+        });
     } else if (this.state.searchQuery && this.state.searchQuery.length > 0) {
         searchResultsDiv.innerHTML = '<div class="search-no-results">🔍 Ничего не найдено</div>';
     } else {
         searchResultsDiv.innerHTML = '';
     }
-    
+
     if (this.state.searchCurrentIndex >= 0 && this.state.searchResults.length > 0) {
         const result = this.state.searchResults[this.state.searchCurrentIndex];
         if (result && result.page !== this.state.currentPage) {
@@ -638,7 +640,7 @@ document.querySelectorAll('.search-result-item').forEach(item => {
             }
         }
     }
-    
+
     setTimeout(() => this.highlightSearchTerm(), 100);
 },
 
