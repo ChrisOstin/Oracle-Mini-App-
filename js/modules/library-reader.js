@@ -594,10 +594,14 @@ updateSearchResults: function() {
             </div>
         `;
         
-   document.querySelectorAll('.search-result-item').forEach(item => {
+document.querySelectorAll('.search-result-item').forEach(item => {
     item.onclick = () => {
-        const matchId = item.dataset.matchId;
-        const idx = this.state.searchResults.findIndex(r => r.matchId === matchId);
+        // ✅ ПРИНУДИТЕЛЬНОЕ ЗАКРЫТИЕ ПЕРЕД ПЕРЕХОДОМ
+        const panel = document.getElementById('reader-search-bar');
+        if (panel) panel.style.display = 'none';
+        
+        const page = parseInt(item.dataset.page);
+        const idx = this.state.searchResults.findIndex(r => r.page === page);
         if (idx !== -1) {
             this.goToSearchResult(idx);
         }
