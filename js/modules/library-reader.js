@@ -643,6 +643,8 @@ updateSearchResults: function() {
      */
   goToSearchResult: function(index) {
 
+this.closeSearch();
+
     // Закрываем верхнюю панель поиска сразу
 const searchBar = document.getElementById('reader-search-bar');
 if (searchBar) {
