@@ -642,6 +642,13 @@ updateSearchResults: function() {
      * Перейти к результату поиска
      */
   goToSearchResult: function(index) {
+
+    // Закрываем верхнюю панель поиска сразу
+const searchBar = document.getElementById('reader-search-bar');
+if (searchBar) {
+    searchBar.style.display = 'none';
+}
+
     if (this.state.searchResults.length === 0) return;
     if (index < 0) index = 0;
     if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
@@ -682,10 +689,6 @@ updateSearchResults: function() {
 
     // Показываем нижнюю панель (если её нет)
     this.showSearchNav();
-
-    // Закрываем верхнюю панель поиска
-    const searchBar = document.getElementById('reader-search-bar');
-    if (searchBar) searchBar.style.display = 'none';
 
     // Очищаем поле ввода поиска
     const searchInput = document.getElementById('reader-search-input');
