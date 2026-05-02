@@ -648,9 +648,9 @@ updateSearchResults: function() {
      * Перейти к результату поиска
      */
 goToSearchResult: function(index) {
-    // Удаляем панель поиска из DOM
-    const oldPanel = document.getElementById('reader-search-bar');
-    if (oldPanel) oldPanel.remove();
+// Просто скрываем панель поиска
+const panel = document.getElementById('reader-search-bar');
+if (panel) panel.style.display = 'none';
 
     if (this.state.searchResults.length === 0) return;
     if (index < 0) index = 0;
