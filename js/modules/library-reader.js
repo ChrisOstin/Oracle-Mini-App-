@@ -642,31 +642,10 @@ updateSearchResults: function() {
      * Перейти к результату поиска
      */
 goToSearchResult: function(index) {
-    // ===== ПРИНУДИТЕЛЬНОЕ ЗАКРЫТИЕ ВЕРХНЕЙ ПАНЕЛИ ПОИСКА =====
-    const panel = document.querySelector('.reader-search-bar');
-    if (panel) {
-        panel.style.display = 'none';
-    }
-    
-    // Очищаем поле ввода
-    const inputField = document.getElementById('reader-search-input');
-    if (inputField) {
-        inputField.value = '';
-    }
-    
-    // Очищаем список результатов
-    const resultsContainer = document.getElementById('reader-search-results');
-    if (resultsContainer) {
-        resultsContainer.innerHTML = '';
-    }
-    
-    // Скрываем навигацию поиска
-    const navContainer = document.getElementById('reader-search-nav');
-    if (navContainer) {
-        navContainer.style.display = 'none';
-    }
-    // ============================================
-    
+    // Удаляем панель поиска из DOM
+    const oldPanel = document.getElementById('reader-search-bar');
+    if (oldPanel) oldPanel.remove();
+
     if (this.state.searchResults.length === 0) return;
     if (index < 0) index = 0;
     if (index >= this.state.searchResults.length) index = this.state.searchResults.length - 1;
