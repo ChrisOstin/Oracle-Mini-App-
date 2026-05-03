@@ -588,7 +588,7 @@ updateSearchResults: function() {
         searchResultsDiv.innerHTML = `
             <div class="search-results-list">
                 ${this.state.searchResults.map((result, idx) => `
-                    <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}">
+                    <div class="search-result-item ${idx === this.state.searchCurrentIndex ? 'active' : ''}" data-page="${result.page}" data-match-id="${result.matchId}">
                         <span class="search-result-page">Страница ${result.page}</span>
                         <span class="search-result-preview">${highlightInPreview(result.preview, this.state.searchQuery)}</span>
                     </div>
@@ -596,19 +596,18 @@ updateSearchResults: function() {
             </div>
         `;
 
-        document.querySelectorAll('.search-result-item').forEach(item => {
-            item.onclick = () => {
-                // Принудительное закрытие панели поиска
-                const panel = document.getElementById('reader-search-bar');
-                if (panel) panel.style.display = 'none';
-                
-                const page = parseInt(item.dataset.page);
-                const idx = this.state.searchResults.findIndex(r => r.page === page);
-                if (idx !== -1) {
-                    this.goToSearchResult(idx);
-                }
-            };
-        });
+       document.querySelectorAll('.search-result-item').forEach(item => {
+    item.onclick = () => {
+        const panel = document.getElementById('reader-search-bar');
+        if (panel) panel.style.display = 'none';
+        
+        const matchId = item.dataset.matchId;                              // ← берём matchId
+        const idx = this.state.searchResults.findIndex(r => r.matchId === matchId);  // ← ищем по matchId
+        if (idx !== -1) {
+            this.goToSearchResult(idx);
+        }
+    };
+});
     } else if (this.state.searchQuery && this.state.searchQuery.length > 0) {
         searchResultsDiv.innerHTML = '<div class="search-no-results">🔍 Ничего не найдено</div>';
     } else {
