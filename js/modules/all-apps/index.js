@@ -358,24 +358,25 @@ updateBatteryLevel: function() {
         setTimeout(() => spark.remove(), 500);
     },
 
-    // Открыть приложение
+// Открыть приложение
 openApp: function(route) {
     if (route && window.MORI_ROUTER) {
- 
-// Убираем класс all-apps при выходе
-          document.body.classList.remove('all-apps-active');
-
-       // Скрываем панель навигации
-        const nav = document.getElementById('dynamic-bottom-nav');
-        if (nav) {
-            nav.style.display = 'none';
+        // Убираем класс all-apps
+        document.body.classList.remove('all-apps-active');
+        
+        // Список модулей, где нужна панель навигации
+        const modulesWithNav = ['portfolio', 'calculator', 'library', 'ai-chat', 'profile'];
+        
+        // Если модуль из списка — показываем панель и плавающие кнопки
+        if (modulesWithNav.includes(route)) {
+            const nav = document.getElementById('dynamic-bottom-nav');
+            const leftBtn = document.getElementById('new-floating-left');
+            const rightBtn = document.getElementById('new-floating-right');
+            
+            if (nav) nav.style.setProperty('display', 'flex', 'important');
+            if (leftBtn) leftBtn.style.setProperty('display', 'block', 'important');
+            if (rightBtn) rightBtn.style.setProperty('display', 'block', 'important');
         }
-
-// Скрываем плавающие кнопки тоже
-const leftBtn = document.getElementById('new-floating-left');
-const rightBtn = document.getElementById('new-floating-right');
-if (leftBtn) leftBtn.style.display = 'none';
-if (rightBtn) rightBtn.style.display = 'none';
         
         // Анимация нажатия
         const card = document.querySelector(`.app-card[data-app-route="${route}"]`);
