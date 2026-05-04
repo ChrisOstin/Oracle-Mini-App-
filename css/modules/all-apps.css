@@ -335,18 +335,6 @@
     }
 }
 
-/* Отступ снизу, чтобы панель навигации не перекрывала контент */
-.all-apps-screen {
-    padding-bottom: 80px;
-}
-
-/* Для мобильных — чуть больше */
-@media (max-width: 480px) {
-    .all-apps-screen {
-        padding-bottom: 50px;
-    }
-}
-
 /* Убираем полоску под заголовком навсегда */
 .all-apps-header {
     border-bottom: none !important;
@@ -385,6 +373,6 @@ body.all-apps-active {
 }
 
 body.all-apps-active #app {
-    margin-top: -80px !important;
+    margin-top: -100px !important;
     padding-top: 0 !important;
 }
