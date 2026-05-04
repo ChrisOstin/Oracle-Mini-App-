@@ -65,6 +65,7 @@ const MORI_ALL_APPS = {
         
         content.innerHTML = this.getHTML();
         this.attachEvents();
+        this.updateBatteryLevel();
     },
 
     // HTML
@@ -75,9 +76,9 @@ const MORI_ALL_APPS = {
         return `
             <div class="all-apps-screen">
                 <!-- Статус-бар телефона -->
-                <div class="phone-status-bar">
+<div class="phone-status-bar">
     <span>${timeStr}</span>
-    ${this.isMobile() ? '<span>📶 🔋</span>' : ''}
+    ${this.isMobile() ? '<span>📶 🔋 <span id="battery-level">--</span>%</span>' : ''}
 </div>
                 
                 <!-- Шапка -->
@@ -103,6 +104,27 @@ const MORI_ALL_APPS = {
 // Проверка, мобильное ли устройство
 isMobile: function() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+},
+
+// Обновление уровня батареи
+updateBatteryLevel: function() {
+    if (!this.isMobile()) return;
+    
+    if (navigator.getBattery) {
+        navigator.getBattery().then((battery) => {
+            const level = Math.floor(battery.level * 100);
+            const batterySpan = document.getElementById('battery-level');
+            if (batterySpan) {
+                batterySpan.textContent = level;
+            }
+        }).catch(() => {
+            const batterySpan = document.getElementById('battery-level');
+            if (batterySpan) batterySpan.textContent = '85';
+        });
+    } else {
+        const batterySpan = document.getElementById('battery-level');
+        if (batterySpan) batterySpan.textContent = '85';
+    }
 },
 
     // Скелетон
