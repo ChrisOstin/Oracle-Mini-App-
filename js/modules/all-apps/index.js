@@ -52,6 +52,9 @@ if (nav) {
     nav.style.display = 'none';
 }
 
+// Добавляем класс для all-apps к body
+document.body.classList.add('all-apps-active');
+
 // Скрываем плавающие кнопки
 const leftBtn = document.getElementById('new-floating-left');
 const rightBtn = document.getElementById('new-floating-right');
@@ -358,7 +361,11 @@ updateBatteryLevel: function() {
     // Открыть приложение
 openApp: function(route) {
     if (route && window.MORI_ROUTER) {
-        // Скрываем панель навигации
+ 
+// Убираем класс all-apps при выходе
+          document.body.classList.remove('all-apps-active');
+
+       // Скрываем панель навигации
         const nav = document.getElementById('dynamic-bottom-nav');
         if (nav) {
             nav.style.display = 'none';
@@ -398,7 +405,11 @@ restoreNav: function() {
 const exitBtn = document.getElementById('exit-apps-btn');
 if (exitBtn) {
     exitBtn.addEventListener('click', () => {
-        // Показываем панель навигации и плавающие кнопки
+     
+// Убираем класс all-apps
+document.body.classList.remove('all-apps-active');
+
+   // Показываем панель навигации и плавающие кнопки
         const nav = document.getElementById('dynamic-bottom-nav');
         const leftBtn = document.getElementById('new-floating-left');
         const rightBtn = document.getElementById('new-floating-right');

@@ -377,3 +377,14 @@
     background: rgba(212, 175, 55, 0.3);
     transform: translateX(-50%) scale(1.02);
 }
+
+/* Убираем пустое место над all-apps */
+body.all-apps-active {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+body.all-apps-active #app {
+    margin-top: -30px !important;
+    padding-top: 0 !important;
+}
