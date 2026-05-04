@@ -27,7 +27,7 @@
 .apps-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
+    gap: 4px;
     padding: 8px 0;
 }
 
@@ -36,7 +36,7 @@
     background: #1a1a1a;
     border: 1px solid rgba(212, 175, 55, 0.2);
     border-radius: 20px;
-    padding: 6px 4px;
+    padding: 4px 2px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s;
@@ -84,13 +84,13 @@
 
 /* Иконка приложения */
 .app-icon {
-    font-size: 24px;
+    font-size: 20px;
     margin-bottom: 4px;
 }
 
 /* Название приложения */
 .app-name {
-    font-size: 10px;
+    font-size: 8px;
     color: #e8d5a8;
     font-weight: 500;
     white-space: nowrap;
@@ -100,7 +100,7 @@
 
 /* Описание */
 .app-description {
-    font-size: 8px;
+    font-size: 4px;
     color: #6a5a3a;
     margin-top: 2px;
 }
