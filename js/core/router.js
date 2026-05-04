@@ -397,6 +397,10 @@ localStorage.setItem('last_screen', screenId);
             setTimeout(updateChatButton, 150);
         }
 
+        // Добавляем кнопку выхода для модулей без панели
+this.addExitButtonIfNeeded(screenId);
+
+
     },
 
     // ========== ПРОВЕРКА ДОСТУПА ==========
@@ -867,6 +871,31 @@ updateTitle: function(screenId) {
         fade: { in: 'fade-in', out: 'fade-out' },
         slide: { in: 'slide-in', out: 'slide-out' }
     },
+
+// Добавляем кнопку выхода для модулей, где нет панели навигации (кроме all-apps)
+addExitButtonIfNeeded: function(screenId) {
+    // Удаляем старую кнопку, если есть
+    const oldBtn = document.getElementById('global-exit-btn');
+    if (oldBtn) oldBtn.remove();
+    
+    // Модули, где НЕ нужна панель навигации (и не all-apps)
+    const modulesWithoutNav = ['house', 'family', 'calendar', 'budget', 'reminders', 'durak', 'music', 'voice', 'demigurge', 'games', 'mori-wallet', 'mori-work', 'retro-phone', 'mori-story'];
+    
+    // Если модуль из списка и это не all-apps
+    if (modulesWithoutNav.includes(screenId) && screenId !== 'all-apps') {
+        const btn = document.createElement('button');
+        btn.id = 'global-exit-btn';
+        btn.innerHTML = '← Выход';
+        btn.style.cssText = 'position: fixed; top: 16px; left: 16px; background: rgba(212,175,55,0.2); border: 1px solid #d4af37; border-radius: 30px; padding: 8px 16px; color: #ffd700; z-index: 10000; cursor: pointer; font-size: 14px;';
+        btn.onclick = () => {
+            if (window.MORI_ROUTER) {
+                MORI_ROUTER.navigate('all-apps');
+            }
+        };
+        document.body.appendChild(btn);
+    }
+},
+
 
     playSound: function(soundName) {},
 
