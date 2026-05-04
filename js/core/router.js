@@ -127,7 +127,7 @@ const MORI_ROUTER = {
             icon: '🃏'
         },
         'all-apps': {
-            title: 'Все приложения',
+            title: '',
             module: 'MORI_ALL_APPS',
             guard: 'user',
             icon: '📱',
