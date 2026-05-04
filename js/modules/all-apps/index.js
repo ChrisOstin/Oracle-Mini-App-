@@ -212,7 +212,7 @@ updateBatteryLevel: function() {
                 <div class="app-card empty">
                     <div class="app-icon">${app.icon}</div>
                     <div class="app-name"></div>
-                    <div class="coming-soon">скоро</div>
+                    <div class="coming-soon">Скоро</div>
                 </div>
             `;
         }
@@ -386,15 +386,18 @@ restoreNav: function() {
 const exitBtn = document.getElementById('exit-apps-btn');
 if (exitBtn) {
     exitBtn.addEventListener('click', () => {
-        // Показываем панель навигации
+        // Показываем панель навигации через setProperty с !important
         const nav = document.getElementById('dynamic-bottom-nav');
         if (nav) {
-            nav.style.display = 'flex';
+            nav.style.setProperty('display', 'flex', 'important');
         }
-        // Переходим в портфель
-        if (window.MORI_ROUTER) {
-            MORI_ROUTER.navigate('portfolio');
-        }
+        
+        // Небольшая задержка перед переходом, чтобы панель успела появиться
+        setTimeout(() => {
+            if (window.MORI_ROUTER) {
+                MORI_ROUTER.navigate('portfolio');
+            }
+        }, 50);
     });
 }
 
