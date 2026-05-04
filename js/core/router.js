@@ -130,7 +130,8 @@ const MORI_ROUTER = {
             title: 'Все приложения',
             module: 'MORI_ALL_APPS',
             guard: 'user',
-            icon: '📱'
+            icon: '📱',
+            id: 'all-apps'
         },
         music: {
             title: 'Музыка',
