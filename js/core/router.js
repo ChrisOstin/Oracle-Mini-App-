@@ -792,38 +792,64 @@ setupGestures: function() {
         document.body.className = `theme-${theme}`;
     },
 
-    // ========== ОБНОВЛЕНИЕ ЗАГОЛОВКА ==========
-    updateTitle: function(screenId) {
-        const titleMap = {
-            'portfolio': 'portfolio-title',
-            'calculator': 'calculator-title',
-            'library': 'library-title',
-            'ai-chat': 'ai-chat-title',
-            'profile': 'profile-title',
-            'tasks': 'tasks-title',
-            'chat': 'chat-title',
-            'house': 'house-title',
-            'family': 'family-title',
-            'music': 'music-title',
-            'voice': 'voice-title',
-            'demigurge': 'demigurge-title',
-            'all-apps': 'all-apps-title',
-            'games': 'games-title',
-            'mori-wallet': 'mori-wallet-title',
-            'mori-work': 'mori-work-title',
-            'retro-phone': 'retro-phone-title',
-            'mori-story': 'mori-story-title'
-        };
-        const titleId = titleMap[screenId];
-        if (!titleId) return;
-        document.querySelectorAll('.module-title').forEach(title => {
-            title.style.display = 'none';
-        });
-        const activeTitle = document.getElementById(titleId);
-        if (activeTitle) {
-            activeTitle.style.display = 'block';
-        }
-    },
+// ========== ОБНОВЛЕНИЕ ЗАГОЛОВКА ==========
+updateTitle: function(screenId) {
+    // Названия модулей для заголовка страницы
+    const pageTitles = {
+        'portfolio': 'Портфель',
+        'calculator': 'Калькулятор',
+        'library': 'Библиотека',
+        'ai-chat': 'MORI AI',
+        'profile': 'Профиль',
+        'tasks': 'Задания',
+        'chat': 'MORIGRAM',
+        'house': 'Дом',
+        'family': 'Семья',
+        'music': 'Музыка',
+        'voice': 'Голосовые',
+        'demigurge': 'Демиург',
+        'all-apps': '',
+        'games': 'Игры',
+        'mori-wallet': 'MORI Wallet',
+        'mori-work': 'MORI Work',
+        'retro-phone': 'Ретро-телефон',
+        'mori-story': 'MORI Story'
+    };
+    
+    // Устанавливаем заголовок страницы
+    const pageTitle = pageTitles[screenId] || 'MORI Oracle';
+    document.title = pageTitle;
+
+    const titleMap = {
+        'portfolio': 'portfolio-title',
+        'calculator': 'calculator-title',
+        'library': 'library-title',
+        'ai-chat': 'ai-chat-title',
+        'profile': 'profile-title',
+        'tasks': 'tasks-title',
+        'chat': 'chat-title',
+        'house': 'house-title',
+        'family': 'family-title',
+        'music': 'music-title',
+        'voice': 'voice-title',
+        'demigurge': 'demigurge-title',
+        'all-apps': 'all-apps-title',
+        'games': 'games-title',
+        'mori-wallet': 'mori-wallet-title',
+        'mori-work': 'mori-work-title',
+        'retro-phone': 'retro-phone-title',
+        'mori-story': 'mori-story-title'
+    };
+    const titleId = titleMap[screenId];
+    if (!titleId) return;
+    document.querySelectorAll('.module-title').forEach(title => {
+        title.style.display = 'none';
+    });
+    const activeTitle = document.getElementById(titleId);
+    if (activeTitle) {
+        activeTitle.style.display = 'block';
+    }
+},
 
     transitions: {
         fade: { in: 'fade-in', out: 'fade-out' },
