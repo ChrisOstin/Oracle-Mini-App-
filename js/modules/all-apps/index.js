@@ -16,15 +16,15 @@ const MORI_ALL_APPS = {
     // Список всех приложений
     appList: [
         // Ряд 1
-        { id: 'portfolio', icon: '📊', name: 'Портфель', description: 'Графики и цена', category: 'main', access: 'user', route: 'portfolio', new: false },
+        { id: 'portfolio', icon: '📊', name: 'Портфель', description: 'График и цена', category: 'main', access: 'user', route: 'portfolio', new: false },
         { id: 'calculator', icon: '💰', name: 'Калькулятор', description: 'Конвертер валют', category: 'main', access: 'user', route: 'calculator', new: false },
         { id: 'library', icon: '📚', name: 'Библиотека', description: 'Книги и читалка', category: 'main', access: 'user', route: 'library', new: false },
         { id: 'ai-chat', icon: '🧠', name: 'MORI AI', description: 'Чат с нейросетью', category: 'main', access: 'user', route: 'ai-chat', new: false },
         
         // Ряд 2
         { id: 'profile', icon: '👤', name: 'Профиль', description: 'Твои данные', category: 'main', access: 'user', route: 'profile', new: false },
-        { id: 'tasks', icon: '🎮', name: 'Задания', description: 'Квесты и дейлики', category: 'main', access: 'user', route: 'tasks', new: false },
-        { id: 'chat', icon: '💬', name: 'MORIGRAM', description: 'Общение с семьёй', category: 'main', access: 'user', route: 'chat', new: false },
+        { id: 'tasks', icon: '✅', name: 'Задания', description: 'Квесты и дейлики', category: 'main', access: 'user', route: 'tasks', new: false },
+        { id: 'chat', icon: '💬', name: 'MORIGRAM', description: 'Общение', category: 'main', access: 'user', route: 'chat', new: false },
         { id: 'house', icon: '🏠', name: 'Дом', description: 'Интерактивный дом', category: 'family', access: 'family', route: 'house', new: false },
         
         // Ряд 3
