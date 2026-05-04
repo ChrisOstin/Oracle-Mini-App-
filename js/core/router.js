@@ -69,7 +69,8 @@ const MORI_ROUTER = {
             title: 'Задания',
             module: 'MORI_TASKS',
             guard: 'user',
-            icon: '✅'
+            icon: '✅',
+            id: 'tasks'
         },
         chat: {
             title: 'MORIGRAM',
