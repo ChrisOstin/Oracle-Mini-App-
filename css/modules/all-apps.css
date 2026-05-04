@@ -8,7 +8,6 @@
     padding: 8px 12px;
     margin: 0;
     max-width: 100%;
-    min-height: 100vh;
     box-shadow: none;
 }
 
@@ -29,6 +28,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 4px;
     padding: 4px 0;
+    overflow-y: hidden;
 }
 
 /* Карточка приложения */
@@ -379,4 +379,19 @@ body.all-apps-active #app {
     padding-top: 0 !important;
     margin-bottom: -100px !important;  /* ← добавить */
     padding-bottom: 0 !important;     /* ← добавить */
+}
+
+/* Убираем скролл для all-apps */
+body.all-apps-active {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    height: 100% !important;
+}
+
+body.all-apps-active #app {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    height: 100% !important;
 }
