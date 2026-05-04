@@ -45,6 +45,13 @@ const MORI_ALL_APPS = {
         console.log('📱 MORI_ALL_APPS инициализация...');
         this.loadFavorites();
         this.simulateLoading();
+    
+// Скрываем панель навигации
+const nav = document.getElementById('dynamic-bottom-nav');
+if (nav) {
+    nav.style.display = 'none';
+}
+
     },
 
     // Загрузка с скелетоном
@@ -97,7 +104,9 @@ const MORI_ALL_APPS = {
                         ${this.state.editMode ? '✓' : '✎'}
                     </button>
                 ` : ''}
-            </div>
+<!-- Кнопка выхода -->
+<button class="exit-apps-btn" id="exit-apps-btn">Выход</button>
+           </div>
         `;
     },
 
@@ -341,22 +350,54 @@ updateBatteryLevel: function() {
     },
 
     // Открыть приложение
-    openApp: function(route) {
-        if (route && window.MORI_ROUTER) {
-            // Анимация нажатия
-            const card = document.querySelector(`.app-card[data-app-route="${route}"]`);
-            if (card) {
-                card.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    card.style.transform = '';
-                }, 150);
-            }
-            MORI_ROUTER.navigate(route);
+openApp: function(route) {
+    if (route && window.MORI_ROUTER) {
+        // Скрываем панель навигации
+        const nav = document.getElementById('dynamic-bottom-nav');
+        if (nav) {
+            nav.style.display = 'none';
         }
-    },
+        
+        // Анимация нажатия
+        const card = document.querySelector(`.app-card[data-app-route="${route}"]`);
+        if (card) {
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 150);
+        }
+        
+        MORI_ROUTER.navigate(route);
+    }
+},
+
+// Восстановить панель навигации
+restoreNav: function() {
+    const nav = document.getElementById('dynamic-bottom-nav');
+    if (nav) {
+        nav.style.display = 'flex';
+    }
+},
 
     // Обработчики
     attachEvents: function() {
+       
+// Кнопка выхода
+const exitBtn = document.getElementById('exit-apps-btn');
+if (exitBtn) {
+    exitBtn.addEventListener('click', () => {
+        // Показываем панель навигации
+        const nav = document.getElementById('dynamic-bottom-nav');
+        if (nav) {
+            nav.style.display = 'flex';
+        }
+        // Переходим в портфель
+        if (window.MORI_ROUTER) {
+            MORI_ROUTER.navigate('portfolio');
+        }
+    });
+}
+
         // Клик по карточке
         document.querySelectorAll('.app-card').forEach(card => {
             card.addEventListener('click', (e) => {

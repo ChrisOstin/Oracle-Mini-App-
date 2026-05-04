@@ -355,3 +355,25 @@
     border-bottom: none !important;
     text-decoration: none !important;
 }
+
+/* Кнопка выхода */
+.exit-apps-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid #d4af37;
+    border-radius: 30px;
+    padding: 10px 24px;
+    color: #ffd700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 100;
+}
+
+.exit-apps-btn:hover {
+    background: rgba(212, 175, 55, 0.3);
+    transform: translateX(-50%) scale(1.02);
+}
