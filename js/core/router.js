@@ -794,7 +794,7 @@ setupGestures: function() {
 
 // ========== ОБНОВЛЕНИЕ ЗАГОЛОВКА ==========
 updateTitle: function(screenId) {
-    // Названия модулей для заголовка страницы
+    // Названия модулей для заголовка страницы в браузере
     const pageTitles = {
         'portfolio': 'Портфель',
         'calculator': 'Калькулятор',
@@ -816,10 +816,19 @@ updateTitle: function(screenId) {
         'mori-story': 'MORI Story'
     };
     
-    // Устанавливаем заголовок страницы
+    // Устанавливаем заголовок страницы в браузере
     const pageTitle = pageTitles[screenId] || 'MORI Oracle';
     document.title = pageTitle;
-
+    
+    // Скрываем заголовки модулей для all-apps
+    if (screenId === 'all-apps') {
+        document.querySelectorAll('.module-title').forEach(title => {
+            title.style.display = 'none';
+        });
+        return;
+    }
+    
+    // Для остальных модулей показываем нужный заголовок
     const titleMap = {
         'portfolio': 'portfolio-title',
         'calculator': 'calculator-title',
@@ -840,11 +849,14 @@ updateTitle: function(screenId) {
         'retro-phone': 'retro-phone-title',
         'mori-story': 'mori-story-title'
     };
+    
     const titleId = titleMap[screenId];
     if (!titleId) return;
+    
     document.querySelectorAll('.module-title').forEach(title => {
         title.style.display = 'none';
     });
+    
     const activeTitle = document.getElementById(titleId);
     if (activeTitle) {
         activeTitle.style.display = 'block';
