@@ -52,6 +52,12 @@ if (nav) {
     nav.style.display = 'none';
 }
 
+// Скрываем плавающие кнопки
+const leftBtn = document.getElementById('new-floating-left');
+const rightBtn = document.getElementById('new-floating-right');
+if (leftBtn) leftBtn.style.display = 'none';
+if (rightBtn) rightBtn.style.display = 'none';
+
     },
 
     // Загрузка с скелетоном
@@ -400,6 +406,12 @@ if (exitBtn) {
         }, 50);
     });
 }
+
+// Показываем плавающие кнопки
+const leftBtn = document.getElementById('new-floating-left');
+const rightBtn = document.getElementById('new-floating-right');
+if (leftBtn) leftBtn.style.display = 'block';
+if (rightBtn) rightBtn.style.display = 'block';
 
         // Клик по карточке
         document.querySelectorAll('.app-card').forEach(card => {
