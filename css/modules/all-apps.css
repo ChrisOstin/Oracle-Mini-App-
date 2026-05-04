@@ -377,6 +377,6 @@ body.all-apps-active {
 body.all-apps-active #app {
     margin-top: -150px !important;
     padding-top: 0 !important;
-    margin-bottom: -60px !important;  /* ← добавить */
+    margin-bottom: -100px !important;  /* ← добавить */
     padding-bottom: 0 !important;     /* ← добавить */
 }
