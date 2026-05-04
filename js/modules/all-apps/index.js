@@ -78,7 +78,7 @@ const MORI_ALL_APPS = {
                 <!-- Статус-бар телефона -->
 <div class="phone-status-bar">
     <span>${timeStr}</span>
-    ${this.isMobile() ? '<span><span id="network-type">📶</span> 🔋 <span id="battery-level">--</span>%</span>' : ''}
+    ${this.isMobile() ? '<span id="status-icons"><span id="network-type">' + this.getNetworkType() + '</span> 🔋 <span id="battery-level">--</span>%</span>' : ''}
 </div>
                 
                 <!-- Шапка -->
@@ -136,29 +136,30 @@ updateBatteryLevel: function() {
     if (!this.isMobile()) return;
     
     // Обновляем тип сети
-    const statusBar = document.querySelector('.phone-status-bar');
-    if (!statusBar) return;
+    const networkSpan = document.getElementById('network-type');
+    if (networkSpan) {
+        networkSpan.innerHTML = this.getNetworkType();
+    }
     
     if (navigator.getBattery) {
         navigator.getBattery().then((battery) => {
             const level = Math.floor(battery.level * 100);
-            const batteryIcon = this.getBatteryIcon(level);
-            const batterySpan = document.getElementById('battery-level');
-            const networkSpan = document.getElementById('network-type');
+            const batteryLevelSpan = document.getElementById('battery-level');
+            const batteryIconSpan = document.getElementById('battery-icon');
             
-            if (batterySpan) {
-                batterySpan.textContent = level;
+            if (batteryLevelSpan) {
+                batteryLevelSpan.textContent = level;
             }
-            if (networkSpan) {
-                networkSpan.innerHTML = batteryIcon;
+            if (batteryIconSpan) {
+                batteryIconSpan.textContent = this.getBatteryIcon(level);
             }
         }).catch(() => {
-            const batterySpan = document.getElementById('battery-level');
-            if (batterySpan) batterySpan.textContent = '85';
+            const batteryLevelSpan = document.getElementById('battery-level');
+            if (batteryLevelSpan) batteryLevelSpan.textContent = '85';
         });
     } else {
-        const batterySpan = document.getElementById('battery-level');
-        if (batterySpan) batterySpan.textContent = '85';
+        const batteryLevelSpan = document.getElementById('battery-level');
+        if (batteryLevelSpan) batteryLevelSpan.textContent = '85';
     }
 },
 
