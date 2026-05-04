@@ -366,13 +366,17 @@
     transform: translateX(-50%) scale(1.02);
 }
 
-/* Убираем пустое место над all-apps */
+/* Убираем пустое место над и под all-apps */
 body.all-apps-active {
     margin-top: 0 !important;
     padding-top: 0 !important;
+    margin-bottom: 0 !important;   /* ← добавить */
+    padding-bottom: 0 !important;  /* ← добавить */
 }
 
 body.all-apps-active #app {
     margin-top: -150px !important;
     padding-top: 0 !important;
+    margin-bottom: -60px !important;  /* ← добавить */
+    padding-bottom: 0 !important;     /* ← добавить */
 }
