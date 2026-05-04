@@ -78,7 +78,7 @@ const MORI_ALL_APPS = {
                 <!-- Статус-бар телефона -->
 <div class="phone-status-bar">
     <span>${timeStr}</span>
-    ${this.isMobile() ? '<span>📶 🔋 <span id="battery-level">--</span>%</span>' : ''}
+    ${this.isMobile() ? '<span><span id="network-type">📶</span> 🔋 <span id="battery-level">--</span>%</span>' : ''}
 </div>
                 
                 <!-- Шапка -->
@@ -106,16 +106,51 @@ isMobile: function() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 },
 
+// Иконка батареи в зависимости от заряда
+getBatteryIcon: function(level) {
+    if (level >= 90) return '🔋';
+    if (level >= 70) return '🔋';
+    if (level >= 50) return '🔋';
+    if (level >= 30) return '🔋';
+    if (level >= 15) return '🔋';
+    return '🪫';  // разряжена
+},
+
+// Определение типа сети
+getNetworkType: function() {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!connection) return '📶';
+    
+    const type = connection.effectiveType; // '4g', '3g', '2g', 'slow-2g'
+    const types = {
+        '4g': '📶 4G',
+        '3g': '📶 3G',
+        '2g': '📶 2G',
+        'slow-2g': '📶 🐌'
+    };
+    return types[type] || '📶';
+},
+
 // Обновление уровня батареи
 updateBatteryLevel: function() {
     if (!this.isMobile()) return;
     
+    // Обновляем тип сети
+    const statusBar = document.querySelector('.phone-status-bar');
+    if (!statusBar) return;
+    
     if (navigator.getBattery) {
         navigator.getBattery().then((battery) => {
             const level = Math.floor(battery.level * 100);
+            const batteryIcon = this.getBatteryIcon(level);
             const batterySpan = document.getElementById('battery-level');
+            const networkSpan = document.getElementById('network-type');
+            
             if (batterySpan) {
                 batterySpan.textContent = level;
+            }
+            if (networkSpan) {
+                networkSpan.innerHTML = batteryIcon;
             }
         }).catch(() => {
             const batterySpan = document.getElementById('battery-level');
