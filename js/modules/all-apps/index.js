@@ -363,6 +363,12 @@ openApp: function(route) {
         if (nav) {
             nav.style.display = 'none';
         }
+
+// Скрываем плавающие кнопки тоже
+const leftBtn = document.getElementById('new-floating-left');
+const rightBtn = document.getElementById('new-floating-right');
+if (leftBtn) leftBtn.style.display = 'none';
+if (rightBtn) rightBtn.style.display = 'none';
         
         // Анимация нажатия
         const card = document.querySelector(`.app-card[data-app-route="${route}"]`);
@@ -392,13 +398,15 @@ restoreNav: function() {
 const exitBtn = document.getElementById('exit-apps-btn');
 if (exitBtn) {
     exitBtn.addEventListener('click', () => {
-        // Показываем панель навигации через setProperty с !important
+        // Показываем панель навигации и плавающие кнопки
         const nav = document.getElementById('dynamic-bottom-nav');
-        if (nav) {
-            nav.style.setProperty('display', 'flex', 'important');
-        }
+        const leftBtn = document.getElementById('new-floating-left');
+        const rightBtn = document.getElementById('new-floating-right');
         
-        // Небольшая задержка перед переходом, чтобы панель успела появиться
+        if (nav) nav.style.setProperty('display', 'flex', 'important');
+        if (leftBtn) leftBtn.style.setProperty('display', 'block', 'important');
+        if (rightBtn) rightBtn.style.setProperty('display', 'block', 'important');
+        
         setTimeout(() => {
             if (window.MORI_ROUTER) {
                 MORI_ROUTER.navigate('portfolio');
@@ -406,13 +414,6 @@ if (exitBtn) {
         }, 50);
     });
 }
-
-// Показываем плавающие кнопки
-const leftBtn = document.getElementById('new-floating-left');
-const rightBtn = document.getElementById('new-floating-right');
-if (leftBtn) leftBtn.style.display = 'block';
-if (rightBtn) rightBtn.style.display = 'block';
-
         // Клик по карточке
         document.querySelectorAll('.app-card').forEach(card => {
             card.addEventListener('click', (e) => {
