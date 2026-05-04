@@ -76,9 +76,9 @@ const MORI_ALL_APPS = {
             <div class="all-apps-screen">
                 <!-- Статус-бар телефона -->
                 <div class="phone-status-bar">
-                    <span>${timeStr}</span>
-                    <span>📶 🔋 85%</span>
-                </div>
+    <span>${timeStr}</span>
+    ${this.isMobile() ? '<span>📶 🔋</span>' : ''}
+</div>
                 
                 <!-- Шапка -->
                 <div class="all-apps-header">
@@ -99,6 +99,11 @@ const MORI_ALL_APPS = {
             </div>
         `;
     },
+
+// Проверка, мобильное ли устройство
+isMobile: function() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+},
 
     // Скелетон
     renderSkeleton: function() {
