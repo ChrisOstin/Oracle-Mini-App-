@@ -889,7 +889,7 @@ addExitButtonIfNeeded: function(screenId) {
         const btn = document.createElement('button');
         btn.id = 'global-exit-btn';
         btn.innerHTML = '← Выход';
-        btn.style.cssText = 'position: fixed; top: 16px; left: 16px; background: rgba(212,175,55,0.2); border: 1px solid #d4af37; border-radius: 30px; padding: 8px 20px; color: #ffd700; z-index: 10000; cursor: pointer; font-size: 14px; text-align: center; line-height: 1.2;';
+        btn.style.cssText = 'position: fixed; top: 16px; left: 16px; background: rgba(212,175,55,0.2); border: 1px solid #d4af37; border-radius: 30px; padding: 8px 24px 8px 8px; color: #ffd700; z-index: 10000; cursor: pointer; font-size: 14px; text-align: center; line-height: 1.2;';
         btn.onclick = () => {
             if (window.MORI_ROUTER) {
                 MORI_ROUTER.navigate('all-apps');
