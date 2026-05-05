@@ -872,7 +872,7 @@ updateTitle: function(screenId) {
         slide: { in: 'slide-in', out: 'slide-out' }
     },
 
-// Добавляем кнопку выхода для модулей, где нет панели навигации (кроме all-apps)
+// Добавляем кнопку выхода для модулей, где нет панели навигации
 addExitButtonIfNeeded: function(screenId) {
     // Удаляем старую кнопку
     const oldBtn = document.getElementById('global-exit-btn');
@@ -881,7 +881,10 @@ addExitButtonIfNeeded: function(screenId) {
     // Модули, у которых есть панель навигации — кнопка не нужна
     const modulesWithNav = ['portfolio', 'calculator', 'library', 'ai-chat', 'profile'];
     
-    // Если модуль НЕ из списка и это не all-apps — добавляем кнопку
+    // Экран авторизации и регистрации — кнопка не нужна
+    if (screenId === 'auth') return;
+    
+    // Если модуль НЕ из списка и это не all-apps и не auth — добавляем кнопку
     if (!modulesWithNav.includes(screenId) && screenId !== 'all-apps') {
         const btn = document.createElement('button');
         btn.id = 'global-exit-btn';
@@ -895,7 +898,6 @@ addExitButtonIfNeeded: function(screenId) {
         document.body.appendChild(btn);
     }
 },
-
 
     playSound: function(soundName) {},
 
