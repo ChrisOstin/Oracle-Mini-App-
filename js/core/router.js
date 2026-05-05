@@ -874,15 +874,15 @@ updateTitle: function(screenId) {
 
 // Добавляем кнопку выхода для модулей, где нет панели навигации (кроме all-apps)
 addExitButtonIfNeeded: function(screenId) {
-    // Удаляем старую кнопку, если есть
+    // Удаляем старую кнопку
     const oldBtn = document.getElementById('global-exit-btn');
     if (oldBtn) oldBtn.remove();
     
-    // Модули, где НЕ нужна панель навигации (и не all-apps)
-    const modulesWithoutNav = ['house', 'family', 'calendar', 'budget', 'reminders', 'durak', 'music', 'voice', 'demigurge', 'games', 'mori-wallet', 'mori-work', 'retro-phone', 'mori-story'];
+    // Модули, у которых есть панель навигации — кнопка не нужна
+    const modulesWithNav = ['portfolio', 'calculator', 'library', 'ai-chat', 'profile'];
     
-    // Если модуль из списка и это не all-apps
-    if (modulesWithoutNav.includes(screenId) && screenId !== 'all-apps') {
+    // Если модуль НЕ из списка и это не all-apps — добавляем кнопку
+    if (!modulesWithNav.includes(screenId) && screenId !== 'all-apps') {
         const btn = document.createElement('button');
         btn.id = 'global-exit-btn';
         btn.innerHTML = '← Выход';
